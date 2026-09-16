@@ -58,6 +58,12 @@ const graph = {
       telephone: SITE.phone,
       email: SITE.email,
       image: `${SITE.url}/og.jpg`,
+      vatID: SITE.btw,
+      identifier: {
+        "@type": "PropertyValue",
+        propertyID: "KvK",
+        value: SITE.kvk,
+      },
       address: {
         "@type": "PostalAddress",
         addressCountry: "NL",

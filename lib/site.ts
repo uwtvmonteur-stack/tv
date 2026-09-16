@@ -1,16 +1,14 @@
 export const SITE = {
   name: "Uw TV Monteur",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.uwtvmonteur.nl",
-  phone: "+31850601234",
-  phoneDisplay: "085 060 1234",
+  phone: "+31642548451",
+  phoneDisplay: "06 42 54 84 51",
   email: "info@uwtvmonteur.nl",
-  // TODO vóór livegang: echt WhatsApp-mobielnummer invullen als "https://wa.me/31…".
-  // Leeg = de WhatsApp-links worden automatisch niet getoond (liever niets dan een fout nummer).
-  whatsapp: "",
-  // TODO vóór livegang: echt KvK-nummer invullen. Leeg = wordt niet getoond
-  // (liever niets dan een onjuist nummer). Een KvK-nummer op de site is in
-  // Nederland verplicht voor bedrijven én een belangrijk vertrouwenssignaal.
-  kvk: "",
+  // WhatsApp-link naar het mobiele nummer. Leeg = de WhatsApp-knoppen worden
+  // automatisch niet getoond.
+  whatsapp: "https://wa.me/31642548451",
+  kvk: "93769865",
+  btw: "NL005041113B60",
   /**
    * Beoordelingen — één bron voor de score die sitebreed wordt getoond.
    * Vul `url` met de link naar uw Google-bedrijfsprofiel (of Trustpilot/Klantenvertellen)

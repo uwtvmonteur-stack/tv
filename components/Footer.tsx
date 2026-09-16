@@ -169,6 +169,7 @@ export default function Footer() {
           <span>
             © {new Date().getFullYear()} {SITE.name}
             {SITE.kvk ? ` · KvK ${SITE.kvk}` : ""}
+            {SITE.btw ? ` · BTW ${SITE.btw}` : ""}
           </span>
           <span>Alle prijzen inclusief btw en voorrijkosten</span>
         </div>

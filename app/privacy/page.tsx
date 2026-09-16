@@ -74,7 +74,8 @@ export default function PrivacyPage() {
             ))}
             <p className="text-sm text-ink-soft">
               {SITE.name}
-              {SITE.kvk ? ` · KvK ${SITE.kvk}` : ""} · {SITE.email} ·{" "}
+              {SITE.kvk ? ` · KvK ${SITE.kvk}` : ""}
+              {SITE.btw ? ` · BTW ${SITE.btw}` : ""} · {SITE.email} ·{" "}
               {SITE.phoneDisplay}
             </p>
           </div>

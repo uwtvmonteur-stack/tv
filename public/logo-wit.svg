@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 64" width="352" height="64">
+  <title>Uw TV Monteur</title>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="15.5" fill="#191512" stroke="rgba(255,255,255,0.15)"/>
+  <rect x="11.5" y="15" width="41" height="27" rx="5.5" fill="none" stroke="#f59e0b" stroke-width="3.5"/>
+  <path d="M24.5 24.5v8.5M39.5 24.5v8.5" stroke="#f59e0b" stroke-width="2.25" stroke-linecap="round" opacity="0.5"/>
+  <circle cx="32" cy="28.75" r="3.75" fill="#f59e0b"/>
+  <path d="M25.5 50h13" stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round"/>
+  <text x="84" y="43" font-family="'Bricolage Grotesque','Plus Jakarta Sans',system-ui,-apple-system,sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5" fill="#faf7f2">Uw TV Monteur</text>
+</svg>

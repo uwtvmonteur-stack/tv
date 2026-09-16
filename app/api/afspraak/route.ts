@@ -103,10 +103,13 @@ ${regels
     return Response.json({ error: "send_failed" }, { status: 502 });
   }
 
-  // Korte bevestiging naar de klant. Niet-blokkerend: een fout hier mag de
-  // aanvraag zelf nooit laten mislukken.
-  transporter
-    .sendMail({
+  // Korte bevestiging naar de klant. We wachten hier bewust op: op Vercel
+  // wordt de functie direct na het antwoord bevroren, waardoor een
+  // "fire-and-forget" e-mail nooit verstuurd wordt. Een fout in deze mail
+  // mag de aanvraag zelf niet laten mislukken.
+  let bevestiging = true;
+  try {
+    await transporter.sendMail({
       from: `"${SITE.name}" <${from}>`,
       to: email,
       replyTo: to,
@@ -115,13 +118,32 @@ ${regels
 
 Bedankt voor uw aanvraag. ${SITE.reactie}
 
-Wilt u het liever direct regelen? Bel ${SITE.phoneDisplay}.
+Uw gegevens:
+${text}
+
+Wilt u het liever direct regelen? Bel of app ${SITE.phoneDisplay}.
 
 Met vriendelijke groet,
 ${SITE.name}
 ${SITE.url}`,
-    })
-    .catch((err: unknown) => console.error("[afspraak] Klantbevestiging mislukt:", err));
+      html: `<p style="font-family:sans-serif;font-size:15px">Beste ${escapeHtml(naam)},</p>
+<p style="font-family:sans-serif;font-size:15px">Bedankt voor uw aanvraag. ${escapeHtml(SITE.reactie)}</p>
+<p style="font-family:sans-serif;font-size:14px;color:#666">Uw gegevens:</p>
+<table style="font-family:sans-serif;font-size:14px;border-collapse:collapse">
+${regels
+  .map(
+    ([k, v]) =>
+      `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-align:top">${k}</td><td style="padding:4px 0">${escapeHtml(v).replace(/\n/g, "<br>")}</td></tr>`,
+  )
+  .join("\n")}
+</table>
+<p style="font-family:sans-serif;font-size:15px">Wilt u het liever direct regelen? Bel of app <a href="tel:${SITE.phone}">${SITE.phoneDisplay}</a>.</p>
+<p style="font-family:sans-serif;font-size:15px">Met vriendelijke groet,<br>${SITE.name}<br><a href="${SITE.url}">${SITE.url}</a></p>`,
+    });
+  } catch (err) {
+    bevestiging = false;
+    console.error("[afspraak] Klantbevestiging mislukt:", err);
+  }
 
-  return Response.json({ ok: true });
+  return Response.json({ ok: true, bevestiging });
 }

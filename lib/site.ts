@@ -4,9 +4,10 @@ export const SITE = {
   phone: "+31642548451",
   phoneDisplay: "06 42 54 84 51",
   email: "info@uwtvmonteur.nl",
-  // WhatsApp-link naar het mobiele nummer. Leeg = de WhatsApp-knoppen worden
-  // automatisch niet getoond.
-  whatsapp: "https://wa.me/31642548451",
+  // WhatsApp bewust uitgeschakeld (wens eigenaar). Leeg = de WhatsApp-knoppen
+  // in sticky balk, contactpagina en footer worden niet getoond. Weer aanzetten:
+  // "https://wa.me/31642548451".
+  whatsapp: "",
   kvk: "93769865",
   btw: "NL005041113B60",
   /**

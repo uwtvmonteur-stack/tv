@@ -39,7 +39,7 @@ export const priceCards = [
   {
     name: "Compact",
     size: "Voor tv's tot 43 inch",
-    price: "€99",
+    price: "€109",
     features: [
       "Montage op elke muur",
       "Waterpas gemonteerd én getest",
@@ -51,7 +51,7 @@ export const priceCards = [
   {
     name: "Standaard",
     size: "Voor tv's van 44 t/m 65 inch",
-    price: "€119",
+    price: "€139",
     features: [
       "Montage op elke muur",
       "Waterpas gemonteerd én getest",
@@ -64,7 +64,7 @@ export const priceCards = [
   {
     name: "Groot",
     size: "Voor tv's vanaf 65 inch",
-    price: "€149",
+    price: "€189",
     features: [
       "Montage op elke muur",
       "Met twee monteurs indien nodig",

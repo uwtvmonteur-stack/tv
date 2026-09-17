@@ -33,8 +33,8 @@ export async function generateMetadata({
   const provincie = provincieBySlug(stad.provincie);
   return {
     ...pageMeta({
-      title: `Tv Monteur ${stad.naam} — Vanaf €99`,
-      description: `Tv monteur nodig in ${stad.naam}? Tv ophangen vanaf €99, inclusief voorrijkosten. Vaak binnen 24 uur bij u thuis, 7 dagen per week.`,
+      title: `Tv Monteur ${stad.naam} — Vanaf €109`,
+      description: `Tv monteur nodig in ${stad.naam}? Tv ophangen vanaf €109, inclusief voorrijkosten. Vaak binnen 24 uur bij u thuis, 7 dagen per week.`,
       path: `/tv-monteur/${stad.slug}`,
     }),
     other: {
@@ -86,7 +86,7 @@ export default async function StadPage({
         `Wat betaal ik voor tv ophangen in ${stad.naam}?`,
         `Hoeveel kost tv-montage in ${stad.naam}?`,
       ][qv],
-      a: `Tv ophangen in ${stad.naam} start bij €99, altijd inclusief voorrijkosten en btw — de exacte prijs hangt af van het formaat (zie de tarieven hierboven). Kabels wegwerken kan vanaf €39 extra.`,
+      a: `Tv ophangen in ${stad.naam} start bij €109, altijd inclusief voorrijkosten en btw — de exacte prijs hangt af van het formaat (zie de tarieven hierboven). Kabels wegwerken kan vanaf €39 extra.`,
     },
     {
       q: [
@@ -116,9 +116,9 @@ export default async function StadPage({
             },
           },
           offers: [
-            { name: "Tv ophangen tot 43 inch", price: "99" },
-            { name: "Tv ophangen 44 t/m 65 inch", price: "119" },
-            { name: "Tv ophangen vanaf 65 inch", price: "149" },
+            { name: "Tv ophangen tot 43 inch", price: "109" },
+            { name: "Tv ophangen 44 t/m 65 inch", price: "139" },
+            { name: "Tv ophangen vanaf 65 inch", price: "189" },
           ],
         })}
       />
@@ -177,13 +177,13 @@ export default async function StadPage({
           </h2>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
             <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
-              Tot 43 inch — €99
+              Tot 43 inch — €109
             </span>
             <span className="rounded-full bg-ink text-cream px-4 py-2">
-              44 t/m 65 inch — €119 · populair
+              44 t/m 65 inch — €139 · populair
             </span>
             <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
-              Vanaf 65 inch — €149
+              Vanaf 65 inch — €189
             </span>
           </div>
           <p className="mt-5 text-sm text-ink-soft">

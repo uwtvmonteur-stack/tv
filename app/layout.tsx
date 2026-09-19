@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 import StickyCta from "@/components/StickyCta";
 import Analytics from "@/components/Analytics";
 import JsonLd from "@/components/JsonLd";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SITE } from "@/lib/site";
 import { provincies } from "@/lib/steden";
 import "./globals.css";
@@ -130,6 +132,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <StickyCta />
         <Analytics />
+        {/* Vercel Web Analytics (paginaweergaven) en Speed Insights (Core Web Vitals) */}
+        <VercelAnalytics />
+        <SpeedInsights />
       </body>
     </html>
   );

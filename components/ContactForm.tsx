@@ -198,7 +198,7 @@ export default function ContactForm() {
   }
 
   return (
-    {/* noValidate: geen browser-bubbels; wij valideren zelf met duidelijke tekst. */}
+    // noValidate: geen browser-bubbels; wij valideren zelf met duidelijke tekst.
     <form onSubmit={handleSubmit} noValidate className="relative flex flex-col gap-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>

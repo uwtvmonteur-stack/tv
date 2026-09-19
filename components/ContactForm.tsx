@@ -24,6 +24,31 @@ const zekerheden = ["Vaste prijs vooraf", "Geen aanbetaling", "Volledig verzeker
 
 type Status = "idle" | "submitting" | "success" | "mailto" | "error";
 
+type Veld = (typeof VELDEN)[number];
+type FieldErrors = Partial<Record<"naam" | "telefoon" | "email", string>>;
+
+// Bewust tolerant: browsers zijn met `type="email"` soms strenger dan nodig
+// (of tonen een onduidelijke bubbel). Wij controleren zelf, in het Nederlands.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function valideer(p: Record<Veld, string>): FieldErrors {
+  const fouten: FieldErrors = {};
+  if (!p.naam.trim()) fouten.naam = "Vul uw naam in.";
+  const cijfers = p.telefoon.replace(/\D/g, "");
+  if (cijfers.length < 8) fouten.telefoon = "Vul een geldig telefoonnummer in (bijv. 06 12 34 56 78).";
+  if (!EMAIL_RE.test(p.email)) fouten.email = "Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl.";
+  return fouten;
+}
+
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <p id={id} role="alert" className="mt-1.5 text-sm font-medium text-red-700">
+      {message}
+    </p>
+  );
+}
+
 function TelButton({ className = "" }: { className?: string }) {
   return (
     <a
@@ -38,8 +63,12 @@ function TelButton({ className = "" }: { className?: string }) {
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const resultRef = useRef<HTMLDivElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
+
+  const ringFout = (veld: keyof FieldErrors) =>
+    fieldErrors[veld] ? " ring-2 ring-red-600 focus:ring-red-600" : "";
 
   // Verplaats de focus naar de bevestiging of foutmelding zodat schermlezers
   // deze direct aankondigen.
@@ -53,12 +82,23 @@ export default function ContactForm() {
     const form = e.currentTarget;
     const data = new FormData(form);
     const payload = Object.fromEntries(
-      VELDEN.map((veld) => [veld, String(data.get(veld) ?? "")]),
-    ) as Record<(typeof VELDEN)[number], string>;
+      VELDEN.map((veld) => [veld, String(data.get(veld) ?? "").trim()]),
+    ) as Record<Veld, string>;
+    // Mobiele toetsenborden zetten soms een hoofdletter of spatie in het
+    // e-mailadres; dat mag nooit een reden zijn om een aanvraag te blokkeren.
+    payload.email = payload.email.replace(/\s+/g, "").toLowerCase();
 
     // Honeypot: bots vullen dit verborgen veld in; mensen zien het niet.
     if (payload.website) {
       setStatus("success");
+      return;
+    }
+
+    const fouten = valideer(payload);
+    setFieldErrors(fouten);
+    if (Object.keys(fouten).length > 0) {
+      const eerste = Object.keys(fouten)[0];
+      form.querySelector<HTMLInputElement>(`#${eerste}`)?.focus();
       return;
     }
 
@@ -97,6 +137,11 @@ export default function ContactForm() {
         setStatus("success");
       } else if (res.status === 503) {
         openMailto();
+      } else if (res.status === 422) {
+        // De server keurde een veld af (in de praktijk het e-mailadres).
+        setFieldErrors({ email: "Controleer uw e-mailadres; het lijkt niet compleet." });
+        setStatus("idle");
+        form.querySelector<HTMLInputElement>("#email")?.focus();
       } else {
         setStatus("error");
       }
@@ -153,7 +198,8 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="relative flex flex-col gap-4">
+    {/* noValidate: geen browser-bubbels; wij valideren zelf met duidelijke tekst. */}
+    <form onSubmit={handleSubmit} noValidate className="relative flex flex-col gap-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="naam" className={labelStyles}>
@@ -162,11 +208,14 @@ export default function ContactForm() {
           <input
             id="naam"
             name="naam"
-            required
+            aria-required="true"
+            aria-invalid={!!fieldErrors.naam}
+            aria-describedby={fieldErrors.naam ? "naam-fout" : undefined}
             autoComplete="name"
             placeholder="Jan de Vries"
-            className={inputStyles}
+            className={inputStyles + ringFout("naam")}
           />
+          <FieldError id="naam-fout" message={fieldErrors.naam} />
         </div>
         <div>
           <label htmlFor="telefoon" className={labelStyles}>
@@ -178,11 +227,14 @@ export default function ContactForm() {
             name="telefoon"
             type="tel"
             inputMode="tel"
-            required
+            aria-required="true"
+            aria-invalid={!!fieldErrors.telefoon}
+            aria-describedby={fieldErrors.telefoon ? "telefoon-fout" : undefined}
             autoComplete="tel"
             placeholder="06 12 34 56 78"
-            className={inputStyles}
+            className={inputStyles + ringFout("telefoon")}
           />
+          <FieldError id="telefoon-fout" message={fieldErrors.telefoon} />
         </div>
       </div>
 
@@ -191,16 +243,24 @@ export default function ContactForm() {
           E-mailadres{" "}
           <span className="text-amber-700" aria-hidden="true">*</span>
         </label>
+        {/* type="text" + inputMode="email": wel het @-toetsenbord, maar geen
+            strenge browser-validatie of autocorrectie die adressen afkeurt. */}
         <input
           id="email"
           name="email"
-          type="email"
+          type="text"
           inputMode="email"
-          required
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck={false}
+          aria-required="true"
+          aria-invalid={!!fieldErrors.email}
+          aria-describedby={fieldErrors.email ? "email-fout" : undefined}
           autoComplete="email"
           placeholder="jan@voorbeeld.nl"
-          className={inputStyles}
+          className={inputStyles + ringFout("email")}
         />
+        <FieldError id="email-fout" message={fieldErrors.email} />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

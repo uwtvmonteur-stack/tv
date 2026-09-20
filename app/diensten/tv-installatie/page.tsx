@@ -79,7 +79,7 @@ const situaties: IconCard[] = [
 const faqItems: FaqItem[] = [
   {
     q: "Kunnen jullie mijn tv ook ophangen?",
-    a: "Ja. Het ophangen van uw tv aan de muur kan als extra optie tijdens dezelfde afspraak worden uitgevoerd, vanaf €109.",
+    a: "Ja. Het ophangen van uw tv aan de muur kan als extra optie tijdens dezelfde afspraak worden uitgevoerd, vanaf €99.",
   },
   {
     q: "Installeren jullie ook Netflix en andere apps?",
@@ -241,7 +241,7 @@ export default function TvInstallatiePage() {
                   >
                     tv ophangservice
                   </Link>{" "}
-                  vanaf €109.
+                  vanaf €99.
                 </p>
               </div>
               <div>

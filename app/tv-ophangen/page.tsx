@@ -18,9 +18,9 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
 export const metadata = pageMeta({
-  title: "Tv ophangen aan huis vanaf €109",
+  title: "Tv ophangen aan huis vanaf €99",
   description:
-    "Tv ophangen aan huis door een ervaren monteur: vast, kantelbaar of draaibaar, waterpas en met weggewerkte kabels. Vaste prijzen vanaf €109, incl. btw.",
+    "Tv ophangen aan huis door een ervaren monteur: vast, kantelbaar of draaibaar, waterpas en met weggewerkte kabels. Vaste prijzen vanaf €99, incl. btw.",
   path: "/tv-ophangen",
 });
 
@@ -155,12 +155,12 @@ export default function TvOphangenPage() {
         data={serviceJsonLd({
           name: "Tv ophangen",
           description:
-            "Tv ophangen aan huis door een ervaren monteur: elke beugel, elke muur, waterpas gemonteerd, kabels weggewerkt en alles aangesloten. Vaste prijzen vanaf €109.",
+            "Tv ophangen aan huis door een ervaren monteur: elke beugel, elke muur, waterpas gemonteerd, kabels weggewerkt en alles aangesloten. Vaste prijzen vanaf €99.",
           path: "/tv-ophangen",
           offers: [
-            { name: "Tv ophangen tot 43 inch", price: "109" },
-            { name: "Tv ophangen 44 t/m 65 inch", price: "139" },
-            { name: "Tv ophangen vanaf 65 inch", price: "189" },
+            { name: "Tv ophangen tot 43 inch", price: "99" },
+            { name: "Tv ophangen 44 t/m 65 inch", price: "129" },
+            { name: "Tv ophangen vanaf 65 inch", price: "179" },
           ],
         })}
       />
@@ -172,14 +172,14 @@ export default function TvOphangenPage() {
           { name: "Diensten", href: "/diensten" },
           { name: "Tv ophangen", href: "/tv-ophangen" },
         ]}
-        eyebrow="Tv ophangen · aan huis · v.a. €109"
+        eyebrow="Tv ophangen · aan huis · v.a. €99"
         title="Tv ophangen service"
         intro="Laat uw televisie veilig, waterpas en zonder zichtbare kabels aan de muur hangen — precies op de juiste kijkhoogte. Onze monteur komt bij u aan huis met al het benodigde montagemateriaal en is gemiddeld binnen een uur klaar."
         benefits={[
           "Elke beugel & elke muur: vast, kantelbaar of draaibaar",
           "Waterpas gemonteerd én op belasting getest",
           "Kabels netjes weggewerkt en alles aangesloten",
-          "Vaste prijs vanaf €109, inclusief voorrijkosten en btw",
+          "Vaste prijs vanaf €99, inclusief voorrijkosten en btw",
         ]}
         image={heroFoto}
         imageAlt="Monteur hangt een grote televisie waterpas aan de woonkamermuur"
@@ -229,13 +229,13 @@ export default function TvOphangenPage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
             <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
-              Tot 43 inch — €109
+              Tot 43 inch — €99
             </span>
             <span className="rounded-full bg-ink text-cream px-4 py-2">
-              44 t/m 65 inch — €139 · populair
+              44 t/m 65 inch — €129 · populair
             </span>
             <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
-              Vanaf 65 inch — €189
+              Vanaf 65 inch — €179
             </span>
           </div>
           <p className="mt-5 text-sm text-ink-soft">

@@ -75,7 +75,7 @@ function Hero() {
         </Reveal>
         <Reveal immediate>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
-            Tv ophangen vanaf €109, vaste prijs inclusief voorrijkosten. Onze
+            Tv ophangen vanaf €99, vaste prijs inclusief voorrijkosten. Onze
             monteur hangt uw tv veilig op, werkt de kabels weg en stelt alles
             in. Vandaag gebeld, vaak morgen al geregeld.
           </p>

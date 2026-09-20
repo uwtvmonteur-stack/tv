@@ -13,7 +13,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "Vaste Prijzen — Tv Ophangen & Installatie",
   description:
-    "Bekijk onze vaste prijzen: tv ophangen vanaf €109, tv installatie €70, soundbar €49. Altijd inclusief voorrijkosten en btw.",
+    "Bekijk onze vaste prijzen: tv ophangen vanaf €99, tv installatie €70, soundbar €49. Altijd inclusief voorrijkosten en btw.",
   path: "/prijzen",
 });
 
@@ -49,9 +49,9 @@ export default function PrijzenPage() {
             "Tv ophangen en installeren tegen vaste tarieven, inclusief voorrijkosten en btw.",
           path: "/prijzen",
           offers: [
-            { name: "Tv ophangen tot 43 inch", price: "109" },
-            { name: "Tv ophangen 44 t/m 65 inch", price: "139" },
-            { name: "Tv ophangen vanaf 65 inch", price: "189" },
+            { name: "Tv ophangen tot 43 inch", price: "99" },
+            { name: "Tv ophangen 44 t/m 65 inch", price: "129" },
+            { name: "Tv ophangen vanaf 65 inch", price: "179" },
             { name: "Complete tv installatie", price: "70" },
             { name: "Kabels wegwerken in kabelgoot", price: "39" },
             { name: "Soundbar installeren", price: "49" },

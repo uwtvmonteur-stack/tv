@@ -5,7 +5,7 @@ import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
-import { BezelCard, Stars } from "@/components/ui";
+import { Stars } from "@/components/ui";
 import {
   IconArrowUpRight,
   IconCheck,
@@ -47,25 +47,12 @@ const zekerheden = [
   "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
+// Bewust kort: het formulier staat er al naast, dus dit hoeft alleen het
+// verloop te tonen — geen uitleg die niemand leest.
 const stappen = [
-  {
-    nr: "1",
-    titel: "Kies uw dag en dagdeel",
-    tekst:
-      "Vul het formulier in en geef aan wanneer het u schikt. Ook 's avonds en in het weekend.",
-  },
-  {
-    nr: "2",
-    titel: "Wij bevestigen uw moment",
-    tekst:
-      "Binnen enkele uren hoort u of uw voorkeur lukt, inclusief de vaste prijs voor uw situatie.",
-  },
-  {
-    nr: "3",
-    titel: "De monteur hangt uw tv op",
-    tekst:
-      "Waterpas opgehangen, kabels weggewerkt, alles aangesloten en getest. Daarna pas betalen.",
-  },
+  "Kies uw dag en dagdeel",
+  "Vertel kort wat er moet gebeuren",
+  "Wij bevestigen binnen enkele uren",
 ];
 
 const faqItems: FaqItem[] = [
@@ -209,19 +196,18 @@ export default function TvOphangenPlannenPage() {
             Zo werkt het
           </h2>
         </Reveal>
-        <ol className="mt-8 grid gap-4 md:grid-cols-3">
-          {stappen.map((s, i) => (
-            <li key={s.nr} className="h-full">
-              <Reveal delay={i * 60} className="h-full">
-                <BezelCard className="h-full" innerClassName="flex h-full flex-col gap-3 p-7">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-600/10 font-display font-bold text-amber-700">
-                    {s.nr}
+        <ol className="mt-8 grid gap-3 md:grid-cols-3 md:gap-4">
+          {stappen.map((stap, i) => (
+            <li key={stap}>
+              <Reveal delay={i * 60}>
+                <div className="flex items-center gap-4 rounded-2xl bg-ink/[0.04] px-5 py-4 ring-1 ring-ink/5">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-600 font-display text-sm font-bold text-white">
+                    {i + 1}
                   </span>
-                  <h3 className="font-display text-lg font-bold tracking-tight">
-                    {s.titel}
-                  </h3>
-                  <p className="text-[15px] leading-relaxed text-ink-soft">{s.tekst}</p>
-                </BezelCard>
+                  <span className="font-display text-[17px] font-bold tracking-tight">
+                    {stap}
+                  </span>
+                </div>
               </Reveal>
             </li>
           ))}

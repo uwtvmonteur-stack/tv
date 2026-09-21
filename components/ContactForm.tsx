@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import Link from "next/link";
 import { IconArrowUpRight } from "./icons";
 import { trackAdsConversion, trackEvent } from "./Analytics";
 import { SITE, TRACKING } from "@/lib/site";
@@ -31,9 +30,13 @@ const DAGDELEN = [
   "Maakt niet uit",
 ];
 
-/** Vandaag in YYYY-MM-DD, zodat de datumkiezer niet in het verleden kan. */
-function vandaag() {
+/**
+ * Morgen in YYYY-MM-DD. De vroegst kiesbare dag: een afspraak op dezelfde dag
+ * kunnen we niet waarmaken, dus die bieden we ook niet aan.
+ */
+function vroegsteDatum() {
   const d = new Date();
+  d.setDate(d.getDate() + 1);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
     d.getDate(),
   ).padStart(2, "0")}`;
@@ -48,7 +51,7 @@ const labelStyles =
 type Status = "idle" | "submitting" | "success" | "mailto" | "error";
 
 type Veld = (typeof VELDEN)[number];
-type FieldErrors = Partial<Record<"naam" | "telefoon" | "email", string>>;
+type FieldErrors = Partial<Record<"naam" | "telefoon" | "email" | "datum", string>>;
 
 // Bewust tolerant: browsers zijn met `type="email"` soms strenger dan nodig
 // (of tonen een onduidelijke bubbel). Wij controleren zelf, in het Nederlands.
@@ -60,6 +63,10 @@ function valideer(p: Record<Veld, string>): FieldErrors {
   const cijfers = p.telefoon.replace(/\D/g, "");
   if (cijfers.length < 8) fouten.telefoon = "Vul een geldig telefoonnummer in (bijv. 06 12 34 56 78).";
   if (!EMAIL_RE.test(p.email)) fouten.email = "Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl.";
+  // Vergelijking van twee YYYY-MM-DD-strings werkt gewoon alfabetisch.
+  if (p.datum && p.datum < vroegsteDatum()) {
+    fouten.datum = "Kies op zijn vroegst de dag van morgen.";
+  }
   return fouten;
 }
 
@@ -322,15 +329,23 @@ export default function ContactForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="datum" className={labelStyles}>
-              Gewenste dag <span className="normal-case">(optioneel)</span>
+              Gewenste dag <span className="normal-case">(vanaf morgen)</span>
             </label>
             <input
               id="datum"
               name="datum"
               type="date"
-              min={vandaag()}
-              className={inputStyles}
+              // De pagina's worden statisch gebouwd, dus in de HTML zou de
+              // vroegste datum op de builddatum blijven staan. Daarom zetten we
+              // hem in de browser, bij het plaatsen van het veld.
+              ref={(el) => {
+                if (el) el.min = vroegsteDatum();
+              }}
+              aria-invalid={!!fieldErrors.datum}
+              aria-describedby={fieldErrors.datum ? "datum-fout" : undefined}
+              className={inputStyles + ringFout("datum")}
             />
+            <FieldError id="datum-fout" message={fieldErrors.datum} />
           </div>
           <div>
             <label htmlFor="dagdeel" className={labelStyles}>
@@ -388,8 +403,8 @@ export default function ContactForm({
         </span>
       </button>
 
-      {/* Onder de knop staat alleen nog wat er móet staan: de foutmelding als
-          het versturen mislukt, en de verwijzing naar de privacyverklaring. */}
+      {/* Onder de knop staat alleen nog de foutmelding, en alleen als het
+          versturen mislukt. Verder eindigt het formulier bij de knop. */}
       {status === "error" && (
         <p
           ref={errorRef}
@@ -409,11 +424,6 @@ export default function ContactForm({
         </p>
       )}
 
-      <p className="text-center text-[11px] text-ink-soft/80">
-        <Link href="/privacy" className="underline underline-offset-2">
-          Privacyverklaring
-        </Link>
-      </p>
     </form>
   );
 }

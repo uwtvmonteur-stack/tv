@@ -29,6 +29,10 @@ export default function StickyCta() {
   // Niet op de contactpagina — daar staat het afspraakformulier al.
   if (pathname === "/contact") return null;
 
+  // Op landingspagina's met een eigen formulier scrollen we daarheen in plaats
+  // van de bezoeker naar /contact te sturen.
+  const eigenFormulier = pathname === "/tv-ophangen-plannen";
+
   const btn =
     "flex flex-1 items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold whitespace-nowrap transition-transform duration-300 ease-fluid active:scale-[0.98]";
 
@@ -57,7 +61,7 @@ export default function StickyCta() {
           </span>
         </a>
         <Link
-          href="/contact"
+          href={eigenFormulier ? "#afspraak" : "/contact"}
           tabIndex={show ? undefined : -1}
           className={`${btn} bg-ink text-cream`}
         >

@@ -12,7 +12,32 @@ import { SITE, TRACKING } from "@/lib/site";
 // formulier terug op een e-mailconcept (mailto) — een noodoplossing.
 const ENDPOINT = "/api/afspraak";
 
-const VELDEN = ["naam", "telefoon", "email", "postcode", "huisnummer", "bericht", "website"] as const;
+const VELDEN = [
+  "naam",
+  "telefoon",
+  "email",
+  "postcode",
+  "huisnummer",
+  "datum",
+  "dagdeel",
+  "bericht",
+  "website",
+] as const;
+
+const DAGDELEN = [
+  "Ochtend (08:00 – 12:00)",
+  "Middag (12:00 – 17:00)",
+  "Avond (17:00 – 21:00)",
+  "Maakt niet uit",
+];
+
+/** Vandaag in YYYY-MM-DD, zodat de datumkiezer niet in het verleden kan. */
+function vandaag() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+    d.getDate(),
+  ).padStart(2, "0")}`;
+}
 
 const inputStyles =
   "w-full rounded-2xl bg-cream px-4 py-3.5 text-base ring-1 ring-ink/10 transition-shadow duration-300 ease-fluid placeholder:text-ink-soft/85 focus:ring-2 focus:ring-ink focus:outline-none sm:text-sm";
@@ -61,7 +86,17 @@ function TelButton({ className = "" }: { className?: string }) {
   );
 }
 
-export default function ContactForm() {
+export default function ContactForm({
+  planner = false,
+  variant,
+  submitLabel,
+}: {
+  /** Toont een voorkeursdatum en dagdeel, zodat de klant zelf een moment kiest. */
+  planner?: boolean;
+  /** Label voor A/B-meting; komt mee als parameter in het GA4-event. */
+  variant?: string;
+  submitLabel?: string;
+} = {}) {
   const [status, setStatus] = useState<Status>("idle");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const resultRef = useRef<HTMLDivElement>(null);
@@ -132,7 +167,10 @@ export default function ContactForm() {
       });
       if (res.ok) {
         form.reset();
-        trackEvent("afspraak_aanvraag", { methode: "formulier" });
+        trackEvent("afspraak_aanvraag", {
+          methode: "formulier",
+          ...(variant ? { variant } : {}),
+        });
         trackAdsConversion(TRACKING.adsFormConversion);
         setStatus("success");
       } else if (res.status === 503) {
@@ -290,6 +328,36 @@ export default function ContactForm() {
         </div>
       </div>
 
+      {planner && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="datum" className={labelStyles}>
+              Gewenste dag <span className="normal-case">(optioneel)</span>
+            </label>
+            <input
+              id="datum"
+              name="datum"
+              type="date"
+              min={vandaag()}
+              className={inputStyles}
+            />
+          </div>
+          <div>
+            <label htmlFor="dagdeel" className={labelStyles}>
+              Dagdeel <span className="normal-case">(optioneel)</span>
+            </label>
+            <select id="dagdeel" name="dagdeel" className={inputStyles} defaultValue="">
+              <option value="">Kies een dagdeel</option>
+              {DAGDELEN.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      )}
+
       <div>
         <label htmlFor="bericht" className={labelStyles}>
           Uw bericht <span className="normal-case">(optioneel)</span>
@@ -322,7 +390,9 @@ export default function ContactForm() {
         disabled={status === "submitting"}
         className="group mt-1 flex w-full items-center justify-center gap-3 rounded-full bg-amber-700 py-2.5 pr-2.5 pl-6 text-base font-semibold text-white transition-transform duration-300 ease-fluid active:scale-[0.98] disabled:opacity-70"
       >
-        {status === "submitting" ? "Bezig met verzenden…" : "Afspraak aanvragen"}
+        {status === "submitting"
+          ? "Bezig met verzenden…"
+          : (submitLabel ?? "Afspraak aanvragen")}
         <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
           <IconArrowUpRight className="h-4 w-4" />
         </span>

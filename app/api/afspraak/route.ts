@@ -43,6 +43,8 @@ export async function POST(request: Request) {
   const email = clean(body.email, 160);
   const postcode = clean(body.postcode, 12);
   const huisnummer = clean(body.huisnummer, 12);
+  const datum = clean(body.datum, 20);
+  const dagdeel = clean(body.dagdeel, 40);
   const bericht = clean(body.bericht, 2000);
 
   if (!naam || !telefoon || !email || !EMAIL_RE.test(email)) {
@@ -74,6 +76,9 @@ export async function POST(request: Request) {
     ["Telefoon", telefoon],
     ["E-mail", email],
     ["Postcode / huisnummer", adres || "–"],
+    ...((datum || dagdeel
+      ? [["Voorkeursmoment", [datum, dagdeel].filter(Boolean).join(" · ")]]
+      : []) as [string, string][]),
     ["Bericht", bericht || "–"],
   ];
 

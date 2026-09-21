@@ -40,8 +40,8 @@ export default function ContactPage() {
         title="Plan uw afspraak"
         intro={
           <>
-            Vul in één minuut het formulier in, dan bellen wij u terug om een
-            moment te kiezen. Liever direct?{" "}
+            Vul in één minuut het formulier in, dan nemen wij binnen enkele uren
+            contact met u op om een moment te kiezen. Liever direct?{" "}
             <a
               href={`tel:${SITE.phone}`}
               className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"

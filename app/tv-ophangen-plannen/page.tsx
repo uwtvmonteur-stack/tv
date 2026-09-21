@@ -33,10 +33,12 @@ export const metadata: Metadata = {
   },
 };
 
+// Bewust risico-wegnemend in plaats van prijsgedreven: de prijs komt pas na de
+// waarde aan bod, verderop op de pagina.
 const zekerheden = [
-  "Vaste prijs vooraf, incl. voorrijkosten en btw",
-  "Geen aanbetaling — u betaalt pas als het klaar is",
-  "Eigen, volledig verzekerde monteurs",
+  "Ervaren monteurs, volledig verzekerd werk",
+  "Waterpas opgehangen, kabels netjes weggewerkt",
+  "Vaste prijs vooraf — geen verrassingen achteraf",
   "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
@@ -51,7 +53,7 @@ const stappen = [
     nr: "2",
     titel: "Wij bevestigen uw moment",
     tekst:
-      "U hoort snel van ons of uw voorkeur lukt, inclusief de vaste prijs voor uw situatie.",
+      "Binnen enkele uren hoort u of uw voorkeur lukt, inclusief de vaste prijs voor uw situatie.",
   },
   {
     nr: "3",
@@ -67,8 +69,8 @@ const faqItems: FaqItem[] = [
     a: `Een vaste prijs op basis van het schermformaat: ${priceCards[0].price} tot 43 inch, ${priceCards[1].price} van 44 t/m 65 inch en ${priceCards[2].price} vanaf 65 inch. Altijd inclusief voorrijkosten en btw, zonder verrassingen achteraf.`,
   },
   {
-    q: "Hoe snel kan de monteur langskomen?",
-    a: "Vaak al binnen 24 uur, meestal binnen twee werkdagen. Geef uw voorkeursdag en dagdeel door, dan bevestigen wij zo snel mogelijk of dat lukt.",
+    q: "Hoe snel hoor ik iets en wanneer kan de monteur komen?",
+    a: "Na uw aanvraag nemen wij binnen enkele uren contact met u op om het moment te bevestigen. De monteur kan er vaak al binnen een dag zijn — ook 's avonds en in het weekend, zonder toeslag.",
   },
   {
     q: "Heb ik zelf een beugel nodig?",
@@ -116,16 +118,19 @@ export default function TvOphangenPlannenPage() {
         <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-10 px-4 pt-28 pb-14 md:px-8 md:pt-36 md:pb-20 lg:grid-cols-2 lg:items-start lg:gap-14">
           <Reveal immediate>
             <div>
-              <h1 className="font-display text-4xl leading-[1.05] font-bold tracking-tight md:text-5xl lg:text-6xl">
+              <span className="inline-flex items-center rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-[0.12em] text-amber-300 uppercase ring-1 ring-white/15">
+                Tv ophangen aan huis · heel Nederland
+              </span>
+              <h1 className="mt-6 font-display text-4xl leading-[1.05] font-bold tracking-tight md:text-5xl lg:text-6xl">
                 Tv laten ophangen?
                 <span className="mt-2 block text-amber-400">
-                  Plan uw afspraak in één minuut.
+                  Wij regelen het van A tot Z.
                 </span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
-                Vaste prijs vanaf {priceCards[0].price}, inclusief voorrijkosten en btw. U
-                kiest zelf welke dag en welk dagdeel u uitkomt — vaak al binnen 24 uur een
-                monteur aan huis.
+                Een ervaren monteur hangt uw tv waterpas op, werkt de kabels netjes weg en
+                sluit alles aan — u hoeft zelf niets te doen. U geeft hiernaast door wanneer
+                het u uitkomt; wij bevestigen binnen enkele uren.
               </p>
 
               <ul className="mt-8 flex flex-col gap-3">
@@ -156,12 +161,17 @@ export default function TvOphangenPlannenPage() {
                 </span>
               </div>
 
+              {/* Bewust een tekstlink, geen knop: het formulier hiernaast moet
+                  de enige opvallende actie op dit scherm blijven. */}
               <a
                 href={`tel:${SITE.phone}`}
-                className="mt-8 flex w-full items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-base font-semibold text-white ring-1 ring-white/30 transition-colors duration-300 ease-fluid hover:bg-white/10 sm:w-auto"
+                className="mt-8 inline-flex items-center gap-2 text-[15px] font-medium text-white/75 transition-colors duration-300 ease-fluid hover:text-white"
               >
                 <IconPhone className="h-4 w-4" />
-                Liever bellen? {SITE.phoneDisplay}
+                Liever even bellen?{" "}
+                <span className="font-semibold text-white underline decoration-white/40 underline-offset-4">
+                  {SITE.phoneDisplay}
+                </span>
               </a>
             </div>
           </Reveal>
@@ -176,8 +186,8 @@ export default function TvOphangenPlannenPage() {
                   Plan uw afspraak
                 </h2>
                 <p className="mt-2 mb-6 text-[15px] leading-relaxed text-ink-soft">
-                  Kies uw voorkeursmoment. Wij bevestigen zo snel mogelijk, meestal nog
-                  dezelfde dag.
+                  Geef door wanneer het u schikt. Wij bevestigen binnen enkele uren — en u
+                  zit nergens aan vast.
                 </p>
                 <ContactForm
                   planner
@@ -216,11 +226,12 @@ export default function TvOphangenPlannenPage() {
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Wat kost het?
+            Vaste prijs, vooraf bekend
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
-            De prijs hangt alleen af van het schermformaat. Wat we vooraf afspreken, is wat
-            u betaalt.
+            De prijs hangt alleen af van het schermformaat — voorrijkosten en btw zitten er
+            altijd in. Wat we vooraf afspreken, is wat u betaalt. Geen uurtarief, geen
+            meerwerk achteraf.
           </p>
         </Reveal>
         <ul className="mt-8 grid gap-4 md:grid-cols-3">

@@ -52,10 +52,12 @@ export default function ServiceHero({
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            {/* Eén duidelijke primaire actie. Bellen blijft mogelijk, maar als
+                rustige tekstlink: twee even zware knoppen kosten conversie. */}
+            <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
               <Link
                 href="/contact"
-                className="group flex items-center justify-center gap-3 rounded-full bg-ink py-2.5 pr-2.5 pl-7 text-base font-semibold text-cream transition-transform duration-300 ease-fluid active:scale-[0.98]"
+                className="group flex w-full items-center justify-center gap-3 rounded-full bg-ink py-2.5 pr-2.5 pl-7 text-base font-semibold text-cream transition-transform duration-300 ease-fluid active:scale-[0.98] sm:w-auto"
               >
                 Plan een afspraak
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
@@ -64,10 +66,13 @@ export default function ServiceHero({
               </Link>
               <a
                 href={`tel:${SITE.phone}`}
-                className="flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-base font-semibold ring-1 ring-ink/15 transition-colors duration-300 ease-fluid hover:bg-ink/5"
+                className="flex items-center gap-2 text-[15px] font-medium text-ink-soft transition-colors duration-300 ease-fluid hover:text-ink"
               >
-                <IconPhone className="h-4.5 w-4.5" />
-                {SITE.phoneDisplay}
+                <IconPhone className="h-4 w-4 text-amber-700" />
+                Liever bellen?{" "}
+                <span className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4">
+                  {SITE.phoneDisplay}
+                </span>
               </a>
             </div>
 

@@ -78,24 +78,26 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-1.5 pl-1">
-            {/* Bellen is op mobiel de snelste conversie: altijd zichtbaar, als
-                icoonknop op kleine schermen en met nummer op brede schermen. */}
+            {/* Eén gevulde knop in de balk: de afspraak. Bellen blijft
+                bereikbaar als rustige tekstlink (breed scherm) en in het
+                mobiele menu, zodat het de afspraakknop niet beconcurreert. */}
             <a
               href={`tel:${SITE.phone}`}
               inert={open || undefined}
               aria-label={`Bel ${SITE.phoneDisplay}`}
-              className="flex h-11 w-11 shrink-0 items-center justify-center gap-2 rounded-full bg-amber-700 text-sm font-semibold whitespace-nowrap text-white transition-colors duration-300 ease-fluid hover:bg-amber-800 xl:h-auto xl:w-auto xl:bg-transparent xl:px-4 xl:py-2.5 xl:text-ink xl:ring-1 xl:ring-ink/10 xl:hover:bg-ink/5"
+              className="hidden shrink-0 items-center gap-2 px-3 py-2.5 text-sm font-medium whitespace-nowrap text-ink/70 transition-colors duration-300 ease-fluid hover:text-ink xl:flex"
             >
-              <IconPhone className="h-4.5 w-4.5 xl:h-4 xl:w-4" />
-              <span className="hidden xl:inline">{SITE.phoneDisplay}</span>
+              <IconPhone className="h-4 w-4" />
+              {SITE.phoneDisplay}
             </a>
             <Link
               href="/contact"
               inert={open || undefined}
-              className="group hidden shrink-0 items-center gap-2.5 rounded-full bg-ink py-2 pr-2 pl-4.5 text-sm font-semibold whitespace-nowrap text-cream transition-transform duration-300 ease-fluid active:scale-[0.97] sm:flex"
+              className="group flex shrink-0 items-center gap-2.5 rounded-full bg-ink px-4.5 py-2.5 text-sm font-semibold whitespace-nowrap text-cream transition-transform duration-300 ease-fluid active:scale-[0.97] sm:py-2 sm:pr-2"
             >
-              Afspraak maken
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
+              <span className="hidden sm:inline">Afspraak maken</span>
+              <span className="sm:hidden">Afspraak</span>
+              <span className="hidden h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105 sm:flex">
                 <IconArrowUpRight className="h-3.5 w-3.5" />
               </span>
             </Link>

@@ -27,7 +27,7 @@ export const SITE = {
    * daadwerkelijk waarmaakt.
    */
   reactie:
-    "Wij bellen u terug om een datum en tijd te kiezen — meestal nog dezelfde dag, uiterlijk de volgende werkdag.",
+    "Wij nemen binnen enkele uren contact met u op om uw afspraak te bevestigen.",
 } as const;
 
 /**

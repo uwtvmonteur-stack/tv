@@ -34,7 +34,7 @@ export default function CtaSection({
             </p>
           </Reveal>
           <Reveal delay={150}>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col items-center gap-5">
               <Link
                 href="/contact"
                 className="group flex items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98]"
@@ -46,10 +46,13 @@ export default function CtaSection({
               </Link>
               <a
                 href={`tel:${SITE.phone}`}
-                className="flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-base font-semibold text-white ring-1 ring-white/30 backdrop-blur-sm transition-colors duration-300 ease-fluid hover:bg-white/10"
+                className="flex items-center gap-2 text-[15px] font-medium text-white/80 transition-colors duration-300 ease-fluid hover:text-white"
               >
-                <IconPhone className="h-4.5 w-4.5" />
-                {SITE.phoneDisplay}
+                <IconPhone className="h-4 w-4" />
+                Liever bellen?{" "}
+                <span className="font-semibold text-white underline decoration-white/40 underline-offset-4">
+                  {SITE.phoneDisplay}
+                </span>
               </a>
             </div>
           </Reveal>

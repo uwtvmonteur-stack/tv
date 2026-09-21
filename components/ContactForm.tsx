@@ -45,7 +45,15 @@ const inputStyles =
 const labelStyles =
   "mb-1.5 block text-[11px] font-semibold tracking-[0.14em] text-ink-soft uppercase";
 
-const zekerheden = ["Vaste prijs vooraf", "Geen aanbetaling", "Volledig verzekerd"];
+// Staan direct onder de verzendknop: nemen de laatste twijfel weg op het moment
+// dat iemand op het punt staat te klikken. "Vrijblijvend" eerst — dat is bij een
+// aanvraagformulier de grootste rem.
+const zekerheden = [
+  "Vrijblijvend",
+  "Vaste prijs vooraf",
+  "Geen aanbetaling",
+  "Volledig verzekerd",
+];
 
 type Status = "idle" | "submitting" | "success" | "mailto" | "error";
 
@@ -200,7 +208,7 @@ export default function ContactForm({
           Bedankt! Uw aanvraag is ontvangen.
         </p>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
-          {SITE.reactie} Wilt u het liever nu regelen?
+          {SITE.reactie} Heeft u haast of wilt u iets doorgeven?
         </p>
         <TelButton className="mx-auto mt-5 w-full sm:w-auto" />
       </div>

@@ -75,30 +75,33 @@ function Hero() {
         </Reveal>
         <Reveal immediate>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
-            Tv ophangen vanaf €99, vaste prijs inclusief voorrijkosten. Onze
-            monteur hangt uw tv veilig op, werkt de kabels weg en stelt alles
-            in. Vandaag gebeld, vaak morgen al geregeld.
+            Onze monteur hangt uw tv waterpas op, werkt de kabels netjes weg en
+            sluit alles aan — u hoeft zelf niets te doen. Vaste prijs vooraf, u
+            betaalt pas als het klaar is.
           </p>
         </Reveal>
         <Reveal immediate>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
             <Link
               href="/contact"
-              className="group flex items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98]"
+              className="group flex w-full items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98] sm:w-auto"
             >
               Plan een afspraak
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                 <IconArrowUpRight className="h-4 w-4" />
               </span>
             </Link>
-            {/* Bellen is voor deze doelgroep de kortste weg naar een afspraak:
-                daarom een echte tel-link in de hero, ook op desktop. */}
+            {/* Bellen blijft bereikbaar, maar als tekstlink: één gevulde knop
+                per scherm levert meer aanvragen op dan twee gelijkwaardige. */}
             <a
               href={`tel:${SITE.phone}`}
-              className="flex items-center justify-center gap-2.5 rounded-full px-7 py-3.5 text-base font-semibold text-white ring-1 ring-white/30 backdrop-blur-sm transition-colors duration-300 ease-fluid hover:bg-white/10"
+              className="flex items-center gap-2 text-[15px] font-medium text-white/80 transition-colors duration-300 ease-fluid hover:text-white"
             >
-              <IconPhone className="h-4.5 w-4.5" />
-              Bel {SITE.phoneDisplay}
+              <IconPhone className="h-4 w-4" />
+              Liever bellen?{" "}
+              <span className="font-semibold text-white underline decoration-white/40 underline-offset-4">
+                {SITE.phoneDisplay}
+              </span>
             </a>
           </div>
         </Reveal>

@@ -172,14 +172,14 @@ export default function TvOphangenPage() {
           { name: "Diensten", href: "/diensten" },
           { name: "Tv ophangen", href: "/tv-ophangen" },
         ]}
-        eyebrow="Tv ophangen · aan huis · v.a. €99"
-        title="Tv ophangen service"
+        eyebrow="Tv ophangen · aan huis · heel Nederland"
+        title="Tv ophangen aan huis"
         intro="Laat uw televisie veilig, waterpas en zonder zichtbare kabels aan de muur hangen — precies op de juiste kijkhoogte. Onze monteur komt bij u aan huis met al het benodigde montagemateriaal en is gemiddeld binnen een uur klaar."
         benefits={[
           "Elke beugel & elke muur: vast, kantelbaar of draaibaar",
           "Waterpas gemonteerd én op belasting getest",
           "Kabels netjes weggewerkt en alles aangesloten",
-          "Vaste prijs vanaf €99, inclusief voorrijkosten en btw",
+          "Vaste prijs vooraf — u betaalt pas als alles werkt",
         ]}
         image={heroFoto}
         imageAlt="Monteur hangt een grote televisie waterpas aan de woonkamermuur"

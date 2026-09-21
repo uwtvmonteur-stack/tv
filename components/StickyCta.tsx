@@ -48,26 +48,23 @@ export default function StickyCta() {
             : "pointer-events-none translate-y-4 opacity-0"
         }`}
       >
-        <a
-          href={`tel:${SITE.phone}`}
-          tabIndex={show ? undefined : -1}
-          className={`${btn} bg-amber-700 text-white`}
-        >
-          <IconPhone className="h-4 w-4" />
-          <span>
-            Bel{" "}
-            <span className="hidden min-[400px]:inline">{SITE.phoneDisplay}</span>
-            <span className="min-[400px]:hidden">direct</span>
-          </span>
-        </a>
         <Link
           href={eigenFormulier ? "#afspraak" : "/contact"}
           tabIndex={show ? undefined : -1}
-          className={`${btn} bg-ink text-cream`}
+          className={`${btn} bg-amber-700 text-white`}
         >
           Afspraak maken
           <IconArrowUpRight className="h-4 w-4" />
         </Link>
+        <a
+          href={`tel:${SITE.phone}`}
+          tabIndex={show ? undefined : -1}
+          aria-label={`Bel ${SITE.phoneDisplay}`}
+          className={`${btn} flex-none px-5 text-ink ring-1 ring-ink/15`}
+        >
+          <IconPhone className="h-4 w-4" />
+          <span className="hidden min-[380px]:inline">Bellen</span>
+        </a>
         {SITE.whatsapp && (
           <a
             href={SITE.whatsapp}

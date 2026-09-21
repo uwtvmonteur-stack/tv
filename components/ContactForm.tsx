@@ -83,12 +83,21 @@ export default function ContactForm({
   planner = false,
   variant,
   submitLabel,
+  berichtLabel = "Uw bericht",
+  berichtPlaceholder = "Bijv. om welke dienst het gaat en wat u nodig heeft…",
 }: {
   /** Toont een voorkeursdatum en dagdeel, zodat de klant zelf een moment kiest. */
   planner?: boolean;
   /** Label voor A/B-meting; komt mee als parameter in het GA4-event. */
   variant?: string;
   submitLabel?: string;
+  /**
+   * Label en voorbeeldtekst van het berichtveld. Per dienst anders: bij het
+   * ophangen helpt het muurtype, bij een installatie juist de apparatuur. Een
+   * goede voorbeeldtekst levert bruikbare aanvragen op en scheelt navragen.
+   */
+  berichtLabel?: string;
+  berichtPlaceholder?: string;
 } = {}) {
   const [status, setStatus] = useState<Status>("idle");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -365,13 +374,13 @@ export default function ContactForm({
 
       <div>
         <label htmlFor="bericht" className={labelStyles}>
-          Uw bericht <span className="normal-case">(optioneel)</span>
+          {berichtLabel} <span className="normal-case">(optioneel)</span>
         </label>
         <textarea
           id="bericht"
           name="bericht"
           rows={3}
-          placeholder="Bijv. tv-formaat, type muur of wanneer het u uitkomt…"
+          placeholder={berichtPlaceholder}
           className={`${inputStyles} resize-none`}
         />
       </div>

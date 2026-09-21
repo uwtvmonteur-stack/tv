@@ -71,6 +71,8 @@ export default function TvInstallatiePlannenPage() {
       formulierTitel="Plan uw afspraak"
       formulierIntro="Geef door wanneer het u schikt. Wij bevestigen binnen enkele uren — en u zit nergens aan vast."
       submitLabel="Plan mijn afspraak"
+      berichtLabel="Wat moet er geïnstalleerd worden?"
+      berichtPlaceholder="Bijv. merk en type van uw tv en welke apparaten aangesloten moeten worden…"
       stappenTitel="Tv laten installeren in 3 stappen"
       stappen={[
         "Kies uw dag en dagdeel",

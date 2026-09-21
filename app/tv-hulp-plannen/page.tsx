@@ -71,6 +71,8 @@ export default function TvHulpPlannenPage() {
       formulierTitel="Plan uw afspraak"
       formulierIntro="Geef door wanneer het u schikt en wat er niet lukt. Wij bevestigen binnen enkele uren — en u zit nergens aan vast."
       submitLabel="Plan mijn afspraak"
+      berichtLabel="Wat lukt er niet?"
+      berichtPlaceholder="Bijv. geen zenders meer, geen wifi, of een app die niet opstart…"
       stappenTitel="Tv hulp aan huis in 3 stappen"
       stappen={[
         "Kies uw dag en dagdeel",

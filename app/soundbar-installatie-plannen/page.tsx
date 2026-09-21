@@ -71,6 +71,8 @@ export default function SoundbarInstallatiePlannenPage() {
       formulierTitel="Plan uw afspraak"
       formulierIntro="Geef door wanneer het u schikt. Wij bevestigen binnen enkele uren — en u zit nergens aan vast."
       submitLabel="Plan mijn afspraak"
+      berichtLabel="Welke set heeft u?"
+      berichtPlaceholder="Bijv. het merk van uw soundbar of surround-set en van uw tv…"
       stappenTitel="Soundbar laten installeren in 3 stappen"
       stappen={[
         "Kies uw dag en dagdeel",

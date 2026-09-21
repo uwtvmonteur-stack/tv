@@ -65,6 +65,8 @@ export default function TvOphangenPlannenPage() {
       formulierTitel="Plan uw afspraak"
       formulierIntro="Geef door wanneer het u schikt. Wij bevestigen binnen enkele uren — en u zit nergens aan vast."
       submitLabel="Plan mijn afspraak"
+      berichtLabel="Wat moet er opgehangen worden?"
+      berichtPlaceholder="Bijv. het formaat van uw tv, het type muur en of u al een beugel heeft…"
       stappenTitel="Tv laten ophangen in 3 stappen"
       stappen={[
         "Kies uw dag en dagdeel",

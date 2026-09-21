@@ -33,6 +33,9 @@ export type PlanLandingProps = {
   formulierTitel: string;
   formulierIntro: string;
   submitLabel: string;
+  /** Label en voorbeeldtekst van het berichtveld — per dienst anders. */
+  berichtLabel: string;
+  berichtPlaceholder: string;
   /** Komt als parameter mee in het GA4-event, zodat varianten meetbaar zijn. */
   variant: string;
   stappenTitel: string;
@@ -77,6 +80,8 @@ export default function PlanLanding({
   formulierTitel,
   formulierIntro,
   submitLabel,
+  berichtLabel,
+  berichtPlaceholder,
   variant,
   stappenTitel,
   stappen,
@@ -192,7 +197,13 @@ export default function PlanLanding({
                 <p className="mt-2 mb-6 text-[15px] leading-relaxed text-ink-soft">
                   {formulierIntro}
                 </p>
-                <ContactForm planner variant={variant} submitLabel={submitLabel} />
+                <ContactForm
+                  planner
+                  variant={variant}
+                  submitLabel={submitLabel}
+                  berichtLabel={berichtLabel}
+                  berichtPlaceholder={berichtPlaceholder}
+                />
               </div>
             </div>
           </Reveal>

@@ -5,6 +5,8 @@ import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
+import Reviews from "@/components/Reviews";
+import CheckList from "@/components/CheckList";
 import { Stars } from "@/components/ui";
 import {
   IconArrowUpRight,
@@ -24,12 +26,12 @@ import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 // zodat Google dit niet als dubbele content behandelt.
 
 export const metadata: Metadata = {
-  title: "Tv laten ophangen — plan direct uw afspraak",
-  description: `Tv laten ophangen vanaf ${priceCards[0].price}, vaste prijs incl. voorrijkosten en btw. Kies zelf uw dag en dagdeel — vaak al binnen 24 uur een monteur aan huis.`,
+  title: "Tv Laten Ophangen aan Huis — Plan uw Afspraak",
+  description: `Tv laten ophangen door een ervaren monteur aan huis. Vaste prijs vanaf ${priceCards[0].price} incl. voorrijkosten en btw. Kies zelf uw dag en dagdeel, wij bevestigen binnen enkele uren.`,
   alternates: { canonical: "/tv-ophangen" },
   robots: { index: false, follow: true },
   openGraph: {
-    title: "Tv laten ophangen — plan direct uw afspraak",
+    title: "Tv laten ophangen aan huis — plan uw afspraak",
     description: `Vaste prijs vanaf ${priceCards[0].price}, inclusief voorrijkosten en btw. Kies zelf uw dag en dagdeel.`,
     url: absUrl("/tv-ophangen-plannen"),
     siteName: SITE.name,
@@ -53,6 +55,17 @@ const stappen = [
   "Kies uw dag en dagdeel",
   "Vertel kort wat er moet gebeuren",
   "Wij bevestigen binnen enkele uren",
+];
+
+// Neemt de vraag "wat krijg ik voor die prijs?" weg en vertelt Google tegelijk
+// waar deze pagina precies over gaat — beide tellen mee voor de kwaliteitsscore.
+const inbegrepen = [
+  "Advies over de beste plek, hoogte en het juiste beugeltype",
+  "Controle van het draagvermogen van uw muur",
+  "De beugel waterpas en stevig monteren",
+  "De tv ophangen en exact waterpas afstellen",
+  "Tv en randapparatuur aansluiten en testen",
+  "Kabels netjes wegwerken en het boorafval meenemen",
 ];
 
 const faqItems: FaqItem[] = [
@@ -100,7 +113,7 @@ export default function TvOphangenPlannenPage() {
       <section className="relative overflow-hidden bg-ink text-cream">
         <Image
           src={heroFoto}
-          alt="Monteur hangt een televisie waterpas aan de woonkamermuur"
+          alt="Monteur is bezig met een tv ophangen: de televisie hangt waterpas aan de woonkamermuur"
           fill
           priority
           placeholder="blur"
@@ -120,9 +133,9 @@ export default function TvOphangenPlannenPage() {
                 </span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
-                Een ervaren monteur hangt uw tv waterpas op, werkt de kabels netjes weg en
-                sluit alles aan — u hoeft zelf niets te doen. U geeft alleen door wanneer
-                het u uitkomt; wij bevestigen binnen enkele uren.
+                Laat uw tv ophangen door een ervaren monteur: waterpas aan de muur, kabels
+                netjes weggewerkt en alles aangesloten — u hoeft zelf niets te doen. U geeft
+                alleen door wanneer het u uitkomt; wij bevestigen binnen enkele uren.
               </p>
 
               <ul className="mt-8 flex flex-col gap-3">
@@ -137,13 +150,18 @@ export default function TvOphangenPlannenPage() {
               </ul>
 
               <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/80">
-                <span className="flex items-center gap-2">
+                <a
+                  href="#reviews"
+                  className="flex items-center gap-2 transition-colors duration-300 ease-fluid hover:text-white"
+                >
                   <Stars />
                   <strong className="font-semibold text-white">
                     {SITE.reviews.score} / 5
                   </strong>
-                  {SITE.reviews.count} reviews
-                </span>
+                  <span className="underline decoration-white/40 underline-offset-4">
+                    {SITE.reviews.count} reviews
+                  </span>
+                </a>
                 <span className="flex items-center gap-2">
                   <IconShield className="h-4 w-4 text-amber-400" />
                   Volledig verzekerd
@@ -169,7 +187,7 @@ export default function TvOphangenPlannenPage() {
           <Reveal immediate>
             <div
               id="afspraak"
-              className="scroll-mt-24 rounded-[2rem] bg-white/10 p-1.5 ring-1 ring-white/15"
+              className="rounded-[2rem] bg-white/10 p-1.5 ring-1 ring-white/15"
             >
               <div className="rounded-[calc(2rem-0.375rem)] bg-cream p-6 text-ink md:p-8">
                 <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
@@ -193,7 +211,7 @@ export default function TvOphangenPlannenPage() {
       <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8 md:py-20">
         <Reveal>
           <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Zo werkt het
+            Tv laten ophangen in 3 stappen
           </h2>
         </Reveal>
         <ol className="mt-8 grid gap-3 md:grid-cols-3 md:gap-4">
@@ -215,12 +233,25 @@ export default function TvOphangenPlannenPage() {
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Vaste prijs, vooraf bekend
+            Wat is inbegrepen bij het ophangen van uw tv?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
-            De prijs hangt alleen af van het schermformaat — voorrijkosten en btw zitten er
-            altijd in. Wat we vooraf afspreken, is wat u betaalt. Geen uurtarief, geen
-            meerwerk achteraf.
+            Eén vaste prijs voor het complete werk. De monteur komt met al het
+            montagemateriaal en is gemiddeld binnen een uur klaar.
+          </p>
+        </Reveal>
+        <Reveal delay={80}>
+          <CheckList items={inbegrepen} className="mt-8 grid gap-3 sm:grid-cols-2" medium />
+        </Reveal>
+
+        <Reveal>
+          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+            Wat kost tv laten ophangen?
+          </h2>
+          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+            De prijs voor tv ophangen hangt alleen af van het schermformaat — voorrijkosten
+            en btw zitten er altijd in. Wat we vooraf afspreken, is wat u betaalt. Geen
+            uurtarief, geen meerwerk achteraf.
           </p>
         </Reveal>
         <ul className="mt-8 grid gap-4 md:grid-cols-3">
@@ -255,7 +286,7 @@ export default function TvOphangenPlannenPage() {
           ))}
         </ul>
         <Reveal>
-          <p className="mt-6 text-sm text-ink-soft">
+          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-ink-soft">
             Kabels wegwerken in een kabelgoot kan erbij.{" "}
             <Link
               href="/prijzen"
@@ -263,13 +294,23 @@ export default function TvOphangenPlannenPage() {
             >
               Bekijk alle prijzen
             </Link>
-            .
+            . Wij hangen tv&apos;s op in heel Nederland — van Rotterdam en Amsterdam tot
+            Utrecht, Eindhoven en alles daartussenin. Elke muur en elke beugel: vast,
+            kantelbaar of draaibaar.
           </p>
         </Reveal>
+      </section>
 
+      {/* Anker voor de sterren in de hero. De afstand tot de menubalk regelt
+          `scroll-padding-top` op html (app/globals.css). */}
+      <div id="reviews">
+        <Reviews title="Klanten over het ophangen van hun tv" />
+      </div>
+
+      <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8 md:py-20">
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Veelgestelde vragen
+            Veelgestelde vragen over tv ophangen
           </h2>
         </Reveal>
         <Reveal delay={100}>

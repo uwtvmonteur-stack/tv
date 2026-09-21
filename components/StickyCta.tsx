@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { IconArrowUpRight, IconChat, IconPhone } from "./icons";
+import { IconArrowUpRight, IconChat } from "./icons";
 import { SITE } from "@/lib/site";
 
 /**
- * Vaste onderbalk met de belangrijkste acties: bellen, afspraak maken en
- * (zodra `SITE.whatsapp` is ingevuld) WhatsApp. Verschijnt pas ná de hero
- * (na ± één schermhoogte scrollen). Op mobiel een onderbalk over de volle
- * breedte, op grotere schermen een zwevende pil. Niet op de contactpagina
- * (daar staat het formulier al).
+ * Vaste onderbalk met de enige actie die telt: een afspraak maken (en, zodra
+ * `SITE.whatsapp` is ingevuld, WhatsApp). Verschijnt pas ná de hero (na ± één
+ * schermhoogte scrollen). Op mobiel een onderbalk over de volle breedte, op
+ * grotere schermen een zwevende pil. Niet op de contactpagina (daar staat het
+ * formulier al).
  */
 export default function StickyCta() {
   const pathname = usePathname();
@@ -56,15 +56,6 @@ export default function StickyCta() {
           Afspraak maken
           <IconArrowUpRight className="h-4 w-4" />
         </Link>
-        <a
-          href={`tel:${SITE.phone}`}
-          tabIndex={show ? undefined : -1}
-          aria-label={`Bel ${SITE.phoneDisplay}`}
-          className={`${btn} flex-none px-5 text-ink ring-1 ring-ink/15`}
-        >
-          <IconPhone className="h-4 w-4" />
-          <span className="hidden min-[380px]:inline">Bellen</span>
-        </a>
         {SITE.whatsapp && (
           <a
             href={SITE.whatsapp}

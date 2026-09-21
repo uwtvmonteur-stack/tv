@@ -12,7 +12,6 @@ import BrandMarquee from "@/components/BrandMarquee";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import { IconCable, IconShield, IconTv } from "@/components/icons";
-import { SITE } from "@/lib/site";
 import { type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
@@ -38,7 +37,7 @@ const inbegrepen = [
 const stappen = [
   {
     title: "Afspraak maken",
-    text: "Kies online of telefonisch een moment dat u uitkomt — ook 's avonds en in het weekend. U ontvangt direct een bevestiging.",
+    text: "Geef online door welk moment u uitkomt — ook 's avonds en in het weekend. Wij bevestigen binnen enkele uren.",
   },
   {
     title: "Muur & tv beoordelen",
@@ -206,14 +205,7 @@ export default function TvOphangenPage() {
               >
                 Plan een afspraak
               </Link>{" "}
-              of bel{" "}
-              <a
-                href={`tel:${SITE.phone}`}
-                className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
-              >
-                {SITE.phoneDisplay}
-              </a>
-              .
+              — u hoort binnen enkele uren van ons.
             </p>
           </div>
         </Reveal>

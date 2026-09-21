@@ -12,7 +12,6 @@ import BrandMarquee from "@/components/BrandMarquee";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import { IconCable, IconChat, IconSliders, IconTv } from "@/components/icons";
-import { SITE } from "@/lib/site";
 import type { FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroImg from "@/public/images/dienst-tv-instellen.jpg";
@@ -86,11 +85,11 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Hoe snel kunnen jullie langskomen?",
-    a: "Vaak al binnen 24 uur, uiterlijk binnen 48 uur. Bel ons voor de eerstvolgende mogelijkheid bij u in de buurt.",
+    a: "Vaak al binnen 24 uur, uiterlijk binnen 48 uur. Vraag online een afspraak aan, dan laten we u binnen enkele uren weten wat de eerstvolgende mogelijkheid bij u in de buurt is.",
   },
   {
     q: "Kan de afspraak ook 's avonds of in het weekend?",
-    a: `Ja, doordeweeks tot 21:00 uur en in het weekend, zonder toeslag. Bel ${SITE.phoneDisplay} voor de eerstvolgende beschikbaarheid.`,
+    a: "Ja, doordeweeks tot 21:00 uur en in het weekend, zonder toeslag. Vraag online een afspraak aan, dan laten we u de eerstvolgende beschikbaarheid weten.",
   },
 ];
 
@@ -215,7 +214,7 @@ export default function TvInstellenPage() {
           steps={[
             {
               title: "Afspraak inplannen",
-              text: "Bel of plan online een moment dat u uitkomt. Vertel kort wat er niet lukt, dan komt de monteur voorbereid.",
+              text: "Plan online een moment dat u uitkomt. Vertel kort wat er niet lukt, dan komt de monteur voorbereid.",
             },
             {
               title: "Monteur komt langs",
@@ -299,7 +298,7 @@ export default function TvInstellenPage() {
 
       <CtaSection
         title="Vandaag nog hulp bij uw tv?"
-        text="Bel ons of plan online een afspraak — vaak kunnen we binnen 24 uur bij u langskomen."
+        text="Plan online een afspraak — vaak kunnen we binnen 24 uur bij u langskomen."
       />
     </main>
   );

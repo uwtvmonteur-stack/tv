@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "./Reveal";
-import { IconArrowUpRight, IconPhone } from "./icons";
-import { SITE } from "@/lib/site";
+import { IconArrowUpRight } from "./icons";
 import familieImg from "@/public/images/familie-kijkt-tv.jpg";
 
 export default function CtaSection({
@@ -34,26 +33,16 @@ export default function CtaSection({
             </p>
           </Reveal>
           <Reveal delay={150}>
-            <div className="mt-10 flex flex-col items-center gap-5">
+            <div className="mt-10">
               <Link
                 href="/contact"
-                className="group flex items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98]"
               >
                 Plan een afspraak
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                   <IconArrowUpRight className="h-4 w-4" />
                 </span>
               </Link>
-              <a
-                href={`tel:${SITE.phone}`}
-                className="flex items-center gap-2 text-[15px] font-medium text-white/80 transition-colors duration-300 ease-fluid hover:text-white"
-              >
-                <IconPhone className="h-4 w-4" />
-                Liever bellen?{" "}
-                <span className="font-semibold text-white underline decoration-white/40 underline-offset-4">
-                  {SITE.phoneDisplay}
-                </span>
-              </a>
             </div>
           </Reveal>
         </div>

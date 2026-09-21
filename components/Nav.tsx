@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { IconArrowUpRight, IconPhone } from "./icons";
+import { IconArrowUpRight } from "./icons";
 import LogoMark from "./Logo";
-import { SITE } from "@/lib/site";
 
 const links = [
   { href: "/diensten", label: "Diensten" },
@@ -78,18 +77,8 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-1.5 pl-1">
-            {/* Eén gevulde knop in de balk: de afspraak. Bellen blijft
-                bereikbaar als rustige tekstlink (breed scherm) en in het
-                mobiele menu, zodat het de afspraakknop niet beconcurreert. */}
-            <a
-              href={`tel:${SITE.phone}`}
-              inert={open || undefined}
-              aria-label={`Bel ${SITE.phoneDisplay}`}
-              className="hidden shrink-0 items-center gap-2 px-3 py-2.5 text-sm font-medium whitespace-nowrap text-ink/70 transition-colors duration-300 ease-fluid hover:text-ink xl:flex"
-            >
-              <IconPhone className="h-4 w-4" />
-              {SITE.phoneDisplay}
-            </a>
+            {/* Eén actie in de balk: de afspraak. Het telefoonnummer staat
+                alleen nog in de footer, zodat niets de afspraakknop afleidt. */}
             <Link
               href="/contact"
               inert={open || undefined}
@@ -166,13 +155,6 @@ export default function Nav() {
             Afspraak maken
             <IconArrowUpRight className="h-4 w-4" />
           </Link>
-          <a
-            href={`tel:${SITE.phone}`}
-            className="flex items-center justify-center gap-2.5 rounded-full px-6 py-4 text-base font-semibold ring-1 ring-ink/15"
-          >
-            <IconPhone className="h-4.5 w-4.5" />
-            {SITE.phoneDisplay}
-          </a>
         </div>
       </div>
     </>

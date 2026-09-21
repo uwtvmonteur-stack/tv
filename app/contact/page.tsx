@@ -8,14 +8,14 @@ import {
   IconChat,
   IconClock,
   IconMail,
-  IconPhone,
-} from "@/components/icons";
+  } from "@/components/icons";
 import { SITE } from "@/lib/site";
 import { absUrl, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "Contact & Afspraak Maken",
-  description: `Plan direct een afspraak met een tv monteur aan huis. Bel ${SITE.phoneDisplay}, mail ons of vul het formulier in — wij reageren binnen één werkdag.`,
+  description:
+    "Plan direct een afspraak met een tv monteur aan huis. Vul het formulier in — wij nemen binnen enkele uren contact met u op.",
   path: "/contact",
 });
 
@@ -41,14 +41,8 @@ export default function ContactPage() {
         intro={
           <>
             Vul in één minuut het formulier in, dan nemen wij binnen enkele uren
-            contact met u op om een moment te kiezen. Liever direct?{" "}
-            <a
-              href={`tel:${SITE.phone}`}
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
-            >
-              Bel {SITE.phoneDisplay}
-            </a>
-            . Vaak kan de monteur al binnen 24 uur bij u langskomen.
+            contact met u op om een moment te kiezen. Vaak kan de monteur al
+            binnen 24 uur bij u langskomen.
           </>
         }
       />
@@ -75,23 +69,14 @@ export default function ContactPage() {
                 <div>
                   <Eyebrow light>Direct contact</Eyebrow>
                   <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl">
-                    Liever even bellen?
+                    Liever even mailen?
                   </h2>
                   <p className="mt-4 leading-relaxed text-white/70">
-                    Bel{SITE.whatsapp ? ", app" : ""} of mail ons — we reageren
-                    snel en denken graag met u mee over de beste oplossing.
+                    Stuur ons gerust een bericht — we reageren snel en denken
+                    graag met u mee over de beste oplossing.
                   </p>
                 </div>
                 <div className="flex flex-col gap-4 text-[15px]">
-                  <a
-                    href={`tel:${SITE.phone}`}
-                    className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-fluid hover:text-amber-400"
-                  >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
-                      <IconPhone className="h-4.5 w-4.5" />
-                    </span>
-                    {SITE.phoneDisplay}
-                  </a>
                   {SITE.whatsapp && (
                     <a
                       href={SITE.whatsapp}

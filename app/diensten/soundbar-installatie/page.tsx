@@ -19,7 +19,6 @@ import {
   IconSpeaker,
   IconTv,
 } from "@/components/icons";
-import { SITE } from "@/lib/site";
 import type { FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import familieImg from "@/public/images/dienst-soundbar.jpg";
@@ -84,7 +83,7 @@ const situaties: IconCard[] = [
 const faqItems: FaqItem[] = [
   {
     q: "Werkt een soundbar met elke tv?",
-    a: "Vrijwel altijd, ongeacht het merk of de leeftijd van uw televisie. Twijfelt u of uw tv geschikt is? Bel ons, dan kijken we het zo met u na.",
+    a: "Vrijwel altijd, ongeacht het merk of de leeftijd van uw televisie. Twijfelt u of uw tv geschikt is? Zet het merk en type in uw aanvraag, dan kijken we het voor u na.",
   },
   {
     q: "Stellen jullie ook Dolby Atmos in?",
@@ -96,7 +95,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Kan de installatie ook 's avonds of in het weekend?",
-    a: `Ja, doordeweeks tot 21:00 uur en in het weekend, zonder toeslag. Bel ${SITE.phoneDisplay} voor de eerstvolgende beschikbaarheid.`,
+    a: "Ja, doordeweeks tot 21:00 uur en in het weekend, zonder toeslag. Vraag online een afspraak aan, dan laten we u de eerstvolgende beschikbaarheid weten.",
   },
 ];
 
@@ -267,7 +266,7 @@ export default function SoundbarPage() {
           steps={[
             {
               title: "Afspraak inplannen",
-              text: "Kies online of telefonisch een moment dat u uitkomt. Geef door welke soundbar of set u heeft, dan komt de monteur voorbereid.",
+              text: "Kies online een moment dat u uitkomt. Geef door welke soundbar of set u heeft, dan komt de monteur voorbereid.",
             },
             {
               title: "Monteur komt langs",

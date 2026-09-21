@@ -6,7 +6,12 @@ import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
 import { BezelCard, Stars } from "@/components/ui";
-import { IconCheck, IconClock, IconPhone, IconShield } from "@/components/icons";
+import {
+  IconArrowUpRight,
+  IconCheck,
+  IconClock,
+  IconShield,
+} from "@/components/icons";
 import { priceCards, type FaqItem } from "@/lib/content";
 import { absUrl, faqJsonLd, serviceJsonLd } from "@/lib/seo";
 import { SITE } from "@/lib/site";
@@ -14,7 +19,7 @@ import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
 // Variant B van /tv-ophangen: een kortere, boekingsgerichte landingspagina voor
 // Google Ads. De originele pagina blijft ongewijzigd bestaan; deze versie test
-// of "zelf een moment kiezen" beter converteert dan "wij bellen u terug".
+// of "zelf een moment kiezen" beter converteert dan de uitgebreide infopagina.
 // Canonical wijst naar /tv-ophangen en de pagina staat bewust niet in de sitemap,
 // zodat Google dit niet als dubbele content behandelt.
 
@@ -124,12 +129,12 @@ export default function TvOphangenPlannenPage() {
               <h1 className="mt-6 font-display text-4xl leading-[1.05] font-bold tracking-tight md:text-5xl lg:text-6xl">
                 Tv laten ophangen?
                 <span className="mt-2 block text-amber-400">
-                  Wij regelen het van A tot Z.
+                  Kies uw moment, wij doen de rest.
                 </span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
                 Een ervaren monteur hangt uw tv waterpas op, werkt de kabels netjes weg en
-                sluit alles aan — u hoeft zelf niets te doen. U geeft hiernaast door wanneer
+                sluit alles aan — u hoeft zelf niets te doen. U geeft alleen door wanneer
                 het u uitkomt; wij bevestigen binnen enkele uren.
               </p>
 
@@ -161,17 +166,15 @@ export default function TvOphangenPlannenPage() {
                 </span>
               </div>
 
-              {/* Bewust een tekstlink, geen knop: het formulier hiernaast moet
-                  de enige opvallende actie op dit scherm blijven. */}
+              {/* Op mobiel staat het formulier ónder deze kolom; deze knop
+                  brengt de bezoeker er in één tik naartoe. Op groot scherm
+                  staat het formulier al naast de tekst. */}
               <a
-                href={`tel:${SITE.phone}`}
-                className="mt-8 inline-flex items-center gap-2 text-[15px] font-medium text-white/75 transition-colors duration-300 ease-fluid hover:text-white"
+                href="#afspraak"
+                className="mt-8 flex w-full items-center justify-center gap-3 rounded-full bg-amber-600 py-4 text-base font-semibold text-white transition-transform duration-300 ease-fluid active:scale-[0.98] lg:hidden"
               >
-                <IconPhone className="h-4 w-4" />
-                Liever even bellen?{" "}
-                <span className="font-semibold text-white underline decoration-white/40 underline-offset-4">
-                  {SITE.phoneDisplay}
-                </span>
+                Plan uw afspraak
+                <IconArrowUpRight className="h-4 w-4" />
               </a>
             </div>
           </Reveal>

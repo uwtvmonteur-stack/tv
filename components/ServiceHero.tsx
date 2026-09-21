@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import Reveal from "./Reveal";
 import Breadcrumbs, { type Crumb } from "./Breadcrumbs";
 import { Eyebrow, Stars } from "./ui";
-import { IconArrowUpRight, IconCheck, IconClock, IconPhone, IconShield } from "./icons";
+import { IconArrowUpRight, IconCheck, IconClock, IconShield } from "./icons";
 import { SITE } from "@/lib/site";
 
 export default function ServiceHero({
@@ -52,28 +52,18 @@ export default function ServiceHero({
               ))}
             </ul>
 
-            {/* Eén duidelijke primaire actie. Bellen blijft mogelijk, maar als
-                rustige tekstlink: twee even zware knoppen kosten conversie. */}
-            <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+            {/* Eén actie per scherm. Het telefoonnummer staat alleen nog in de
+                footer, zodat niets de afspraakknop beconcurreert. */}
+            <div className="mt-8">
               <Link
                 href="/contact"
-                className="group flex w-full items-center justify-center gap-3 rounded-full bg-ink py-2.5 pr-2.5 pl-7 text-base font-semibold text-cream transition-transform duration-300 ease-fluid active:scale-[0.98] sm:w-auto"
+                className="group flex w-full items-center justify-center gap-3 rounded-full bg-ink py-2.5 pr-2.5 pl-7 text-base font-semibold text-cream transition-transform duration-300 ease-fluid active:scale-[0.98] sm:w-auto sm:inline-flex"
               >
                 Plan een afspraak
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                   <IconArrowUpRight className="h-4 w-4" />
                 </span>
               </Link>
-              <a
-                href={`tel:${SITE.phone}`}
-                className="flex items-center gap-2 text-[15px] font-medium text-ink-soft transition-colors duration-300 ease-fluid hover:text-ink"
-              >
-                <IconPhone className="h-4 w-4 text-amber-700" />
-                Liever bellen?{" "}
-                <span className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4">
-                  {SITE.phoneDisplay}
-                </span>
-              </a>
             </div>
 
             <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-soft">

@@ -19,8 +19,7 @@ import {
   IconArrowUpRight,
   IconCheck,
   IconClock,
-  IconPhone,
-  IconShield,
+    IconShield,
 } from "@/components/icons";
 import { diensten, dienstHref, faqAlgemeen } from "@/lib/content";
 import { provincies, stedenInProvincie } from "@/lib/steden";
@@ -81,28 +80,17 @@ function Hero() {
           </p>
         </Reveal>
         <Reveal immediate>
-          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+          {/* Eén actie per scherm: alles wijst naar het afspraakformulier. */}
+          <div className="mt-8">
             <Link
               href="/contact"
-              className="group flex w-full items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98] sm:w-auto"
+              className="group flex w-full items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98] sm:inline-flex sm:w-auto"
             >
               Plan een afspraak
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                 <IconArrowUpRight className="h-4 w-4" />
               </span>
             </Link>
-            {/* Bellen blijft bereikbaar, maar als tekstlink: één gevulde knop
-                per scherm levert meer aanvragen op dan twee gelijkwaardige. */}
-            <a
-              href={`tel:${SITE.phone}`}
-              className="flex items-center gap-2 text-[15px] font-medium text-white/80 transition-colors duration-300 ease-fluid hover:text-white"
-            >
-              <IconPhone className="h-4 w-4" />
-              Liever bellen?{" "}
-              <span className="font-semibold text-white underline decoration-white/40 underline-offset-4">
-                {SITE.phoneDisplay}
-              </span>
-            </a>
           </div>
         </Reveal>
         <Reveal immediate>
@@ -280,7 +268,7 @@ const steps = [
   {
     nr: "01",
     title: "Plan uw afspraak",
-    text: "Online of telefonisch, ook 's avonds en in het weekend. Wij bellen u terug om datum en tijd te bevestigen.",
+    text: "Online in één minuut geregeld, ook 's avonds en in het weekend. Wij nemen binnen enkele uren contact met u op om datum en tijd te bevestigen.",
   },
   {
     nr: "02",
@@ -470,13 +458,13 @@ function FaqSectie() {
               Alles wat u wilt weten
             </h2>
             <p className="mt-5 leading-relaxed text-ink-soft">
-              Staat uw vraag er niet tussen? Bel ons gerust op{" "}
-              <a
-                href={`tel:${SITE.phone}`}
+              Staat uw vraag er niet tussen? Stel hem gerust in het{" "}
+              <Link
+                href="/contact"
                 className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
               >
-                {SITE.phoneDisplay}
-              </a>{" "}
+                aanvraagformulier
+              </Link>{" "}
               — we denken graag met u mee.
             </p>
           </Reveal>

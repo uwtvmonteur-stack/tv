@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
-import { IconArrowUpRight, IconCheck, IconPhone } from "./icons";
+import { IconArrowUpRight, IconCheck } from "./icons";
 import { trackAdsConversion, trackEvent } from "./Analytics";
 import { SITE, TRACKING } from "@/lib/site";
 
@@ -82,18 +82,6 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-function TelButton({ className = "" }: { className?: string }) {
-  return (
-    <a
-      href={`tel:${SITE.phone}`}
-      className={`flex items-center justify-center gap-2.5 rounded-full bg-ink px-6 py-3.5 text-base font-semibold text-cream transition-transform duration-300 ease-fluid active:scale-[0.98] ${className}`}
-    >
-      <IconPhone className="h-4.5 w-4.5" />
-      Bel {SITE.phoneDisplay}
-    </a>
-  );
-}
-
 export default function ContactForm({
   planner = false,
   variant,
@@ -146,9 +134,8 @@ export default function ContactForm({
     }
 
     // Noodoplossing als SMTP (nog) niet is ingesteld: e-mailconcept openen.
-    // We tonen dan géén "bedankt" maar een eerlijke tussenstap met het
-    // telefoonnummer, omdat de aanvraag pas binnenkomt als de bezoeker de
-    // e-mail zelf verstuurt.
+    // We tonen dan géén "bedankt" maar een eerlijke tussenstap, omdat de
+    // aanvraag pas binnenkomt als de bezoeker de e-mail zelf verstuurt.
     const openMailto = () => {
       const body = [
         `Naam: ${payload.naam}`,
@@ -208,9 +195,8 @@ export default function ContactForm({
           Bedankt! Uw aanvraag is ontvangen.
         </p>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
-          {SITE.reactie} Heeft u haast of wilt u iets doorgeven?
+          {SITE.reactie} Houd uw telefoon dus even bij de hand.
         </p>
-        <TelButton className="mx-auto mt-5 w-full sm:w-auto" />
       </div>
     );
   }
@@ -228,10 +214,16 @@ export default function ContactForm({
         </p>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
           Uw e-mailprogramma is geopend met uw gegevens. Verstuur dat bericht,
-          dan bellen wij u terug. Is er geen e-mailprogramma geopend? Bel ons
-          dan even — dat is de snelste weg naar een afspraak.
+          dan nemen wij binnen enkele uren contact met u op. Is er geen
+          e-mailprogramma geopend? Mail uw gegevens dan naar{" "}
+          <a
+            href={`mailto:${SITE.email}`}
+            className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+          >
+            {SITE.email}
+          </a>
+          .
         </p>
-        <TelButton className="mx-auto mt-5 w-full sm:w-auto" />
         <button
           type="button"
           onClick={() => setStatus("idle")}
@@ -422,22 +414,19 @@ export default function ContactForm({
           role="alert"
           className="text-center text-sm font-semibold text-red-700 focus:outline-none"
         >
-          Er ging iets mis bij het versturen. Bel ons gerust op{" "}
-          <a href={`tel:${SITE.phone}`} className="underline underline-offset-4">
-            {SITE.phoneDisplay}
+          Er ging iets mis bij het versturen. Probeer het nog een keer, of mail
+          uw gegevens naar{" "}
+          <a
+            href={`mailto:${SITE.email}`}
+            className="underline underline-offset-4"
+          >
+            {SITE.email}
           </a>
-          , dan plannen we het direct in.
+          — dan plannen we het direct in.
         </p>
       ) : (
         <p className="text-center text-xs leading-relaxed text-ink-soft">
-          {SITE.reactie} Liever direct?{" "}
-          <a
-            href={`tel:${SITE.phone}`}
-            className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
-          >
-            Bel {SITE.phoneDisplay}
-          </a>
-          .
+          {SITE.reactie}
         </p>
       )}
 

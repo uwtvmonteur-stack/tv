@@ -13,7 +13,6 @@ import { usps, type FaqItem } from "@/lib/content";
 import { provincieBySlug, stadBySlug, steden } from "@/lib/steden";
 import { lokaalTekst } from "@/lib/stedenLokaal";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
-import { SITE } from "@/lib/site";
 import heroFoto from "@/public/images/monteur-aan-het-werk.jpg";
 
 export const dynamicParams = false;
@@ -78,7 +77,7 @@ export default async function StadPage({
         `Wanneer kan er een tv monteur in ${stad.naam} langskomen?`,
         `Hoe snel bent u in ${stad.naam} aan de beurt?`,
       ][qv],
-      a: `In ${stad.naam} kunnen we u vaak al binnen 24 uur helpen, uiterlijk binnen 48 uur — ook 's avonds en in het weekend, zonder toeslag. Bel ${SITE.phoneDisplay} voor de eerstvolgende beschikbaarheid.`,
+      a: `In ${stad.naam} kunnen we u vaak al binnen 24 uur helpen, uiterlijk binnen 48 uur — ook 's avonds en in het weekend, zonder toeslag. Vraag online een afspraak aan, dan laten we u binnen enkele uren de eerstvolgende beschikbaarheid weten.`,
     },
     {
       q: [

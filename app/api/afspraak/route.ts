@@ -126,7 +126,7 @@ Bedankt voor uw aanvraag. ${SITE.reactie}
 Uw gegevens:
 ${text}
 
-Wilt u het liever direct regelen? Bel of app ${SITE.phoneDisplay}.
+Klopt er iets niet of wilt u nog iets doorgeven? U kunt gewoon op deze e-mail antwoorden.
 
 Met vriendelijke groet,
 ${SITE.name}
@@ -142,7 +142,7 @@ ${regels
   )
   .join("\n")}
 </table>
-<p style="font-family:sans-serif;font-size:15px">Wilt u het liever direct regelen? Bel of app <a href="tel:${SITE.phone}">${SITE.phoneDisplay}</a>.</p>
+<p style="font-family:sans-serif;font-size:15px">Klopt er iets niet of wilt u nog iets doorgeven? U kunt gewoon op deze e-mail antwoorden.</p>
 <p style="font-family:sans-serif;font-size:15px">Met vriendelijke groet,<br>${SITE.name}<br><a href="${SITE.url}">${SITE.url}</a></p>`,
     });
   } catch (err) {

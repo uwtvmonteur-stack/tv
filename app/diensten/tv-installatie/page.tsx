@@ -12,7 +12,6 @@ import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import CheckList from "@/components/CheckList";
 import { IconChat, IconSliders, IconSpeaker, IconTv } from "@/components/icons";
-import { SITE } from "@/lib/site";
 import type { FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroImg from "@/public/images/dienst-tv-installatie.jpg";
@@ -199,7 +198,7 @@ export default function TvInstallatiePage() {
           steps={[
             {
               title: "Afspraak maken",
-              text: "Plan eenvoudig online een afspraak of bel ons. We spreken een geschikt moment met u af.",
+              text: "Plan eenvoudig online een afspraak. Wij nemen binnen enkele uren contact met u op om een geschikt moment af te spreken.",
             },
             {
               title: "Tv plaatsen of ophangen",
@@ -257,13 +256,13 @@ export default function TvInstallatiePage() {
               </div>
             </div>
             <p className="mt-6 text-[15px] leading-relaxed text-ink-soft">
-              Twijfelt u welke service bij u past? Bel{" "}
-              <a
-                href={`tel:${SITE.phone}`}
+              Twijfelt u welke service bij u past? Zet het kort in het{" "}
+              <Link
+                href="/contact"
                 className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
               >
-                {SITE.phoneDisplay}
-              </a>{" "}
+                aanvraagformulier
+              </Link>{" "}
               — wij denken graag met u mee.
             </p>
           </div>

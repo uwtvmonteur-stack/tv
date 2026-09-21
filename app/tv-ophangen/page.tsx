@@ -12,7 +12,7 @@ import BrandMarquee from "@/components/BrandMarquee";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import { IconCable, IconShield, IconTv } from "@/components/icons";
-import { type FaqItem } from "@/lib/content";
+import { reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
@@ -405,7 +405,10 @@ export default function TvOphangenPage() {
         />
       </section>
 
-      <Reviews />
+      <Reviews
+        title="Klanten over het ophangen van hun tv"
+        items={reviewsPerDienst["tv-ophangen"]}
+      />
 
       <CtaSection
         title="Tv ophangen? Plan direct een afspraak"

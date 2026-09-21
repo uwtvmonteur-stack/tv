@@ -12,7 +12,7 @@ import BrandMarquee from "@/components/BrandMarquee";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import { IconCable, IconChat, IconSliders, IconTv } from "@/components/icons";
-import type { FaqItem } from "@/lib/content";
+import { reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroImg from "@/public/images/dienst-tv-instellen.jpg";
 
@@ -294,7 +294,10 @@ export default function TvInstellenPage() {
         />
       </section>
 
-      <Reviews />
+      <Reviews
+        title="Klanten over onze hulp aan huis"
+        items={reviewsPerDienst["tv-instellen"]}
+      />
 
       <CtaSection
         title="Vandaag nog hulp bij uw tv?"

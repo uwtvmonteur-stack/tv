@@ -19,7 +19,7 @@ import {
   IconSpeaker,
   IconTv,
 } from "@/components/icons";
-import type { FaqItem } from "@/lib/content";
+import { reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import familieImg from "@/public/images/dienst-soundbar.jpg";
 
@@ -340,7 +340,10 @@ export default function SoundbarPage() {
         />
       </section>
 
-      <Reviews />
+      <Reviews
+        title="Klanten over hun geluidsinstallatie"
+        items={reviewsPerDienst["soundbar-installatie"]}
+      />
 
       <CtaSection title="Bioscoopgeluid in uw woonkamer?" />
     </main>

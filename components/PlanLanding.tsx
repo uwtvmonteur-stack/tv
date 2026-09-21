@@ -9,7 +9,7 @@ import Reveal from "./Reveal";
 import Reviews from "./Reviews";
 import { Stars } from "./ui";
 import { IconArrowUpRight, IconCheck, IconClock, IconShield } from "./icons";
-import type { FaqItem } from "@/lib/content";
+import type { FaqItem, Review } from "@/lib/content";
 import { faqJsonLd, serviceJsonLd } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 
@@ -45,6 +45,8 @@ export type PlanLandingProps = {
   prijzen: PrijsKaart[];
   prijsNoot: ReactNode;
   reviewsTitel: string;
+  /** Beoordelingen over déze dienst; kies de set uit `reviewsPerDienst`. */
+  reviewsItems: Review[];
   faqTitel: string;
   faqItems: FaqItem[];
   image: StaticImageData;
@@ -86,6 +88,7 @@ export default function PlanLanding({
   prijzen,
   prijsNoot,
   reviewsTitel,
+  reviewsItems,
   faqTitel,
   faqItems,
   image,
@@ -282,7 +285,7 @@ export default function PlanLanding({
       {/* Anker voor de sterren in de hero. De afstand tot de menubalk regelt
           `scroll-padding-top` op html (app/globals.css). */}
       <div id="reviews">
-        <Reviews title={reviewsTitel} />
+        <Reviews title={reviewsTitel} items={reviewsItems} />
       </div>
 
       <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8 md:py-20">

@@ -12,7 +12,7 @@ import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import CheckList from "@/components/CheckList";
 import { IconChat, IconSliders, IconSpeaker, IconTv } from "@/components/icons";
-import type { FaqItem } from "@/lib/content";
+import { reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroImg from "@/public/images/dienst-tv-installatie.jpg";
 
@@ -304,7 +304,10 @@ export default function TvInstallatiePage() {
         />
       </section>
 
-      <Reviews />
+      <Reviews
+        title="Klanten over hun tv installatie"
+        items={reviewsPerDienst["tv-installatie"]}
+      />
 
       <CtaSection
         title="Uw nieuwe tv. Wij regelen de rest."

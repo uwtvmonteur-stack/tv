@@ -1,17 +1,22 @@
 import Reveal from "@/components/Reveal";
 import { BezelCard, Eyebrow, Stars } from "@/components/ui";
-import { reviews } from "@/lib/content";
+import { reviews, type Review } from "@/lib/content";
 import { SITE } from "@/lib/site";
 
 /**
  * Compacte, horizontaal scrollbare reviews-sectie voor alle pagina's — zonder plaatsnamen.
  * De score komt uit `SITE.reviews` (één bron) en wordt een link zodra `SITE.reviews.url`
  * is ingevuld, zodat bezoekers de beoordelingen zelf kunnen controleren.
+ *
+ * Zonder `items` toont de sectie de gemengde set; dienstpagina's geven hun eigen
+ * set mee uit `reviewsPerDienst`, zodat de beoordelingen over die dienst gaan.
  */
 export default function Reviews({
   title = "Waarom klanten ons aanraden",
+  items = reviews,
 }: {
   title?: string;
+  items?: Review[];
 }) {
   return (
     <section className="px-2 md:px-6">
@@ -52,7 +57,7 @@ export default function Reviews({
 
           <Reveal>
             <ul className="mt-8 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {reviews.map((review) => (
+              {items.map((review) => (
                 <li
                   key={review.name}
                   className="w-[270px] shrink-0 snap-start md:w-[300px]"

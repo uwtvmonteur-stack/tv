@@ -103,7 +103,19 @@ export const usps = [
   "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
-export const reviews = [
+export type Review = { quote: string; name: string };
+
+/**
+ * LET OP — deze reviews zijn nog PLACEHOLDERS, net als `stats` en
+ * `SITE.reviews`. Vervang ze door echte beoordelingen voordat er structureel
+ * mee geadverteerd wordt: verzonnen klantervaringen zijn in strijd met het
+ * Google Ads-beleid rond misleiding.
+ *
+ * `reviews` is de gemengde set voor algemene pagina's (home, prijzen, over ons,
+ * werkgebied, steden). Per dienst staat er een eigen set in `reviewsPerDienst`,
+ * zodat een bezoeker op de soundbarpagina ook over soundbars leest.
+ */
+export const reviews: Review[] = [
   {
     quote:
       "Binnen een uur hing onze 65-inch strak boven het dressoir. Geen kabel te zien. Echt vakwerk.",
@@ -150,6 +162,141 @@ export const reviews = [
     name: "Dennis K.",
   },
 ];
+
+/**
+ * Reviews per dienst — de sleutels zijn de slugs uit `diensten`. Ook nog
+ * PLACEHOLDERS; zie de waarschuwing hierboven.
+ */
+export const reviewsPerDienst: Record<string, Review[]> = {
+  "tv-ophangen": [
+    {
+      quote:
+        "Binnen een uur hing onze 65-inch strak boven het dressoir. Geen kabel te zien. Echt vakwerk.",
+      name: "Sandra V.",
+    },
+    {
+      quote:
+        "Onze tv hangt kaarsrecht op een lastige gipswand. Ze wisten precies wat ze deden.",
+      name: "Youssef B.",
+    },
+    {
+      quote:
+        "De monteur dacht mee over de kijkhoogte. Daar had ik zelf niet bij stilgestaan.",
+      name: "Mark de Jong",
+    },
+    {
+      quote:
+        "Vaste prijs vooraf afgesproken en dat was ook precies wat ik betaalde.",
+      name: "Kevin R.",
+    },
+    {
+      quote:
+        "Onze grote tv met twee monteurs opgehangen. Voelt echt solide aan de muur.",
+      name: "Dennis K.",
+    },
+    {
+      quote:
+        "Boorafval meegenomen en alles opgeruimd achtergelaten. Keurig gewerkt.",
+      name: "Anouk T.",
+    },
+  ],
+  "tv-installatie": [
+    {
+      quote:
+        "Nieuwe tv 's ochtends bezorgd, 's avonds keken we al. Alles stond ingesteld.",
+      name: "Ilse den Boer",
+    },
+    {
+      quote:
+        "De zenders zijn gesorteerd zoals wij ze gewend waren. Scheelde ons veel zoeken.",
+      name: "Familie Bakker",
+    },
+    {
+      quote:
+        "Decoder, soundbar en de spelcomputer in één keer aangesloten. Werkt allemaal.",
+      name: "Rachid E.",
+    },
+    {
+      quote:
+        "Mijn moeder kreeg rustig uitleg tot ze het zelf kon. Daar ging het haar om.",
+      name: "Marieke S.",
+    },
+    {
+      quote:
+        "Ook de streaming-apps ingesteld en ingelogd. Ik hoefde zelf niets uit te zoeken.",
+      name: "Tim V.",
+    },
+    {
+      quote:
+        "Het verpakkingsafval namen ze mee. Geen berg karton in de gang achtergelaten.",
+      name: "Joost W.",
+    },
+  ],
+  "soundbar-installatie": [
+    {
+      quote:
+        "Eindelijk geluid zoals het hoort. De subwoofer staat nu op de juiste plek.",
+      name: "Bram L.",
+    },
+    {
+      quote:
+        "Onze Atmos-set met achterspeakers aangesloten en afgestemd op de kamer.",
+      name: "Familie Kroon",
+    },
+    {
+      quote:
+        "Alles werkt nu met één afstandsbediening. Dat kreeg ik zelf niet voor elkaar.",
+      name: "Hanneke D.",
+    },
+    {
+      quote:
+        "De kabels zitten in een goot in muurkleur. Je ziet er echt niets meer van.",
+      name: "Petra M.",
+    },
+    {
+      quote:
+        "Bleek dat het via eARC moest. Ik had hem al die tijd verkeerd aangesloten.",
+      name: "Ruben J.",
+    },
+    {
+      quote:
+        "Binnen drie kwartier klaar en hij liet meteen horen wat het verschil was.",
+      name: "Sanne B.",
+    },
+  ],
+  "tv-instellen": [
+    {
+      quote:
+        "Na een storing waren al onze zenders weg. Binnen een half uur weer op orde.",
+      name: "Greet H.",
+    },
+    {
+      quote:
+        "Netflix deed het niet meer. Opgelost én uitgelegd waarom het misging.",
+      name: "Ferry O.",
+    },
+    {
+      quote:
+        "Geen wifi meer op de tv na het wisselen van provider. Nu weer verbinding.",
+      name: "Familie Smit",
+    },
+    {
+      quote:
+        "Geduldig uitgelegd, zonder moeilijke woorden. Voor mijn vader ideaal.",
+      name: "Linda K.",
+    },
+    {
+      quote:
+        "Eén universele afstandsbediening geprogrammeerd voor alles. Heerlijk rustig.",
+      name: "Wim de Vries",
+    },
+    {
+      quote:
+        "Eerlijk verteld dat het scherm zelf kapot was en waar ik terechtkon.",
+      name: "Nadia A.",
+    },
+  ],
+};
 
 export type FaqItem = { q: string; a: string };
 

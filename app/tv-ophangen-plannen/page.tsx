@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PlanLanding from "@/components/PlanLanding";
-import { priceCards, type FaqItem } from "@/lib/content";
+import { priceCards, reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { absUrl } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
@@ -104,6 +104,7 @@ export default function TvOphangenPlannenPage() {
         </>
       }
       reviewsTitel="Klanten over het ophangen van hun tv"
+      reviewsItems={reviewsPerDienst["tv-ophangen"]}
       faqTitel="Veelgestelde vragen over tv ophangen"
       faqItems={faqItems}
       image={heroFoto}

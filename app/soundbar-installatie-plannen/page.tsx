@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PlanLanding from "@/components/PlanLanding";
-import { type FaqItem } from "@/lib/content";
+import { reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { absUrl } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import heroFoto from "@/public/images/dienst-soundbar.jpg";
@@ -116,6 +116,7 @@ export default function SoundbarInstallatiePlannenPage() {
         </>
       }
       reviewsTitel="Klanten over hun geluidsinstallatie"
+      reviewsItems={reviewsPerDienst["soundbar-installatie"]}
       faqTitel="Veelgestelde vragen over soundbar installeren"
       faqItems={faqItems}
       image={heroFoto}

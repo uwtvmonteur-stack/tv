@@ -30,8 +30,9 @@ export default function StickyCta() {
   if (pathname === "/contact") return null;
 
   // Op landingspagina's met een eigen formulier scrollen we daarheen in plaats
-  // van de bezoeker naar /contact te sturen.
-  const eigenFormulier = pathname === "/tv-ophangen-plannen";
+  // van de bezoeker naar /contact te sturen — anders converteert de helft van
+  // het advertentieverkeer alsnog op een andere pagina en is de test waardeloos.
+  const eigenFormulier = pathname.endsWith("-plannen");
 
   const btn =
     "flex flex-1 items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold whitespace-nowrap transition-transform duration-300 ease-fluid active:scale-[0.98]";

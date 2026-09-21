@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
-import { IconArrowUpRight, IconCheck } from "./icons";
+import { IconArrowUpRight } from "./icons";
 import { trackAdsConversion, trackEvent } from "./Analytics";
 import { SITE, TRACKING } from "@/lib/site";
 
@@ -44,16 +44,6 @@ const inputStyles =
 
 const labelStyles =
   "mb-1.5 block text-[11px] font-semibold tracking-[0.14em] text-ink-soft uppercase";
-
-// Staan direct onder de verzendknop: nemen de laatste twijfel weg op het moment
-// dat iemand op het punt staat te klikken. "Vrijblijvend" eerst — dat is bij een
-// aanvraagformulier de grootste rem.
-const zekerheden = [
-  "Vrijblijvend",
-  "Vaste prijs vooraf",
-  "Geen aanbetaling",
-  "Volledig verzekerd",
-];
 
 type Status = "idle" | "submitting" | "success" | "mailto" | "error";
 
@@ -398,16 +388,9 @@ export default function ContactForm({
         </span>
       </button>
 
-      <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1.5 text-xs font-medium text-ink-soft">
-        {zekerheden.map((z) => (
-          <li key={z} className="flex items-center gap-1.5">
-            <IconCheck className="h-3 w-3 text-amber-700" />
-            {z}
-          </li>
-        ))}
-      </ul>
-
-      {status === "error" ? (
+      {/* Onder de knop staat alleen nog wat er móet staan: de foutmelding als
+          het versturen mislukt, en de verwijzing naar de privacyverklaring. */}
+      {status === "error" && (
         <p
           ref={errorRef}
           tabIndex={-1}
@@ -424,15 +407,9 @@ export default function ContactForm({
           </a>
           — dan plannen we het direct in.
         </p>
-      ) : (
-        <p className="text-center text-xs leading-relaxed text-ink-soft">
-          {SITE.reactie}
-        </p>
       )}
 
-      <p className="text-center text-[11px] leading-relaxed text-ink-soft/80">
-        Uw gegevens gebruiken we alleen om contact met u op te nemen over uw
-        aanvraag.{" "}
+      <p className="text-center text-[11px] text-ink-soft/80">
         <Link href="/privacy" className="underline underline-offset-2">
           Privacyverklaring
         </Link>

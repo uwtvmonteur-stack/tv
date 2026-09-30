@@ -54,13 +54,13 @@ export default function TvOphangenPlannenPage() {
       variant="tv-ophangen-plannen"
       eyebrow="Tv ophangen aan huis · heel Nederland"
       titel="Tv laten ophangen?"
-      titelAccent="Kies uw moment, wij doen de rest."
-      intro="Laat uw tv ophangen door een ervaren monteur: waterpas aan de muur, kabels netjes weggewerkt en alles aangesloten — u hoeft zelf niets te doen. U geeft alleen door wanneer het u uitkomt; wij bevestigen binnen enkele uren."
+      titelAccent="Aan élke muur, ook gipswand."
+      intro="Bezorgdiensten van elektronicawinkels hangen uw tv alleen op aan massief steen of beton. Bij een gipswand, holle wand of houten wand krijgt u nee. Wij doen het wél — met bevestiging die bij uw wand past, en we rekenen eerst het draagvermogen na."
       zekerheden={[
-        "Ervaren monteurs, volledig verzekerd werk",
-        "Waterpas opgehangen, kabels netjes weggewerkt",
-        "Vaste prijs vooraf — geen verrassingen achteraf",
-        "Ook 's avonds en in het weekend, zonder toeslag",
+        "Elke muur: steen, beton, gipswand, holle of houten wand",
+        "Draagvermogen vooraf nagerekend, daarna waterpas opgehangen",
+        "Eigen monteurs in loondienst, volledig verzekerd werk",
+        "Vaste prijs vooraf — u betaalt pas als hij hangt en werkt",
       ]}
       formulierTitel="Plan uw afspraak"
       formulierIntro="Geef door wanneer het u schikt. Wij bevestigen binnen enkele uren — en u zit nergens aan vast."
@@ -84,7 +84,7 @@ export default function TvOphangenPlannenPage() {
         "Kabels netjes wegwerken en het boorafval meenemen",
       ]}
       prijsTitel="Wat kost tv laten ophangen?"
-      prijsIntro="De prijs voor tv ophangen hangt alleen af van het schermformaat — voorrijkosten en btw zitten er altijd in. Wat we vooraf afspreken, is wat u betaalt. Geen uurtarief, geen meerwerk achteraf."
+      prijsIntro="De prijs hangt alleen af van het schermformaat, want dat bepaalt het werk: een scherm vanaf 65 inch is zwaar en kwetsbaar, vraagt een stevigere beugel en wordt door twee monteurs opgehangen. Voorrijkosten, montagemateriaal en btw zitten er altijd in. Wat we vooraf afspreken, is wat u betaalt — geen uurtarief, geen meerwerk achteraf."
       prijzen={priceCards.map((kaart) => ({
         label: kaart.size,
         prijs: kaart.price,
@@ -105,6 +105,29 @@ export default function TvOphangenPlannenPage() {
           kantelbaar of draaibaar.
         </>
       }
+      uitdagingen={{
+        titel: "Een gipswand of holle wand? Juist dan komen wij langs.",
+        intro:
+          "Dit is waar de bezorgservice van de winkel afhaakt en waar wij het verschil maken. Twijfelt u of uw tv veilig blijft hangen, dan lost de monteur dat ter plekke op — of hij zegt u eerlijk dat het niet kan.",
+        items: [
+          {
+            kop: "Gipswand of metal stud",
+            tekst:
+              "We zoeken het stalen frame achter de platen, of gebruiken speciale holle-wandbevestiging die het gewicht verdeelt. Daarna hangt uw tv net zo stevig als op steen.",
+          },
+          {
+            kop: "Holle of houten wand",
+            tekst:
+              "Een voorzetwand, schuine wand of houten beschot is voor ons geen reden om af te zeggen. De monteur bepaalt bij u thuis de veilige oplossing.",
+          },
+          {
+            kop: "Grote tv vanaf 65 inch",
+            tekst:
+              "Zwaar en kwetsbaar, dus geen eenmanswerk. Wij komen met twee monteurs en een beugel die het gewicht van uw scherm echt draagt.",
+          },
+        ],
+        slot: "Weet u niet zeker wat voor muur u heeft? Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich.",
+      }}
       reviewsTitel="Klanten over het ophangen van hun tv"
       reviewsItems={reviewsPerDienst["tv-ophangen"]}
       faqTitel="Veelgestelde vragen over tv ophangen"

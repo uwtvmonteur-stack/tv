@@ -7,7 +7,7 @@ import Faq from "./Faq";
 import JsonLd from "./JsonLd";
 import Reveal from "./Reveal";
 import Reviews from "./Reviews";
-import { Stars } from "./ui";
+import { BezelCard, Stars } from "./ui";
 import { IconArrowUpRight, IconCheck, IconClock, IconShield } from "./icons";
 import type { FaqItem, Review } from "@/lib/content";
 import { faqJsonLd, serviceJsonLd } from "@/lib/seo";
@@ -47,6 +47,19 @@ export type PlanLandingProps = {
   prijsIntro: string;
   prijzen: PrijsKaart[];
   prijsNoot: ReactNode;
+  /**
+   * Blok direct onder de hero: de situaties waarin de concurrentie afhaakt.
+   * Bezorgdiensten van elektronicawinkels monteren alleen aan massief steen of
+   * beton; wie een gipswand of holle wand heeft, krijgt daar nee. Dat is het
+   * sterkste onderscheid dat we hebben, dus het staat hoog en niet in een
+   * voetnoot. Laat weg bij diensten waar het niet speelt.
+   */
+  uitdagingen?: {
+    titel: string;
+    intro: string;
+    items: { kop: string; tekst: string }[];
+    slot: string;
+  };
   reviewsTitel: string;
   /** Beoordelingen over déze dienst; kies de set uit `reviewsPerDienst`. */
   reviewsItems: Review[];
@@ -92,6 +105,7 @@ export default function PlanLanding({
   prijsIntro,
   prijzen,
   prijsNoot,
+  uitdagingen,
   reviewsTitel,
   reviewsItems,
   faqTitel,
@@ -209,6 +223,50 @@ export default function PlanLanding({
           </Reveal>
         </div>
       </section>
+
+      {/* Staat bewust vóór de stappen en de prijs: wie hier terechtkomt met een
+          moeilijke wand wil éérst weten of het überhaupt kan. */}
+      {uitdagingen && (
+        <section className="px-2 pt-12 md:px-6">
+          <div className="mx-auto max-w-7xl rounded-[2.5rem] bg-cream-deep px-4 py-14 md:px-8 md:py-16">
+            <div className="mx-auto max-w-6xl">
+              <Reveal>
+                <h2 className="max-w-3xl font-display text-3xl font-bold tracking-tight md:text-4xl">
+                  {uitdagingen.titel}
+                </h2>
+                <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+                  {uitdagingen.intro}
+                </p>
+              </Reveal>
+              <ul className="mt-8 grid gap-4 md:grid-cols-3">
+                {uitdagingen.items.map((item, i) => (
+                  <li key={item.kop} className="h-full">
+                    <Reveal delay={i * 60} className="h-full">
+                      <BezelCard
+                        className="h-full"
+                        innerClassName="flex h-full flex-col gap-3 p-7"
+                      >
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-600/10 text-amber-700">
+                          <IconCheck className="h-4 w-4" />
+                        </span>
+                        <h3 className="font-display text-lg font-bold tracking-tight">
+                          {item.kop}
+                        </h3>
+                        <p className="text-[15px] leading-relaxed text-ink-soft">
+                          {item.tekst}
+                        </p>
+                      </BezelCard>
+                    </Reveal>
+                  </li>
+                ))}
+              </ul>
+              <Reveal>
+                <p className="mt-8 max-w-2xl font-medium">{uitdagingen.slot}</p>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8 md:py-20">
         <Reveal>

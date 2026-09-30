@@ -172,14 +172,24 @@ export default function TvOphangenPage() {
           { name: "Tv ophangen", href: "/tv-ophangen" },
         ]}
         eyebrow="Tv ophangen · aan huis · heel Nederland"
-        title="Tv ophangen aan huis"
-        intro="Laat uw televisie veilig, waterpas en zonder zichtbare kabels aan de muur hangen — precies op de juiste kijkhoogte. Onze monteur komt bij u aan huis met al het benodigde montagemateriaal en is gemiddeld binnen een uur klaar."
+        title="Tv laten ophangen"
+        intro="U wijst aan waar hij moet hangen, wij doen de rest: de juiste hoogte voor uw bank, kaarsrecht opgehangen, kabels weggewerkt en alles aangesloten. U hoeft niets voor te bereiden en niets op te ruimen."
         benefits={[
-          "Elke beugel & elke muur: vast, kantelbaar of draaibaar",
-          "Waterpas gemonteerd én op belasting getest",
-          "Kabels netjes weggewerkt en alles aangesloten",
-          "Vaste prijs vooraf — u betaalt pas als alles werkt",
+          "Kaarsrecht opgehangen, op de hoogte die bij uw bank past",
+          "Kabels netjes weggewerkt — u ziet er niets meer van",
+          "Elke muur: steen, beton, gipswand of holle wand",
+          "Vaste prijs vooraf — u betaalt pas als hij hangt en werkt",
         ]}
+        formulier={{
+          titel: "Plan uw afspraak",
+          intro:
+            "Geef door wanneer het u schikt. Wij bevestigen binnen enkele uren — en u zit nergens aan vast.",
+          submitLabel: "Plan mijn afspraak",
+          variant: "tv-ophangen",
+          berichtLabel: "Wat moet er opgehangen worden?",
+          berichtPlaceholder:
+            "Bijv. het formaat van uw tv, het type muur en of u al een beugel heeft…",
+        }}
         image={heroFoto}
         imageAlt="Monteur hangt een grote televisie waterpas aan de woonkamermuur"
       />
@@ -212,12 +222,41 @@ export default function TvOphangenPage() {
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+            Wat is inbegrepen bij het ophangen van een tv?
+          </h2>
+          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+            Bij onze tv-ophangservice regelen we alles van begin tot eind. U
+            hoeft zelf niets voor te bereiden.
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <CheckList
+            items={inbegrepen}
+            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
+          />
+        </Reveal>
+      </section>
+
+      {/* Bewijs komt ná de belofte en vóór de prijs: eerst vertellen wat we
+          leveren, dan laten zien dat we het leveren, dan wat het kost. */}
+      <div id="reviews" className="pt-6">
+        <Reviews
+          title="Klanten over het ophangen van hun tv"
+          items={reviewsPerDienst["tv-ophangen"]}
+        />
+      </div>
+
+      <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
+        <Reveal>
+          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
             Wat kost een tv ophangen?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
-            Vaste prijzen op basis van het schermformaat, altijd inclusief
-            voorrijkosten en btw. De prijs die we vooraf afspreken is de prijs
-            die u betaalt.
+            De prijs hangt alleen af van het schermformaat, want dat bepaalt het
+            werk: een scherm vanaf 65 inch is zwaar en kwetsbaar, vraagt een
+            stevigere beugel en wordt door twee monteurs opgehangen.
+            Voorrijkosten, montagemateriaal en btw zitten er altijd in. De prijs
+            die we vooraf afspreken is de prijs die u betaalt.
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
             <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
@@ -240,22 +279,6 @@ export default function TvOphangenPage() {
             </Link>
             .
           </p>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Wat is inbegrepen bij het ophangen van een tv?
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
-            Bij onze tv-ophangservice regelen we alles van begin tot eind. U
-            hoeft zelf niets voor te bereiden.
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={inbegrepen}
-            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
-          />
         </Reveal>
 
         <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />
@@ -405,10 +428,6 @@ export default function TvOphangenPage() {
         />
       </section>
 
-      <Reviews
-        title="Klanten over het ophangen van hun tv"
-        items={reviewsPerDienst["tv-ophangen"]}
-      />
 
       <CtaSection
         title="Tv ophangen? Plan direct een afspraak"

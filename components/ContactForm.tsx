@@ -338,8 +338,7 @@ export default function ContactForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="datum" className={labelStyles}>
-              Gewenste dag{" "}
-              <span className="normal-case">(optioneel, vanaf morgen)</span>
+              Gewenste dag <span className="normal-case">(optioneel)</span>
             </label>
             <input
               id="datum"

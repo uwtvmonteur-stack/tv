@@ -3,10 +3,21 @@ import Link from "next/link";
 import type { StaticImageData } from "next/image";
 import type { ReactNode } from "react";
 import Reveal from "./Reveal";
+import ContactForm from "./ContactForm";
 import Breadcrumbs, { type Crumb } from "./Breadcrumbs";
 import { Eyebrow, Stars } from "./ui";
 import { IconArrowUpRight, IconCheck, IconClock, IconShield } from "./icons";
 import { SITE } from "@/lib/site";
+
+export type HeroFormulier = {
+  titel: string;
+  intro: string;
+  submitLabel: string;
+  /** Komt als parameter mee in het GA4-event, zodat we per pagina kunnen meten. */
+  variant: string;
+  berichtLabel: string;
+  berichtPlaceholder: string;
+};
 
 export default function ServiceHero({
   crumbs,
@@ -17,6 +28,7 @@ export default function ServiceHero({
   image,
   imageAlt,
   priority = true,
+  formulier,
 }: {
   crumbs: Crumb[];
   eyebrow: string;
@@ -26,9 +38,22 @@ export default function ServiceHero({
   image: StaticImageData;
   imageAlt: string;
   priority?: boolean;
+  /**
+   * Zet een afspraakformulier in een eigen blok direct ónder de hero, en laat
+   * de knop in de hero daarheen springen in plaats van naar /contact.
+   *
+   * Bewust níet in de hero zelf: een formulierkaart naast de tekstkolom vult de
+   * hele hero, waardoor de foto erachter niet meer te zien is. De foto ís hier
+   * het verkoopargument — hij laat zien wat de klant koopt — dus die houdt de
+   * hero, en het formulier staat één tik lager zonder paginawissel.
+   *
+   * Laat weg op pagina's die alleen informeren (stad, provincie).
+   */
+  formulier?: HeroFormulier;
 }) {
   return (
-    <header className="mx-auto w-full max-w-6xl px-4 pt-32 pb-6 md:px-8 md:pt-40">
+    <>
+      <header className="mx-auto w-full max-w-6xl px-4 pt-32 pb-6 md:px-8 md:pt-40">
       <Breadcrumbs items={crumbs} />
       <div className="mt-8 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <Reveal immediate>
@@ -56,10 +81,10 @@ export default function ServiceHero({
                 footer, zodat niets de afspraakknop beconcurreert. */}
             <div className="mt-8">
               <Link
-                href="/contact"
+                href={formulier ? "#afspraak" : "/contact"}
                 className="group flex w-full items-center justify-center gap-3 rounded-full bg-ink py-2.5 pr-2.5 pl-7 text-base font-semibold text-cream transition-transform duration-300 ease-fluid active:scale-[0.98] sm:w-auto sm:inline-flex"
               >
-                Plan een afspraak
+                {formulier ? "Plan uw afspraak" : "Plan een afspraak"}
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                   <IconArrowUpRight className="h-4 w-4" />
                 </span>
@@ -108,7 +133,41 @@ export default function ServiceHero({
             </div>
           </div>
         </Reveal>
-      </div>
-    </header>
+        </div>
+      </header>
+
+      {formulier && (
+        <section
+          id="afspraak"
+          className="mx-auto w-full max-w-6xl px-4 pt-12 md:px-8 md:pt-14"
+        >
+          {/* `immediate`: dit is het conversiepunt en mag nooit even onzichtbaar
+              zijn door de scroll-animatie. */}
+          <Reveal immediate>
+            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5">
+              <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
+                <div className="max-w-2xl">
+                  <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+                    {formulier.titel}
+                  </h2>
+                  <p className="mt-3 leading-relaxed text-ink-soft">
+                    {formulier.intro}
+                  </p>
+                </div>
+                <div className="mt-8">
+                  <ContactForm
+                    planner
+                    variant={formulier.variant}
+                    submitLabel={formulier.submitLabel}
+                    berichtLabel={formulier.berichtLabel}
+                    berichtPlaceholder={formulier.berichtPlaceholder}
+                  />
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+      )}
+    </>
   );
 }

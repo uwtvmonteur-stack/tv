@@ -4,7 +4,14 @@ import { absUrl } from "@/lib/seo";
 
 export type Crumb = { name: string; href: string };
 
-export default function Breadcrumbs({ items }: { items: Crumb[] }) {
+export default function Breadcrumbs({
+  items,
+  light = false,
+}: {
+  items: Crumb[];
+  /** Voor een donkere achtergrond, zoals de hero met formulier. */
+  light?: boolean;
+}) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -19,7 +26,10 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
     <>
       <JsonLd data={jsonLd} />
-      <nav aria-label="Kruimelpad" className="text-xs text-ink-soft">
+      <nav
+        aria-label="Kruimelpad"
+        className={`text-xs ${light ? "text-white/60" : "text-ink-soft"}`}
+      >
         <ol className="flex flex-wrap items-center gap-1.5">
           {items.map((crumb, i) => {
             const isLast = i === items.length - 1;
@@ -27,13 +37,18 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
               <li key={crumb.href} className="flex items-center gap-1.5">
                 {i > 0 && <span aria-hidden>/</span>}
                 {isLast ? (
-                  <span aria-current="page" className="font-medium text-ink">
+                  <span
+                    aria-current="page"
+                    className={`font-medium ${light ? "text-white" : "text-ink"}`}
+                  >
                     {crumb.name}
                   </span>
                 ) : (
                   <Link
                     href={crumb.href}
-                    className="transition-colors duration-300 ease-fluid hover:text-ink"
+                    className={`transition-colors duration-300 ease-fluid ${
+                      light ? "hover:text-white" : "hover:text-ink"
+                    }`}
                   >
                     {crumb.name}
                   </Link>

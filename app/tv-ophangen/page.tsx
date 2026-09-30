@@ -180,16 +180,6 @@ export default function TvOphangenPage() {
           "Elke muur: steen, beton, gipswand of holle wand",
           "Vaste prijs vooraf — u betaalt pas als hij hangt en werkt",
         ]}
-        formulier={{
-          titel: "Plan uw afspraak",
-          intro:
-            "Geef door wanneer het u schikt. Wij bevestigen binnen enkele uren — en u zit nergens aan vast.",
-          submitLabel: "Plan mijn afspraak",
-          variant: "tv-ophangen",
-          berichtLabel: "Wat moet er opgehangen worden?",
-          berichtPlaceholder:
-            "Bijv. het formaat van uw tv, het type muur en of u al een beugel heeft…",
-        }}
         image={heroFoto}
         imageAlt="Monteur hangt een grote televisie waterpas aan de woonkamermuur"
       />

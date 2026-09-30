@@ -153,6 +153,32 @@ export default function TvInstallatiePage() {
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+            Wat is inbegrepen bij de tv installatie?
+          </h2>
+          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+            Bij een standaard tv installatie regelen wij onder andere:
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <CheckList
+            items={inbegrepen}
+            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
+          />
+        </Reveal>
+      </section>
+
+      {/* Bewijs komt ná de belofte en vóór de prijs: eerst vertellen wat we
+          leveren, dan laten zien dat we het leveren, dan wat het kost. */}
+      <div id="reviews" className="pt-6">
+        <Reviews
+          title="Klanten over hun tv installatie"
+          items={reviewsPerDienst["tv-installatie"]}
+        />
+      </div>
+
+      <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
+        <Reveal>
+          <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
             Wat kost een tv installatie aan huis?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -165,21 +191,6 @@ export default function TvInstallatiePage() {
               Complete tv installatie — vaste prijs €70
             </span>
           </div>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Wat is inbegrepen bij de tv installatie?
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
-            Bij een standaard tv installatie regelen wij onder andere:
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={inbegrepen}
-            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
-          />
         </Reveal>
 
         <Reveal>
@@ -304,10 +315,6 @@ export default function TvInstallatiePage() {
         />
       </section>
 
-      <Reviews
-        title="Klanten over hun tv installatie"
-        items={reviewsPerDienst["tv-installatie"]}
-      />
 
       <CtaSection
         title="Uw nieuwe tv. Wij regelen de rest."

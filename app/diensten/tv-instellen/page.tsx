@@ -144,6 +144,29 @@ export default function TvInstellenPage() {
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+            Waarmee we u helpen
+          </h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <CheckList
+            items={hulpItems}
+            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
+          />
+        </Reveal>
+      </section>
+
+      {/* Bewijs komt ná de belofte en vóór de prijs: eerst vertellen wat we
+          leveren, dan laten zien dat we het leveren, dan wat het kost. */}
+      <div id="reviews" className="pt-6">
+        <Reviews
+          title="Klanten over onze hulp aan huis"
+          items={reviewsPerDienst["tv-instellen"]}
+        />
+      </div>
+
+      <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
+        <Reveal>
+          <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
             Wat kost tv hulp aan huis?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -173,18 +196,6 @@ export default function TvInstellenPage() {
             </Link>
             .
           </p>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
-            Waarmee we u helpen
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={hulpItems}
-            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
-          />
         </Reveal>
 
         <Reveal>
@@ -294,10 +305,6 @@ export default function TvInstellenPage() {
         />
       </section>
 
-      <Reviews
-        title="Klanten over onze hulp aan huis"
-        items={reviewsPerDienst["tv-instellen"]}
-      />
 
       <CtaSection
         title="Vandaag nog hulp bij uw tv?"

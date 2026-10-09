@@ -3,6 +3,7 @@ import ServiceHero from "@/components/ServiceHero";
 import Stappen from "@/components/Stappen";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
+import InlineCta from "@/components/InlineCta";
 import Reviews from "@/components/Reviews";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
@@ -210,6 +211,8 @@ export default function TvOphangenPage() {
           </div>
         </Reveal>
 
+        <InlineCta />
+
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
             Wat is inbegrepen bij het ophangen van een tv?
@@ -328,6 +331,16 @@ export default function TvOphangenPage() {
             items={beugelFactoren}
             className="mt-6 grid max-w-4xl gap-3 sm:grid-cols-2"
           />
+          <p className="mt-5 max-w-2xl text-sm text-ink-soft">
+            Wilt u zelf controleren of een beugel op uw tv past?{" "}
+            <Link
+              href="/kennisbank/welke-tv-beugel"
+              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+            >
+              Zo meet u de VESA-maat
+            </Link>
+            .
+          </p>
         </Reveal>
 
         <Reveal>
@@ -349,6 +362,17 @@ export default function TvOphangenPage() {
               scherm iets naar beneden richt en comfortabel blijft kijken zonder
               reflectie of nekklachten. Onze monteur bepaalt de hoogte altijd
               samen met u vóórdat er geboord wordt.
+            </p>
+            <p>
+              Wilt u het zelf narekenen?{" "}
+              <Link
+                href="/kennisbank/hoe-hoog-tv-ophangen"
+                className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              >
+                In onze kennisbank staat de rekenregel met een tabel per
+                schermformaat
+              </Link>
+              .
             </p>
           </div>
         </Reveal>
@@ -420,6 +444,8 @@ export default function TvOphangenPage() {
             ["/tv-ophangen-gipswand", "Tv ophangen aan gipswand"],
             ["/diensten/tv-installatie", "Complete tv installatie"],
             ["/diensten/soundbar-installatie", "Soundbar installeren"],
+            ["/kennisbank/hoe-hoog-tv-ophangen", "Hoe hoog ophangen?"],
+            ["/kennisbank", "Kennisbank"],
             ["/prijzen", "Bekijk onze prijzen"],
           ]}
         />

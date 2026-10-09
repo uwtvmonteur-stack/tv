@@ -66,6 +66,36 @@ export function faqJsonLd(items: FaqItem[]) {
   };
 }
 
+/**
+ * Article-schema voor een kennisbankartikel. `headline` is de vraag zoals een
+ * bezoeker die stelt; dat is ook het fragment waarop Google het artikel toont.
+ */
+export function artikelJsonLd({
+  titel,
+  beschrijving,
+  path,
+  datum,
+}: {
+  titel: string;
+  beschrijving: string;
+  path: string;
+  datum: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: titel,
+    description: beschrijving,
+    url: absUrl(path),
+    datePublished: datum,
+    dateModified: datum,
+    inLanguage: "nl-NL",
+    author: { "@id": `${SITE.url}/#bedrijf` },
+    publisher: { "@id": `${SITE.url}/#bedrijf` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": absUrl(path) },
+  };
+}
+
 export function serviceJsonLd({
   name,
   description,

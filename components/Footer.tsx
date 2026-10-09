@@ -121,6 +121,14 @@ export default function Footer() {
               )}
               <li>
                 <Link
+                  href="/kennisbank"
+                  className="transition-colors duration-300 ease-fluid hover:text-white"
+                >
+                  Kennisbank
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/over-ons"
                   className="transition-colors duration-300 ease-fluid hover:text-white"
                 >

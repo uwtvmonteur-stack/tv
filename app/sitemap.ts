@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
 import { provincies, steden } from "@/lib/steden";
 import { diensten, dienstHref } from "@/lib/content";
+import { artikelen } from "@/lib/kennisbank";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -23,6 +24,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...diensten.map((dienst) => entry(dienstHref(dienst), 0.9)),
     entry("/tv-ophangen-gipswand", 0.9),
     entry("/prijzen", 0.9),
+    entry("/kennisbank", 0.7, "weekly"),
+    ...artikelen.map((artikel) => entry(`/kennisbank/${artikel.slug}`, 0.6)),
     entry("/werkgebied", 0.8, "weekly"),
     ...provincies.map((provincie) =>
       entry(`/werkgebied/${provincie.slug}`, 0.8),

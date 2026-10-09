@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ServiceHero from "@/components/ServiceHero";
 import CtaSection from "@/components/CtaSection";
+import InlineCta from "@/components/InlineCta";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
@@ -167,6 +168,8 @@ export default async function StadPage({
             </ul>
           </div>
         </Reveal>
+
+        <InlineCta text={`Vaste prijs vooraf, ook aan gipswand of holle wand. Kies een dag die u schikt; u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid in ${stad.naam}.`} />
 
         <DienstenMiniGrid plaats={stad.naam} />
 

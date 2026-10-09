@@ -2,6 +2,7 @@ import Link from "next/link";
 import ServiceHero from "@/components/ServiceHero";
 import Stappen from "@/components/Stappen";
 import CtaSection from "@/components/CtaSection";
+import InlineCta from "@/components/InlineCta";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
@@ -192,6 +193,8 @@ export default function TvInstallatiePage() {
             </span>
           </div>
         </Reveal>
+
+        <InlineCta text="Vaste prijs vooraf. Wij gaan pas weg als uw tv hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht." />
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">

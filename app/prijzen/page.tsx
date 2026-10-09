@@ -1,5 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import CtaSection from "@/components/CtaSection";
+import InlineCta from "@/components/InlineCta";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
@@ -81,6 +82,8 @@ export default function PrijzenPage() {
         <div className="mt-8">
           <PriceCards headingLevel="h3" />
         </div>
+
+        <InlineCta title="Dit is de prijs die u betaalt" text="Geen voorrijkosten, geen btw-verrassing en geen meerwerk zonder uw toestemming. Kies een dag die u schikt; u krijgt binnen enkele uren bericht." />
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">

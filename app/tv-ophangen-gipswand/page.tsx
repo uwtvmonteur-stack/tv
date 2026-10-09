@@ -3,6 +3,7 @@ import ServiceHero from "@/components/ServiceHero";
 import Stappen from "@/components/Stappen";
 import Faq from "@/components/Faq";
 import CtaSection from "@/components/CtaSection";
+import InlineCta from "@/components/InlineCta";
 import Reviews from "@/components/Reviews";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
@@ -246,6 +247,8 @@ export default function TvOphangenGipswandPage() {
           </p>
         </Reveal>
 
+        <InlineCta />
+
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
             Veelgestelde vragen over tv ophangen aan gipswand
@@ -267,6 +270,8 @@ export default function TvOphangenGipswandPage() {
         <RelatedLinks
           items={[
             ["/tv-ophangen", "Tv ophangen"],
+            ["/kennisbank/tv-ophangen-gipswand-plug", "Welke plug in gipswand?"],
+            ["/kennisbank/welke-tv-beugel", "Welke beugel past?"],
             ["/prijzen", "Prijzen"],
             ["/diensten/tv-installatie", "Tv installatie"],
             ["/contact", "Afspraak maken"],

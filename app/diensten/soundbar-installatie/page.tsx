@@ -24,7 +24,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import familieImg from "@/public/images/dienst-soundbar.jpg";
 
 export const metadata = pageMeta({
-  title: "Soundbar Installeren — v.a. €49",
+  title: "Soundbar Laten Installeren aan Huis",
   description:
     "Soundbar laten installeren? Wij monteren, sluiten aan en stellen het geluid af op uw kamer — ook surround en home-cinema. Vanaf €49.",
   path: "/diensten/soundbar-installatie",

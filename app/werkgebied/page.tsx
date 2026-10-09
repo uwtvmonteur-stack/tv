@@ -10,9 +10,9 @@ import { provincies, stedenInProvincie } from "@/lib/steden";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Werkgebied — Tv Monteur bij U in de Buurt",
+  title: "Ons Werkgebied — Tv Monteur aan Huis",
   description:
-    "Onze tv monteurs zijn actief in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Bekijk alle steden waar we tv's ophangen — vaak binnen 24 uur.",
+    "Onze tv monteurs zijn actief in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Bekijk alle steden waar we aan huis komen.",
   path: "/werkgebied",
 });
 

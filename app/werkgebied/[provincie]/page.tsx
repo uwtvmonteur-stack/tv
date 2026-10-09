@@ -30,7 +30,7 @@ export async function generateMetadata({
   if (!provincie) return {};
   return {
     ...pageMeta({
-      title: `Tv Monteur in de Provincie ${provincie.naam} — Vanaf €99`,
+      title: `Tv Monteur ${provincie.naam}`,
       description: `Tv monteur nodig in de provincie ${provincie.naam}? Tv ophangen, installeren en instellen aan huis. Vaak binnen 24 uur, vaste prijzen incl. voorrijkosten.`,
       path: `/werkgebied/${provincie.slug}`,
     }),

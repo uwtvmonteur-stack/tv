@@ -60,6 +60,9 @@ const graph = {
       telephone: SITE.phone,
       email: SITE.email,
       image: `${SITE.url}/og.jpg`,
+      // Google gebruikt `logo` voor merkweergave en het kennispaneel; zonder
+      // dit veld valt het terug op een willekeurige afbeelding van de pagina.
+      logo: `${SITE.url}/logo.svg`,
       vatID: SITE.btw,
       identifier: {
         "@type": "PropertyValue",

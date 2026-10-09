@@ -17,7 +17,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroImg from "@/public/images/dienst-tv-installatie.jpg";
 
 export const metadata = pageMeta({
-  title: "Tv Installatie aan Huis — Vaste Prijs €70",
+  title: "Tv Laten Installeren aan Huis",
   description:
     "Nieuwe tv gekocht? Wij maken hem gebruiksklaar aan huis: aansluiten, zenders, wifi en apps instellen en uitleg. Vaste prijs €70. Ophangen kan als optie.",
   path: "/diensten/tv-installatie",

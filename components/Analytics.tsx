@@ -48,11 +48,11 @@ export default function Analytics() {
       const a = (e.target as HTMLElement | null)?.closest?.("a");
       if (!a) return;
       const href = a.getAttribute("href") ?? "";
+      // Alleen telefoonkliks: WhatsApp is uitgeschakeld (SITE.whatsapp is leeg),
+      // dus een whatsapp_klik-event zou alleen de rapportage vervuilen.
       if (href.startsWith("tel:")) {
         trackEvent("telefoon_klik", { pagina: location.pathname });
         trackAdsConversion(TRACKING.adsCallConversion);
-      } else if (href.includes("wa.me") || href.includes("whatsapp")) {
-        trackEvent("whatsapp_klik", { pagina: location.pathname });
       }
     }
     document.addEventListener("click", onClick, { capture: true });

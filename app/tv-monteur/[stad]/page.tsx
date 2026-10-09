@@ -32,8 +32,8 @@ export async function generateMetadata({
   const provincie = provincieBySlug(stad.provincie);
   return {
     ...pageMeta({
-      title: `Tv Monteur ${stad.naam} — Vanaf €99`,
-      description: `Tv monteur nodig in ${stad.naam}? Tv ophangen vanaf €99, inclusief voorrijkosten. Vaak binnen 24 uur bij u thuis, 7 dagen per week.`,
+      title: `Tv Monteur ${stad.naam} — Aan Huis`,
+      description: `Tv monteur nodig in ${stad.naam}? Tv ophangen, installeren en instellen aan huis. Vaste prijs vooraf, vaak binnen 24 uur bij u thuis.`,
       path: `/tv-monteur/${stad.slug}`,
     }),
     other: {

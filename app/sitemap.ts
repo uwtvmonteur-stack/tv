@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/", 1, "weekly"),
     entry("/diensten", 0.9),
     ...diensten.map((dienst) => entry(dienstHref(dienst), 0.9)),
+    entry("/tv-ophangen-gipswand", 0.9),
     entry("/prijzen", 0.9),
     entry("/werkgebied", 0.8, "weekly"),
     ...provincies.map((provincie) =>

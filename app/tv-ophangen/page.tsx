@@ -17,9 +17,9 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
 export const metadata = pageMeta({
-  title: "Tv ophangen aan huis vanaf €99",
+  title: "Tv Laten Ophangen — Ook aan Gipswand",
   description:
-    "Tv ophangen aan huis door een ervaren monteur: vast, kantelbaar of draaibaar, waterpas en met weggewerkte kabels. Vaste prijzen vanaf €99, incl. btw.",
+    "Tv laten ophangen door een ervaren monteur: waterpas, kabels weggewerkt en aan elke muur — ook gipswand en holle wand. Vaste prijs vooraf, incl. btw.",
   path: "/tv-ophangen",
 });
 
@@ -280,7 +280,14 @@ export default function TvOphangenPage() {
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
             Elke muur vraagt om een andere aanpak en bevestiging. Onze monteurs
             herkennen het muurtype en kiezen de juiste pluggen, zodat uw tv
-            overal veilig hangt.
+            overal veilig hangt. Heeft u een{" "}
+            <Link
+              href="/tv-ophangen-gipswand"
+              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+            >
+              gipswand of holle wand
+            </Link>
+            ? Daar leest u precies hoe we dat aanpakken.
           </p>
         </Reveal>
         <Reveal delay={100}>
@@ -410,10 +417,10 @@ export default function TvOphangenPage() {
 
         <RelatedLinks
           items={[
+            ["/tv-ophangen-gipswand", "Tv ophangen aan gipswand"],
             ["/diensten/tv-installatie", "Complete tv installatie"],
             ["/diensten/soundbar-installatie", "Soundbar installeren"],
             ["/prijzen", "Bekijk onze prijzen"],
-            ["/contact", "Neem contact op"],
           ]}
         />
       </section>

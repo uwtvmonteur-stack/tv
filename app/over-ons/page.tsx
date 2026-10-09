@@ -11,7 +11,7 @@ import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 export const metadata = pageMeta({
   title: "Over Ons — Eigen, Verzekerde Monteurs",
   description:
-    "Maak kennis met Uw TV Monteur: eigen, ervaren en verzekerde monteurs die door heel Nederland tv's ophangen en installeren. Ruim 12.000 tv's opgehangen.",
+    "Maak kennis met Uw TV Monteur: eigen, ervaren en verzekerde monteurs die door heel Nederland tv's ophangen, installeren en instellen.",
   path: "/over-ons",
 });
 

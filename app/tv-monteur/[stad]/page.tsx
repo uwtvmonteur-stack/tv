@@ -8,9 +8,17 @@ import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
-import DienstenMiniGrid from "@/components/DienstenMiniGrid";
 import { IconArrowUpRight } from "@/components/icons";
-import { usps, type FaqItem } from "@/lib/content";
+import { DienstIcon } from "@/components/ui";
+import {
+  diensten,
+  dienstHref,
+  reviews,
+  reviewsPerDienst,
+  usps,
+  type FaqItem,
+  type Review,
+} from "@/lib/content";
 import { provincieBySlug, stadBySlug, steden } from "@/lib/steden";
 import { lokaalTekst } from "@/lib/stedenLokaal";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
@@ -51,6 +59,27 @@ const waarom = (naam: string) => [
   ...usps.filter((u) => !u.startsWith("Vaak binnen 24 uur")),
 ];
 
+/**
+ * Alle bestaande beoordelingen in één poel, ontdubbeld op quote. Elke stad
+ * toont hier een ander venster uit — dezelfde beoordelingen, andere selectie.
+ * Reden: het reviewsblok leverde 13 van de 25 woordelijk identieke zinnen
+ * tussen twee stadpagina's op en was daarmee de grootste bron van duplicatie.
+ * Er wordt geen beoordeling toegevoegd, herschreven of verwijderd.
+ */
+const reviewPoel: Review[] = [
+  ...reviews,
+  ...Object.values(reviewsPerDienst).flat(),
+].filter(
+  (review, i, lijst) =>
+    lijst.findIndex((ander) => ander.quote === review.quote) === i,
+);
+
+/** "Delft, Dordrecht en Den Haag" — leest als een zin, niet als een lijst. */
+function opsomming(namen: string[]) {
+  if (namen.length <= 1) return namen[0] ?? "";
+  return `${namen.slice(0, -1).join(", ")} en ${namen[namen.length - 1]}`;
+}
+
 export default async function StadPage({
   params,
 }: {
@@ -71,6 +100,17 @@ export default async function StadPage({
   // Varieer de vraagformulering per stad (op volgnummer), zodat de FAQ's niet
   // op alle 32 stadpagina's woordelijk identiek zijn (dunne-content-preventie).
   const qv = stadIndex % 3;
+  // Drie wijken verspreid over de lijst in plaats van de eerste drie: zo noemt
+  // het antwoord per stad andere namen dan het chipsoverzicht hierboven opent.
+  const wijkSelectie = [0, 2, 4]
+    .map((i) => stad.wijken[i % stad.wijken.length])
+    .filter((wijk, i, lijst) => lijst.indexOf(wijk) === i);
+  // Stap 5 per stad: buursteden, die bezoekers het vaakst naast elkaar zien,
+  // krijgen zo een duidelijk andere selectie dan hun buren.
+  const stadReviews = Array.from(
+    { length: 6 },
+    (_, i) => reviewPoel[(stadIndex * 5 + i) % reviewPoel.length],
+  );
   const faqItems: FaqItem[] = [
     {
       q: [
@@ -78,7 +118,7 @@ export default async function StadPage({
         `Wanneer kan er een tv monteur in ${stad.naam} langskomen?`,
         `Hoe snel bent u in ${stad.naam} aan de beurt?`,
       ][qv],
-      a: `In ${stad.naam} kunnen we u vaak al binnen 24 uur helpen, uiterlijk binnen 48 uur — ook 's avonds en in het weekend, zonder toeslag. Vraag online een afspraak aan, dan laten we u binnen enkele uren de eerstvolgende beschikbaarheid weten.`,
+      a: `In ${stad.naam} kunnen we u vaak al binnen 24 uur helpen, uiterlijk binnen 48 uur — ook 's avonds en in het weekend, zonder toeslag. Onze monteurs rijden dagelijks tussen ${stad.naam} en ${opsomming(nabijeSteden.map((s) => s.naam))}, dus er is bijna altijd iemand in de buurt. Vraag online een afspraak aan, dan laten we u binnen enkele uren de eerstvolgende mogelijkheid weten.`,
     },
     {
       q: [
@@ -86,7 +126,7 @@ export default async function StadPage({
         `Wat betaal ik voor tv ophangen in ${stad.naam}?`,
         `Hoeveel kost tv-montage in ${stad.naam}?`,
       ][qv],
-      a: `Tv ophangen in ${stad.naam} start bij €99, altijd inclusief voorrijkosten en btw — de exacte prijs hangt af van het formaat (zie de tarieven hierboven). Kabels wegwerken kan vanaf €39 extra.`,
+      a: `Tv ophangen in ${stad.naam} start bij €99, altijd inclusief voorrijkosten en btw — de exacte prijs hangt af van het schermformaat (zie de tarieven hierboven). Voor ${stad.naam} rekenen we geen voorrijtoeslag, in welke wijk u ook woont. Kabels wegwerken kan vanaf €39 extra.`,
     },
     {
       q: [
@@ -94,7 +134,11 @@ export default async function StadPage({
         `Komen jullie in alle wijken van ${stad.naam}?`,
         `Werken jullie door heel ${stad.naam}?`,
       ][qv],
-      a: `Ja, in alle wijken van ${stad.naam} — zie het overzicht hierboven. Daarnaast komen we in de omliggende plaatsen en de rest van ${provincie.naam}. Staat uw wijk er niet bij? Dan helpen we u vrijwel altijd alsnog.`,
+      a: `Ja. We komen onder meer in ${opsomming(wijkSelectie)}, en net zo goed in de rest van ${stad.naam}. Staat uw wijk er niet bij? Dan helpen we u vrijwel altijd alsnog, net als in de omliggende plaatsen en de rest van ${provincie.naam}.`,
+    },
+    {
+      q: `Hangen jullie ook een tv op aan een gipswand in ${stad.naam}?`,
+      a: `Ja, daar worden we juist vaak voor gebeld. Veel woningen hebben tegenwoordig een voorzetwand of gipsplaat in plaats van massief metselwerk, en daar houdt een gewone plug een tv niet. Onze monteur stelt in ${stad.naam} ter plekke het wandtype vast, zoekt de staanders op en rekent het draagvermogen na voordat er geboord wordt.`,
     },
   ];
 
@@ -133,7 +177,11 @@ export default async function StadPage({
         ]}
         eyebrow={`Tv monteur ${provincie.naam}`}
         title={`Tv monteur in ${stad.naam}`}
-        intro={`Zoekt u een tv monteur in ${stad.naam}? Onze monteur komt bij u aan huis, hangt uw tv veilig en waterpas op, werkt de kabels weg en sluit al uw apparatuur aan — vakkundig en voor een vaste prijs.`}
+        // Bewust `stad.blurb` als intro: die tekst gaat over de bouwstijlen en
+        // woningtypes van déze stad en verschilt dus per pagina. De generieke
+        // intro die hier stond was op alle 32 stadpagina's woordelijk gelijk,
+        // waardoor Google ze als bijna-duplicaten uit de resultaten filterde.
+        intro={stad.blurb}
         benefits={waarom(stad.naam)}
         image={heroFoto}
         imageAlt={`Tv monteur van Uw TV Monteur aan het werk in ${stad.naam}`}
@@ -145,12 +193,10 @@ export default async function StadPage({
             <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
               Tv monteur in elke wijk van {stad.naam}
             </h2>
-            <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
-              Onze monteurs komen door heel {stad.naam} aan huis — van{" "}
-              {stad.wijken[0]} en {stad.wijken[1]} tot{" "}
-              {stad.wijken[stad.wijken.length - 1]}. Waar u ook woont en welk
-              type muur u ook heeft, wij hangen uw tv veilig en waterpas op.
-            </p>
+            {/* Alleen de per-stad geschreven tekst. De inleidende zin die hier
+                stond ("Onze monteurs komen door heel X aan huis — van A en B
+                tot F") was een sjabloon dat op elke stadpagina hetzelfde las;
+                de wijknamen eronder zeggen hetzelfde, maar dan concreet. */}
             {lokaalTekst[stad.slug] && (
               <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
                 {lokaalTekst[stad.slug]}
@@ -171,7 +217,30 @@ export default async function StadPage({
 
         <InlineCta text={`Vaste prijs vooraf, ook aan gipswand of holle wand. Kies een dag die u schikt; u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid in ${stad.naam}.`} />
 
-        <DienstenMiniGrid plaats={stad.naam} />
+        {/* Geen DienstenMiniGrid meer op stadpagina's: die rendert vijf
+            dienstbeschrijvingen die op alle 32 pagina's woordelijk gelijk zijn,
+            en juist díe tekst gebruikte Google als samenvatting in plaats van
+            de lokale alinea hierboven. De links blijven — die dragen de interne
+            linkstructuur naar de dienstpagina's — maar zonder de dubbele tekst.
+            De provinciepagina's gebruiken de grid nog wel. */}
+        <Reveal>
+          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+            Onze diensten in {stad.naam}
+          </h2>
+          <ul className="mt-8 flex flex-wrap gap-2.5 text-sm">
+            {diensten.map((dienst) => (
+              <li key={dienst.slug}>
+                <Link
+                  href={dienstHref(dienst)}
+                  className="flex items-center gap-2.5 rounded-full bg-ink/[0.04] px-4 py-2.5 font-medium ring-1 ring-ink/5 transition-colors duration-300 ease-fluid hover:bg-ink/10"
+                >
+                  <DienstIcon slug={dienst.slug} className="h-4 w-4" />
+                  {dienst.naam} in {stad.naam}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
@@ -236,7 +305,10 @@ export default async function StadPage({
         </Reveal>
       </section>
 
-      <Reviews />
+      <Reviews
+        title={`Wat klanten in ${provincie.naam} zeggen`}
+        items={stadReviews}
+      />
 
       <CtaSection title={`Tv monteur nodig in ${stad.naam}?`} />
     </main>

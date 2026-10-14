@@ -215,8 +215,6 @@ export default async function StadPage({
           </div>
         </Reveal>
 
-        <InlineCta text={`Vaste prijs vooraf, ook aan gipswand of holle wand. Kies een dag die u schikt; u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid in ${stad.naam}.`} />
-
         {/* Geen DienstenMiniGrid meer op stadpagina's: die rendert vijf
             dienstbeschrijvingen die op alle 32 pagina's woordelijk gelijk zijn,
             en juist díe tekst gebruikte Google als samenvatting in plaats van
@@ -268,6 +266,13 @@ export default async function StadPage({
             .
           </p>
         </Reveal>
+
+        {/* Hoort ná het tariefblok: pas als iemand de prijs voor zijn formaat
+            kent, kan hij "plan een afspraak" beantwoorden. Stond hier eerder
+            vóór de prijzen. */}
+        <InlineCta
+          text={`Vaste prijs vooraf, ook aan gipswand of holle wand. Kies een dag die u schikt; u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid in ${stad.naam}.`}
+        />
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">

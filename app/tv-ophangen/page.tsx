@@ -131,8 +131,16 @@ const faqItems: FaqItem[] = [
     a: "Tv ophangen heeft een vaste prijs op basis van het schermformaat, altijd inclusief voorrijkosten en btw — de tarieven per formaat vindt u hierboven. Het wegwerken van kabels kan er tegen meerprijs bij, altijd vooraf afgesproken.",
   },
   {
+    q: "Hoe snel kunnen jullie de tv ophangen?",
+    a: "Vraag online een afspraak aan, dan laten we u binnen enkele uren weten wat de eerstvolgende mogelijkheid bij u in de buurt is. Vaak kan dat al binnen 24 uur.",
+  },
+  {
+    q: "Kan de afspraak ook 's avonds of in het weekend?",
+    a: "Ja. Doordeweeks komen we tot 21:00 uur langs en in het weekend tussen 09:00 en 17:00 uur, zonder toeslag. Geef bij uw aanvraag door welk dagdeel u schikt.",
+  },
+  {
     q: "Moet ik zelf een tv-beugel hebben?",
-    a: "Wij verkopen zelf geen beugels, maar we regelen er op aanvraag graag een voor u. Geef bij het maken van de afspraak door welke tv u heeft, dan ligt de juiste beugel klaar. Heeft u er al een? Dan monteren we die gewoon.",
+    a: "Heeft u er al een? Die monteren we gewoon. Heeft u er geen, dan regelen wij de juiste beugel voor uw tv — geef bij uw aanvraag het merk en het formaat door, dan krijgt u de prijs van de beugel er direct bij in de bevestiging. U weet dus vóór de afspraak wat het totaal wordt.",
   },
   {
     q: "Kan een zware of grote tv aan de muur?",
@@ -211,8 +219,6 @@ export default function TvOphangenPage() {
           </div>
         </Reveal>
 
-        <InlineCta />
-
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
             Wat is inbegrepen bij het ophangen van een tv?
@@ -262,8 +268,10 @@ export default function TvOphangenPage() {
               Vanaf 65 inch — €179
             </span>
           </div>
-          <p className="mt-5 text-sm text-ink-soft">
-            Bekijk alle tarieven en opties op de{" "}
+          <p className="mt-5 max-w-2xl text-sm text-ink-soft">
+            Heeft u nog geen beugel, of wilt u de kabels weggewerkt? Geef het
+            door bij uw aanvraag, dan staat het totaalbedrag in de bevestiging —
+            ook dat spreken we vooraf af. Bekijk alle tarieven en opties op de{" "}
             <Link
               href="/prijzen"
               className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
@@ -273,6 +281,17 @@ export default function TvOphangenPage() {
             .
           </p>
         </Reveal>
+
+        {/* Deze CTA hoort direct ná het tariefblok te staan: pas als iemand de
+            prijs voor zijn formaat heeft gezien, is "plan een afspraak" een
+            vraag die hij kán beantwoorden. Stond eerder per ongeluk vóór de
+            prijzen, en deze pagina converteerde 0% terwijl de dienstpagina's
+            mét de CTA ná de prijs 9 tot 25% doen. */}
+        <InlineCta
+          title="Weet u welk formaat uw tv is?"
+          text="Dan staat uw prijs hierboven al vast, inclusief voorrijkosten en btw. Kies een dag die u schikt; u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid."
+          label="Plan uw afspraak"
+        />
 
         <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />
 
@@ -452,9 +471,11 @@ export default function TvOphangenPage() {
       </section>
 
 
+      {/* "Vandaag gebeld" beloofde een telefoontje terwijl er bewust nergens
+          een belknop staat en de datumkiezer pas morgen begint. */}
       <CtaSection
-        title="Tv ophangen? Plan direct een afspraak"
-        text="Vandaag gebeld, vaak morgen al geregeld. Onze monteur hangt uw tv veilig en waterpas op — met vaste prijzen en volledig verzekerde monteurs."
+        title="Tv ophangen? Kies een dag die u schikt"
+        text="Vraag online uw afspraak aan — u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid. Ook 's avonds en in het weekend, zonder toeslag."
       />
     </main>
   );

@@ -19,18 +19,6 @@ export const metadata = pageMeta({
   path: "/contact",
 });
 
-/**
- * Wat een koude bezoeker moet weten vóórdat hij zijn gegevens achterlaat. De
- * eerste regel is de belangrijkste: de grootste reden om een formulier niet in
- * te vullen is de angst ergens aan vast te zitten.
- */
-const zekerheden = [
-  "Aanvragen is gratis en zonder verplichting",
-  "Vaste prijs vooraf, inclusief voorrijkosten en btw",
-  "Ook aan gipswand en holle wand",
-  "Eigen, verzekerde monteurs",
-];
-
 const vervolgstappen = [
   "U krijgt binnen enkele uren bericht van ons met de eerstvolgende mogelijkheden.",
   "Samen kiezen we een dag en tijd die u schikt — ook 's avonds of in het weekend, zonder toeslag.",
@@ -56,33 +44,7 @@ export default function ContactPage() {
         ]}
         eyebrow="Contact"
         title="Plan uw afspraak"
-        intro={
-          <>
-            Vul in één minuut het formulier in, dan nemen wij binnen enkele uren
-            contact met u op om een moment te kiezen. Vaak kan de monteur al
-            binnen 24 uur bij u langskomen.
-          </>
-        }
       />
-
-      {/* Deze pagina is ook een advertentielandingspagina: bezoekers komen hier
-          via een sitelink binnen zonder eerst een dienstpagina te zien. Zonder
-          deze regel zien zij alleen een formulier dat om hun gegevens vraagt,
-          wat de hoge bounce op /contact verklaarde. */}
-      <section className="mx-auto w-full max-w-6xl px-4 md:px-8">
-        <Reveal immediate>
-          <ul className="flex flex-wrap gap-2.5 text-sm font-medium">
-            {zekerheden.map((zekerheid) => (
-              <li
-                key={zekerheid}
-                className="rounded-full bg-cream-deep/60 px-4 py-2 ring-1 ring-ink/5"
-              >
-                {zekerheid}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      </section>
 
       <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
         <div className="grid gap-5 lg:grid-cols-5">
@@ -90,12 +52,9 @@ export default function ContactPage() {
               (kort) onzichtbaar zijn door de scroll-animatie. */}
           <Reveal immediate className="lg:col-span-3">
             <BezelCard className="h-full" innerClassName="p-6 md:p-10">
-              <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+              <h2 className="mb-8 font-display text-3xl font-bold tracking-tight md:text-4xl">
                 Afspraak aanvragen
               </h2>
-              <p className="mt-3 mb-8 leading-relaxed text-ink-soft">
-                {SITE.reactie}
-              </p>
               <ContactForm />
             </BezelCard>
           </Reveal>

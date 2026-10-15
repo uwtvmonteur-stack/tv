@@ -180,7 +180,7 @@ export default function TvOphangenPage() {
           { name: "Diensten", href: "/diensten" },
           { name: "Tv ophangen", href: "/tv-ophangen" },
         ]}
-        eyebrow="Tv ophangen · aan huis · heel Nederland"
+        eyebrow="Tv ophangen aan huis · ook ’s avonds en in het weekend"
         title="Tv laten ophangen"
         intro="U wijst aan waar hij moet hangen, wij doen de rest: de juiste hoogte voor uw bank, kaarsrecht opgehangen, kabels weggewerkt en alles aangesloten. U hoeft niets voor te bereiden en niets op te ruimen."
         benefits={[
@@ -303,10 +303,14 @@ export default function TvOphangenPage() {
             vraag die hij kán beantwoorden. Stond eerder per ongeluk vóór de
             prijzen, en deze pagina converteerde 0% terwijl de dienstpagina's
             mét de CTA ná de prijs 9 tot 25% doen. */}
+        {/* `#afspraak`: het formulier staat op deze pagina zelf, onder de hero.
+            Hiervóór sprong deze knop naar /contact en haalde hij de bezoeker
+            juist weg van het formulier, op het moment dat hij zijn prijs net
+            had gezien. */}
         <InlineCta
-          title="Weet u welk formaat uw tv is?"
-          text="Dan staat uw prijs hierboven al vast, inclusief voorrijkosten en btw. Kies een dag die u schikt; u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid."
-          label="Plan uw afspraak"
+          href="#afspraak"
+          title="Uw prijs staat hierboven al vast"
+          text="Inclusief voorrijkosten en btw, en u betaalt pas na afloop. Kies hieronder een dag die u schikt — ook 's avonds of op zaterdag."
         />
 
         <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />

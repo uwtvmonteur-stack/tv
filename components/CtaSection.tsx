@@ -5,8 +5,13 @@ import { IconArrowUpRight } from "./icons";
 import familieImg from "@/public/images/familie-kijkt-tv.jpg";
 
 export default function CtaSection({
-  title = "Vanavond al zorgeloos kijken?",
-  text = "Plan uw afspraak binnen één minuut. Onze monteurs staan voor u klaar — vaak al binnen 24 uur.",
+  // "Vanavond al zorgeloos kijken?" en "vaak al binnen 24 uur" beloofden iets
+  // wat de aanvraagflow niet waarmaakt: de datumkiezer begint pas op morgen.
+  // Om precies dezelfde reden is eerder "Vandaag gebeld" van /tv-ophangen
+  // gehaald. Deze standaard staat op home, /diensten, /over-ons, /prijzen, de
+  // kennisbank en de 32 stadpagina's — dus zesvoudig dezelfde loze belofte.
+  title = "Kies een avond of een zaterdag die u schikt",
+  text = "Vraag online uw afspraak aan — u hoort binnen enkele uren wat de eerstvolgende mogelijkheid is. 's Avonds tot 21:00 en in het weekend zonder toeslag, en u betaalt pas na afloop.",
 }: {
   title?: string;
   text?: string;

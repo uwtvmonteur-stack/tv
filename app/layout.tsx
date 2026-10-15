@@ -74,7 +74,7 @@ const graph = {
         addressCountry: "NL",
       },
       description:
-        "Tv monteur aan huis: tv ophangen, tv installatie, kabels wegwerken, soundbar-installatie en tv hulp — door heel Nederland.",
+        "Tv monteur aan huis: tv ophangen, tv installatie, kabels wegwerken, soundbar-installatie en tv hulp in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant.",
       priceRange: "€€",
       areaServed: [
         ...provincies.map((provincie) => ({

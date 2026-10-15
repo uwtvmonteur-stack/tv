@@ -15,11 +15,20 @@ import { IconArrowUpRight } from "./icons";
 export default function InlineCta({
   title = "Klaar om een datum te kiezen?",
   text = "Vaste prijs vooraf, ook aan gipswand of holle wand. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid.",
-  label = "Plan een afspraak",
+  label = "Afspraak aanvragen",
+  /**
+   * Standaard naar /contact. Pagina's die zélf een afspraakformulier dragen
+   * geven `#afspraak` mee, zodat deze knop naar dat formulier springt in
+   * plaats van de bezoeker van de pagina te halen — precies op het moment dat
+   * hij zijn prijs heeft gezien. Bewust een prop en geen detectie in de
+   * browser: zo blijft dit een servercomponent zonder JavaScript.
+   */
+  href = "/contact",
 }: {
   title?: string;
   text?: string;
   label?: string;
+  href?: string;
 }) {
   return (
     <Reveal>
@@ -31,7 +40,7 @@ export default function InlineCta({
           <p className="mt-2 text-sm leading-relaxed text-cream/70">{text}</p>
         </div>
         <Link
-          href="/contact"
+          href={href}
           className="group inline-flex shrink-0 items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98]"
         >
           {label}

@@ -65,7 +65,7 @@ function Hero() {
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-28 pb-10 md:px-8 md:pt-44 md:pb-24 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
         <Reveal immediate>
-          <Eyebrow light>Tv ophangen & installatie aan huis · Heel Nederland</Eyebrow>
+          <Eyebrow light>Tv monteur aan huis · ’s avonds en in het weekend zonder toeslag</Eyebrow>
         </Reveal>
         <Reveal immediate>
           <h1 className="mt-7 max-w-3xl font-display text-5xl leading-[0.98] font-bold tracking-tight text-white md:text-7xl lg:text-[5rem]">

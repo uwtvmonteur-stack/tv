@@ -4,6 +4,7 @@ import { LogoGlyph } from "./Logo";
 import { SITE } from "@/lib/site";
 import { diensten, dienstHref } from "@/lib/content";
 import { provincies, steden } from "@/lib/steden";
+import { artikelen } from "@/lib/kennisbank";
 
 export default function Footer() {
   return (
@@ -155,22 +156,60 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Hub-and-spoke in plaats van 32 stadlinks op elke pagina.
+            Gemeten: elke stadpagina kreeg 57 interne links en /privacy (noindex)
+            er 54, terwijl de kennisbankartikelen er 2 tot 6 hadden. Daarmee
+            vertelde de site Google dat 32 vrijwel identieke stadpagina's het
+            belangrijkst waren — en 19 ervan stonden alsnog niet in de index.
+            De provincies en /werkgebied zijn nu de hub; die linken door naar de
+            steden, zodat elke stadpagina bereikbaar blijft zonder dat elke
+            pagina 32 keer hetzelfde signaal afgeeft. */}
         <div className="mt-14 border-t border-white/10 pt-8">
-          <h3 className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">
-            Steden in ons werkgebied
-          </h3>
-          <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-            {steden.map((stad) => (
-              <li key={stad.slug}>
-                <Link
-                  href={`/tv-monteur/${stad.slug}`}
-                  className="text-white/55 transition-colors duration-300 ease-fluid hover:text-white"
-                >
-                  Tv monteur {stad.naam}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="grid gap-8 sm:grid-cols-2">
+            <div>
+              <h3 className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">
+                Ons werkgebied
+              </h3>
+              <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                {provincies.map((provincie) => (
+                  <li key={provincie.slug}>
+                    <Link
+                      href={`/werkgebied/${provincie.slug}`}
+                      className="text-white/55 transition-colors duration-300 ease-fluid hover:text-white"
+                    >
+                      Tv monteur {provincie.naam}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link
+                    href="/werkgebied"
+                    className="font-medium text-white/75 transition-colors duration-300 ease-fluid hover:text-white"
+                  >
+                    Alle {steden.length} steden
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">
+                Kennisbank
+              </h3>
+              <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                {artikelen.map((artikel) => (
+                  <li key={artikel.slug}>
+                    <Link
+                      href={`/kennisbank/${artikel.slug}`}
+                      className="text-white/55 transition-colors duration-300 ease-fluid hover:text-white"
+                    >
+                      {artikel.titel}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
 
         <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/50 md:flex-row md:items-center">

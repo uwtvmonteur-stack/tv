@@ -28,7 +28,7 @@ import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 export const metadata = pageMeta({
   title: "Tv Ophangen aan Gipswand of Holle Wand",
   description:
-    "Tv ophangen aan een gipswand, metal stud of holle wand? Wij rekenen het draagvermogen na en gebruiken de juiste bevestiging. Waar anderen nee zeggen, komen wij langs.",
+    "Tv ophangen aan gipswand, metal stud of holle wand? Wij rekenen het draagvermogen na en kiezen de bevestiging die bij uw wand hoort. Vaste prijs vooraf.",
   path: "/tv-ophangen-gipswand",
 });
 

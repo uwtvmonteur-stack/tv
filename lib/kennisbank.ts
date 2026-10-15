@@ -48,7 +48,7 @@ export const artikelen: Artikel[] = [
     titel: "Hoe hoog moet je een tv ophangen?",
     metaTitel: "Hoe Hoog Tv Ophangen? Zo Rekent U Het Uit",
     beschrijving:
-      "Hoe hoog hang je een tv op? Het midden van het scherm hoort op ooghoogte als u zit. Met deze rekenregel en de tabel per formaat weet u precies op welke hoogte de beugel moet.",
+      "Hoe hoog hang je een tv op? Het midden van het scherm hoort op ooghoogte als u zit. Met deze rekenregel en tabel per formaat weet u de juiste hoogte.",
     eyebrow: "Kennisbank · Tv ophangen",
     antwoord:
       "Hang uw tv zo op dat het midden van het scherm op ooghoogte zit terwijl u op de bank zit — voor de meeste mensen is dat 100 tot 110 cm boven de vloer. Bij een 55-inch tv komt de onderkant van het scherm dan op ongeveer 70 cm.",
@@ -122,7 +122,7 @@ export const artikelen: Artikel[] = [
     titel: "Welke tv-beugel past op mijn tv?",
     metaTitel: "Welke Tv-Beugel Heb Ik Nodig? VESA Uitgelegd",
     beschrijving:
-      "Welke tv-beugel past op uw tv? Meet de VESA-maat, controleer het draagvermogen en kies tussen vast, kantelbaar of draaibaar. Zo weet u zeker dat beugel en televisie bij elkaar passen.",
+      "Welke tv-beugel past op uw tv? Meet de VESA-maat, controleer het draagvermogen en kies tussen vast, kantelbaar of draaibaar. Zo past hij gegarandeerd.",
     eyebrow: "Kennisbank · Beugels",
     antwoord:
       "Een beugel past op uw tv als de VESA-maat klopt en de beugel het gewicht van uw televisie kan dragen. Meet daarvoor de afstand tussen de vier schroefgaten achterop uw tv in millimeters, horizontaal en verticaal.",
@@ -268,7 +268,7 @@ export const artikelen: Artikel[] = [
     titel: "Welke plug gebruik je in een gipswand?",
     metaTitel: "Tv Ophangen Gipswand: Welke Plug Gebruikt U?",
     beschrijving:
-      "Een tv ophangen aan een gipswand vraagt een andere bevestiging dan baksteen. Welke plug waar hoort, wat een gipswand echt kan dragen en wanneer u in de staanders moet schroeven.",
+      "Een tv ophangen aan een gipswand vraagt andere bevestiging dan baksteen. Welke plug waar hoort, wat zo’n wand draagt en wanneer u in de staanders schroeft.",
     eyebrow: "Kennisbank · Wanden",
     antwoord:
       "In een gipswand hoort een tv-beugel het liefst vastgeschroefd in de metalen of houten staanders achter de platen. Kan dat niet, dan zijn metalen hollewandankers de enige serieuze optie: gewone nylonpluggen en kunststof tuimelpluggen houden een televisie niet.",
@@ -363,7 +363,7 @@ export const artikelen: Artikel[] = [
     titel: "Tv zelf ophangen of laten doen?",
     metaTitel: "Tv Zelf Ophangen of Laten Doen? Een Checklist",
     beschrijving:
-      "Kunt u uw tv zelf ophangen of is een monteur verstandiger? Een eerlijke checklist op basis van wandtype, schermformaat en kabels, inclusief wanneer u het beter niet zelf doet.",
+      "Kunt u uw tv zelf ophangen of is een monteur verstandiger? Een eerlijke checklist op basis van wandtype, schermformaat, kabels en gereedschap.",
     eyebrow: "Kennisbank · Keuzehulp",
     antwoord:
       "Een televisie tot ongeveer 43 inch aan een massieve bakstenen of betonnen muur hangt u met de juiste pluggen prima zelf op. Bij een holle of gipswand, een scherm vanaf 55 inch, een plek boven een haard of kabels die in de wand moeten, loopt u reëel risico.",

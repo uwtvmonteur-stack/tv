@@ -35,8 +35,13 @@ export async function POST(request: Request) {
     return Response.json({ error: "invalid_json" }, { status: 400 });
   }
 
-  // Honeypot: bots vullen dit verborgen veld in. Doe alsof het gelukt is.
-  if (clean(body.website, 200)) return Response.json({ ok: true });
+  // Honeypot: bots vullen dit verborgen veld in. Doe alsof het gelukt is, maar
+  // zeg er met `verzonden: false` bij dat er niets is verstuurd. De browser
+  // telt alleen een conversie bij `verzonden: true`, zodat deze nep-200 nooit
+  // als aanvraag in Analytics of Ads belandt. (Het formulier vangt de honeypot
+  // zelf al af vóór de POST; dit is de tweede linie voor directe API-aanroepen.)
+  if (clean(body.website, 200))
+    return Response.json({ ok: true, verzonden: false });
 
   const naam = clean(body.naam, 120);
   const telefoon = clean(body.telefoon, 40);
@@ -150,5 +155,5 @@ ${regels
     console.error("[afspraak] Klantbevestiging mislukt:", err);
   }
 
-  return Response.json({ ok: true, bevestiging });
+  return Response.json({ ok: true, verzonden: true, bevestiging });
 }

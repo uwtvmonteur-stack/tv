@@ -168,11 +168,26 @@ export default function ContactForm({
       });
       if (res.ok) {
         form.reset();
-        trackEvent("afspraak_aanvraag", {
-          methode: "formulier",
-          ...(variant ? { variant } : {}),
-        });
-        trackAdsConversion(TRACKING.adsFormConversion);
+        // Converteer alleen als de server bevestigt dat de aanvraag echt is
+        // verstuurd. Een 200 alléén is niet genoeg: de honeypot-afhandeling
+        // antwoordt bewust met een nep-200 (`verzonden: false`) om bots niets
+        // te verraden, en zo'n hit mag nooit als aanvraag meetellen in
+        // Analytics of Google Ads.
+        //
+        // Bewust `!== false` en niet `=== true`: kan het antwoord niet gelezen
+        // worden, dan is de mail wél verstuurd (de route geeft 502 als dat
+        // mislukt) en is een getelde conversie juist. Alleen een expliciete
+        // ontkenning onderdrukt de meting.
+        const data = (await res.json().catch(() => null)) as {
+          verzonden?: boolean;
+        } | null;
+        if (data?.verzonden !== false) {
+          trackEvent("afspraak_aanvraag", {
+            methode: "formulier",
+            ...(variant ? { variant } : {}),
+          });
+          trackAdsConversion(TRACKING.adsFormConversion);
+        }
         setStatus("success");
       } else if (res.status === 503) {
         openMailto();

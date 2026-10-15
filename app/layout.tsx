@@ -9,6 +9,8 @@ import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SITE } from "@/lib/site";
 import { provincies } from "@/lib/steden";
+import { addons, priceCards } from "@/lib/content";
+import { offerCatalogJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -75,14 +77,19 @@ const graph = {
       },
       description:
         "Tv monteur aan huis: tv ophangen, tv installatie, kabels wegwerken, soundbar-installatie en tv hulp in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant.",
-      priceRange: "€€",
-      areaServed: [
-        ...provincies.map((provincie) => ({
-          "@type": "State",
-          name: provincie.naam,
-        })),
-        { "@type": "Country", name: "Nederland" },
-      ],
+      // Concreet in plaats van "€€": de laagste losse dienst (kabelgoot, vanaf
+      // €39) tot de hoogste (tv vanaf 65 inch ophangen, €159). Google toont dit
+      // in het bedrijfspaneel, en een bereik dat de prijslijst volgt is
+      // controleerbaar — "€€" zegt een bezoeker niets.
+      priceRange: "€39–€159",
+      // Bewust alleen de vier provincies waar we daadwerkelijk rijden. De
+      // eerdere `Country: Nederland` sprak dat tegen: twee tegenstrijdige
+      // gebieden in één schema laten Google geen servicegebied bepalen, en het
+      // klopte niet meer met de site, waar "heel Nederland" overal weg is.
+      areaServed: provincies.map((provincie) => ({
+        "@type": "State",
+        name: provincie.naam,
+      })),
       openingHoursSpecification: [
         {
           "@type": "OpeningHoursSpecification",
@@ -97,6 +104,30 @@ const graph = {
           closes: "17:00",
         },
       ],
+      // Los van `telephone` hierboven: Google gebruikt het losse veld voor de
+      // belknop en dit object voor het kennispaneel, inclusief de taal waarin
+      // we te woord staan.
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: SITE.phone,
+        email: SITE.email,
+        areaServed: "NL",
+        availableLanguage: "nl",
+      },
+      // Precies wat de FAQ op /prijzen belooft, niet meer.
+      paymentAccepted: "Pin, Tikkie, betaalverzoek, factuur (zakelijk)",
+      currenciesAccepted: "EUR",
+      // Het volledige aanbod met prijzen, op élke pagina. Tot nu toe stonden de
+      // tarieven alleen in het Service-schema van /prijzen, waardoor Google de
+      // diensten aan die ene pagina koppelde in plaats van aan het bedrijf.
+      hasOfferCatalog: offerCatalogJsonLd([
+        ...priceCards.map((card) => ({
+          naam: `Tv ophangen ${card.size.replace(/^Voor tv's /, "")}`,
+          prijs: card.price,
+        })),
+        ...addons,
+      ]),
     },
     {
       "@type": "WebSite",

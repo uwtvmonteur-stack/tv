@@ -132,3 +132,47 @@ export function serviceJsonLd({
       : {}),
   };
 }
+
+/**
+ * Prijsnotaties uit `content.ts` ("€99", "vanaf €39", "op maat") omgezet naar
+ * een schema.org PriceSpecification.
+ *
+ * Een "vanaf"-prijs wordt `minPrice` en niet `price`: een platte `price` zou
+ * Google een vaste prijs laten tonen die we voor die dienst niet garanderen, en
+ * een prijs in een rich result die afwijkt van de pagina is een reden voor
+ * afkeuring. Staat er geen bedrag in ("op maat", "op aanvraag"), dan volgt er
+ * géén prijsveld — liever geen prijs dan een verzonnen prijs.
+ */
+function prijsSpec(prijs: string) {
+  const bedrag = prijs.match(/€\s*([\d.,]+)/)?.[1]?.replace(",", ".");
+  if (!bedrag) return {};
+  return {
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      [/vanaf/i.test(prijs) ? "minPrice" : "price"]: bedrag,
+      priceCurrency: "EUR",
+      // Sitebreed staat "inclusief voorrijkosten en btw" bij elk tarief.
+      valueAddedTaxIncluded: true,
+    },
+  };
+}
+
+/**
+ * Dienstencatalogus voor het bedrijfsschema. Hangt onder `hasOfferCatalog` in
+ * de layout, zodat élke pagina het volledige aanbod met prijzen meegeeft in
+ * plaats van alleen /prijzen — dat is wat Google nodig heeft om de diensten aan
+ * het bedrijf te koppelen in plaats van aan losse pagina's.
+ */
+export function offerCatalogJsonLd(items: { naam: string; prijs: string }[]) {
+  return {
+    "@type": "OfferCatalog",
+    name: "Tv ophangen, installeren en instellen",
+    itemListElement: items.map((item) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: item.naam },
+      ...prijsSpec(item.prijs),
+      availability: "https://schema.org/InStock",
+      url: absUrl("/prijzen"),
+    })),
+  };
+}

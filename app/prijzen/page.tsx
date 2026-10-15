@@ -1,6 +1,6 @@
 import PageHeader from "@/components/PageHeader";
+import ContactForm from "@/components/ContactForm";
 import CtaSection from "@/components/CtaSection";
-import InlineCta from "@/components/InlineCta";
 import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
@@ -83,7 +83,39 @@ export default function PrijzenPage() {
           <PriceCards headingLevel="h3" />
         </div>
 
-        <InlineCta title="Dit is de prijs die u betaalt" text="Geen voorrijkosten, geen btw-verrassing en geen meerwerk zonder uw toestemming. Kies een dag die u schikt; u krijgt binnen enkele uren bericht." />
+        {/* Formulier in plaats van een doorverwijzende CTA. Deze pagina houdt
+            bezoekers gemiddeld 234 seconden vast met 77% betrokkenheid — de
+            hoogste van de site — en leverde nul aanvragen op, simpelweg omdat
+            er niets te versturen viel. Direct onder de tarieven, want dat is
+            het moment waarop iemand weet wat zijn formaat kost. */}
+        <section id="afspraak" className="mt-12">
+          <Reveal immediate>
+            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5">
+              <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
+                <div className="max-w-2xl">
+                  <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+                    Dit is de prijs die u betaalt
+                  </h2>
+                  <p className="mt-3 leading-relaxed text-ink-soft">
+                    Geen voorrijkosten, geen btw-verrassing en geen meerwerk
+                    zonder uw toestemming. Kies een dag die u schikt; u krijgt
+                    binnen enkele uren bericht over de eerstvolgende
+                    mogelijkheid.
+                  </p>
+                </div>
+                <div className="mt-8">
+                  <ContactForm
+                    planner
+                    variant="prijzen"
+                    submitLabel="Afspraak aanvragen"
+                    berichtLabel="Uw tv en uw muur"
+                    berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, bakstenen muur, ik heb nog geen beugel."
+                  />
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </section>
 
         <Reveal>
           <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">

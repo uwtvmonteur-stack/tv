@@ -167,7 +167,7 @@ export default function TvOphangenPage() {
           path: "/tv-ophangen",
           offers: [
             { name: "Tv ophangen tot 43 inch", price: "99" },
-            { name: "Tv ophangen 44 t/m 65 inch", price: "129" },
+            { name: "Tv ophangen 44 t/m 64 inch", price: "129" },
             { name: "Tv ophangen vanaf 65 inch", price: "159" },
           ],
         })}
@@ -191,6 +191,22 @@ export default function TvOphangenPage() {
         ]}
         image={heroFoto}
         imageAlt="Monteur hangt een grote televisie waterpas aan de woonkamermuur"
+        // Deze pagina ontvangt ruim de helft van het advertentiebudget en had
+        // geen enkel formulierveld: elke CTA sprong naar /contact. Van 33
+        // sessies in een week kwam er nul tot een aanvraag, terwijl de
+        // dienstpagina's mét formulier 9 tot 25% halen. Het blok staat ónder de
+        // hero, dus de foto blijft het verkoopargument, en `planner` zet de
+        // datum- en dagdeelkeuze aan die tot nu toe nergens werd getoond.
+        formulier={{
+          titel: "Plan het ophangen van uw tv",
+          intro:
+            "Vertel kort welke tv u heeft en wanneer het u schikt. U krijgt binnen enkele uren bericht met de eerstvolgende mogelijkheid en de vaste prijs voor uw situatie.",
+          submitLabel: "Afspraak aanvragen",
+          variant: "tv-ophangen-hero",
+          berichtLabel: "Uw tv en uw muur",
+          berichtPlaceholder:
+            "Bijvoorbeeld: 55 inch Samsung, bakstenen muur, ik heb nog geen beugel.",
+        }}
       />
 
       <BrandMarquee />
@@ -262,7 +278,7 @@ export default function TvOphangenPage() {
               Tot 43 inch — €99
             </span>
             <span className="rounded-full bg-ink text-cream px-4 py-2">
-              44 t/m 65 inch — €129 · populair
+              44 t/m 64 inch — €129 · populair
             </span>
             <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
               Vanaf 65 inch — €159

@@ -26,7 +26,10 @@ import { provincies, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import heroImg from "@/public/images/hero-woonkamer.jpg";
-import beugelImg from "@/public/images/tv-beugel-detail.jpg";
+// tv-beugel-detail.jpg toont een beugel die fysiek niet kan bestaan: de arm
+// raakt alleen de rechterrand van het scherm, zonder VESA-bevestiging. Op de
+// homepagekaart van een tv-ophangbedrijf is dat precies het verkeerde beeld.
+import beugelImg from "@/public/images/dienst-tv-ophangen.jpg";
 import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 
 const meta = pageMeta({
@@ -187,7 +190,7 @@ function Diensten() {
                 <div className="relative min-h-64 md:w-2/5">
                   <Image
                     src={beugelImg}
-                    alt="Tv op een draaibare wandbeugel, elegant van de muur gedraaid"
+                    alt="Monteur bevestigt een televisie aan de wandbeugel in een woonkamer"
                     fill
                     placeholder="blur"
                     sizes="(max-width: 768px) 100vw, 40vw"

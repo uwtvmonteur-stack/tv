@@ -50,7 +50,7 @@ export const priceCards = [
   },
   {
     name: "Standaard",
-    size: "Voor tv's van 44 t/m 65 inch",
+    size: "Voor tv's van 44 t/m 64 inch",
     price: "€129",
     features: [
       "Montage op elke muur",

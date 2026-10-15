@@ -161,7 +161,7 @@ export default async function StadPage({
           },
           offers: [
             { name: "Tv ophangen tot 43 inch", price: "99" },
-            { name: "Tv ophangen 44 t/m 65 inch", price: "129" },
+            { name: "Tv ophangen 44 t/m 64 inch", price: "129" },
             { name: "Tv ophangen vanaf 65 inch", price: "159" },
           ],
         })}
@@ -249,7 +249,7 @@ export default async function StadPage({
               Tot 43 inch — €99
             </span>
             <span className="rounded-full bg-ink text-cream px-4 py-2">
-              44 t/m 65 inch — €129 · populair
+              44 t/m 64 inch — €129 · populair
             </span>
             <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
               Vanaf 65 inch — €159

@@ -65,9 +65,21 @@ export default function Analytics() {
 
   return (
     <>
+      {/* `lazyOnload` in plaats van `afterInteractive`: gemeten met Lighthouse
+          op mobiel was gtag.js 191 kB en 542 ms blokkeertijd — een derde van
+          alle JavaScript en de grootste enkele blokkeerder van de hoofdthread.
+          Met `afterInteractive` zet Next er bovendien een preload-hint voor in
+          de <head>, waardoor het script meedingt tijdens het LCP-venster, en
+          juist daar zit 75% van de laadtijd van deze site.
+
+          Het inline script hieronder blijft wél `afterInteractive`: dát
+          definieert `window.gtag` en `dataLayer`. Daardoor worden events die
+          afgaan vóórdat gtag.js binnen is netjes in `dataLayer` gequeued in
+          plaats van verloren te gaan — zonder die volgorde zou een vroege
+          formulierverzending niet meetellen. */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${ids[0]}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
       <Script id="gtag-init" strategy="afterInteractive">
         {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());${config}`}

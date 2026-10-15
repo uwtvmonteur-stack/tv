@@ -27,7 +27,13 @@ export default function ServiceHero({
   benefits,
   image,
   imageAlt,
-  priority = true,
+  // Standaard `false`: op mobiel staat deze foto onder de vouw — op
+  // /tv-ophangen gemeten op y=1029px bij een viewport van 667px. Met
+  // `priority` zette Next er een preload met hoge prioriteit voor in de
+  // <head>, die meedong tijdens het LCP-venster voor een beeld dat de bezoeker
+  // pas na scrollen ziet. `placeholder="blur"` vult het gat op. De homepage
+  // gebruikt deze component niet; daar staat de hero wél boven de vouw.
+  priority = false,
   formulier,
 }: {
   crumbs: Crumb[];

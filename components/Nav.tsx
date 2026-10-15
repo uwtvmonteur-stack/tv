@@ -77,13 +77,18 @@ export default function Nav() {
             ))}
           </div>
 
-          <div className="flex items-center gap-1.5 pl-1">
+          {/* Op 320px liep deze cluster door tot x=337: 17px buiten beeld,
+              waardoor 38% van de hamburgerknop onbereikbaar was. De header is
+              `fixed`, dus `body{overflow-x:clip}` ving dat niet af — het werd
+              simpelweg afgesneden. Onder `sm` nu krappere gap, padding-left en
+              knoppadding; vanaf `sm` blijft alles zoals het was. */}
+          <div className="flex items-center gap-1 pl-0 sm:gap-1.5 sm:pl-1">
             {/* Eén actie in de balk: de afspraak. Het telefoonnummer staat
                 alleen nog in de footer, zodat niets de afspraakknop afleidt. */}
             <Link
               href="/contact"
               inert={open || undefined}
-              className="group flex shrink-0 items-center gap-2.5 rounded-full bg-ink px-4.5 py-2.5 text-sm font-semibold whitespace-nowrap text-cream transition-transform duration-300 ease-fluid active:scale-[0.97] sm:py-2 sm:pr-2"
+              className="group flex shrink-0 items-center gap-2.5 rounded-full bg-ink px-3 py-2.5 text-sm font-semibold whitespace-nowrap text-cream transition-transform duration-300 ease-fluid active:scale-[0.97] sm:px-4.5 sm:py-2 sm:pr-2"
             >
               <span className="hidden sm:inline">Afspraak maken</span>
               <span className="sm:hidden">Afspraak</span>

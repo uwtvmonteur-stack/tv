@@ -52,7 +52,7 @@ export default function PrijzenPage() {
           offers: [
             { name: "Tv ophangen tot 43 inch", price: "99" },
             { name: "Tv ophangen 44 t/m 65 inch", price: "129" },
-            { name: "Tv ophangen vanaf 65 inch", price: "179" },
+            { name: "Tv ophangen vanaf 65 inch", price: "159" },
             { name: "Complete tv installatie", price: "70" },
             { name: "Kabels wegwerken in kabelgoot", price: "39" },
             { name: "Soundbar installeren", price: "49" },

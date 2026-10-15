@@ -64,7 +64,7 @@ export const priceCards = [
   {
     name: "Groot",
     size: "Voor tv's vanaf 65 inch",
-    price: "€179",
+    price: "€159",
     features: [
       "Montage op elke muur",
       "Met twee monteurs indien nodig",

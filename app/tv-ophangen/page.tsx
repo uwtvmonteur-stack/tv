@@ -168,7 +168,7 @@ export default function TvOphangenPage() {
           offers: [
             { name: "Tv ophangen tot 43 inch", price: "99" },
             { name: "Tv ophangen 44 t/m 65 inch", price: "129" },
-            { name: "Tv ophangen vanaf 65 inch", price: "179" },
+            { name: "Tv ophangen vanaf 65 inch", price: "159" },
           ],
         })}
       />
@@ -265,7 +265,7 @@ export default function TvOphangenPage() {
               44 t/m 65 inch — €129 · populair
             </span>
             <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
-              Vanaf 65 inch — €179
+              Vanaf 65 inch — €159
             </span>
           </div>
           <p className="mt-5 max-w-2xl text-sm text-ink-soft">

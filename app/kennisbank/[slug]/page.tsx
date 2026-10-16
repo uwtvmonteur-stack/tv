@@ -8,6 +8,7 @@ import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
 import RelatedLinks from "@/components/RelatedLinks";
+import RichText from "@/components/RichText";
 import { artikelBySlug, artikelen, type ArtikelSectie } from "@/lib/kennisbank";
 import { artikelJsonLd, faqJsonLd, pageMeta } from "@/lib/seo";
 
@@ -42,7 +43,9 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
         </h2>
         <div className="mt-4 space-y-4 leading-relaxed text-ink-soft">
           {sectie.alineas.map((alinea) => (
-            <p key={alinea.slice(0, 40)}>{alinea}</p>
+            <p key={alinea.slice(0, 40)}>
+              <RichText>{alinea}</RichText>
+            </p>
           ))}
         </div>
 
@@ -53,7 +56,7 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
                 key={punt.slice(0, 40)}
                 className="rounded-2xl bg-cream-deep/50 px-5 py-4 text-sm leading-relaxed text-ink-soft ring-1 ring-ink/5"
               >
-                {punt}
+                <RichText>{punt}</RichText>
               </li>
             ))}
           </ul>

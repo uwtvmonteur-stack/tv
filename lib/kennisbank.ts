@@ -385,10 +385,10 @@ export const artikelen: Artikel[] = [
       {
         kop: "Wanneer u het beter niet zelf doet",
         alineas: [
-          "Er zijn vijf situaties waarin de kans op schade of een mislukte montage sterk toeneemt. Niet omdat het onmogelijk is, maar omdat de fout duur en vaak onomkeerbaar is.",
+          "Er zijn vijf situaties waarin de kans op schade of een mislukte montage sterk toeneemt. Niet omdat het onmogelijk is, maar omdat de fout duur en vaak onomkeerbaar is. Herkent u uw situatie hieronder, dan is [uw tv laten ophangen](/tv-ophangen) vrijwel altijd goedkoper dan een beschadigd paneel of een tweede gaatjesronde.",
         ],
         lijst: [
-          "Holle wand, gipsplaat, metal stud of voorzetwand — hier is de bevestiging een berekening, geen gevoel. Dit is de meest voorkomende oorzaak van een televisie die later alsnog loskomt.",
+          "Holle wand, gipsplaat, metal stud of voorzetwand — hier is de bevestiging een berekening, geen gevoel. Dit is de meest voorkomende oorzaak van een televisie die later alsnog loskomt; wat er dan wél moet gebeuren staat in [tv ophangen aan een gipswand](/tv-ophangen-gipswand).",
           "Schermen vanaf 55 inch, en zeker vanaf 65 inch — een scherm van vijfentwintig kilo en anderhalve meter breed kantelt makkelijk uit uw handen terwijl u de haken zoekt. Eén keer verkeerd neerzetten op de rand betekent meestal een nieuw paneel.",
           "Boven een haard, in een schacht of naast de meterkast — hier zitten rookkanalen, gasleidingen of stroomgroepen. Blind boren is hier het probleem, niet het ophangen.",
           "Kabels of stroom in de wand — een stopcontact achter de televisie aanleggen is elektrisch werk, en een verlengsnoer door de wand trekken mag niet.",

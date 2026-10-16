@@ -33,16 +33,20 @@ import beugelImg from "@/public/images/dienst-tv-ophangen.jpg";
 import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 
 const meta = pageMeta({
-  title: "Tv Monteur aan Huis — Ophangen & Installatie",
+  title: "Tv Monteur aan Huis — Vaste Prijs, Geen Voorrijkosten",
   description:
-    "Op zoek naar een tv monteur aan huis? Wij hangen uw tv op, werken kabels weg en installeren alles. Vaste prijzen incl. voorrijkosten, vaak binnen 24 uur.",
+    "Tv monteur aan huis nodig? Wij hangen uw tv op, sluiten alles aan en werken de kabels weg. Vaste prijs vooraf vanaf €99, 's avonds en in het weekend zonder toeslag.",
   path: "/",
 });
 
 export const metadata: Metadata = {
   ...meta,
   title: {
-    absolute: "Tv Ophangen & Installatie aan Huis | Uw TV Monteur",
+    // Begint bewust met "Tv monteur aan huis" en niet met "Tv ophangen": die
+    // laatste term hoort bij /tv-ophangen. Stonden beide titels op dezelfde
+    // woorden, dan koos Google de homepage (meer interne links) en kreeg de
+    // dienstpagina nul vertoningen -- precies wat Search Console liet zien.
+    absolute: "Tv Monteur aan Huis — Ophangen & Installeren | Uw TV Monteur",
   },
 };
 

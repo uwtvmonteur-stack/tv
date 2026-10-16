@@ -18,9 +18,9 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
 export const metadata = pageMeta({
-  title: "Tv Laten Ophangen — Ook aan Gipswand",
+  title: "Tv Laten Ophangen — Vaste Prijs vanaf €99",
   description:
-    "Tv laten ophangen door een ervaren monteur: waterpas, kabels weggewerkt en aan elke muur — ook gipswand en holle wand. Vaste prijs vooraf, incl. btw.",
+    "Tv laten ophangen door een ervaren monteur: waterpas, getest en kabels weggewerkt. Vaste prijs vanaf €99 incl. voorrijkosten en btw. Ook 's avonds en in het weekend.",
   path: "/tv-ophangen",
 });
 

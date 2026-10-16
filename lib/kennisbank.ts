@@ -435,7 +435,7 @@ export const artikelen: Artikel[] = [
     ],
     dienst: { label: "Tv laten ophangen", href: "/tv-ophangen" },
     verwant: ["tv-ophangen-gipswand-plug", "welke-tv-beugel"],
-    datum: "2026-10-10",
+    datum: "2026-10-16",
   },
 ];
 

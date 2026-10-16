@@ -17,9 +17,9 @@ import { artikelen } from "@/lib/kennisbank";
  */
 const GEWIJZIGD = {
   /** Home, dienstenoverzicht, prijzen, contact, over ons. */
-  kern: "2026-10-10",
+  kern: "2026-10-16",
   /** De dienstpagina's zelf, inclusief de gipswandpagina. */
-  diensten: "2026-10-10",
+  diensten: "2026-10-16",
   /** Stad-, provincie- en werkgebiedpagina's. */
   steden: "2026-10-10",
   kennisbank: "2026-10-10",

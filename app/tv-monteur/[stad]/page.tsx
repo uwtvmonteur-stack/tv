@@ -21,6 +21,7 @@ import {
 } from "@/lib/content";
 import { provincieBySlug, stadBySlug, steden } from "@/lib/steden";
 import { lokaalTekst } from "@/lib/stedenLokaal";
+import { stedenMontage } from "@/lib/stedenMontage";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/monteur-aan-het-werk.jpg";
 
@@ -214,6 +215,30 @@ export default async function StadPage({
             </ul>
           </div>
         </Reveal>
+
+        {/* De bouwperiodes die in deze stad overheersen, en wat die betekenen
+            voor plug, beugel en haalbare plek. Dit is het enige onderwerp dat
+            per stad werkelijk verschilt: de rest van de pagina is noodzakelijk
+            sjabloon. Search Console liet zien dat 19 van de 32 stadpagina's
+            wel waren gevonden maar nooit opgehaald, en het verschil tussen
+            twee willekeurige stadpagina's was 31% letterlijk gelijke zinnen.
+            Deze sectie verdubbelt het deel van de pagina dat alleen hier staat,
+            en is tegelijk het antwoord dat een bezoeker echt zoekt. */}
+        {stedenMontage[stad.slug] && (
+          <Reveal>
+            <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+              Welke muur heeft u in {stad.naam}?
+            </h2>
+            <p className="mt-6 max-w-3xl leading-relaxed text-ink-soft">
+              {stedenMontage[stad.slug]}
+            </p>
+            <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
+              Weet u niet zeker wat voor wand u heeft? Dat hoeft ook niet — onze
+              monteur bepaalt het ter plekke en neemt de pluggen voor elk
+              wandtype mee. De prijs verandert er niet door.
+            </p>
+          </Reveal>
+        )}
 
         {/* Geen DienstenMiniGrid meer op stadpagina's: die rendert vijf
             dienstbeschrijvingen die op alle 32 pagina's woordelijk gelijk zijn,

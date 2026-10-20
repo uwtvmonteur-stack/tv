@@ -16,6 +16,53 @@
   --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
+
+  /* Fluide typografie, geijkt op 375px tot 1280px.
+     Hiervoor stond er 63x text-4xl naast 62x text-3xl en verder bijna niets,
+     waardoor een H1 op mobiel maar 1,20x zo groot was als een H2. Een bezoeker
+     ziet dan geen hierarchie maar een lijst gelijkwaardige koppen -- dat is wat
+     een site als sjabloon laat lezen. Deze trappen zetten die verhouding op
+     1,33 tot 1,63. De letter-spacing zit per trap in het token, want een vaste
+     tracking-tight is te los op 80px en te krap op 19px. clamp() rekent op vw,
+     dus er is geen JS en geen layoutverschuiving: CLS blijft 0,000. */
+  --text-step--1: clamp(0.8125rem, 0.7606rem + 0.221vw, 0.9375rem);
+  --text-step--1--line-height: 1.5;
+  --text-step-0: clamp(1rem, 0.9741rem + 0.11vw, 1.0625rem);
+  --text-step-0--line-height: 1.65;
+  --text-step-1: clamp(1.0625rem, 0.9848rem + 0.332vw, 1.25rem);
+  --text-step-1--line-height: 1.55;
+  --text-step-2: clamp(1.1875rem, 1.058rem + 0.553vw, 1.5rem);
+  --text-step-2--line-height: 1.25;
+  --text-step-2--letter-spacing: -0.015em;
+  --text-step-3: clamp(1.6875rem, 1.299rem + 1.658vw, 2.625rem);
+  --text-step-3--line-height: 1.1;
+  --text-step-3--letter-spacing: -0.021em;
+  --text-step-4: clamp(2.25rem, 1.6283rem + 2.653vw, 3.75rem);
+  --text-step-4--line-height: 1.02;
+  --text-step-4--letter-spacing: -0.026em;
+  --text-step-5: clamp(2.75rem, 1.8175rem + 3.979vw, 5rem);
+  --text-step-5--line-height: 0.95;
+  --text-step-5--letter-spacing: -0.034em;
+
+  /* Een systeem voor randen en hoeken. Er stonden zes randsterktes
+     (ring-ink/5 24x, /10 6x, /15 5x, border-ink/10 4x, amber-600/20 3x,
+     border-ink/5 1x) en vijf radii door elkaar. ink/5 op creme is bovendien
+     niet te zien, waardoor kaarten alleen door hun schaduw bestonden en als
+     vage wolken lazen in plaats van als gedefinieerde objecten. */
+  --color-line: rgb(25 21 18 / 0.09);
+  --color-line-strong: rgb(25 21 18 / 0.16);
+  --color-cream-sunk: #ece5da;
+  --radius-shell: 1.75rem;
+  --radius-core: 1.375rem;
+  --radius-bed: 2.25rem;
+
+  /* Verticaal ritme. De homepage ademde met py-24/py-36 terwijl de
+     dienstpagina's -- waar het advertentiegeld landt -- op py-10 met mt-20
+     stonden. De verhouding blok:kop gaat van 2,5 naar 3,6, zodat een kop
+     visueel bij zijn eigen inhoud hoort en niet bij de vorige alinea. */
+  --spacing-section: clamp(5.5rem, 3.635rem + 7.956vw, 10rem);
+  --spacing-block: clamp(4.5rem, 3.464rem + 4.42vw, 7rem);
+  --spacing-heading: clamp(1.25rem, 0.939rem + 1.326vw, 2rem);
 }
 
 html {

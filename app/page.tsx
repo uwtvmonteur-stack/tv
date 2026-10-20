@@ -72,7 +72,7 @@ function Hero() {
           <Eyebrow light>Tv monteur aan huis · ’s avonds en in het weekend zonder toeslag</Eyebrow>
         </Reveal>
         <Reveal immediate>
-          <h1 className="mt-7 max-w-3xl font-display text-5xl leading-[0.98] font-bold tracking-tight text-white md:text-7xl lg:text-[5rem]">
+          <h1 className="mt-7 max-w-3xl font-display text-step-5 font-bold text-white">
             Uw tv monteur aan huis.
             <span className="mt-2 block text-amber-400">
               Strak aan de muur, zonder gedoe.
@@ -143,7 +143,7 @@ function Diensten() {
       <Reveal>
         <div className="max-w-2xl">
           <Eyebrow>Onze diensten</Eyebrow>
-          <h2 className="mt-6 font-display text-4xl font-bold tracking-tight md:text-5xl">
+          <h2 className="mt-6 font-display text-step-3 font-bold">
             Alles voor het perfecte kijkmoment
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-ink-soft">
@@ -167,7 +167,7 @@ function Diensten() {
                     <IconChip>
                       <DienstIcon slug={tvOphangen.slug} />
                     </IconChip>
-                    <h3 className="mt-6 font-display text-2xl font-bold tracking-tight md:text-3xl">
+                    <h3 className="mt-6 font-display text-step-2 font-bold">
                       {tvOphangen.naam}
                     </h3>
                     <p className="mt-4 leading-relaxed text-ink-soft">
@@ -218,7 +218,7 @@ function Diensten() {
                 <IconChip>
                   <DienstIcon slug={dienst.slug} />
                 </IconChip>
-                <h3 className="mt-6 font-display text-xl font-bold tracking-tight md:text-2xl">
+                <h3 className="mt-6 font-display text-step-2 font-bold">
                   {dienst.naam}
                 </h3>
                 <p className="mt-3 leading-relaxed text-ink-soft">
@@ -241,7 +241,7 @@ function Diensten() {
                 <DienstIcon slug={instellen.slug} />
               </IconChip>
               <div>
-                <h3 className="font-display text-xl font-bold tracking-tight">
+                <h3 className="font-display text-step-2 font-bold">
                   {instellen.naam}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-soft">
@@ -297,7 +297,7 @@ function Werkwijze() {
           <div>
             <Reveal>
               <Eyebrow light>Onze werkwijze</Eyebrow>
-              <h2 className="mt-6 font-display text-4xl font-bold tracking-tight md:text-5xl">
+              <h2 className="mt-6 font-display text-step-3 font-bold">
                 Geregeld in drie stappen
               </h2>
             </Reveal>
@@ -313,7 +313,7 @@ function Werkwijze() {
                       {step.nr}
                     </span>
                     <div>
-                      <h3 className="font-display text-xl font-bold tracking-tight md:text-2xl">
+                      <h3 className="font-display text-step-2 font-bold">
                         {step.title}
                       </h3>
                       <p className="mt-3 leading-relaxed text-white/70">
@@ -350,7 +350,7 @@ function Prijzen() {
       <Reveal>
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>Vaste prijzen</Eyebrow>
-          <h2 className="mt-6 font-display text-4xl font-bold tracking-tight md:text-5xl">
+          <h2 className="mt-6 font-display text-step-3 font-bold">
             Duidelijk vooraf, nooit verrassingen
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-ink-soft">
@@ -385,7 +385,7 @@ function Werkgebied() {
       <Reveal>
         <div className="max-w-2xl">
           <Eyebrow>Werkgebied</Eyebrow>
-          <h2 className="mt-6 font-display text-4xl font-bold tracking-tight md:text-5xl">
+          <h2 className="mt-6 font-display text-step-3 font-bold">
             Een tv monteur bij u in de buurt
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-ink-soft">
@@ -461,7 +461,7 @@ function FaqSectie() {
         <div className="lg:col-span-2">
           <Reveal>
             <Eyebrow>Veelgestelde vragen</Eyebrow>
-            <h2 className="mt-6 font-display text-4xl font-bold tracking-tight md:text-5xl">
+            <h2 className="mt-6 font-display text-step-3 font-bold">
               Alles wat u wilt weten
             </h2>
             <p className="mt-5 leading-relaxed text-ink-soft">

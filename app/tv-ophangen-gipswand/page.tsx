@@ -175,7 +175,7 @@ export default function TvOphangenGipswandPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Welke wand heeft u?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -186,7 +186,7 @@ export default function TvOphangenGipswandPage() {
         <IconCardGrid items={wandtypes} columns={3} />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Wat er misgaat als het verkeerd wordt gedaan
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -203,7 +203,7 @@ export default function TvOphangenGipswandPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Wat er is inbegrepen
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -230,7 +230,7 @@ export default function TvOphangenGipswandPage() {
         <Stappen title="Zo pakken wij een gipswand aan" steps={stappen} />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Wat kost het?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -250,7 +250,7 @@ export default function TvOphangenGipswandPage() {
         <InlineCta />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Veelgestelde vragen over tv ophangen aan gipswand
           </h2>
         </Reveal>
@@ -261,7 +261,7 @@ export default function TvOphangenGipswandPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Ook bij u in de buurt
           </h2>
           <ProvincieChips prefix="Tv ophangen" withOverview />

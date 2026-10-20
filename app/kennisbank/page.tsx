@@ -48,7 +48,7 @@ export default function KennisbankPage() {
                   <span className="text-xs font-semibold tracking-wide text-ink-soft uppercase">
                     {artikel.eyebrow}
                   </span>
-                  <h2 className="mt-3 font-display text-xl font-bold tracking-tight md:text-2xl">
+                  <h2 className="mt-3 font-display text-step-2 font-bold">
                     {artikel.titel}
                   </h2>
                   <p className="mt-3 grow text-sm leading-relaxed text-ink-soft">

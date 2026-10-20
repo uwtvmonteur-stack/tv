@@ -20,7 +20,7 @@ export default function PageHeader({
       <Reveal immediate>
         <div className="mt-8">
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="mt-6 max-w-3xl font-display text-4xl leading-[1.02] font-bold tracking-tight md:text-6xl">
+          <h1 className="mt-6 max-w-3xl font-display text-step-4 font-bold">
             {title}
           </h1>
           {intro && (

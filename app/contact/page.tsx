@@ -52,7 +52,7 @@ export default function ContactPage() {
               (kort) onzichtbaar zijn door de scroll-animatie. */}
           <Reveal immediate className="lg:col-span-3">
             <BezelCard className="h-full" innerClassName="p-6 md:p-10">
-              <h2 className="mb-8 font-display text-3xl font-bold tracking-tight md:text-4xl">
+              <h2 className="mb-8 font-display text-step-3 font-bold">
                 Afspraak aanvragen
               </h2>
               <ContactForm />
@@ -64,7 +64,7 @@ export default function ContactPage() {
               <div className="flex h-full flex-col justify-between gap-10 rounded-[calc(2rem-0.375rem)] bg-ink p-8 text-cream md:p-10">
                 <div>
                   <Eyebrow light>Na het versturen</Eyebrow>
-                  <h2 className="mt-6 font-display text-3xl font-bold tracking-tight md:text-4xl">
+                  <h2 className="mt-6 font-display text-step-3 font-bold">
                     Wat gebeurt er daarna?
                   </h2>
                   {/* Onzekerheid over wat er volgt is de tweede reden om een

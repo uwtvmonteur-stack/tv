@@ -30,7 +30,7 @@ export default function CtaSection({
         <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/70 to-black/55" />
         <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center md:py-36 [text-shadow:0_1px_16px_rgba(0,0,0,0.6)]">
           <Reveal>
-            <h2 className="font-display text-4xl font-bold tracking-tight text-white md:text-6xl">
+            <h2 className="font-display text-step-4 font-bold text-white">
               {title}
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/80">

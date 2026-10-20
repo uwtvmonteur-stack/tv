@@ -51,7 +51,7 @@ export default function DienstenPage() {
                     <IconChip>
                       <DienstIcon slug={dienst.slug} />
                     </IconChip>
-                    <h2 className="mt-6 font-display text-xl font-bold tracking-tight md:text-2xl">
+                    <h2 className="mt-6 font-display text-step-2 font-bold">
                       {dienst.naam}
                     </h2>
                     <p className="mt-3 leading-relaxed text-ink-soft">
@@ -74,7 +74,7 @@ export default function DienstenPage() {
             <Reveal delay={400} className="h-full">
             <div className="flex h-full flex-col justify-between gap-8 rounded-[2rem] bg-ink p-8 text-cream">
               <div>
-                <h2 className="font-display text-xl font-bold tracking-tight md:text-2xl">
+                <h2 className="font-display text-step-2 font-bold">
                   Waarom Uw TV Monteur?
                 </h2>
                 <ul className="mt-5 flex flex-col gap-3 text-sm">

@@ -62,7 +62,7 @@ export default function PrivacyPage() {
           <div className="flex flex-col gap-10">
             {secties.map((s) => (
               <div key={s.h2}>
-                <h2 className="font-display text-2xl font-bold tracking-tight">
+                <h2 className="font-display text-step-2 font-bold">
                   {s.h2}
                 </h2>
                 {s.p.map((tekst) => (

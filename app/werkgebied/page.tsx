@@ -46,7 +46,7 @@ export default function WerkgebiedPage() {
                 <Reveal delay={i * 80} className="h-full">
                 <BezelCard className="h-full" innerClassName="flex h-full flex-col gap-6 p-8">
                   <div>
-                    <h2 className="font-display text-2xl font-bold tracking-tight">
+                    <h2 className="font-display text-step-2 font-bold">
                       <Link
                         href={`/werkgebied/${provincie.slug}`}
                         className="transition-colors duration-300 ease-fluid hover:text-amber-700"

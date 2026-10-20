@@ -65,7 +65,7 @@ export default function ServiceHero({
         <Reveal immediate>
           <div>
             <Eyebrow>{eyebrow}</Eyebrow>
-            <h1 className="mt-6 font-display text-4xl leading-[1.02] font-bold tracking-tight md:text-5xl lg:text-6xl">
+            <h1 className="mt-6 font-display text-step-4 font-bold">
               {title}
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
@@ -153,7 +153,7 @@ export default function ServiceHero({
             <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5">
               <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
                 <div className="max-w-2xl">
-                  <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+                  <h2 className="font-display text-step-3 font-bold">
                     {formulier.titel}
                   </h2>
                   <p className="mt-3 leading-relaxed text-ink-soft">

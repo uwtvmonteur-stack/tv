@@ -10,7 +10,7 @@ export default function NotFound() {
       >
         404
       </span>
-      <h1 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-4xl">
+      <h1 className="mt-4 font-display text-step-3 font-bold">
         Deze pagina hangt hier niet
       </h1>
       <p className="mt-4 max-w-md leading-relaxed text-ink-soft">

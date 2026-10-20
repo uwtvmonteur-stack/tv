@@ -20,7 +20,7 @@ const VELDEN = [
   "datum",
   "dagdeel",
   "bericht",
-  "website",
+  "ref_check_2",
 ] as const;
 
 const DAGDELEN = [
@@ -126,7 +126,11 @@ export default function ContactForm({
     payload.email = payload.email.replace(/\s+/g, "").toLowerCase();
 
     // Honeypot: bots vullen dit verborgen veld in; mensen zien het niet.
-    if (payload.website) {
+    // De naam is bewust betekenisloos: een veld dat "website" of "url" heet
+    // wordt door Chrome en wachtwoordbeheerders ingevuld, ook buiten beeld en
+    // ook met autoComplete="off". Dan verdween een echte aanvraag stil achter
+    // een bedankscherm.
+    if (payload.ref_check_2) {
       setStatus("success");
       return;
     }
@@ -212,7 +216,7 @@ export default function ContactForm({
         role="status"
         className="rounded-2xl bg-amber-600/10 p-6 text-center ring-1 ring-amber-600/20 focus:outline-none"
       >
-        <p className="font-display text-xl font-bold tracking-tight">
+        <p className="font-display text-step-2 font-bold">
           Bedankt! Uw aanvraag is ontvangen.
         </p>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
@@ -230,7 +234,7 @@ export default function ContactForm({
         role="status"
         className="rounded-2xl bg-amber-600/10 p-6 text-center ring-1 ring-amber-600/20 focus:outline-none"
       >
-        <p className="font-display text-xl font-bold tracking-tight">
+        <p className="font-display text-step-2 font-bold">
           Nog één stap: verstuur de e-mail
         </p>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
@@ -405,8 +409,14 @@ export default function ContactForm({
         className="absolute -left-[9999px] h-px w-px overflow-hidden"
         aria-hidden="true"
       >
-        <label htmlFor="website">Website</label>
-        <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+        <label htmlFor="ref_check_2">Laat dit veld leeg</label>
+        <input
+          id="ref_check_2"
+          name="ref_check_2"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
 
       <p className="text-xs text-ink-soft">

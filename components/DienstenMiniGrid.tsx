@@ -8,7 +8,7 @@ export default function DienstenMiniGrid({ plaats }: { plaats: string }) {
   return (
     <>
       <Reveal>
-        <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+        <h2 className="mt-20 font-display text-step-3 font-bold">
           Onze diensten in {plaats}
         </h2>
       </Reveal>

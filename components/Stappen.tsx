@@ -10,7 +10,7 @@ export default function Stappen({
   return (
     <>
       <Reveal>
-        <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+        <h2 className="mt-20 font-display text-step-3 font-bold">
           {title}
         </h2>
       </Reveal>

@@ -75,12 +75,12 @@ export default function PrijzenPage() {
 
       <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
         <Reveal>
-          <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="font-display text-step-3 font-bold">
             Onze tarieven per tv-formaat
           </h2>
         </Reveal>
         <div className="mt-8">
-          <PriceCards headingLevel="h3" />
+          <PriceCards headingLevel="h3" href="#afspraak" />
         </div>
 
         {/* Formulier in plaats van een doorverwijzende CTA. Deze pagina houdt
@@ -93,7 +93,7 @@ export default function PrijzenPage() {
             <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5">
               <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
                 <div className="max-w-2xl">
-                  <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+                  <h2 className="font-display text-step-3 font-bold">
                     Dit is de prijs die u betaalt
                   </h2>
                   <p className="mt-3 leading-relaxed text-ink-soft">
@@ -118,7 +118,7 @@ export default function PrijzenPage() {
         </section>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Aanvullende diensten
           </h2>
         </Reveal>
@@ -141,7 +141,7 @@ export default function PrijzenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Altijd inbegrepen
           </h2>
         </Reveal>
@@ -153,7 +153,7 @@ export default function PrijzenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Veelgestelde vragen over prijzen
           </h2>
         </Reveal>

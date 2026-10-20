@@ -156,7 +156,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Van soundbar tot home-cinema
           </h2>
         </Reveal>
@@ -179,7 +179,7 @@ export default function SoundbarPage() {
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
         <Reveal>
-          <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="font-display text-step-3 font-bold">
             Wat kost soundbar installeren?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -212,7 +212,7 @@ export default function SoundbarPage() {
         <InlineCta text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Soundbar, surround of home-cinema — wat past bij u?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -239,7 +239,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Hoe sluiten we uw soundbar aan?
           </h2>
           <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
@@ -263,7 +263,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Soundbar plaatsen: onder de tv of aan de muur
           </h2>
           <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
@@ -298,7 +298,7 @@ export default function SoundbarPage() {
         />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Alle grote audiomerken
           </h2>
           <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
@@ -310,7 +310,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Soundbar installeren in elke situatie
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -321,7 +321,7 @@ export default function SoundbarPage() {
         <IconCardGrid items={situaties} columns={2} hover />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Soundbar installeren in ons werkgebied
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -334,7 +334,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Veelgestelde vragen over soundbar-installatie
           </h2>
         </Reveal>

@@ -236,7 +236,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Wat is inbegrepen bij het ophangen van een tv?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -263,7 +263,7 @@ export default function TvOphangenPage() {
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Wat kost een tv ophangen?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -316,7 +316,7 @@ export default function TvOphangenPage() {
         <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Tv ophangen aan verschillende soorten muren
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -348,7 +348,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Welke tv-beugel heb ik nodig?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -383,7 +383,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Hoe hoog moet een tv worden opgehangen?
           </h2>
           <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
@@ -417,7 +417,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Tv ophangen en kabels wegwerken
           </h2>
           <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
@@ -444,7 +444,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Tv ophangen in elke situatie
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -455,7 +455,7 @@ export default function TvOphangenPage() {
         <IconCardGrid items={situaties} columns={2} hover />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Tv ophangen in ons werkgebied
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -468,7 +468,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Veelgestelde vragen over tv ophangen
           </h2>
         </Reveal>

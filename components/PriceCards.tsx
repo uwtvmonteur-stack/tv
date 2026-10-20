@@ -10,12 +10,21 @@ import { priceCards } from "@/lib/content";
  */
 export default function PriceCards({
   headingLevel = "h3",
+  /**
+   * Waar de knop onder elke kaart heen gaat. Standaard /contact, maar een
+   * pagina die zelf een afspraakformulier draagt geeft `#afspraak` mee. Dat
+   * stond er niet, waardoor alle drie de knoppen op /prijzen naar een andere
+   * pagina stuurden terwijl het formulier 300px lager op diezelfde pagina
+   * stond — drie lekken op de pagina met de hoogste betrokkenheid van de site.
+   */
+  href = "/contact",
 }: {
   headingLevel?: "h2" | "h3";
+  href?: string;
 }) {
   const Heading = headingLevel;
   return (
-    <ul className="grid items-stretch gap-5 md:grid-cols-3">
+    <ul className="grid items-stretch gap-x-5 gap-y-9 md:grid-cols-3 md:gap-5">
       {priceCards.map((card, i) => (
         <li key={card.name} className="h-full">
           <Reveal delay={i * 100} className="h-full">
@@ -49,7 +58,7 @@ export default function PriceCards({
                 {card.size}
               </p>
               <div className="mt-6 flex items-baseline gap-2">
-                <span className="font-display text-5xl font-bold tracking-tight">
+                <span className="font-display text-step-4 font-bold tabular-nums">
                   {card.price}
                 </span>
                 <span
@@ -77,7 +86,7 @@ export default function PriceCards({
                 ))}
               </ul>
               <Link
-                href="/contact"
+                href={href}
                 className={`mt-8 flex items-center justify-center rounded-full py-3.5 text-sm font-semibold transition-transform duration-300 ease-fluid active:scale-[0.98] ${
                   card.featured
                     ? "bg-amber-700 text-white"

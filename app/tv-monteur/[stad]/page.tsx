@@ -191,7 +191,7 @@ export default async function StadPage({
       <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
         <Reveal>
           <div className="rounded-[2rem] bg-cream-deep/50 p-8 md:p-10">
-            <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+            <h2 className="font-display text-step-3 font-bold">
               Tv monteur in elke wijk van {stad.naam}
             </h2>
             {/* Alleen de per-stad geschreven tekst. De inleidende zin die hier
@@ -226,7 +226,7 @@ export default async function StadPage({
             en is tegelijk het antwoord dat een bezoeker echt zoekt. */}
         {stedenMontage[stad.slug] && (
           <Reveal>
-            <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+            <h2 className="mt-20 font-display text-step-3 font-bold">
               Welke muur heeft u in {stad.naam}?
             </h2>
             <p className="mt-6 max-w-3xl leading-relaxed text-ink-soft">
@@ -247,7 +247,7 @@ export default async function StadPage({
             linkstructuur naar de dienstpagina's — maar zonder de dubbele tekst.
             De provinciepagina's gebruiken de grid nog wel. */}
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Onze diensten in {stad.naam}
           </h2>
           <ul className="mt-8 flex flex-wrap gap-2.5 text-sm">
@@ -266,7 +266,7 @@ export default async function StadPage({
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Wat kost tv ophangen in {stad.naam}?
           </h2>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
@@ -300,7 +300,7 @@ export default async function StadPage({
         />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Veelgestelde vragen — {stad.naam}
           </h2>
         </Reveal>

@@ -34,7 +34,7 @@ export default function InlineCta({
     <Reveal>
       <div className="mt-12 flex flex-col gap-6 rounded-[2rem] bg-ink px-7 py-8 text-cream md:flex-row md:items-center md:justify-between md:px-10">
         <div className="max-w-xl">
-          <p className="font-display text-2xl font-bold tracking-tight">
+          <p className="font-display text-step-2 font-bold">
             {title}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-cream/70">{text}</p>

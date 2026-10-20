@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   // telt alleen een conversie bij `verzonden: true`, zodat deze nep-200 nooit
   // als aanvraag in Analytics of Ads belandt. (Het formulier vangt de honeypot
   // zelf al af vóór de POST; dit is de tweede linie voor directe API-aanroepen.)
-  if (clean(body.website, 200))
+  if (clean(body.ref_check_2, 200))
     return Response.json({ ok: true, verzonden: false });
 
   const naam = clean(body.naam, 120);

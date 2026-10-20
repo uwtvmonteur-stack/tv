@@ -153,7 +153,7 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Wat is inbegrepen bij de tv installatie?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -179,7 +179,7 @@ export default function TvInstallatiePage() {
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
         <Reveal>
-          <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="font-display text-step-3 font-bold">
             Wat kost een tv installatie aan huis?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -197,7 +197,7 @@ export default function TvInstallatiePage() {
         <InlineCta text="Vaste prijs vooraf. Wij gaan pas weg als uw tv hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht." />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Ook uw andere apparatuur aansluiten
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -229,7 +229,7 @@ export default function TvInstallatiePage() {
           ]}
         />
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Tv installatie voor iedere situatie
           </h2>
         </Reveal>
@@ -237,7 +237,7 @@ export default function TvInstallatiePage() {
 
         <Reveal>
           <div className="mt-20 rounded-[2rem] bg-cream-deep/60 p-8 md:p-10">
-            <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+            <h2 className="font-display text-step-3 font-bold">
               Tv laten installeren of alleen ophangen?
             </h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
@@ -283,7 +283,7 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Veelgestelde vragen over tv installatie
           </h2>
         </Reveal>
@@ -294,7 +294,7 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Tv installatie aan huis in uw regio
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">

@@ -38,7 +38,7 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
   return (
     <Reveal>
       <section className="mt-14 first:mt-0">
-        <h2 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+        <h2 className="font-display text-step-3 font-bold">
           {sectie.kop}
         </h2>
         <div className="mt-4 space-y-4 leading-relaxed text-ink-soft">
@@ -159,7 +159,7 @@ export default async function ArtikelPage({
         />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-2xl font-bold tracking-tight md:text-3xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Veelgestelde vragen
           </h2>
         </Reveal>

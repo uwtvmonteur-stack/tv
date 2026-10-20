@@ -111,7 +111,7 @@ export default async function ProvinciePage({
 
       <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
         <Reveal>
-          <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="font-display text-step-3 font-bold">
             Kies uw stad
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -142,7 +142,7 @@ export default async function ProvinciePage({
         <DienstenMiniGrid plaats={provincie.naam} />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mt-20 font-display text-step-3 font-bold">
             Veelgestelde vragen — {provincie.naam}
           </h2>
         </Reveal>

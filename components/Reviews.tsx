@@ -26,12 +26,12 @@ export default function Reviews({
             <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
               <div className="max-w-md">
                 <Eyebrow>Reviews</Eyebrow>
-                <h2 className="mt-4 font-display text-2xl font-bold tracking-tight md:text-3xl">
+                <h2 className="mt-4 font-display text-step-3 font-bold">
                   {title}
                 </h2>
               </div>
               <div className="flex shrink-0 items-center gap-3">
-                <span className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+                <span className="font-display text-step-3 font-bold">
                   {SITE.reviews.score}
                 </span>
                 <div className="flex flex-col gap-0.5">

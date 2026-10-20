@@ -54,7 +54,7 @@ function Hero() {
   return (
     // `svh` i.p.v. `dvh`: dvh groeit zodra de mobiele adresbalk inklapt en
     // verschuift dan de hele hero (layout shift tijdens het scrollen).
-    <section className="relative flex min-h-[100svh] items-end overflow-hidden">
+    <section className="relative flex min-h-[max(33rem,86svh)] items-end overflow-hidden">
       <Image
         src={heroImg}
         alt="Wandgemonteerde tv in een sfeervolle moderne woonkamer bij schemering"
@@ -64,12 +64,11 @@ function Hero() {
         sizes="100vw"
         className="object-cover"
       />
-      <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/40 to-black/30" />
-      <div className="absolute inset-0 bg-linear-to-r from-black/40 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(10_8_7/0.92)_0%,rgb(10_8_7/0.74)_26%,rgb(10_8_7/0.36)_58%,rgb(10_8_7/0.18)_100%)]" />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-28 pb-10 md:px-8 md:pt-44 md:pb-24 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-32 pb-14 md:px-8 md:pt-44 md:pb-20">
         <Reveal immediate>
-          <Eyebrow light>Tv monteur aan huis · ’s avonds en in het weekend zonder toeslag</Eyebrow>
+          <Eyebrow light>Tv monteur aan huis</Eyebrow>
         </Reveal>
         <Reveal immediate>
           <h1 className="mt-7 max-w-3xl font-display text-step-5 font-bold text-white">
@@ -81,9 +80,10 @@ function Hero() {
         </Reveal>
         <Reveal immediate>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
-            Onze monteur hangt uw tv waterpas op, werkt de kabels netjes weg en
-            sluit alles aan — u hoeft zelf niets te doen. Vaste prijs vooraf, u
-            betaalt pas als het klaar is.
+            Wij hangen de tv op die u al heeft, aan de beugel die u al heeft —
+            ook als u hem niet bij ons kocht. De prijs die u ziet is de prijs
+            die u betaalt: ook ’s avonds en in het weekend, en ook als uw wand
+            van gipsplaat blijkt.
           </p>
         </Reveal>
         <Reveal immediate>

@@ -17,6 +17,11 @@ export type HeroFormulier = {
   variant: string;
   berichtLabel: string;
   berichtPlaceholder: string;
+  /**
+   * Zet de montagevragen aan: het formaat van de tv met de prijs erbij, de
+   * beugelvraag en de extra's. Alleen voor pagina's over ophangen.
+   */
+  montage?: boolean;
 };
 
 export default function ServiceHero({
@@ -163,6 +168,7 @@ export default function ServiceHero({
                 <div className="mt-8">
                   <ContactForm
                     planner
+                    montage={formulier.montage}
                     variant={formulier.variant}
                     submitLabel={formulier.submitLabel}
                     berichtLabel={formulier.berichtLabel}

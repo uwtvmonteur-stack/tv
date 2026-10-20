@@ -85,6 +85,76 @@ export const addons = [
   { naam: "Tv hulp aan huis — instellen, zenders, wifi en apps", prijs: "€60" },
 ];
 
+/**
+ * Numeriek bedrag uit een prijsnotatie als "€129" of "vanaf €39"; `null` als er
+ * geen bedrag in staat ("op maat"). Zo blijft de prijslijst de enige bron: het
+ * formulier rekent met exact de tekst die de bezoeker op /prijzen ziet.
+ */
+export function prijsBedrag(prijs: string) {
+  const cijfers = prijs.replace(/[^0-9]/g, "");
+  return cijfers ? Number(cijfers) : null;
+}
+
+/**
+ * Een prijs zonder vast bedrag ("vanaf €39", "op maat") mag nooit als hard
+ * totaal op het scherm komen; die maakt het totaal een vanaf-prijs.
+ */
+export const prijsIsOpen = (prijs: string) =>
+  /vanaf|op maat|op aanvraag/i.test(prijs) || prijsBedrag(prijs) === null;
+
+/**
+ * De drie montagetarieven als tikkeuze in het afspraakformulier, afgeleid van
+ * `priceCards` in plaats van herhaald: een prijs die in het formulier afwijkt
+ * van de prijslijst kost precies het vertrouwen dat de vaste prijs moet
+ * opbouwen.
+ */
+export const montageMaten = priceCards.map((card) => ({
+  id: card.name.toLowerCase(),
+  naam: card.name,
+  label: card.size.replace(/^Voor tv's /, ""),
+  prijs: card.price,
+  bedrag: prijsBedrag(card.price),
+  populair: card.featured,
+}));
+
+/**
+ * Extra's die in dezelfde rit meekunnen. Kort geformuleerd omdat ze naast een
+ * vinkje staan; de volledige omschrijving staat in `addons`.
+ */
+export const montageExtras = [
+  { id: "kabelgoot", label: "Kabels wegwerken in een kabelgoot", prijs: "vanaf €39" },
+  { id: "kabels-in-muur", label: "Kabels volledig in de muur wegwerken", prijs: "op maat" },
+  { id: "soundbar", label: "Soundbar aansluiten en afstellen", prijs: "€49" },
+].map((extra) => ({
+  ...extra,
+  bedrag: prijsBedrag(extra.prijs),
+  open: prijsIsOpen(extra.prijs),
+}));
+
+/**
+ * De beugelvraag. Staat bewust in het formulier en niet alleen in de FAQ: wie
+ * nog geen beugel heeft moet er eerst zelf een kopen voordat wij kunnen komen,
+ * en dat is de meest voorkomende reden dat een afspraak alsnog afketst. Door
+ * het hier te vragen lossen we het in dezelfde rit op.
+ */
+export const beugelOpties = [
+  {
+    id: "eigen",
+    label: "Ja, die heb ik al",
+    detail: "Wij hangen hem op — ook als u hem ergens anders kocht.",
+  },
+  {
+    id: "nodig",
+    label: "Nee, ik heb er nog een nodig",
+    detail: "Wij regelen er een die bij uw tv en wand past. De prijs hoort u vooraf.",
+  },
+  {
+    id: "advies",
+    label: "Dat weet ik niet",
+    detail: "Zet uw tv in het bericht; wij zoeken uit wat erbij past.",
+  },
+];
+
 export const stats = [
   { value: "12.000+", label: "tv's vakkundig opgehangen" },
   { value: "4,9 / 5", label: "gemiddelde klantbeoordeling" },

@@ -200,12 +200,13 @@ export default function TvOphangenPage() {
         formulier={{
           titel: "Plan het ophangen van uw tv",
           intro:
-            "Vertel kort welke tv u heeft en wanneer het u schikt. U krijgt binnen enkele uren bericht met de eerstvolgende mogelijkheid en de vaste prijs voor uw situatie.",
+            "Kies het formaat van uw tv, dan staat uw prijs er direct bij — vast, inclusief voorrijkosten en btw. U krijgt binnen enkele uren bericht met de eerstvolgende mogelijkheid.",
           submitLabel: "Afspraak aanvragen",
           variant: "tv-ophangen-hero",
+          montage: true,
           berichtLabel: "Uw tv en uw muur",
           berichtPlaceholder:
-            "Bijvoorbeeld: 55 inch Samsung, bakstenen muur, ik heb nog geen beugel.",
+            "Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat.",
         }}
       />
 

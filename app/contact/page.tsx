@@ -55,7 +55,10 @@ export default function ContactPage() {
               <h2 className="mb-8 font-display text-step-3 font-bold">
                 Afspraak aanvragen
               </h2>
-              <ContactForm />
+              {/* `montage`: ophangen is waar de overgrote meerderheid voor
+                  komt, en de prijs vóór het telefoonnummer tonen is hier het
+                  hele punt. Wie voor iets anders komt, laat de tv-vraag leeg. */}
+              <ContactForm montage planner variant="contact" />
             </BezelCard>
           </Reveal>
 

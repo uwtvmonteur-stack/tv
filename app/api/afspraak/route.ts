@@ -51,8 +51,18 @@ export async function POST(request: Request) {
   const datum = clean(body.datum, 20);
   const dagdeel = clean(body.dagdeel, 40);
   const bericht = clean(body.bericht, 2000);
+  // De keuzes uit het formulier, als leesbare tekst. `prijs` is het bedrag dat
+  // de klant tijdens het invullen op het scherm zag; dat staat bewust in de
+  // mail, zodat de toegezegde prijs later na te lezen is.
+  const tvmaat = clean(body.tvmaat, 160);
+  const beugel = clean(body.beugel, 120);
+  const extras = clean(body.extras, 500);
+  const prijs = clean(body.prijs, 40);
 
-  if (!naam || !telefoon || !email || !EMAIL_RE.test(email)) {
+  // E-mail is optioneel: wij bellen terug, dus naam en telefoon zijn wat we
+  // nodig hebben. Staat er wél een adres, dan moet het bruikbaar zijn — anders
+  // komt de bevestiging nooit aan en merkt niemand dat.
+  if (!naam || !telefoon || (email && !EMAIL_RE.test(email))) {
     return Response.json({ error: "validation" }, { status: 422 });
   }
 
@@ -76,14 +86,21 @@ export async function POST(request: Request) {
   const from = MAIL_FROM || SMTP_USER;
   const adres = [postcode, huisnummer].filter(Boolean).join(" ");
 
+  // Een regel die wegvalt als hij leeg is: de aanvraagmail moet in één blik te
+  // lezen zijn, en een rij met een streepje erachter leest niemand.
+  const optioneel = (label: string, waarde: string) =>
+    (waarde ? [[label, waarde]] : []) as [string, string][];
+
   const regels: [string, string][] = [
     ["Naam", naam],
     ["Telefoon", telefoon],
-    ["E-mail", email],
+    ["E-mail", email || "– (klant wordt gebeld)"],
     ["Postcode / huisnummer", adres || "–"],
-    ...((datum || dagdeel
-      ? [["Voorkeursmoment", [datum, dagdeel].filter(Boolean).join(" · ")]]
-      : []) as [string, string][]),
+    ...optioneel("Tv", tvmaat),
+    ...optioneel("Beugel", beugel),
+    ...optioneel("Extra's", extras),
+    ...optioneel("Prijs op het scherm", prijs),
+    ...optioneel("Voorkeursmoment", [datum, dagdeel].filter(Boolean).join(" · ")),
     ["Bericht", bericht || "–"],
   ];
 
@@ -103,7 +120,9 @@ ${regels
     await transporter.sendMail({
       from: `"${SITE.name} website" <${from}>`,
       to,
-      replyTo: `"${naam.replace(/"/g, "")}" <${email}>`,
+      // Zonder e-mailadres is er niets om op te antwoorden; een leeg `replyTo`
+      // laat sommige servers de mail juist weigeren.
+      ...(email ? { replyTo: `"${naam.replace(/"/g, "")}" <${email}>` } : {}),
       subject: `Afspraakaanvraag — ${naam}${postcode ? ` (${postcode})` : ""}`,
       text,
       html,
@@ -111,6 +130,13 @@ ${regels
   } catch (err) {
     console.error("[afspraak] Versturen mislukt:", err);
     return Response.json({ error: "send_failed" }, { status: 502 });
+  }
+
+  // Geen e-mailadres opgegeven? Dan valt er geen bevestiging te versturen. Dat
+  // is geen fout maar een keuze van de klant: de aanvraag is binnen en wij
+  // bellen terug. Daarom `null` en niet `false`.
+  if (!email) {
+    return Response.json({ ok: true, verzonden: true, bevestiging: null });
   }
 
   // Korte bevestiging naar de klant. We wachten hier bewust op: op Vercel

@@ -105,6 +105,7 @@ export default function PrijzenPage() {
                 </div>
                 <div className="mt-8">
                   <ContactForm
+                    montage
                     planner
                     variant="prijzen"
                     submitLabel="Afspraak aanvragen"

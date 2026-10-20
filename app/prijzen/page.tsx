@@ -167,7 +167,7 @@ export default function PrijzenPage() {
 
       <Reviews />
 
-      <CtaSection title="Weten waar u aan toe bent?" />
+      <CtaSection title="Weten waar u aan toe bent?" href="#afspraak" />
     </main>
   );
 }

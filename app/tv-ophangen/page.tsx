@@ -9,7 +9,7 @@ import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
 import CheckList from "@/components/CheckList";
 import ProvincieChips from "@/components/ProvincieChips";
-import BrandMarquee from "@/components/BrandMarquee";
+import Bezwaren from "@/components/Bezwaren";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import { IconCable, IconShield, IconTv } from "@/components/icons";
@@ -210,7 +210,7 @@ export default function TvOphangenPage() {
         }}
       />
 
-      <BrandMarquee />
+      <Bezwaren />
 
       <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <Reveal immediate>
@@ -495,6 +495,7 @@ export default function TvOphangenPage() {
       {/* "Vandaag gebeld" beloofde een telefoontje terwijl er bewust nergens
           een belknop staat en de datumkiezer pas morgen begint. */}
       <CtaSection
+        href="#afspraak"
         title="Tv ophangen? Kies een dag die u schikt"
         text="Vraag online uw afspraak aan — u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid. Ook 's avonds en in het weekend, zonder toeslag."
       />

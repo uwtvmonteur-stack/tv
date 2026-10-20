@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CtaSection from "@/components/CtaSection";
-import BrandMarquee from "@/components/BrandMarquee";
+import Bezwaren from "@/components/Bezwaren";
+import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
@@ -87,10 +88,12 @@ function Hero() {
           </p>
         </Reveal>
         <Reveal immediate>
-          {/* Eén actie per scherm: alles wijst naar het afspraakformulier. */}
+          {/* Eén actie per scherm: alles wijst naar het afspraakformulier —
+              dat staat sinds deze herbouw op deze pagina zelf, dus deze knop
+              scrolt in plaats van dat hij de bezoeker verhuist. */}
           <div className="mt-8">
             <Link
-              href="/contact"
+              href="#afspraak"
               className="group flex w-full items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98] sm:inline-flex sm:w-auto"
             >
               Plan een afspraak
@@ -361,7 +364,11 @@ function Prijzen() {
       </Reveal>
 
       <div className="mt-16">
-        <PriceCards headingLevel="h3" />
+        {/* Naar het formulier op deze pagina, niet naar /contact: een
+            paginawissel tussen "ik weet de prijs" en "ik vraag aan" is de
+            duurste stap van de hele site. De kaart geeft het gekozen formaat
+            mee aan het formulier. */}
+        <PriceCards headingLevel="h3" href="#afspraak" />
       </div>
 
       <Reveal delay={200}>
@@ -374,6 +381,48 @@ function Prijzen() {
             Bekijk alle prijzen en aanvullende diensten
           </Link>
         </p>
+      </Reveal>
+    </section>
+  );
+}
+
+/**
+ * Het afspraakformulier op de homepage zelf.
+ *
+ * Tot nu toe eindigde elke weg op deze pagina bij een knop naar /contact. Dat
+ * is een paginawissel op het moment dat iemand besloten heeft — de stap waar
+ * verkeer het makkelijkst verdwijnt. Het formulier staat nu direct onder de
+ * prijzen, zodat de prijs en het aanvragen één beweging zijn.
+ */
+function Afspraak() {
+  return (
+    <section
+      id="afspraak"
+      className="mx-auto w-full max-w-6xl scroll-mt-24 px-4 pb-section md:px-8"
+    >
+      <Reveal immediate>
+        <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
+          <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
+            <div className="max-w-2xl">
+              <h2 className="font-display text-step-3 font-bold">
+                Vraag uw afspraak aan
+              </h2>
+              <p className="mt-3 leading-relaxed text-ink-soft">
+                Kies het formaat van uw tv, dan staat uw prijs er direct bij. U
+                hoort binnen enkele uren wat de eerstvolgende mogelijkheid is.
+              </p>
+            </div>
+            <div className="mt-8">
+              <ContactForm
+                montage
+                planner
+                variant="home"
+                berichtLabel="Uw tv en uw muur"
+                berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
+              />
+            </div>
+          </div>
+        </div>
       </Reveal>
     </section>
   );
@@ -487,17 +536,21 @@ function FaqSectie() {
 export default function Page() {
   return (
     <main>
-      {/* Volgorde volgt de beslisvolgorde van een advertentiebezoeker:
-          wat doen jullie → wat kost het → hoe werkt het → bewijs → twijfels → actie. */}
+      {/* Volgorde volgt de beslisvolgorde van een advertentiebezoeker: wat doen
+          jullie → hoe gaat het → bewijs → mijn twijfels → wat kost het →
+          aanvragen. Het aanvragen stond hier eerst helemaal aan het eind, en
+          alleen als een knop naar een andere pagina; de prijzen stonden vóór
+          het bewijs en de twijfels bleven onderaan in de FAQ liggen. */}
       <Hero />
       <Diensten />
-      <Prijzen />
       <Werkwijze />
-      <BrandMarquee />
       <Reviews />
+      <Bezwaren />
+      <Prijzen />
+      <Afspraak />
       <FaqSectie />
       <Werkgebied />
-      <CtaSection />
+      <CtaSection href="#afspraak" />
     </main>
   );
 }

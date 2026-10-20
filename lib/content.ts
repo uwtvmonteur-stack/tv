@@ -396,3 +396,33 @@ export const faqAlgemeen: FaqItem[] = [
     a: "Ja. Al onze monteurs zijn volledig verzekerd en werken zorgvuldig, zodat u bij ons altijd zorgeloos bent.",
   },
 ];
+
+/**
+ * De vier dingen die een bezoeker tegenhouden, met het antwoord erbij. Niet
+ * bedacht maar gevonden: op elk van deze vier punten heeft de concurrentie een
+ * nee, een toeslag of een voorbehoud, en wij niet. Daarom staan ze op de twee
+ * pagina's waar de beslissing valt, vlak voor de prijs — en niet pas onderaan
+ * in de FAQ, waar niemand meer komt die al is afgehaakt.
+ */
+export const bezwaren = [
+  {
+    vraag: "Ik heb mijn tv niet bij u gekocht",
+    antwoord:
+      "Dat hoeft ook niet. Wij hangen elke tv op: elk merk, uit elke winkel, en ook een tv die u al jaren heeft. Bij de grote webwinkels kunt u montage alleen meebestellen bij een nieuwe tv.",
+  },
+  {
+    vraag: "Mijn wand is van gipsplaat of hol",
+    antwoord:
+      "Dat kost bij ons niets extra. Wij controleren het draagvermogen en gebruiken de bevestiging die bij uw wand hoort. De prijs die u vooraf ziet blijft staan, ook als de wand anders blijkt dan u dacht.",
+  },
+  {
+    vraag: "Bij mij kan het alleen 's avonds of in het weekend",
+    antwoord:
+      "Dan komen we 's avonds of in het weekend, zonder toeslag. Doordeweeks plannen we tot 21:00 uur, zaterdag en zondag van 09:00 tot 17:00 uur. Hetzelfde tarief als op een dinsdagmiddag.",
+  },
+  {
+    vraag: "Wie is verantwoordelijk als er iets misgaat?",
+    antwoord:
+      "Wij, en niemand anders. U heeft te maken met het bedrijf dat de klus zelf uitvoert, niet met een platform dat hem doorgeeft aan een partij die u niet kent. Onze monteurs zijn verzekerd en wij zijn aanspreekbaar op het resultaat.",
+  },
+];

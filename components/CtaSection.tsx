@@ -12,9 +12,14 @@ export default function CtaSection({
   // kennisbank en de 32 stadpagina's — dus zesvoudig dezelfde loze belofte.
   title = "Kies een avond of een zaterdag die u schikt",
   text = "Vraag online uw afspraak aan — u hoort binnen enkele uren wat de eerstvolgende mogelijkheid is. 's Avonds tot 21:00 en in het weekend zonder toeslag, en u betaalt pas na afloop.",
+  // Staat het formulier op dezelfde pagina, dan geeft die pagina `#afspraak`
+  // mee: deze afsluiter hoeft niemand te verhuizen naar /contact voor iets wat
+  // een paar regels hoger staat.
+  href = "/contact",
 }: {
   title?: string;
   text?: string;
+  href?: string;
 }) {
   return (
     <section className="px-2 py-12 md:px-6">
@@ -40,7 +45,7 @@ export default function CtaSection({
           <Reveal delay={150}>
             <div className="mt-10">
               <Link
-                href="/contact"
+                href={href}
                 className="group inline-flex items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98]"
               >
                 Plan een afspraak

@@ -22,7 +22,7 @@ import {
   IconClock,
     IconShield,
 } from "@/components/icons";
-import { diensten, dienstHref, faqAlgemeen } from "@/lib/content";
+import { bezwaren, diensten, dienstHref, faqAlgemeen } from "@/lib/content";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta } from "@/lib/seo";
 import { SITE } from "@/lib/site";
@@ -505,7 +505,19 @@ function Werkgebied() {
 function FaqSectie() {
   return (
     <section className="mx-auto w-full max-w-6xl px-4 py-24 md:px-8 md:py-36">
-      <JsonLd data={faqJsonLd(faqAlgemeen)} />
+      {/* De vier bezwaren staan zichtbaar op deze pagina als vraag met
+          antwoord, dus horen ze ook in het FAQPage-schema: dit is wat
+          zoekmachines en AI-antwoordmachines uitlezen, en het zijn precies de
+          vier vragen waarop wij een ander antwoord geven dan de markt. */}
+      <JsonLd
+        data={faqJsonLd([
+          ...bezwaren.map((bezwaar) => ({
+            q: bezwaar.vraag,
+            a: bezwaar.antwoord,
+          })),
+          ...faqAlgemeen,
+        ])}
+      />
       <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
         <div className="lg:col-span-2">
           <Reveal>

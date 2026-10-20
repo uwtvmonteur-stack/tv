@@ -14,7 +14,7 @@ import PrijsGarantie from "@/components/PrijsGarantie";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import { IconCable, IconShield, IconTv } from "@/components/icons";
-import { reviewsPerDienst, type FaqItem } from "@/lib/content";
+import { bezwaren, reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
@@ -173,7 +173,16 @@ export default function TvOphangenPage() {
           ],
         })}
       />
-      <JsonLd data={faqJsonLd(faqItems)} />
+      {/* Inclusief de vier bezwaren die verderop op deze pagina staan. */}
+      <JsonLd
+        data={faqJsonLd([
+          ...bezwaren.map((bezwaar) => ({
+            q: bezwaar.vraag,
+            a: bezwaar.antwoord,
+          })),
+          ...faqItems,
+        ])}
+      />
 
       <ServiceHero
         crumbs={[

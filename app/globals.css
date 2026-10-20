@@ -45,8 +45,8 @@
   --text-step-5--letter-spacing: -0.034em;
 
   /* Een systeem voor randen en hoeken. Er stonden zes randsterktes
-     (ring-ink/5 24x, /10 6x, /15 5x, border-ink/10 4x, amber-600/20 3x,
-     border-ink/5 1x) en vijf radii door elkaar. ink/5 op creme is bovendien
+     (ring-line 24x, /10 6x, /15 5x, border-line-strong 4x, amber-600/20 3x,
+     border-line 1x) en vijf radii door elkaar. ink/5 op creme is bovendien
      niet te zien, waardoor kaarten alleen door hun schaduw bestonden en als
      vage wolken lazen in plaats van als gedefinieerde objecten. */
   --color-line: rgb(25 21 18 / 0.09);

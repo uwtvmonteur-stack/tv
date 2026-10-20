@@ -73,7 +73,7 @@ export default function PrijzenPage() {
         intro="Bij ons weet u vooraf precies waar u aan toe bent. Alle prijzen zijn inclusief voorrijkosten en btw — wat u hieronder ziet, is wat u betaalt."
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <Reveal>
           <h2 className="font-display text-step-3 font-bold">
             Onze tarieven per tv-formaat
@@ -90,7 +90,7 @@ export default function PrijzenPage() {
             het moment waarop iemand weet wat zijn formaat kost. */}
         <section id="afspraak" className="mt-12">
           <Reveal immediate>
-            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5">
+            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
               <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
                 <div className="max-w-2xl">
                   <h2 className="font-display text-step-3 font-bold">
@@ -118,7 +118,7 @@ export default function PrijzenPage() {
         </section>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Aanvullende diensten
           </h2>
         </Reveal>
@@ -141,7 +141,7 @@ export default function PrijzenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Altijd inbegrepen
           </h2>
         </Reveal>
@@ -153,7 +153,7 @@ export default function PrijzenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Veelgestelde vragen over prijzen
           </h2>
         </Reveal>

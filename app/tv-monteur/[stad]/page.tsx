@@ -188,7 +188,7 @@ export default async function StadPage({
         imageAlt={`Tv monteur van Uw TV Monteur aan het werk in ${stad.naam}`}
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <Reveal>
           <div className="rounded-[2rem] bg-cream-deep/50 p-8 md:p-10">
             <h2 className="font-display text-step-3 font-bold">
@@ -207,7 +207,7 @@ export default async function StadPage({
               {stad.wijken.map((wijk) => (
                 <li
                   key={wijk}
-                  className="rounded-full bg-white px-4 py-2 text-sm font-medium ring-1 ring-ink/5"
+                  className="rounded-full bg-white px-4 py-2 text-sm font-medium ring-1 ring-line"
                 >
                   {wijk}
                 </li>
@@ -226,7 +226,7 @@ export default async function StadPage({
             en is tegelijk het antwoord dat een bezoeker echt zoekt. */}
         {stedenMontage[stad.slug] && (
           <Reveal>
-            <h2 className="mt-20 font-display text-step-3 font-bold">
+            <h2 className="mt-block font-display text-step-3 font-bold">
               Welke muur heeft u in {stad.naam}?
             </h2>
             <p className="mt-6 max-w-3xl leading-relaxed text-ink-soft">
@@ -247,7 +247,7 @@ export default async function StadPage({
             linkstructuur naar de dienstpagina's — maar zonder de dubbele tekst.
             De provinciepagina's gebruiken de grid nog wel. */}
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Onze diensten in {stad.naam}
           </h2>
           <ul className="mt-8 flex flex-wrap gap-2.5 text-sm">
@@ -255,7 +255,7 @@ export default async function StadPage({
               <li key={dienst.slug}>
                 <Link
                   href={dienstHref(dienst)}
-                  className="flex items-center gap-2.5 rounded-full bg-ink/[0.04] px-4 py-2.5 font-medium ring-1 ring-ink/5 transition-colors duration-300 ease-fluid hover:bg-ink/10"
+                  className="flex items-center gap-2.5 rounded-full bg-ink/[0.04] px-4 py-2.5 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
                 >
                   <DienstIcon slug={dienst.slug} className="h-4 w-4" />
                   {dienst.naam} in {stad.naam}
@@ -266,17 +266,17 @@ export default async function StadPage({
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Wat kost tv ophangen in {stad.naam}?
           </h2>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
+            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
               Tot 43 inch — €99
             </span>
             <span className="rounded-full bg-ink text-cream px-4 py-2">
               44 t/m 64 inch — €129 · populair
             </span>
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
+            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
               Vanaf 65 inch — €159
             </span>
           </div>
@@ -300,7 +300,7 @@ export default async function StadPage({
         />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Veelgestelde vragen — {stad.naam}
           </h2>
         </Reveal>
@@ -319,7 +319,7 @@ export default async function StadPage({
               <Link
                 key={nabijStad.slug}
                 href={`/tv-monteur/${nabijStad.slug}`}
-                className="rounded-full bg-ink/[0.04] px-4 py-2 font-medium ring-1 ring-ink/5 transition-colors duration-300 ease-fluid hover:bg-ink/10"
+                className="rounded-full bg-ink/[0.04] px-4 py-2 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
               >
                 Tv monteur {nabijStad.naam}
               </Link>

@@ -141,7 +141,7 @@ export default function SoundbarPage() {
 
       <BrandMarquee />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <Reveal immediate>
           <div className="max-w-3xl">
             <p className="leading-relaxed text-ink-soft">
@@ -156,7 +156,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Van soundbar tot home-cinema
           </h2>
         </Reveal>
@@ -190,10 +190,10 @@ export default function SoundbarPage() {
             <span className="rounded-full bg-ink text-cream px-4 py-2">
               Soundbar installeren — €49 · populair
             </span>
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
+            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
               Surround-set — vanaf €79
             </span>
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
+            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
               Home-cinema — prijs op maat
             </span>
           </div>
@@ -212,7 +212,7 @@ export default function SoundbarPage() {
         <InlineCta text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Soundbar, surround of home-cinema — wat past bij u?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -221,7 +221,7 @@ export default function SoundbarPage() {
           </p>
         </Reveal>
         <Reveal delay={100}>
-          <ul className="mt-8 max-w-4xl divide-y divide-ink/10 border-y border-ink/10">
+          <ul className="mt-8 max-w-4xl divide-y divide-ink/10 border-y border-line-strong">
             {keuze.map((k) => (
               <li key={k.h3} className="flex items-start gap-5 py-6">
                 <IconChip>{k.icon}</IconChip>
@@ -239,7 +239,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Hoe sluiten we uw soundbar aan?
           </h2>
           <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
@@ -263,7 +263,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Soundbar plaatsen: onder de tv of aan de muur
           </h2>
           <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
@@ -298,7 +298,7 @@ export default function SoundbarPage() {
         />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Alle grote audiomerken
           </h2>
           <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
@@ -310,7 +310,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Soundbar installeren in elke situatie
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -321,7 +321,7 @@ export default function SoundbarPage() {
         <IconCardGrid items={situaties} columns={2} hover />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Soundbar installeren in ons werkgebied
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -334,7 +334,7 @@ export default function SoundbarPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Veelgestelde vragen over soundbar-installatie
           </h2>
         </Reveal>

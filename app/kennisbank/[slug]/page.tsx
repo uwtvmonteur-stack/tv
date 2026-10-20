@@ -54,7 +54,7 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
             {sectie.lijst.map((punt) => (
               <li
                 key={punt.slice(0, 40)}
-                className="rounded-2xl bg-cream-deep/50 px-5 py-4 text-sm leading-relaxed text-ink-soft ring-1 ring-ink/5"
+                className="rounded-2xl bg-cream-deep/50 px-5 py-4 text-sm leading-relaxed text-ink-soft ring-1 ring-line"
               >
                 <RichText>{punt}</RichText>
               </li>
@@ -65,7 +65,7 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
         {sectie.tabel && (
           // overflow-x-auto houdt een brede tabel leesbaar op een telefoon
           // zonder de hele pagina horizontaal te laten schuiven.
-          <div className="mt-6 overflow-x-auto rounded-2xl ring-1 ring-ink/10">
+          <div className="mt-6 overflow-x-auto rounded-2xl ring-1 ring-line-strong">
             <table className="w-full border-collapse text-left text-sm">
               <thead>
                 <tr className="bg-ink text-cream">
@@ -80,7 +80,7 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
                 {sectie.tabel.rijen.map((rij) => (
                   <tr
                     key={rij[0]}
-                    className="border-t border-ink/10 bg-white even:bg-cream-deep/30"
+                    className="border-t border-line-strong bg-white even:bg-cream-deep/30"
                   >
                     {rij.map((cel, i) => (
                       <td
@@ -159,7 +159,7 @@ export default async function ArtikelPage({
         />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Veelgestelde vragen
           </h2>
         </Reveal>

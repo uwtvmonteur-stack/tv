@@ -17,9 +17,9 @@ export default function Faq({ items }: { items: FaqItem[] }) {
         return (
           <div
             key={item.q}
-            className="rounded-[1.75rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5"
+            className="rounded-[1.75rem] bg-ink/[0.04] p-1.5 ring-1 ring-line"
           >
-            <div className="rounded-[calc(1.75rem-0.375rem)] bg-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]">
+            <div className="rounded-[calc(1.75rem-0.375rem)] bg-white">
               <h3 className="m-0">
                 <button
                   type="button"

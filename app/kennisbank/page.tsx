@@ -36,14 +36,14 @@ export default function KennisbankPage() {
         intro="Een tv ophangen begint met een paar vragen: op welke hoogte, welke beugel, en houdt deze muur het eigenlijk wel? Hier staan de antwoorden, met de maten en rekenregels die onze monteurs zelf gebruiken — ook als de uitkomst is dat u het prima zelf kunt."
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <ul className="grid gap-5 md:grid-cols-2">
           {artikelen.map((artikel, i) => (
             <li key={artikel.slug}>
               <Reveal delay={i * 60}>
                 <Link
                   href={`/kennisbank/${artikel.slug}`}
-                  className="group flex h-full flex-col rounded-[2rem] bg-cream-deep/50 p-7 ring-1 ring-ink/5 transition-colors duration-300 ease-fluid hover:bg-cream-deep md:p-8"
+                  className="group flex h-full flex-col rounded-[2rem] bg-cream-deep/50 p-7 ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-cream-deep md:p-8"
                 >
                   <span className="text-xs font-semibold tracking-wide text-ink-soft uppercase">
                     {artikel.eyebrow}

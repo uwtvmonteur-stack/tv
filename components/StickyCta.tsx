@@ -52,7 +52,7 @@ export default function StickyCta() {
       <div className="h-20" aria-hidden />
       <div
         aria-hidden={!show}
-        className={`fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-ink/10 bg-cream/95 px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm transition-all duration-300 ease-fluid sm:bottom-5 sm:mx-auto sm:max-w-lg sm:rounded-full sm:border sm:pb-3 sm:shadow-[0_25px_50px_-20px_rgba(25,21,18,0.45)] ${
+        className={`fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-line-strong bg-cream/95 px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm transition-all duration-300 ease-fluid sm:bottom-5 sm:mx-auto sm:max-w-lg sm:rounded-full sm:border sm:pb-3 sm:shadow-[0_25px_50px_-20px_rgba(25,21,18,0.45)] ${
           show
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-4 opacity-0"

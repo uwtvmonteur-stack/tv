@@ -129,7 +129,7 @@ export default function TvInstellenPage() {
 
       <BrandMarquee />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <Reveal immediate>
           <div className="max-w-3xl">
             <p className="leading-relaxed text-ink-soft">
@@ -144,7 +144,7 @@ export default function TvInstellenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Waarmee we u helpen
           </h2>
         </Reveal>
@@ -202,7 +202,7 @@ export default function TvInstellenPage() {
         <InlineCta text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Hulp met streaming en apps
           </h2>
           <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
@@ -215,7 +215,7 @@ export default function TvInstellenPage() {
             {streaming.map((dienst) => (
               <li
                 key={dienst}
-                className="rounded-full bg-white px-4 py-2 text-sm font-medium ring-1 ring-ink/5"
+                className="rounded-full bg-white px-4 py-2 text-sm font-medium ring-1 ring-line"
               >
                 {dienst}
               </li>
@@ -246,7 +246,7 @@ export default function TvInstellenPage() {
         />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Geduldig en in gewone taal — ook voor senioren
           </h2>
           <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
@@ -265,7 +265,7 @@ export default function TvInstellenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Tv hulp in elke situatie
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -275,7 +275,7 @@ export default function TvInstellenPage() {
         <IconCardGrid items={situaties} columns={2} hover />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Tv hulp aan huis in ons werkgebied
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -288,7 +288,7 @@ export default function TvInstellenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Veelgestelde vragen over tv hulp
           </h2>
         </Reveal>

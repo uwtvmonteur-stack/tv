@@ -126,7 +126,7 @@ export default function ServiceHero({
         </Reveal>
 
         <Reveal immediate>
-          <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5">
+          <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
             <div className="overflow-hidden rounded-[calc(2rem-0.375rem)]">
               <Image
                 src={image}
@@ -150,7 +150,7 @@ export default function ServiceHero({
           {/* `immediate`: dit is het conversiepunt en mag nooit even onzichtbaar
               zijn door de scroll-animatie. */}
           <Reveal immediate>
-            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5">
+            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
               <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
                 <div className="max-w-2xl">
                   <h2 className="font-display text-step-3 font-bold">

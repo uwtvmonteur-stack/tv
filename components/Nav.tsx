@@ -51,7 +51,7 @@ export default function Nav() {
       <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:pt-6">
         <nav
           aria-label="Hoofdnavigatie"
-          className="pointer-events-auto flex w-full max-w-3xl items-center justify-between gap-1 rounded-full bg-cream/90 py-1.5 pr-1.5 pl-2 shadow-[0_16px_50px_-16px_rgba(25,21,18,0.3)] ring-1 ring-ink/10 backdrop-blur-md lg:w-auto lg:max-w-none lg:justify-start lg:gap-2"
+          className="pointer-events-auto flex w-full max-w-3xl items-center justify-between gap-1 rounded-full bg-cream/90 py-1.5 pr-1.5 pl-2 shadow-[0_16px_50px_-16px_rgba(25,21,18,0.3)] ring-1 ring-line-strong backdrop-blur-md lg:w-auto lg:max-w-none lg:justify-start lg:gap-2"
         >
           <Link
             href="/"
@@ -103,7 +103,7 @@ export default function Nav() {
               aria-expanded={open}
               aria-controls="mobiel-menu"
               onClick={() => setOpen(!open)}
-              className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-full ring-1 ring-ink/10 lg:hidden"
+              className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-full ring-1 ring-line-strong lg:hidden"
             >
               <span
                 className={`h-[1.5px] w-4 rounded-full bg-ink transition-transform duration-500 ease-fluid ${

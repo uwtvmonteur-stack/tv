@@ -46,7 +46,7 @@ export default function ContactPage() {
         title="Plan uw afspraak"
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <div className="grid gap-5 lg:grid-cols-5">
           {/* `immediate`: het formulier is het conversiepunt en mag nooit
               (kort) onzichtbaar zijn door de scroll-animatie. */}
@@ -60,7 +60,7 @@ export default function ContactPage() {
           </Reveal>
 
           <Reveal delay={100} className="lg:col-span-2">
-            <div className="h-full rounded-[2rem] bg-ink/[0.06] p-1.5 ring-1 ring-ink/10">
+            <div className="h-full rounded-[2rem] bg-ink/[0.06] p-1.5 ring-1 ring-line-strong">
               <div className="flex h-full flex-col justify-between gap-10 rounded-[calc(2rem-0.375rem)] bg-ink p-8 text-cream md:p-10">
                 <div>
                   <Eyebrow light>Na het versturen</Eyebrow>

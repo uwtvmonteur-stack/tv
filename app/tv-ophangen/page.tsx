@@ -211,7 +211,7 @@ export default function TvOphangenPage() {
 
       <BrandMarquee />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <Reveal immediate>
           <div className="max-w-3xl">
             <p className="leading-relaxed text-ink-soft">
@@ -236,7 +236,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Wat is inbegrepen bij het ophangen van een tv?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -263,7 +263,7 @@ export default function TvOphangenPage() {
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Wat kost een tv ophangen?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -274,13 +274,13 @@ export default function TvOphangenPage() {
             die we vooraf afspreken is de prijs die u betaalt.
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
+            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
               Tot 43 inch — €99
             </span>
             <span className="rounded-full bg-ink text-cream px-4 py-2">
               44 t/m 64 inch — €129 · populair
             </span>
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-ink/5">
+            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
               Vanaf 65 inch — €159
             </span>
           </div>
@@ -316,7 +316,7 @@ export default function TvOphangenPage() {
         <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Tv ophangen aan verschillende soorten muren
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -333,7 +333,7 @@ export default function TvOphangenPage() {
           </p>
         </Reveal>
         <Reveal delay={100}>
-          <ul className="mt-8 max-w-4xl divide-y divide-ink/10 border-y border-ink/10">
+          <ul className="mt-8 max-w-4xl divide-y divide-ink/10 border-y border-line-strong">
             {muren.map((m) => (
               <li key={m.h3} className="py-6">
                 <h3 className="font-display text-lg font-bold tracking-tight">
@@ -348,7 +348,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Welke tv-beugel heb ik nodig?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -383,7 +383,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Hoe hoog moet een tv worden opgehangen?
           </h2>
           <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
@@ -417,7 +417,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Tv ophangen en kabels wegwerken
           </h2>
           <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
@@ -444,7 +444,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Tv ophangen in elke situatie
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -455,7 +455,7 @@ export default function TvOphangenPage() {
         <IconCardGrid items={situaties} columns={2} hover />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Tv ophangen in ons werkgebied
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -468,7 +468,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Veelgestelde vragen over tv ophangen
           </h2>
         </Reveal>

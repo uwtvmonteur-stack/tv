@@ -138,7 +138,7 @@ export default function TvInstallatiePage() {
 
       <BrandMarquee />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <Reveal immediate>
           <div className="max-w-3xl">
             <p className="leading-relaxed text-ink-soft">
@@ -153,7 +153,7 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Wat is inbegrepen bij de tv installatie?
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -197,7 +197,7 @@ export default function TvInstallatiePage() {
         <InlineCta text="Vaste prijs vooraf. Wij gaan pas weg als uw tv hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht." />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Ook uw andere apparatuur aansluiten
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
@@ -229,7 +229,7 @@ export default function TvInstallatiePage() {
           ]}
         />
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Tv installatie voor iedere situatie
           </h2>
         </Reveal>
@@ -283,7 +283,7 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Veelgestelde vragen over tv installatie
           </h2>
         </Reveal>
@@ -294,7 +294,7 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Tv installatie aan huis in uw regio
           </h2>
           <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">

@@ -48,7 +48,7 @@ export function BezelCard({
 }) {
   return (
     <div
-      className={`rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-ink/5 ${className}`}
+      className={`rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line ${className}`}
     >
       <div
         className={`h-full rounded-[calc(2rem-0.375rem)] bg-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),0_30px_60px_-35px_rgba(25,21,18,0.18)] ${innerClassName}`}

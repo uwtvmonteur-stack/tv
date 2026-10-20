@@ -37,7 +37,7 @@ export default function WerkgebiedPage() {
         intro="Onze monteurs zijn dagelijks onderweg in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant — daar helpen we u vaak al binnen 24 uur."
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <ul className="grid gap-4 md:grid-cols-2">
           {provincies.map((provincie, i) => {
             const provincieSteden = stedenInProvincie(provincie.slug);
@@ -63,7 +63,7 @@ export default function WerkgebiedPage() {
                       <Link
                         key={stad.slug}
                         href={`/tv-monteur/${stad.slug}`}
-                        className="rounded-full bg-ink/[0.04] px-3.5 py-1.5 font-medium ring-1 ring-ink/5 transition-colors duration-300 ease-fluid hover:bg-ink/10"
+                        className="rounded-full bg-ink/[0.04] px-3.5 py-1.5 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
                       >
                         {stad.naam}
                       </Link>

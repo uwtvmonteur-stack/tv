@@ -31,8 +31,8 @@ export default function PriceCards({
           <div
             className={`relative h-full rounded-[2rem] p-1.5 ring-1 ${
               card.featured
-                ? "bg-ink/[0.06] ring-ink/10"
-                : "bg-ink/[0.04] ring-ink/5"
+                ? "bg-ink/[0.06] ring-line-strong"
+                : "bg-ink/[0.04] ring-line"
             }`}
           >
             {card.featured && (
@@ -44,7 +44,7 @@ export default function PriceCards({
               className={`flex h-full flex-col rounded-[calc(2rem-0.375rem)] p-8 ${
                 card.featured
                   ? "bg-ink text-cream shadow-[0_40px_80px_-40px_rgba(25,21,18,0.5)]"
-                  : "bg-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]"
+                  : "bg-white"
               }`}
             >
               <Heading className="font-display text-lg font-bold tracking-tight">

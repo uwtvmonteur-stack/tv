@@ -109,7 +109,7 @@ export default async function ProvinciePage({
         imageAlt={`Tv monteur van Uw TV Monteur aan het werk in ${provincie.naam}`}
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-10 md:px-8">
+      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
         <Reveal>
           <h2 className="font-display text-step-3 font-bold">
             Kies uw stad
@@ -125,7 +125,7 @@ export default async function ProvinciePage({
               <Reveal delay={i * 60} className="h-full">
               <Link
                 href={`/tv-monteur/${stad.slug}`}
-                className="group flex h-full items-center justify-between gap-3 rounded-[1.5rem] bg-white p-5 ring-1 ring-ink/5 shadow-[0_20px_40px_-30px_rgba(25,21,18,0.2)] transition-transform duration-500 ease-fluid hover:-translate-y-1"
+                className="group flex h-full items-center justify-between gap-3 rounded-[1.5rem] bg-white p-5 ring-1 ring-line shadow-[0_20px_40px_-30px_rgba(25,21,18,0.2)] transition-transform duration-500 ease-fluid hover:-translate-y-1"
               >
                 <span className="font-display font-bold tracking-tight">
                   {stad.naam}
@@ -142,7 +142,7 @@ export default async function ProvinciePage({
         <DienstenMiniGrid plaats={provincie.naam} />
 
         <Reveal>
-          <h2 className="mt-20 font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-step-3 font-bold">
             Veelgestelde vragen — {provincie.naam}
           </h2>
         </Reveal>

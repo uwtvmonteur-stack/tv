@@ -43,7 +43,7 @@ function vroegsteDatum() {
 }
 
 const inputStyles =
-  "w-full rounded-2xl bg-cream px-4 py-3.5 text-base ring-1 ring-ink/10 transition-shadow duration-300 ease-fluid placeholder:text-ink-soft/85 focus:ring-2 focus:ring-ink focus:outline-none sm:text-sm";
+  "w-full rounded-2xl bg-cream px-4 py-3.5 text-base ring-1 ring-line-strong transition-shadow duration-300 ease-fluid placeholder:text-ink-soft/85 focus:ring-2 focus:ring-ink focus:outline-none sm:text-sm";
 
 const labelStyles =
   "mb-1.5 block text-[11px] font-semibold tracking-[0.14em] text-ink-soft uppercase";

@@ -13,7 +13,7 @@ export default function ProvincieChips({
   withOverview?: boolean;
 }) {
   const chip =
-    "rounded-full bg-ink/[0.04] px-4 py-2 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10";
+    "rounded-full bg-sunk px-4 py-2 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk";
   return (
     <div className="mt-6 flex flex-wrap gap-2.5 text-sm">
       {provincies.map((provincie) => (

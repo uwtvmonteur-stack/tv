@@ -8,7 +8,7 @@ import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
 import ProvincieChips from "@/components/ProvincieChips";
-import BrandMarquee from "@/components/BrandMarquee";
+import Bezwaren from "@/components/Bezwaren";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import CheckList from "@/components/CheckList";
@@ -146,12 +146,12 @@ export default function TvInstallatiePage() {
         }}
       />
 
-      <BrandMarquee />
+      <Bezwaren />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <Reveal immediate>
           <div className="max-w-3xl">
-            <p className="leading-relaxed text-ink-soft">
+            <p className="leading-relaxed text-fg-muted">
               Een nieuwe televisie aansluiten is meer dan de stekker erin doen:
               zenders instellen, wifi verbinden en alle apparaten goed laten
               samenwerken. Onze monteur komt bij u thuis, sluit uw tv en
@@ -163,10 +163,10 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Wat is inbegrepen bij de tv installatie?
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Bij een standaard tv installatie regelen wij onder andere:
           </p>
         </Reveal>
@@ -187,18 +187,18 @@ export default function TvInstallatiePage() {
         />
       </div>
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 pb-10 md:px-8">
         <Reveal>
-          <h2 className="font-display text-step-3 font-bold">
+          <h2 className="font-display text-h2 font-semibold">
             Wat kost een tv installatie aan huis?
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Eén vaste prijs voor de complete installatie, inclusief btw en
             voorrijkosten. Wat we vooraf afspreken, is wat u betaalt — geen
             verrassingen achteraf.
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-ink text-cream px-5 py-2.5">
+            <span className="rounded-full bg-inverse text-fg-inverse px-5 py-2.5">
               Complete tv installatie — vaste prijs €70
             </span>
           </div>
@@ -207,10 +207,10 @@ export default function TvInstallatiePage() {
         <InlineCta href="#afspraak" text="Vaste prijs vooraf. Wij gaan pas weg als uw tv hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht." />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Ook uw andere apparatuur aansluiten
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Uw televisie staat meestal niet alleen. Daarom kunnen we ook de
             apparatuur rondom uw tv aansluiten en instellen.
           </p>
@@ -239,28 +239,28 @@ export default function TvInstallatiePage() {
           ]}
         />
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Tv installatie voor iedere situatie
           </h2>
         </Reveal>
         <IconCardGrid items={situaties} columns={2} hover />
 
         <Reveal>
-          <div className="mt-20 rounded-[2rem] bg-cream-deep/60 p-8 md:p-10">
-            <h2 className="font-display text-step-3 font-bold">
+          <div className="mt-20 rounded-lg bg-sunk p-8 md:p-10">
+            <h2 className="font-display text-h2 font-semibold">
               Tv laten installeren of alleen ophangen?
             </h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
               <div>
-                <h3 className="font-display text-lg font-bold tracking-tight">
+                <h3 className="font-display text-lg font-semibold tracking-tight">
                   Alleen tv ophangen
                 </h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+                <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
                   Wilt u vooral dat uw televisie veilig en waterpas aan de muur
                   wordt gemonteerd? Bekijk dan onze{" "}
                   <Link
                     href="/tv-ophangen"
-                    className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+                    className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
                   >
                     tv ophangservice
                   </Link>{" "}
@@ -268,10 +268,10 @@ export default function TvInstallatiePage() {
                 </p>
               </div>
               <div>
-                <h3 className="font-display text-lg font-bold tracking-tight">
+                <h3 className="font-display text-lg font-semibold tracking-tight">
                   Complete tv installatie
                 </h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+                <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
                   Wilt u dat uw tv wordt aangesloten, met wifi wordt verbonden,
                   zenders en apps krijgt, met uw apparatuur samenwerkt en aan u
                   wordt uitgelegd? Dan is de complete tv installatie aan huis de
@@ -279,11 +279,11 @@ export default function TvInstallatiePage() {
                 </p>
               </div>
             </div>
-            <p className="mt-6 text-[15px] leading-relaxed text-ink-soft">
+            <p className="mt-6 text-[15px] leading-relaxed text-fg-muted">
               Twijfelt u welke service bij u past? Zet het kort in het{" "}
               <Link
                 href="/contact"
-                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
               >
                 aanvraagformulier
               </Link>{" "}
@@ -293,7 +293,7 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Veelgestelde vragen over tv installatie
           </h2>
         </Reveal>
@@ -304,10 +304,10 @@ export default function TvInstallatiePage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Tv installatie aan huis in uw regio
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Wij helpen klanten aan huis met tv installatie, montage en technische
             ondersteuning in Zuid-Holland, Noord-Holland, Utrecht en
             Noord-Brabant. Woont u in een andere plaats? Neem gerust contact op —

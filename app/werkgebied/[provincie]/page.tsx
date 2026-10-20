@@ -120,12 +120,12 @@ export default async function ProvinciePage({
         }}
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <Reveal>
-          <h2 className="font-display text-step-3 font-bold">
+          <h2 className="font-display text-h2 font-semibold">
             Kies uw stad
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Bekijk wat we voor u kunnen betekenen bij u in de buurt — inclusief
             lokale veelgestelde vragen en beschikbaarheid.
           </p>
@@ -136,12 +136,12 @@ export default async function ProvinciePage({
               <Reveal delay={i * 60} className="h-full">
               <Link
                 href={`/tv-ophangen/${stad.slug}`}
-                className="group flex h-full items-center justify-between gap-3 rounded-[1.5rem] bg-white p-5 ring-1 ring-line shadow-[0_20px_40px_-30px_rgba(25,21,18,0.2)] transition-transform duration-500 ease-fluid hover:-translate-y-1"
+                className="group flex h-full items-center justify-between gap-3 rounded-md bg-white p-5 border border-hairline shadow-e2 transition-transform duration-500 ease-out hover:-translate-y-1"
               >
-                <span className="font-display font-bold tracking-tight">
+                <span className="font-display font-semibold tracking-tight">
                   {stad.naam}
                 </span>
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink/5 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5">
                   <IconArrowUpRight className="h-3.5 w-3.5" />
                 </span>
               </Link>
@@ -153,7 +153,7 @@ export default async function ProvinciePage({
         <DienstenMiniGrid plaats={provincie.naam} />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Veelgestelde vragen — {provincie.naam}
           </h2>
         </Reveal>

@@ -32,19 +32,19 @@ export default function InlineCta({
 }) {
   return (
     <Reveal>
-      <div className="mt-12 flex flex-col gap-6 rounded-[2rem] bg-ink px-7 py-8 text-cream md:flex-row md:items-center md:justify-between md:px-10">
+      <div className="mt-12 flex flex-col gap-6 rounded-lg bg-inverse px-7 py-8 text-fg-inverse md:flex-row md:items-center md:justify-between md:px-10">
         <div className="max-w-xl">
-          <p className="font-display text-step-2 font-bold">
+          <p className="font-display text-h3 font-semibold">
             {title}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-cream/70">{text}</p>
+          <p className="mt-2 text-sm leading-relaxed text-fg-inverse-muted">{text}</p>
         </div>
         <Link
           href={href}
-          className="group inline-flex shrink-0 items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98]"
+          className="group inline-flex shrink-0 items-center justify-center gap-3 rounded-full bg-paper py-2.5 pr-2.5 pl-7 text-base font-semibold text-fg transition-transform duration-300 ease-out active:scale-[0.98]"
         >
           {label}
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
             <IconArrowUpRight className="h-4 w-4" />
           </span>
         </Link>

@@ -38,11 +38,11 @@ const interTight = Inter_Tight({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Uw TV Monteur — Tv Ophangen & Installatie aan Huis",
+    default: "Uw TV Monteur — tv ophangen en installeren aan huis",
     template: "%s | Uw TV Monteur",
   },
   description:
-    "Uw TV Monteur is dé tv monteur aan huis: tv ophangen, complete tv installatie, kabels wegwerken en tv hulp. Vaste prijzen inclusief voorrijkosten en btw, vaak binnen 24 uur.",
+    "Tv laten ophangen door de monteur die zelf komt. Elke tv, elke wand, vaste prijs vooraf inclusief voorrijkosten en btw — ook 's avonds en in het weekend zonder toeslag.",
   openGraph: {
     siteName: SITE.name,
     locale: "nl_NL",

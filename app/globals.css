@@ -138,26 +138,9 @@
   --duration-base: 200ms;
   --duration-slow: 360ms;
 
-  /* =====================================================================
-     TIJDELIJKE ALIASSEN — worden verwijderd zodra alle componenten zijn
-     omgezet. Ze staan hier zodat de site tijdens de verbouwing op geen
-     enkel moment stuk is. Controle vóór verwijdering:
-       grep -rE "cream|ink-soft|ring-line|text-step|ease-fluid" app components
-     ===================================================================== */
-  --color-cream: #f7f4ef;
-  --color-cream-deep: #f0ebe3;
-  --color-ink: #14110f;
-  --color-ink-soft: #4f4842;
-  --color-line: #ded5c7;
-  --color-line-strong: #cfc5b7;
-  --ease-fluid: cubic-bezier(0.2, 0.65, 0.3, 1);
-  --ease-spring: cubic-bezier(0.2, 0.65, 0.3, 1);
-  --text-step-2: var(--text-h3);
-  --text-step-3: var(--text-h2);
-  --text-step-4: var(--text-h1);
-  --text-step-5: var(--text-hero);
+  /* Afstand tussen twee onderwerpen bínnen één sectie. Kleiner dan
+     `--spacing-section`, groter dan `--spacing-stack`. */
   --spacing-block: clamp(3rem, 2rem + 4vw, 5rem);
-  --spacing-heading: clamp(1.25rem, 0.94rem + 1.33vw, 2rem);
 }
 
 html {

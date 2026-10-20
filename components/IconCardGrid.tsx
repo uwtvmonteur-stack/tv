@@ -29,7 +29,7 @@ export default function IconCardGrid({
             <BezelCard
               className={`h-full ${
                 hover
-                  ? "transition-transform duration-500 ease-fluid hover:-translate-y-1"
+                  ? "transition-transform duration-500 ease-out hover:-translate-y-1"
                   : ""
               }`}
               innerClassName={
@@ -38,10 +38,10 @@ export default function IconCardGrid({
             >
               {item.icon && <IconChip>{item.icon}</IconChip>}
               <div>
-                <h3 className="font-display text-lg font-bold tracking-tight">
+                <h3 className="font-display text-lg font-semibold tracking-tight">
                   {item.h3}
                 </h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+                <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
                   {item.text}
                 </p>
               </div>

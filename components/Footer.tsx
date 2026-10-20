@@ -8,15 +8,15 @@ import { artikelen } from "@/lib/kennisbank";
 
 export default function Footer() {
   return (
-    <footer className="bg-ink text-cream">
-      <div className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8 md:py-20">
+    <footer className="bg-inverse text-fg-inverse">
+      <div className="mx-auto w-full max-w-content px-4 py-16 md:px-8 md:py-20">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5">
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
                 <LogoGlyph className="h-5 w-5 text-accent-ink" />
               </span>
-              <span className="font-display text-lg font-bold tracking-tight">
+              <span className="font-display text-lg font-semibold tracking-tight">
                 {SITE.name}
               </span>
             </div>
@@ -46,7 +46,7 @@ export default function Footer() {
                 <li key={dienst.slug}>
                   <Link
                     href={dienstHref(dienst)}
-                    className="text-white/70 transition-colors duration-300 ease-fluid hover:text-white"
+                    className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
                   >
                     {dienst.naam}
                   </Link>
@@ -55,7 +55,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/prijzen"
-                  className="text-white/70 transition-colors duration-300 ease-fluid hover:text-white"
+                  className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
                 >
                   Prijzen
                 </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
                 <li key={provincie.slug}>
                   <Link
                     href={`/werkgebied/${provincie.slug}`}
-                    className="text-white/70 transition-colors duration-300 ease-fluid hover:text-white"
+                    className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
                   >
                     Tv monteur {provincie.naam}
                   </Link>
@@ -81,7 +81,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/werkgebied"
-                  className="text-white/70 transition-colors duration-300 ease-fluid hover:text-white"
+                  className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
                 >
                   Volledig werkgebied
                 </Link>
@@ -97,7 +97,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`tel:${SITE.phone}`}
-                  className="transition-colors duration-300 ease-fluid hover:text-white"
+                  className="transition-colors duration-300 ease-out hover:text-white"
                 >
                   {SITE.phoneDisplay}
                 </a>
@@ -105,7 +105,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="transition-colors duration-300 ease-fluid hover:text-white"
+                  className="transition-colors duration-300 ease-out hover:text-white"
                 >
                   {SITE.email}
                 </a>
@@ -114,7 +114,7 @@ export default function Footer() {
                 <li>
                   <a
                     href={SITE.whatsapp}
-                    className="transition-colors duration-300 ease-fluid hover:text-white"
+                    className="transition-colors duration-300 ease-out hover:text-white"
                   >
                     WhatsApp
                   </a>
@@ -123,7 +123,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/kennisbank"
-                  className="transition-colors duration-300 ease-fluid hover:text-white"
+                  className="transition-colors duration-300 ease-out hover:text-white"
                 >
                   Kennisbank
                 </Link>
@@ -131,7 +131,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/over-ons"
-                  className="transition-colors duration-300 ease-fluid hover:text-white"
+                  className="transition-colors duration-300 ease-out hover:text-white"
                 >
                   Over ons
                 </Link>
@@ -139,7 +139,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="transition-colors duration-300 ease-fluid hover:text-white"
+                  className="transition-colors duration-300 ease-out hover:text-white"
                 >
                   Afspraak maken
                 </Link>
@@ -147,7 +147,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="transition-colors duration-300 ease-fluid hover:text-white"
+                  className="transition-colors duration-300 ease-out hover:text-white"
                 >
                   Privacyverklaring
                 </Link>
@@ -175,7 +175,7 @@ export default function Footer() {
                   <li key={provincie.slug}>
                     <Link
                       href={`/werkgebied/${provincie.slug}`}
-                      className="text-white/55 transition-colors duration-300 ease-fluid hover:text-white"
+                      className="text-white/55 transition-colors duration-300 ease-out hover:text-white"
                     >
                       Tv monteur {provincie.naam}
                     </Link>
@@ -184,7 +184,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/werkgebied"
-                    className="font-medium text-white/75 transition-colors duration-300 ease-fluid hover:text-white"
+                    className="font-medium text-white/75 transition-colors duration-300 ease-out hover:text-white"
                   >
                     Alle {steden.length} steden
                   </Link>
@@ -201,7 +201,7 @@ export default function Footer() {
                   <li key={artikel.slug}>
                     <Link
                       href={`/kennisbank/${artikel.slug}`}
-                      className="text-white/55 transition-colors duration-300 ease-fluid hover:text-white"
+                      className="text-white/55 transition-colors duration-300 ease-out hover:text-white"
                     >
                       {artikel.titel}
                     </Link>

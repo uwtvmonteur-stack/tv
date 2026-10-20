@@ -46,13 +46,13 @@ export default function ContactPage() {
         title="Plan uw afspraak"
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <div className="grid gap-5 lg:grid-cols-5">
           {/* `immediate`: het formulier is het conversiepunt en mag nooit
               (kort) onzichtbaar zijn door de scroll-animatie. */}
           <Reveal immediate className="lg:col-span-3">
             <BezelCard className="h-full" innerClassName="p-6 md:p-10">
-              <h2 className="mb-8 font-display text-step-3 font-bold">
+              <h2 className="mb-8 font-display text-h2 font-semibold">
                 Afspraak aanvragen
               </h2>
               {/* `montage`: ophangen is waar de overgrote meerderheid voor
@@ -63,11 +63,11 @@ export default function ContactPage() {
           </Reveal>
 
           <Reveal delay={100} className="lg:col-span-2">
-            <div className="h-full rounded-[2rem] bg-ink/[0.06] p-1.5 ring-1 ring-line-strong">
-              <div className="flex h-full flex-col justify-between gap-10 rounded-[calc(2rem-0.375rem)] bg-ink p-8 text-cream md:p-10">
+            <div className="h-full rounded-lg bg-sunk p-1.5 border border-hairline">
+              <div className="flex h-full flex-col justify-between gap-10 rounded-lg bg-inverse p-8 text-fg-inverse md:p-10">
                 <div>
                   <Eyebrow light>Na het versturen</Eyebrow>
-                  <h2 className="mt-6 font-display text-step-3 font-bold">
+                  <h2 className="mt-6 font-display text-h2 font-semibold">
                     Wat gebeurt er daarna?
                   </h2>
                   {/* Onzekerheid over wat er volgt is de tweede reden om een
@@ -75,7 +75,7 @@ export default function ContactPage() {
                   <ol className="mt-6 flex flex-col gap-5 text-[15px] leading-relaxed text-white/70">
                     {vervolgstappen.map((stap, i) => (
                       <li key={stap} className="flex gap-3.5">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-cream">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-fg-inverse">
                           {i + 1}
                         </span>
                         <span>{stap}</span>
@@ -87,7 +87,7 @@ export default function ContactPage() {
                   {SITE.whatsapp && (
                     <a
                       href={SITE.whatsapp}
-                      className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-fluid hover:text-accent-ink"
+                      className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-out hover:text-accent-ink"
                     >
                       <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
                         <IconChat className="h-4.5 w-4.5" />
@@ -97,7 +97,7 @@ export default function ContactPage() {
                   )}
                   <a
                     href={`mailto:${SITE.email}`}
-                    className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-fluid hover:text-accent-ink"
+                    className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-out hover:text-accent-ink"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
                       <IconMail className="h-4.5 w-4.5" />

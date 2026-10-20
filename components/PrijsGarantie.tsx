@@ -28,14 +28,14 @@ export default function PrijsGarantie({
       {prijsGaranties.map((garantie, i) => (
         <li key={garantie.kop}>
           <Reveal delay={i * 80} className="h-full">
-            <div className="flex h-full flex-col rounded-[1.5rem] bg-white p-7 ring-1 ring-line-strong">
+            <div className="flex h-full flex-col rounded-md bg-white p-7 border border-hairline">
               <IconChip>
                 <GarantieIcon naam={garantie.icon} />
               </IconChip>
-              <h3 className="mt-5 font-display text-[1.0625rem] leading-snug font-bold">
+              <h3 className="mt-5 font-display text-[1.0625rem] leading-snug font-semibold">
                 {garantie.kop}
               </h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+              <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
                 {garantie.tekst}
               </p>
             </div>

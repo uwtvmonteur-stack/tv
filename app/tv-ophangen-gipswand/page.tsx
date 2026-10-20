@@ -164,10 +164,10 @@ export default function TvOphangenGipswandPage() {
         }}
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <Reveal immediate>
           <div className="max-w-3xl">
-            <p className="leading-relaxed text-ink-soft">
+            <p className="leading-relaxed text-fg-muted">
               Een tv aan een gipswand is geen kwestie van zwaardere pluggen
               pakken. Het gaat om weten wát er achter de plaat zit en hoeveel
               kracht uw beugel er precies op uitoefent. Die twee dingen samen
@@ -176,7 +176,7 @@ export default function TvOphangenGipswandPage() {
               nee zeggen.{" "}
               <Link
                 href="/contact"
-                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
               >
                 Plan een afspraak
               </Link>{" "}
@@ -186,10 +186,10 @@ export default function TvOphangenGipswandPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Welke wand heeft u?
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Elk type vraagt een andere bevestiging. U hoeft het niet zelf te
             weten — de monteur stelt het ter plekke vast.
           </p>
@@ -197,10 +197,10 @@ export default function TvOphangenGipswandPage() {
         <IconCardGrid items={wandtypes} columns={3} />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Wat er misgaat als het verkeerd wordt gedaan
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             De meeste tv&apos;s die van een wand komen, vallen niet meteen. Ze
             zakken eerst, en dan laat de bevestiging los.
           </p>
@@ -214,10 +214,10 @@ export default function TvOphangenGipswandPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Wat er is inbegrepen
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Dezelfde vaste prijs als een gewone montage. Een moeilijke wand kost
             bij ons niets extra.
           </p>
@@ -237,20 +237,20 @@ export default function TvOphangenGipswandPage() {
         />
       </div>
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 pb-10 md:px-8">
         <Stappen title="Zo pakken wij een gipswand aan" steps={stappen} />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Wat kost het?
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Hetzelfde als elke andere montage: de prijs hangt alleen af van het
             schermformaat, niet van het wandtype. Voorrijkosten,
             montagemateriaal en btw zitten er altijd in.{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
             >
               Bekijk de prijzen
             </Link>
@@ -261,7 +261,7 @@ export default function TvOphangenGipswandPage() {
         <InlineCta href="#afspraak" />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Veelgestelde vragen over tv ophangen aan gipswand
           </h2>
         </Reveal>
@@ -272,7 +272,7 @@ export default function TvOphangenGipswandPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Ook bij u in de buurt
           </h2>
           <ProvincieChips prefix="Tv ophangen" withOverview />

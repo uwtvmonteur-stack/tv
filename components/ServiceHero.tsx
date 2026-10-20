@@ -64,16 +64,16 @@ export default function ServiceHero({
 }) {
   return (
     <>
-      <header className="mx-auto w-full max-w-6xl px-4 pt-32 pb-6 md:px-8 md:pt-40">
+      <header className="mx-auto w-full max-w-content px-4 pt-32 pb-6 md:px-8 md:pt-40">
       <Breadcrumbs items={crumbs} />
       <div className="mt-8 grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <Reveal immediate>
           <div>
             <Eyebrow>{eyebrow}</Eyebrow>
-            <h1 className="mt-6 font-display text-step-4 font-bold">
+            <h1 className="mt-6 font-display text-h1 font-semibold">
               {title}
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
               {intro}
             </p>
 
@@ -93,19 +93,19 @@ export default function ServiceHero({
             <div className="mt-8">
               <Link
                 href={formulier ? "#afspraak" : "/contact"}
-                className="group flex w-full items-center justify-center gap-3 rounded-full bg-ink py-2.5 pr-2.5 pl-7 text-base font-semibold text-cream transition-transform duration-300 ease-fluid active:scale-[0.98] sm:w-auto sm:inline-flex"
+                className="group flex w-full items-center justify-center gap-3 rounded-full bg-inverse py-2.5 pr-2.5 pl-7 text-base font-semibold text-fg-inverse transition-transform duration-300 ease-out active:scale-[0.98] sm:w-auto sm:inline-flex"
               >
                 {formulier ? "Plan uw afspraak" : "Plan een afspraak"}
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                   <IconArrowUpRight className="h-4 w-4" />
                 </span>
               </Link>
             </div>
 
-            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-ink-soft">
+            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-fg-muted">
               <span className="flex items-center gap-2">
                 <Stars />
-                <strong className="font-semibold text-ink">
+                <strong className="font-semibold text-fg">
                   {SITE.reviews.score} / 5
                 </strong>
                 {SITE.reviews.url && (
@@ -131,8 +131,8 @@ export default function ServiceHero({
         </Reveal>
 
         <Reveal immediate>
-          <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
-            <div className="overflow-hidden rounded-[calc(2rem-0.375rem)]">
+          <div className="rounded-lg bg-sunk p-1.5 border border-hairline">
+            <div className="overflow-hidden rounded-lg">
               <Image
                 src={image}
                 alt={imageAlt}
@@ -150,18 +150,18 @@ export default function ServiceHero({
       {formulier && (
         <section
           id="afspraak"
-          className="mx-auto w-full max-w-6xl px-4 pt-12 md:px-8 md:pt-14"
+          className="mx-auto w-full max-w-content px-4 pt-12 md:px-8 md:pt-14"
         >
           {/* `immediate`: dit is het conversiepunt en mag nooit even onzichtbaar
               zijn door de scroll-animatie. */}
           <Reveal immediate>
-            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
-              <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
+            <div className="rounded-lg bg-sunk p-1.5 border border-hairline">
+              <div className="rounded-lg bg-white p-6 md:p-10">
                 <div className="max-w-2xl">
-                  <h2 className="font-display text-step-3 font-bold">
+                  <h2 className="font-display text-h2 font-semibold">
                     {formulier.titel}
                   </h2>
-                  <p className="mt-3 leading-relaxed text-ink-soft">
+                  <p className="mt-3 leading-relaxed text-fg-muted">
                     {formulier.intro}
                   </p>
                 </div>

@@ -23,7 +23,7 @@ export default function CtaSection({
 }) {
   return (
     <section className="px-2 py-12 md:px-6">
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem]">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-lg">
         <Image
           src={familieImg}
           alt="Stel geniet 's avonds van een film op een wandgemonteerde tv"
@@ -35,7 +35,7 @@ export default function CtaSection({
         <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/70 to-black/55" />
         <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center md:py-36 [text-shadow:0_1px_16px_rgba(0,0,0,0.6)]">
           <Reveal>
-            <h2 className="font-display text-step-4 font-bold text-white">
+            <h2 className="font-display text-h1 font-semibold text-white">
               {title}
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/80">
@@ -46,10 +46,10 @@ export default function CtaSection({
             <div className="mt-10">
               <Link
                 href={href}
-                className="group inline-flex items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-[transform,background-color] duration-300 ease-fluid hover:bg-white active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-3 rounded-full bg-paper py-2.5 pr-2.5 pl-7 text-base font-semibold text-fg transition-[transform,background-color] duration-300 ease-out hover:bg-white active:scale-[0.98]"
               >
                 Plan een afspraak
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                   <IconArrowUpRight className="h-4 w-4" />
                 </span>
               </Link>

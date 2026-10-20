@@ -44,7 +44,7 @@ export default function StickyCta() {
   if (pathname === "/contact") return null;
 
   const btn =
-    "flex flex-1 items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold whitespace-nowrap transition-transform duration-300 ease-fluid active:scale-[0.98]";
+    "flex flex-1 items-center justify-center gap-2 rounded-sm py-3 text-sm font-semibold whitespace-nowrap transition-transform duration-300 ease-out active:scale-[0.98]";
 
   return (
     <>
@@ -52,7 +52,7 @@ export default function StickyCta() {
       <div className="h-20" aria-hidden />
       <div
         aria-hidden={!show}
-        className={`fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-line-strong bg-cream/95 px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm transition-all duration-300 ease-fluid sm:bottom-5 sm:mx-auto sm:max-w-lg sm:rounded-full sm:border sm:pb-3 sm:shadow-[0_25px_50px_-20px_rgba(25,21,18,0.45)] ${
+        className={`fixed inset-x-0 bottom-0 z-40 flex gap-2 border-t border-hairline bg-paper px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm transition-all duration-300 ease-out sm:bottom-5 sm:mx-auto sm:max-w-lg sm:rounded-md sm:border sm:pb-3 sm:shadow-e2 ${
           show
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-4 opacity-0"
@@ -71,7 +71,7 @@ export default function StickyCta() {
             href={SITE.whatsapp}
             tabIndex={show ? undefined : -1}
             aria-label="WhatsApp"
-            className={`${btn} max-w-14 bg-[#25D366] text-ink sm:max-w-none sm:flex-none sm:px-4`}
+            className={`${btn} max-w-14 bg-[#25D366] text-fg sm:max-w-none sm:flex-none sm:px-4`}
           >
             <IconChat className="h-4 w-4" />
             <span className="hidden sm:inline">WhatsApp</span>

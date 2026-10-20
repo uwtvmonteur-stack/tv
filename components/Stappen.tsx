@@ -10,7 +10,7 @@ export default function Stappen({
   return (
     <>
       <Reveal>
-        <h2 className="mt-block font-display text-step-3 font-bold">
+        <h2 className="mt-block font-display text-h2 font-semibold">
           {title}
         </h2>
       </Reveal>
@@ -18,15 +18,15 @@ export default function Stappen({
         {steps.map((step, i) => (
           <li key={step.title} className="h-full">
             <Reveal delay={i * 60} className="h-full">
-              <div className="h-full rounded-[1.75rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
-                <div className="h-full rounded-[calc(1.75rem-0.375rem)] bg-white p-6">
-                  <span className="font-display text-sm font-bold tracking-widest text-accent-fg">
+              <div className="h-full rounded-md border border-hairline bg-raised shadow-e1">
+                <div className="h-full p-6">
+                  <span className="font-display text-sm font-semibold tracking-widest text-accent-fg">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-3 font-display text-lg font-bold tracking-tight">
+                  <h3 className="mt-3 font-display text-lg font-semibold tracking-tight">
                     {step.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                  <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                     {step.text}
                   </p>
                 </div>

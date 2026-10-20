@@ -28,7 +28,7 @@ export default function Breadcrumbs({
       <JsonLd data={jsonLd} />
       <nav
         aria-label="Kruimelpad"
-        className={`text-xs ${light ? "text-white/60" : "text-ink-soft"}`}
+        className={`text-xs ${light ? "text-white/60" : "text-fg-muted"}`}
       >
         <ol className="flex flex-wrap items-center gap-1.5">
           {items.map((crumb, i) => {
@@ -39,15 +39,15 @@ export default function Breadcrumbs({
                 {isLast ? (
                   <span
                     aria-current="page"
-                    className={`font-medium ${light ? "text-white" : "text-ink"}`}
+                    className={`font-medium ${light ? "text-white" : "text-fg"}`}
                   >
                     {crumb.name}
                   </span>
                 ) : (
                   <Link
                     href={crumb.href}
-                    className={`transition-colors duration-300 ease-fluid ${
-                      light ? "hover:text-white" : "hover:text-ink"
+                    className={`transition-colors duration-300 ease-out ${
+                      light ? "hover:text-white" : "hover:text-fg"
                     }`}
                   >
                     {crumb.name}

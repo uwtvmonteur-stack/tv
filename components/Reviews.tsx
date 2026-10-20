@@ -20,18 +20,18 @@ export default function Reviews({
 }) {
   return (
     <section className="px-2 md:px-6">
-      <div className="mx-auto max-w-7xl rounded-[2.5rem] bg-cream-deep px-4 py-14 md:px-8 md:py-16">
-        <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl rounded-lg bg-sunk px-4 py-14 md:px-8 md:py-16">
+        <div className="mx-auto max-w-content">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
               <div className="max-w-md">
                 <Eyebrow>Reviews</Eyebrow>
-                <h2 className="mt-4 font-display text-step-3 font-bold">
+                <h2 className="mt-4 font-display text-h2 font-semibold">
                   {title}
                 </h2>
               </div>
               <div className="flex shrink-0 items-center gap-3">
-                <span className="font-display text-step-3 font-bold">
+                <span className="font-display text-h2 font-semibold">
                   {SITE.reviews.score}
                 </span>
                 <div className="flex flex-col gap-0.5">
@@ -41,12 +41,12 @@ export default function Reviews({
                       href={SITE.reviews.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-ink-soft underline decoration-accent-fg/60 underline-offset-2 hover:text-ink"
+                      className="text-xs text-fg-muted underline decoration-accent-fg/60 underline-offset-2 hover:text-fg"
                     >
                       {SITE.reviews.count} beoordelingen op Google
                     </a>
                   ) : (
-                    <span className="text-xs text-ink-soft">
+                    <span className="text-xs text-fg-muted">
                       {SITE.reviews.count} beoordelingen
                     </span>
                   )}
@@ -79,7 +79,7 @@ export default function Reviews({
             </ul>
           </Reveal>
 
-          <p className="mt-3 text-xs text-ink-soft">
+          <p className="mt-3 text-xs text-fg-muted">
             Sleep of scroll voor meer beoordelingen →
           </p>
         </div>

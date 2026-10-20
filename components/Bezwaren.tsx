@@ -17,11 +17,11 @@ import { bezwaren } from "@/lib/content";
  */
 export default function Bezwaren() {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+    <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
       <Reveal>
         <div className="max-w-2xl">
           <Eyebrow>Voordat u aanvraagt</Eyebrow>
-          <h2 className="mt-6 font-display text-step-3 font-bold">
+          <h2 className="mt-6 font-display text-h2 font-semibold">
             Vier dingen die u misschien tegenhouden
           </h2>
         </div>
@@ -31,14 +31,14 @@ export default function Bezwaren() {
         {bezwaren.map((bezwaar, i) => (
           <li key={bezwaar.vraag}>
             <Reveal delay={i * 80} className="h-full">
-              <div className="flex h-full flex-col rounded-[1.5rem] bg-white p-7 ring-1 ring-line-strong md:p-8">
+              <div className="flex h-full flex-col rounded-md bg-white p-7 border border-hairline md:p-8">
                 {/* De vraag in de woorden van de bezoeker, tussen
                     aanhalingstekens: dan leest hij zijn eigen gedachte terug en
                     weet hij dat het antwoord eronder voor hem bedoeld is. */}
-                <h3 className="font-display text-[1.125rem] leading-snug font-bold">
+                <h3 className="font-display text-[1.125rem] leading-snug font-semibold">
                   &ldquo;{bezwaar.vraag}&rdquo;
                 </h3>
-                <p className="mt-3 leading-relaxed text-ink-soft">
+                <p className="mt-3 leading-relaxed text-fg-muted">
                   {bezwaar.antwoord}
                 </p>
               </div>

@@ -222,10 +222,10 @@ export default function TvOphangenPage() {
 
       <Bezwaren />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <Reveal immediate>
           <div className="max-w-3xl">
-            <p className="leading-relaxed text-ink-soft">
+            <p className="leading-relaxed text-fg-muted">
               Een tv ophangen lijkt eenvoudig, maar er komt meer bij kijken dan
               vier gaten boren. Het juiste beugeltype, het draagvermogen van de
               muur, de perfecte hoogte en het onzichtbaar wegwerken van kabels
@@ -237,7 +237,7 @@ export default function TvOphangenPage() {
               letten. Liever meteen geregeld?{" "}
               <Link
                 href="/contact"
-                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
               >
                 Plan een afspraak
               </Link>{" "}
@@ -247,10 +247,10 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Wat is inbegrepen bij het ophangen van een tv?
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Bij onze tv-ophangservice regelen we alles van begin tot eind. U
             hoeft zelf niets voor te bereiden.
           </p>
@@ -272,12 +272,12 @@ export default function TvOphangenPage() {
         />
       </div>
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 pb-10 md:px-8">
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Wat kost een tv ophangen?
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             De prijs hangt alleen af van het schermformaat, want dat bepaalt het
             werk: een scherm vanaf 65 inch is zwaar en kwetsbaar, vraagt een
             stevigere beugel en wordt door twee monteurs opgehangen.
@@ -285,23 +285,23 @@ export default function TvOphangenPage() {
             die we vooraf afspreken is de prijs die u betaalt.
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
+            <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
               Tot 43 inch — €99
             </span>
-            <span className="rounded-full bg-ink text-cream px-4 py-2">
+            <span className="rounded-full bg-inverse text-fg-inverse px-4 py-2">
               44 t/m 64 inch — €129 · populair
             </span>
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
+            <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
               Vanaf 65 inch — €159
             </span>
           </div>
-          <p className="mt-5 max-w-2xl text-sm text-ink-soft">
+          <p className="mt-5 max-w-2xl text-sm text-fg-muted">
             Heeft u nog geen beugel, of wilt u de kabels weggewerkt? Geef het
             door bij uw aanvraag, dan staat het totaalbedrag in de bevestiging —
             ook dat spreken we vooraf af. Bekijk alle tarieven en opties op de{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
             >
               prijzenpagina
             </Link>
@@ -335,16 +335,16 @@ export default function TvOphangenPage() {
         <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Tv ophangen aan verschillende soorten muren
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Elke muur vraagt om een andere aanpak en bevestiging. Onze monteurs
             herkennen het muurtype en kiezen de juiste pluggen, zodat uw tv
             overal veilig hangt. Heeft u een{" "}
             <Link
               href="/tv-ophangen-gipswand"
-              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
             >
               gipswand of holle wand
             </Link>
@@ -352,13 +352,13 @@ export default function TvOphangenPage() {
           </p>
         </Reveal>
         <Reveal delay={100}>
-          <ul className="mt-8 max-w-4xl divide-y divide-ink/10 border-y border-line-strong">
+          <ul className="mt-8 max-w-4xl divide-y divide-hairline border-y border-hairline">
             {muren.map((m) => (
               <li key={m.h3} className="py-6">
-                <h3 className="font-display text-lg font-bold tracking-tight">
+                <h3 className="font-display text-lg font-semibold tracking-tight">
                   {m.h3}
                 </h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+                <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
                   {m.text}
                 </p>
               </li>
@@ -367,10 +367,10 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Welke tv-beugel heb ik nodig?
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Er zijn drie hoofdtypen tv-beugels, elk met eigen voordelen. Welke
             het beste past, hangt af van uw kijkpositie, de ruimte en het formaat
             van uw tv.
@@ -378,7 +378,7 @@ export default function TvOphangenPage() {
         </Reveal>
         <IconCardGrid items={beugels} columns={3} />
         <Reveal>
-          <p className="mt-8 max-w-3xl leading-relaxed text-ink-soft">
+          <p className="mt-8 max-w-3xl leading-relaxed text-fg-muted">
             Of een beugel precies past, hoeft u niet zelf uit te zoeken — de
             monteur controleert het ter plekke. Handig om te weten waar het van
             afhangt:
@@ -389,11 +389,11 @@ export default function TvOphangenPage() {
             items={beugelFactoren}
             className="mt-6 grid max-w-4xl gap-3 sm:grid-cols-2"
           />
-          <p className="mt-5 max-w-2xl text-sm text-ink-soft">
+          <p className="mt-5 max-w-2xl text-sm text-fg-muted">
             Wilt u zelf controleren of een beugel op uw tv past?{" "}
             <Link
               href="/kennisbank/welke-tv-beugel"
-              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
             >
               Zo meet u de VESA-maat
             </Link>
@@ -402,10 +402,10 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Hoe hoog moet een tv worden opgehangen?
           </h2>
-          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
+          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-fg-muted">
             <p>
               De ideale hoogte hangt af van uw zithoogte, de kijkafstand en het
               formaat van de tv. Als vuistregel houdt u het midden van het
@@ -425,7 +425,7 @@ export default function TvOphangenPage() {
               Wilt u het zelf narekenen?{" "}
               <Link
                 href="/kennisbank/hoe-hoog-tv-ophangen"
-                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
               >
                 In onze kennisbank staat de rekenregel met een tabel per
                 schermformaat
@@ -436,10 +436,10 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Tv ophangen en kabels wegwerken
           </h2>
-          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
+          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-fg-muted">
             <p>
               Een zwevende tv verdient een muur zonder kabelspaghetti. Bij het
               ophangen werken we de stroom-, hdmi- en netwerkkabels netjes weg.
@@ -453,7 +453,7 @@ export default function TvOphangenPage() {
               tegen een vaste prijs met u af. Meer weten? Bekijk onze{" "}
               <Link
                 href="/prijzen"
-                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
               >
                 prijzen en opties
               </Link>
@@ -463,10 +463,10 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Tv ophangen in elke situatie
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Elke woonkamer is anders. Voor de meest voorkomende situaties weten
             onze monteurs precies wat er nodig is.
           </p>
@@ -474,10 +474,10 @@ export default function TvOphangenPage() {
         <IconCardGrid items={situaties} columns={2} hover />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Tv ophangen in ons werkgebied
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht
             en Noord-Brabant. Bekijk of we ook bij u in de buurt zijn:
           </p>
@@ -487,7 +487,7 @@ export default function TvOphangenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Veelgestelde vragen over tv ophangen
           </h2>
         </Reveal>

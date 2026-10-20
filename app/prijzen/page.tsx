@@ -74,9 +74,9 @@ export default function PrijzenPage() {
         intro="Bij ons weet u vooraf precies waar u aan toe bent. Alle prijzen zijn inclusief voorrijkosten en btw — wat u hieronder ziet, is wat u betaalt."
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <Reveal>
-          <h2 className="font-display text-step-3 font-bold">
+          <h2 className="font-display text-h2 font-semibold">
             Onze tarieven per tv-formaat
           </h2>
         </Reveal>
@@ -95,13 +95,13 @@ export default function PrijzenPage() {
             het moment waarop iemand weet wat zijn formaat kost. */}
         <section id="afspraak" className="mt-12">
           <Reveal immediate>
-            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
-              <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
+            <div className="rounded-lg bg-sunk p-1.5 border border-hairline">
+              <div className="rounded-lg bg-white p-6 md:p-10">
                 <div className="max-w-2xl">
-                  <h2 className="font-display text-step-3 font-bold">
+                  <h2 className="font-display text-h2 font-semibold">
                     Dit is de prijs die u betaalt
                   </h2>
-                  <p className="mt-3 leading-relaxed text-ink-soft">
+                  <p className="mt-3 leading-relaxed text-fg-muted">
                     Geen voorrijkosten, geen btw-verrassing en geen meerwerk
                     zonder uw toestemming. Kies een dag die u schikt; u krijgt
                     binnen enkele uren bericht over de eerstvolgende
@@ -124,20 +124,20 @@ export default function PrijzenPage() {
         </section>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Aanvullende diensten
           </h2>
         </Reveal>
         <Reveal delay={100}>
           <BezelCard className="mt-8">
-            <ul className="divide-y divide-ink/5">
+            <ul className="divide-y divide-hairline">
               {addons.map((addon) => (
                 <li
                   key={addon.naam}
                   className="flex flex-col justify-between gap-1 px-7 py-4.5 sm:flex-row sm:items-center sm:gap-4"
                 >
                   <span className="text-[15px]">{addon.naam}</span>
-                  <span className="shrink-0 font-display font-bold">
+                  <span className="shrink-0 font-display font-semibold">
                     {addon.prijs}
                   </span>
                 </li>
@@ -147,7 +147,7 @@ export default function PrijzenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Altijd inbegrepen
           </h2>
         </Reveal>
@@ -159,7 +159,7 @@ export default function PrijzenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Veelgestelde vragen over prijzen
           </h2>
         </Reveal>

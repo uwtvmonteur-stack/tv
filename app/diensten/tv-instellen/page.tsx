@@ -9,7 +9,7 @@ import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
 import CheckList from "@/components/CheckList";
 import ProvincieChips from "@/components/ProvincieChips";
-import BrandMarquee from "@/components/BrandMarquee";
+import Bezwaren from "@/components/Bezwaren";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import { IconCable, IconChat, IconSliders, IconTv } from "@/components/icons";
@@ -137,12 +137,12 @@ export default function TvInstellenPage() {
         }}
       />
 
-      <BrandMarquee />
+      <Bezwaren />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <Reveal immediate>
           <div className="max-w-3xl">
-            <p className="leading-relaxed text-ink-soft">
+            <p className="leading-relaxed text-fg-muted">
               Moderne tv&apos;s kunnen ontzettend veel, en juist daardoor gaat er
               weleens iets mis: zenders die verdwijnen, geen internet, een app
               die hapert of een instelling die per ongeluk is veranderd. Wij
@@ -154,7 +154,7 @@ export default function TvInstellenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Waarmee we u helpen
           </h2>
         </Reveal>
@@ -175,33 +175,33 @@ export default function TvInstellenPage() {
         />
       </div>
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-10 md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 pb-10 md:px-8">
         <Reveal>
-          <h2 className="font-display text-step-3 font-bold">
+          <h2 className="font-display text-h2 font-semibold">
             Wat kost tv hulp aan huis?
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             De meeste hulpvragen lost onze monteur op voor een vaste prijs van
             €60, inclusief voorrijkosten en btw. Vooraf afgesproken, geen
             verrassingen achteraf.
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-ink text-cream px-4 py-2">
+            <span className="rounded-full bg-inverse text-fg-inverse px-4 py-2">
               Tv hulp — vaste prijs €60
             </span>
           </div>
-          <p className="mt-5 text-sm text-ink-soft">
+          <p className="mt-5 text-sm text-fg-muted">
             Bekijk alle{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
             >
               prijzen
             </Link>{" "}
             of{" "}
             <Link
               href="/contact"
-              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
             >
               plan direct een afspraak
             </Link>
@@ -212,10 +212,10 @@ export default function TvInstellenPage() {
         <InlineCta href="#afspraak" text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Hulp met streaming en apps
           </h2>
-          <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-3xl leading-relaxed text-fg-muted">
             Doet Netflix, Viaplay of NPO Start het niet, of komt u niet meer
             ingelogd? We zetten uw streaming-apps weer goed en helpen u met
             inloggen. Uw wachtwoorden blijven van u — die vullen we alleen samen
@@ -225,7 +225,7 @@ export default function TvInstellenPage() {
             {streaming.map((dienst) => (
               <li
                 key={dienst}
-                className="rounded-full bg-white px-4 py-2 text-sm font-medium ring-1 ring-line"
+                className="rounded-full bg-white px-4 py-2 text-sm font-medium border border-hairline"
               >
                 {dienst}
               </li>
@@ -256,10 +256,10 @@ export default function TvInstellenPage() {
         />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Geduldig en in gewone taal — ook voor senioren
           </h2>
-          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-ink-soft">
+          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-fg-muted">
             <p>
               Onze monteurs zijn er niet alleen om het óp te lossen, maar ook om
               het úít te leggen. Veel van onze klanten zijn senioren die gewoon
@@ -275,20 +275,20 @@ export default function TvInstellenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Tv hulp in elke situatie
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Waar u ook op vastloopt, onze monteur helpt u snel verder.
           </p>
         </Reveal>
         <IconCardGrid items={situaties} columns={2} hover />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Tv hulp aan huis in ons werkgebied
           </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-ink-soft">
+          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
             Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht
             en Noord-Brabant:
           </p>
@@ -298,7 +298,7 @@ export default function TvInstellenPage() {
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Veelgestelde vragen over tv hulp
           </h2>
         </Reveal>

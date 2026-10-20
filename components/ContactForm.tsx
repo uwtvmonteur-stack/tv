@@ -52,10 +52,10 @@ function vroegsteDatum() {
 }
 
 const inputStyles =
-  "w-full rounded-2xl bg-cream px-4 py-3.5 text-base ring-1 ring-line-strong transition-shadow duration-300 ease-fluid placeholder:text-ink-soft/85 focus:ring-2 focus:ring-ink focus:outline-none sm:text-sm";
+  "w-full rounded-md bg-paper px-4 py-3.5 text-base border border-hairline transition-shadow duration-300 ease-out placeholder:text-fg-muted/85 focus:ring-2 focus:ring-ink focus:outline-none sm:text-sm";
 
 const labelStyles =
-  "mb-1.5 block text-[11px] font-semibold tracking-[0.14em] text-ink-soft uppercase";
+  "mb-1.5 block text-[11px] font-semibold tracking-[0.14em] text-fg-muted uppercase";
 
 /**
  * Eén tikbare keuze. Het bolletje of vinkje zelf is visueel verborgen maar
@@ -64,7 +64,7 @@ const labelStyles =
  * telefoon de helft van het werk dat een uitklaplijst kost.
  */
 const keuzeStyles =
-  "relative flex cursor-pointer items-start justify-between gap-4 rounded-2xl bg-cream px-4 py-3.5 text-left ring-1 ring-line-strong transition-[background-color,box-shadow] duration-300 ease-fluid has-[:checked]:bg-accent-tint has-[:checked]:ring-2 has-[:checked]:ring-accent has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ink";
+  "relative flex cursor-pointer items-start justify-between gap-4 rounded-md bg-paper px-4 py-3.5 text-left border border-hairline transition-[background-color,box-shadow] duration-300 ease-out has-[:checked]:bg-accent-tint has-[:checked]:ring-2 has-[:checked]:ring-accent has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ink";
 
 type Status = "idle" | "submitting" | "success" | "mailto" | "error";
 
@@ -135,16 +135,16 @@ function Stap({
     <fieldset className="min-w-0 border-0 p-0">
       <legend className="mb-3 w-full">
         <span className="flex items-baseline gap-3">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-[12px] font-semibold text-cream tabular-nums">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-inverse text-[12px] font-semibold text-fg-inverse tabular-nums">
             {nummer}
           </span>
-          <span className="font-display text-[1.0625rem] leading-snug font-bold">
+          <span className="font-display text-[1.0625rem] leading-snug font-semibold">
             {titel}
           </span>
         </span>
       </legend>
       {hint && (
-        <p className="mb-3 text-sm leading-relaxed text-ink-soft">{hint}</p>
+        <p className="mb-3 text-sm leading-relaxed text-fg-muted">{hint}</p>
       )}
       {children}
     </fieldset>
@@ -391,12 +391,12 @@ export default function ContactForm({
         ref={resultRef}
         tabIndex={-1}
         role="status"
-        className="rounded-2xl bg-accent-tint p-6 text-center ring-1 ring-accent/25 focus:outline-none"
+        className="rounded-md bg-accent-tint p-6 text-center ring-1 ring-accent/25 focus:outline-none"
       >
-        <p className="font-display text-step-2 font-bold">
+        <p className="font-display text-h3 font-semibold">
           Bedankt! Uw aanvraag is ontvangen.
         </p>
-        <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+        <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
           {SITE.reactie} Houd uw telefoon dus even bij de hand.
         </p>
       </div>
@@ -409,18 +409,18 @@ export default function ContactForm({
         ref={resultRef}
         tabIndex={-1}
         role="status"
-        className="rounded-2xl bg-accent-tint p-6 text-center ring-1 ring-accent/25 focus:outline-none"
+        className="rounded-md bg-accent-tint p-6 text-center ring-1 ring-accent/25 focus:outline-none"
       >
-        <p className="font-display text-step-2 font-bold">
+        <p className="font-display text-h3 font-semibold">
           Nog één stap: verstuur de e-mail
         </p>
-        <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+        <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
           Uw e-mailprogramma is geopend met uw gegevens. Verstuur dat bericht,
           dan nemen wij binnen enkele uren contact met u op. Is er geen
           e-mailprogramma geopend? Mail uw gegevens dan naar{" "}
           <a
             href={`mailto:${SITE.email}`}
-            className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+            className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
           >
             {SITE.email}
           </a>
@@ -522,19 +522,19 @@ export default function ContactForm({
                   <span className="min-w-0">
                     <span className="block font-semibold">{optie.label}</span>
                     {optie.populair && (
-                      <span className="mt-0.5 block text-[13px] text-ink-soft">
+                      <span className="mt-0.5 block text-[13px] text-fg-muted">
                         Meest gekozen
                       </span>
                     )}
                   </span>
-                  <span className="shrink-0 font-display font-bold tabular-nums">
+                  <span className="shrink-0 font-display font-semibold tabular-nums">
                     {optie.prijs}
                   </span>
                 </label>
               ))}
             </div>
 
-            <p className="mt-6 mb-3 text-sm leading-relaxed text-ink-soft">
+            <p className="mt-6 mb-3 text-sm leading-relaxed text-fg-muted">
               En heeft u al een beugel voor die tv?
             </p>
             <div className="flex flex-col gap-2.5">
@@ -550,7 +550,7 @@ export default function ContactForm({
                   />
                   <span className="min-w-0">
                     <span className="block font-semibold">{optie.label}</span>
-                    <span className="mt-0.5 block text-[13px] leading-relaxed text-ink-soft">
+                    <span className="mt-0.5 block text-[13px] leading-relaxed text-fg-muted">
                       {optie.detail}
                     </span>
                   </span>
@@ -582,7 +582,7 @@ export default function ContactForm({
                     className="sr-only"
                   />
                   <span className="min-w-0 font-semibold">{extra.label}</span>
-                  <span className="shrink-0 text-sm font-semibold text-ink-soft tabular-nums">
+                  <span className="shrink-0 text-sm font-semibold text-fg-muted tabular-nums">
                     {extra.prijs}
                   </span>
                 </label>
@@ -735,7 +735,7 @@ export default function ContactForm({
       {montage && (
         <div
           aria-live="polite"
-          className="rounded-[1.25rem] bg-ink p-5 text-cream md:p-6"
+          className="rounded-md bg-inverse p-5 text-fg-inverse md:p-6"
         >
           {totaal === null ? (
             <p className="text-[15px] leading-relaxed text-white/70">
@@ -749,7 +749,7 @@ export default function ContactForm({
                 <span className="text-[11px] font-semibold tracking-[0.14em] text-white/60 uppercase">
                   Uw prijs
                 </span>
-                <span className="font-display text-step-3 font-bold tabular-nums">
+                <span className="font-display text-h2 font-semibold tabular-nums">
                   {totaalIsOpen && (
                     <span className="mr-1.5 align-middle text-base font-semibold text-white/60">
                       vanaf
@@ -779,17 +779,17 @@ export default function ContactForm({
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="group flex w-full items-center justify-center gap-3 rounded-full bg-accent py-2.5 pr-2.5 pl-6 text-base font-semibold text-white transition-[transform,background-color] duration-300 ease-fluid hover:bg-accent-hover active:scale-[0.98] disabled:opacity-70"
+          className="group flex w-full items-center justify-center gap-3 rounded-full bg-accent py-2.5 pr-2.5 pl-6 text-base font-semibold text-white transition-[transform,background-color] duration-300 ease-out hover:bg-accent-hover active:scale-[0.98] disabled:opacity-70"
         >
           {status === "submitting"
             ? "Bezig met verzenden…"
             : (submitLabel ?? "Afspraak aanvragen")}
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
             <IconArrowUpRight className="h-4 w-4" />
           </span>
         </button>
         {/* De laatste twijfel vlak voor de klik: zit ik hier nu aan vast? */}
-        <p className="mt-3 text-center text-sm text-ink-soft">
+        <p className="mt-3 text-center text-sm text-fg-muted">
           U zit nog nergens aan vast — u krijgt eerst een voorstel voor dag en
           tijd.{" "}
           <span className="text-accent-fg" aria-hidden="true">

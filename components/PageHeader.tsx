@@ -15,16 +15,16 @@ export default function PageHeader({
   intro?: ReactNode;
 }) {
   return (
-    <header className="mx-auto w-full max-w-6xl px-4 pt-36 pb-6 md:px-8 md:pt-44">
+    <header className="mx-auto w-full max-w-content px-4 pt-36 pb-6 md:px-8 md:pt-44">
       <Breadcrumbs items={crumbs} />
       <Reveal immediate>
         <div className="mt-8">
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="mt-6 max-w-3xl font-display text-step-4 font-bold">
+          <h1 className="mt-6 max-w-3xl font-display text-h1 font-semibold">
             {title}
           </h1>
           {intro && (
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-fg-muted">
               {intro}
             </p>
           )}

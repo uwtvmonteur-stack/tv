@@ -29,41 +29,41 @@ export default function PriceCards({
         <li key={card.name} className="h-full">
           <Reveal delay={i * 100} className="h-full">
           <div
-            className={`relative h-full rounded-[2rem] p-1.5 ring-1 ${
+            className={`relative h-full rounded-lg p-1.5 ring-1 ${
               card.featured
-                ? "bg-ink/[0.06] ring-line-strong"
-                : "bg-ink/[0.04] ring-line"
+                ? "bg-sunk border-hairline"
+                : "bg-sunk border-hairline"
             }`}
           >
             {card.featured && (
-              <span className="absolute -top-3.5 left-1/2 z-10 -translate-x-1/2 rounded-full bg-accent px-4 py-1.5 text-[10px] font-semibold tracking-[0.15em] text-white uppercase shadow-[0_10px_25px_-8px_rgba(217,119,6,0.6)]">
+              <span className="absolute -top-3.5 left-1/2 z-10 -translate-x-1/2 rounded-full bg-accent px-4 py-1.5 text-[10px] font-semibold tracking-[0.15em] text-white uppercase shadow-e1">
                 Meest gekozen
               </span>
             )}
             <div
-              className={`flex h-full flex-col rounded-[calc(2rem-0.375rem)] p-8 ${
+              className={`flex h-full flex-col rounded-lg p-8 ${
                 card.featured
-                  ? "bg-ink text-cream shadow-[0_40px_80px_-40px_rgba(25,21,18,0.5)]"
+                  ? "bg-inverse text-fg-inverse shadow-e3"
                   : "bg-white"
               }`}
             >
-              <Heading className="font-display text-lg font-bold tracking-tight">
+              <Heading className="font-display text-lg font-semibold tracking-tight">
                 {card.name}
               </Heading>
               <p
                 className={`mt-1 text-sm ${
-                  card.featured ? "text-white/70" : "text-ink-soft"
+                  card.featured ? "text-white/70" : "text-fg-muted"
                 }`}
               >
                 {card.size}
               </p>
               <div className="mt-6 flex items-baseline gap-2">
-                <span className="font-display text-step-4 font-bold tabular-nums">
+                <span className="font-display text-h1 font-semibold tabular-nums">
                   {card.price}
                 </span>
                 <span
                   className={`text-sm ${
-                    card.featured ? "text-white/70" : "text-ink-soft"
+                    card.featured ? "text-white/70" : "text-fg-muted"
                   }`}
                 >
                   eenmalig
@@ -92,10 +92,10 @@ export default function PriceCards({
                 // formaat al gekozen en hoort dat niet twee regels lager
                 // opnieuw te moeten doen. ContactForm luistert hierop.
                 data-maat={card.name.toLowerCase()}
-                className={`mt-8 flex items-center justify-center rounded-full py-3.5 text-sm font-semibold transition-transform duration-300 ease-fluid active:scale-[0.98] ${
+                className={`mt-8 flex items-center justify-center rounded-sm py-3.5 text-sm font-semibold transition-transform duration-300 ease-out active:scale-[0.98] ${
                   card.featured
                     ? "bg-accent text-white hover:bg-accent-hover"
-                    : "ring-1 ring-ink/15 hover:bg-ink/5"
+                    : "border border-control hover:bg-sunk"
                 }`}
               >
                 Plan een afspraak

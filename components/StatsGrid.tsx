@@ -11,10 +11,10 @@ export default function StatsGrid({ className = "" }: { className?: string }) {
           <li key={stat.label}>
             <Reveal delay={i * 80}>
               <div className="flex flex-col items-center gap-2 text-center">
-                <span className="font-display text-step-3 font-bold">
+                <span className="font-display text-h2 font-semibold">
                   {stat.value}
                 </span>
-                <span className="text-sm text-ink-soft">{stat.label}</span>
+                <span className="text-sm text-fg-muted">{stat.label}</span>
               </div>
             </Reveal>
           </li>

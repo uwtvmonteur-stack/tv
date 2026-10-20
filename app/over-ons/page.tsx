@@ -35,11 +35,11 @@ export default function OverOnsPage() {
         intro="Uw TV Monteur begon met één busje en één overtuiging: een tv hoort gewoon perfect opgehangen te worden — half werk bestaat niet. Inmiddels rijdt er een heel team op uit, met bij elke klus diezelfde standaard."
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
             <Reveal>
-              <div className="max-w-xl space-y-4 leading-relaxed text-ink-soft">
+              <div className="max-w-xl space-y-4 leading-relaxed text-fg-muted">
                 <p>
                   Wat begon als een eenmanszaak groeide uit tot een hecht team
                   van ervaren tv-monteurs, actief in Zuid-Holland,
@@ -63,8 +63,8 @@ export default function OverOnsPage() {
             </Reveal>
           </div>
           <Reveal delay={150}>
-            <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line transition-transform duration-700 ease-fluid md:rotate-2 md:hover:rotate-0">
-              <div className="overflow-hidden rounded-[calc(2rem-0.375rem)]">
+            <div className="rounded-lg bg-sunk p-1.5 border border-hairline transition-transform duration-700 ease-out md:rotate-2 md:hover:rotate-0">
+              <div className="overflow-hidden rounded-lg">
                 <Image
                   src={monteurImg}
                   alt="Monteur van Uw TV Monteur monteert een tv perfect waterpas"

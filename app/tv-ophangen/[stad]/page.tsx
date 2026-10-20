@@ -205,10 +205,10 @@ export default async function StadPage({
         }}
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <Reveal>
-          <div className="rounded-[2rem] bg-cream-deep/50 p-8 md:p-10">
-            <h2 className="font-display text-step-3 font-bold">
+          <div className="rounded-lg bg-sunk p-8 md:p-10">
+            <h2 className="font-display text-h2 font-semibold">
               Wij hangen op in elke wijk van {stad.naam}
             </h2>
             {/* Alleen de per-stad geschreven tekst. De inleidende zin die hier
@@ -216,7 +216,7 @@ export default async function StadPage({
                 tot F") was een sjabloon dat op elke stadpagina hetzelfde las;
                 de wijknamen eronder zeggen hetzelfde, maar dan concreet. */}
             {lokaalTekst[stad.slug] && (
-              <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
+              <p className="mt-4 max-w-3xl leading-relaxed text-fg-muted">
                 {lokaalTekst[stad.slug]}
               </p>
             )}
@@ -224,7 +224,7 @@ export default async function StadPage({
               {stad.wijken.map((wijk) => (
                 <li
                   key={wijk}
-                  className="rounded-full bg-white px-4 py-2 text-sm font-medium ring-1 ring-line"
+                  className="rounded-full bg-white px-4 py-2 text-sm font-medium border border-hairline"
                 >
                   {wijk}
                 </li>
@@ -243,13 +243,13 @@ export default async function StadPage({
             en is tegelijk het antwoord dat een bezoeker echt zoekt. */}
         {stedenMontage[stad.slug] && (
           <Reveal>
-            <h2 className="mt-block font-display text-step-3 font-bold">
+            <h2 className="mt-block font-display text-h2 font-semibold">
               Welke muur heeft u in {stad.naam}?
             </h2>
-            <p className="mt-6 max-w-3xl leading-relaxed text-ink-soft">
+            <p className="mt-6 max-w-3xl leading-relaxed text-fg-muted">
               {stedenMontage[stad.slug]}
             </p>
-            <p className="mt-4 max-w-3xl leading-relaxed text-ink-soft">
+            <p className="mt-4 max-w-3xl leading-relaxed text-fg-muted">
               Weet u niet zeker wat voor wand u heeft? Dat hoeft ook niet — onze
               monteur bepaalt het ter plekke en neemt de pluggen voor elk
               wandtype mee. De prijs verandert er niet door.
@@ -264,7 +264,7 @@ export default async function StadPage({
             linkstructuur naar de dienstpagina's — maar zonder de dubbele tekst.
             De provinciepagina's gebruiken de grid nog wel. */}
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Onze diensten in {stad.naam}
           </h2>
           <ul className="mt-8 flex flex-wrap gap-2.5 text-sm">
@@ -272,7 +272,7 @@ export default async function StadPage({
               <li key={dienst.slug}>
                 <Link
                   href={dienstHref(dienst)}
-                  className="flex items-center gap-2.5 rounded-full bg-ink/[0.04] px-4 py-2.5 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
+                  className="flex items-center gap-2.5 rounded-full bg-sunk px-4 py-2.5 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk"
                 >
                   <DienstIcon slug={dienst.slug} className="h-4 w-4" />
                   {dienst.naam} in {stad.naam}
@@ -283,25 +283,25 @@ export default async function StadPage({
         </Reveal>
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Wat kost tv ophangen in {stad.naam}?
           </h2>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
+            <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
               Tot 43 inch — €99
             </span>
-            <span className="rounded-full bg-ink text-cream px-4 py-2">
+            <span className="rounded-full bg-inverse text-fg-inverse px-4 py-2">
               44 t/m 64 inch — €129 · populair
             </span>
-            <span className="rounded-full bg-ink/[0.04] px-4 py-2 ring-1 ring-line">
+            <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
               Vanaf 65 inch — €159
             </span>
           </div>
-          <p className="mt-5 text-sm text-ink-soft">
+          <p className="mt-5 text-sm text-fg-muted">
             Inclusief voorrijkosten in {stad.naam} en btw. Bekijk alle{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
             >
               prijzen en aanvullende diensten
             </Link>
@@ -317,7 +317,7 @@ export default async function StadPage({
         />
 
         <Reveal>
-          <h2 className="mt-block font-display text-step-3 font-bold">
+          <h2 className="mt-block font-display text-h2 font-semibold">
             Veelgestelde vragen — {stad.naam}
           </h2>
         </Reveal>
@@ -336,17 +336,17 @@ export default async function StadPage({
               <Link
                 key={nabijStad.slug}
                 href={`/tv-ophangen/${nabijStad.slug}`}
-                className="rounded-full bg-ink/[0.04] px-4 py-2 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
+                className="rounded-full bg-sunk px-4 py-2 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk"
               >
                 Tv monteur {nabijStad.naam}
               </Link>
             ))}
             <Link
               href={`/werkgebied/${provincie.slug}`}
-              className="group flex items-center gap-2 rounded-full px-4 py-2 font-semibold"
+              className="group flex items-center gap-2 rounded-sm px-4 py-2 font-semibold"
             >
               Heel {provincie.naam}
-              <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5" />
+              <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5" />
             </Link>
           </div>
         </Reveal>

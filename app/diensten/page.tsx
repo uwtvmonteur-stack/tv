@@ -37,30 +37,30 @@ export default function DienstenPage() {
         intro="Van tv ophangen en complete installatie tot soundbar aansluiten en tv instellen — kies hieronder de dienst die bij u past. Overal vaste prijzen, inclusief voorrijkosten en btw."
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-8 md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 pb-8 md:px-8">
         <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {diensten.map((dienst, i) => (
             <li key={dienst.slug} className="h-full">
               <Reveal delay={i * 80} className="h-full">
               <Link href={dienstHref(dienst)} className="group block h-full">
                 <BezelCard
-                  className="h-full transition-transform duration-500 ease-fluid group-hover:-translate-y-1"
+                  className="h-full transition-transform duration-500 ease-out group-hover:-translate-y-1"
                   innerClassName="flex h-full flex-col justify-between gap-8 p-8"
                 >
                   <div>
                     <IconChip>
                       <DienstIcon slug={dienst.slug} />
                     </IconChip>
-                    <h2 className="mt-6 font-display text-step-2 font-bold">
+                    <h2 className="mt-6 font-display text-h3 font-semibold">
                       {dienst.naam}
                     </h2>
-                    <p className="mt-3 leading-relaxed text-ink-soft">
+                    <p className="mt-3 leading-relaxed text-fg-muted">
                       {dienst.kort}
                     </p>
                   </div>
                   <span className="flex items-center gap-2.5 text-sm font-semibold">
                     Lees meer
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink/5 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5">
                       <IconArrowUpRight className="h-3.5 w-3.5" />
                     </span>
                   </span>
@@ -72,9 +72,9 @@ export default function DienstenPage() {
 
           <li className="h-full">
             <Reveal delay={400} className="h-full">
-            <div className="flex h-full flex-col justify-between gap-8 rounded-[2rem] bg-ink p-8 text-cream">
+            <div className="flex h-full flex-col justify-between gap-8 rounded-lg bg-inverse p-8 text-fg-inverse">
               <div>
-                <h2 className="font-display text-step-2 font-bold">
+                <h2 className="font-display text-h3 font-semibold">
                   Waarom Uw TV Monteur?
                 </h2>
                 <ul className="mt-5 flex flex-col gap-3 text-sm">
@@ -90,7 +90,7 @@ export default function DienstenPage() {
               </div>
               <Link
                 href="/prijzen"
-                className="flex items-center justify-center rounded-full bg-accent py-3.5 text-sm font-semibold text-white transition-transform duration-300 ease-fluid active:scale-[0.98]"
+                className="flex items-center justify-center rounded-full bg-accent py-3.5 text-sm font-semibold text-white transition-transform duration-300 ease-out active:scale-[0.98]"
               >
                 Bekijk alle prijzen
               </Link>

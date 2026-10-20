@@ -17,9 +17,9 @@ export default function Faq({ items }: { items: FaqItem[] }) {
         return (
           <div
             key={item.q}
-            className="rounded-[1.75rem] bg-ink/[0.04] p-1.5 ring-1 ring-line"
+            className="overflow-hidden rounded-md border border-hairline bg-raised shadow-e1"
           >
-            <div className="rounded-[calc(1.75rem-0.375rem)] bg-white">
+            <div>
               <h3 className="m-0">
                 <button
                   type="button"
@@ -31,7 +31,7 @@ export default function Faq({ items }: { items: FaqItem[] }) {
                 >
                   <span>{item.q}</span>
                   <span
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink/5 transition-transform duration-500 ease-fluid ${
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out ${
                       isOpen ? "rotate-45" : ""
                     }`}
                   >
@@ -44,11 +44,11 @@ export default function Faq({ items }: { items: FaqItem[] }) {
                 role="region"
                 aria-labelledby={btnId}
                 aria-hidden={!isOpen}
-                className="grid transition-[grid-template-rows] duration-500 ease-fluid"
+                className="grid transition-[grid-template-rows] duration-500 ease-out"
                 style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
               >
                 <div className="overflow-hidden">
-                  <p className="px-6 pb-6 text-[15px] leading-relaxed text-ink-soft">
+                  <p className="px-6 pb-6 text-[15px] leading-relaxed text-fg-muted">
                     {item.a}
                   </p>
                 </div>

@@ -37,18 +37,20 @@ import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 const meta = pageMeta({
   title: "Tv ophangen aan huis — vaste prijs, geen voorrijkosten",
   description:
-    "Tv monteur aan huis nodig? Wij hangen uw tv op, sluiten alles aan en werken de kabels weg. Vaste prijs vooraf vanaf €99, 's avonds en in het weekend zonder toeslag.",
+    "Tv laten ophangen aan huis? Wij hangen uw tv op, sluiten alles aan en werken de kabels weg. Vaste prijs vooraf vanaf €99, 's avonds en in het weekend zonder toeslag.",
   path: "/",
 });
 
 export const metadata: Metadata = {
   ...meta,
   title: {
-    // Begint bewust met "Tv monteur aan huis" en niet met "Tv ophangen": die
-    // laatste term hoort bij /tv-ophangen. Stonden beide titels op dezelfde
-    // woorden, dan koos Google de homepage (meer interne links) en kreeg de
-    // dienstpagina nul vertoningen -- precies wat Search Console liet zien.
-    absolute: "Tv Monteur aan Huis — Ophangen & Installeren | Uw TV Monteur",
+    // De homepage mag niet op dezelfde woorden staan als /tv-ophangen:
+    // stonden beide titels daarop, dan koos Google de homepage (meer interne
+    // links) en kreeg de dienstpagina nul vertoningen -- precies wat Search
+    // Console liet zien. De oplossing was hier "tv monteur", maar dat is in
+    // het Nederlands vooral een reparatieterm. Daarom nu de merknaam voorop:
+    // die is uniek van ons, en de exacte zoekterm blijft van /tv-ophangen.
+    absolute: "Uw TV Monteur — tv aan de muur, vaste prijs vooraf",
   },
 };
 
@@ -98,7 +100,7 @@ function Hero() {
               scrolt in plaats van dat hij de bezoeker verhuist. */}
           <div className="mt-8 sm:max-w-xs">
             <Button href="#afspraak" variant="inverse" maat="lg" breed>
-              Bekijk uw prijs en plan een afspraak
+              Bekijk uw prijs
               <IconArrowUpRight className="h-4 w-4" />
             </Button>
           </div>
@@ -144,14 +146,14 @@ function Diensten() {
   const [tvOphangen, tvInstallatie, soundbar, instellen] = diensten;
 
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-24 md:px-8 md:py-36">
+    <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
       <Reveal>
         <div className="max-w-2xl">
           <Eyebrow>Onze diensten</Eyebrow>
-          <h2 className="mt-6 font-display text-step-3 font-bold">
+          <h2 className="mt-6 font-display text-h2 font-semibold">
             Alles voor het perfecte kijkmoment
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-ink-soft">
+          <p className="mt-5 text-lg leading-relaxed text-fg-muted">
             Van tv ophangen tot alles ingesteld: één monteur, één afspraak, en
             alles werkt.
           </p>
@@ -165,17 +167,17 @@ function Diensten() {
             href={dienstHref(tvOphangen)}
             className="group block h-full"
           >
-            <BezelCard className="h-full transition-transform duration-500 ease-fluid group-hover:-translate-y-1">
-              <div className="flex h-full flex-col overflow-hidden rounded-[calc(2rem-0.375rem)] md:flex-row">
+            <BezelCard className="h-full transition-transform duration-500 ease-out group-hover:-translate-y-1">
+              <div className="flex h-full flex-col overflow-hidden rounded-lg md:flex-row">
                 <div className="flex flex-1 flex-col justify-between gap-8 p-8 md:p-10">
                   <div>
                     <IconChip>
                       <DienstIcon slug={tvOphangen.slug} />
                     </IconChip>
-                    <h3 className="mt-6 font-display text-step-2 font-bold">
+                    <h3 className="mt-6 font-display text-h3 font-semibold">
                       {tvOphangen.naam}
                     </h3>
-                    <p className="mt-4 leading-relaxed text-ink-soft">
+                    <p className="mt-4 leading-relaxed text-fg-muted">
                       Vast, kantelbaar of volledig draaibaar — wij monteren elke
                       tv op elke muur. Heeft u nog geen beugel? Dan regelen we er
                       op aanvraag een voor u.
@@ -217,16 +219,16 @@ function Diensten() {
             <Reveal delay={100 + i * 100} className="h-full">
             <Link href={dienstHref(dienst)} className="group block h-full">
               <BezelCard
-                className="h-full transition-transform duration-500 ease-fluid group-hover:-translate-y-1"
+                className="h-full transition-transform duration-500 ease-out group-hover:-translate-y-1"
                 innerClassName="p-8 md:p-9"
               >
                 <IconChip>
                   <DienstIcon slug={dienst.slug} />
                 </IconChip>
-                <h3 className="mt-6 font-display text-step-2 font-bold">
+                <h3 className="mt-6 font-display text-h3 font-semibold">
                   {dienst.naam}
                 </h3>
-                <p className="mt-3 leading-relaxed text-ink-soft">
+                <p className="mt-3 leading-relaxed text-fg-muted">
                   {dienst.kort}
                 </p>
               </BezelCard>
@@ -239,17 +241,17 @@ function Diensten() {
           <Reveal delay={100} className="h-full">
           <Link href={dienstHref(instellen)} className="group block h-full">
             <BezelCard
-              className="h-full transition-transform duration-500 ease-fluid group-hover:-translate-y-1"
+              className="h-full transition-transform duration-500 ease-out group-hover:-translate-y-1"
               innerClassName="flex items-center gap-6 p-8"
             >
               <IconChip>
                 <DienstIcon slug={instellen.slug} />
               </IconChip>
               <div>
-                <h3 className="font-display text-step-2 font-bold">
+                <h3 className="font-display text-h3 font-semibold">
                   {instellen.naam}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                   {instellen.kort}
                 </p>
               </div>
@@ -263,10 +265,10 @@ function Diensten() {
         <div className="mt-10 flex justify-center">
           <Link
             href="/diensten"
-            className="group flex items-center gap-2.5 rounded-full py-2.5 pr-2.5 pl-6 text-sm font-semibold ring-1 ring-ink/15 transition-colors duration-300 ease-fluid hover:bg-ink/5"
+            className="group flex items-center gap-2.5 rounded-sm py-2.5 pr-2.5 pl-6 text-sm font-semibold border border-control transition-colors duration-300 ease-out hover:bg-sunk"
           >
             Bekijk alle diensten
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink/5 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5">
               <IconArrowUpRight className="h-3.5 w-3.5" />
             </span>
           </Link>
@@ -297,12 +299,12 @@ const steps = [
 function Werkwijze() {
   return (
     <section className="px-2 md:px-6">
-      <div className="mx-auto max-w-7xl rounded-[2.5rem] bg-ink px-4 py-24 text-cream md:px-8 md:py-32">
-        <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-2 lg:items-center">
+      <div className="mx-auto max-w-7xl rounded-lg bg-inverse px-4 py-24 text-fg-inverse md:px-8 md:py-32">
+        <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-2 lg:items-center">
           <div>
             <Reveal>
               <Eyebrow light>Onze werkwijze</Eyebrow>
-              <h2 className="mt-6 font-display text-step-3 font-bold">
+              <h2 className="mt-6 font-display text-h2 font-semibold">
                 Geregeld in drie stappen
               </h2>
             </Reveal>
@@ -314,11 +316,11 @@ function Werkwijze() {
                       i > 0 ? "border-t border-white/10" : ""
                     }`}
                   >
-                    <span className="font-display text-sm font-bold tracking-widest text-accent-ink">
+                    <span className="font-display text-sm font-semibold tracking-widest text-accent-ink">
                       {step.nr}
                     </span>
                     <div>
-                      <h3 className="font-display text-step-2 font-bold">
+                      <h3 className="font-display text-h3 font-semibold">
                         {step.title}
                       </h3>
                       <p className="mt-3 leading-relaxed text-white/70">
@@ -331,8 +333,8 @@ function Werkwijze() {
             </div>
           </div>
           <Reveal delay={150}>
-            <div className="rounded-[2rem] bg-white/5 p-1.5 ring-1 ring-white/10 transition-transform duration-700 ease-fluid md:rotate-2 md:hover:rotate-0">
-              <div className="overflow-hidden rounded-[calc(2rem-0.375rem)]">
+            <div className="rounded-lg bg-white/5 p-1.5 ring-1 ring-white/10 transition-transform duration-700 ease-out md:rotate-2 md:hover:rotate-0">
+              <div className="overflow-hidden rounded-lg">
                 <Image
                   src={monteurImg}
                   alt="Monteur van Uw TV Monteur monteert een tv perfect waterpas"
@@ -351,14 +353,14 @@ function Werkwijze() {
 
 function Prijzen() {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-24 md:px-8 md:py-36">
+    <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
       <Reveal>
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>Vaste prijzen</Eyebrow>
-          <h2 className="mt-6 font-display text-step-3 font-bold">
+          <h2 className="mt-6 font-display text-h2 font-semibold">
             Duidelijk vooraf, nooit verrassingen
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-ink-soft">
+          <p className="mt-5 text-lg leading-relaxed text-fg-muted">
             De prijs die we vooraf afspreken is de prijs die u betaalt — zonder
             kleine lettertjes.
           </p>
@@ -374,11 +376,11 @@ function Prijzen() {
       </div>
 
       <Reveal delay={200}>
-        <p className="mt-10 text-center text-sm text-ink-soft">
+        <p className="mt-10 text-center text-sm text-fg-muted">
           Geen aanbetaling: u betaalt pas na afloop, per pin of betaalverzoek.{" "}
           <Link
             href="/prijzen"
-            className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+            className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
           >
             Bekijk alle prijzen en aanvullende diensten
           </Link>
@@ -400,16 +402,16 @@ function Afspraak() {
   return (
     <section
       id="afspraak"
-      className="mx-auto w-full max-w-6xl scroll-mt-24 px-4 pb-section md:px-8"
+      className="mx-auto w-full max-w-content scroll-mt-24 px-4 pb-section md:px-8"
     >
       <Reveal immediate>
-        <div className="rounded-[2rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
-          <div className="rounded-[calc(2rem-0.375rem)] bg-white p-6 md:p-10">
+        <div className="rounded-lg bg-sunk p-1.5 border border-hairline">
+          <div className="rounded-lg bg-white p-6 md:p-10">
             <div className="max-w-2xl">
-              <h2 className="font-display text-step-3 font-bold">
+              <h2 className="font-display text-h2 font-semibold">
                 Vraag uw afspraak aan
               </h2>
-              <p className="mt-3 leading-relaxed text-ink-soft">
+              <p className="mt-3 leading-relaxed text-fg-muted">
                 Kies het formaat van uw tv, dan staat uw prijs er direct bij. U
                 hoort binnen enkele uren wat de eerstvolgende mogelijkheid is.
               </p>
@@ -432,14 +434,14 @@ function Afspraak() {
 
 function Werkgebied() {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-24 md:px-8 md:py-36">
+    <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
       <Reveal>
         <div className="max-w-2xl">
           <Eyebrow>Werkgebied</Eyebrow>
-          <h2 className="mt-6 font-display text-step-3 font-bold">
+          <h2 className="mt-6 font-display text-h2 font-semibold">
             Een tv monteur bij u in de buurt
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-ink-soft">
+          <p className="mt-5 text-lg leading-relaxed text-fg-muted">
             Dagelijks onderweg in Zuid-Holland, Noord-Holland, Utrecht en
             Noord-Brabant. Kijk of we ook bij u in de buurt komen.
           </p>
@@ -453,20 +455,20 @@ function Werkgebied() {
             <li key={provincie.slug} className="h-full">
               <Reveal delay={i * 80} className="h-full">
               <BezelCard className="h-full" innerClassName="flex h-full flex-col gap-4 p-7">
-                <h3 className="font-display text-lg font-bold tracking-tight">
+                <h3 className="font-display text-lg font-semibold tracking-tight">
                   <Link
                     href={`/werkgebied/${provincie.slug}`}
-                    className="transition-colors duration-300 ease-fluid hover:text-accent-fg"
+                    className="transition-colors duration-300 ease-out hover:text-accent-fg"
                   >
                     {provincie.naam}
                   </Link>
                 </h3>
-                <ul className="flex flex-col gap-2 text-sm text-ink-soft">
+                <ul className="flex flex-col gap-2 text-sm text-fg-muted">
                   {topSteden.map((stad) => (
                     <li key={stad.slug}>
                       <Link
                         href={`/tv-ophangen/${stad.slug}`}
-                        className="transition-colors duration-300 ease-fluid hover:text-ink"
+                        className="transition-colors duration-300 ease-out hover:text-fg"
                       >
                         Tv monteur {stad.naam}
                       </Link>
@@ -478,7 +480,7 @@ function Werkgebied() {
                   className="group mt-auto flex w-max items-center gap-2 text-sm font-semibold"
                 >
                   Alle plaatsen
-                  <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5" />
+                  <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5" />
                 </Link>
               </BezelCard>
               </Reveal>
@@ -491,10 +493,10 @@ function Werkgebied() {
         <div className="mt-10 flex justify-center">
           <Link
             href="/werkgebied"
-            className="group flex items-center gap-2.5 rounded-full py-2.5 pr-2.5 pl-6 text-sm font-semibold ring-1 ring-ink/15 transition-colors duration-300 ease-fluid hover:bg-ink/5"
+            className="group flex items-center gap-2.5 rounded-sm py-2.5 pr-2.5 pl-6 text-sm font-semibold border border-control transition-colors duration-300 ease-out hover:bg-sunk"
           >
             Bekijk het volledige werkgebied
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink/5 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5">
               <IconArrowUpRight className="h-3.5 w-3.5" />
             </span>
           </Link>
@@ -506,7 +508,7 @@ function Werkgebied() {
 
 function FaqSectie() {
   return (
-    <section className="mx-auto w-full max-w-6xl px-4 py-24 md:px-8 md:py-36">
+    <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
       {/* De vier bezwaren staan zichtbaar op deze pagina als vraag met
           antwoord, dus horen ze ook in het FAQPage-schema: dit is wat
           zoekmachines en AI-antwoordmachines uitlezen, en het zijn precies de
@@ -524,14 +526,14 @@ function FaqSectie() {
         <div className="lg:col-span-2">
           <Reveal>
             <Eyebrow>Veelgestelde vragen</Eyebrow>
-            <h2 className="mt-6 font-display text-step-3 font-bold">
+            <h2 className="mt-6 font-display text-h2 font-semibold">
               Alles wat u wilt weten
             </h2>
-            <p className="mt-5 leading-relaxed text-ink-soft">
+            <p className="mt-5 leading-relaxed text-fg-muted">
               Staat uw vraag er niet tussen? Stel hem gerust in het{" "}
               <Link
                 href="/contact"
-                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
+                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
               >
                 aanvraagformulier
               </Link>{" "}

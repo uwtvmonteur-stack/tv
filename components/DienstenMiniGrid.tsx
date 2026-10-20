@@ -8,7 +8,7 @@ export default function DienstenMiniGrid({ plaats }: { plaats: string }) {
   return (
     <>
       <Reveal>
-        <h2 className="mt-block font-display text-step-3 font-bold">
+        <h2 className="mt-block font-display text-h2 font-semibold">
           Onze diensten in {plaats}
         </h2>
       </Reveal>
@@ -18,17 +18,17 @@ export default function DienstenMiniGrid({ plaats }: { plaats: string }) {
             <Reveal delay={i * 60} className="h-full">
               <Link href={dienstHref(dienst)} className="group block h-full">
                 <BezelCard
-                  className="h-full transition-transform duration-500 ease-fluid group-hover:-translate-y-1"
+                  className="h-full transition-transform duration-500 ease-out group-hover:-translate-y-1"
                   innerClassName="flex h-full flex-col gap-4 p-7"
                 >
                   <IconChip>
                     <DienstIcon slug={dienst.slug} className="h-5.5 w-5.5" />
                   </IconChip>
                   <div>
-                    <h3 className="font-display text-lg font-bold tracking-tight">
+                    <h3 className="font-display text-lg font-semibold tracking-tight">
                       {dienst.naam}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                    <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                       {dienst.kort}
                     </p>
                   </div>

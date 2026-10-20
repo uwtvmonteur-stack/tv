@@ -33,11 +33,11 @@ export default function WerkgebiedPage() {
           { name: "Werkgebied", href: "/werkgebied" },
         ]}
         eyebrow="Werkgebied"
-        title="Een tv monteur bij u in de buurt"
+        title="Wij hangen uw tv op bij u in de buurt"
         intro="Onze monteurs zijn dagelijks onderweg in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant — daar helpen we u vaak al binnen 24 uur."
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
+      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <ul className="grid gap-4 md:grid-cols-2">
           {provincies.map((provincie, i) => {
             const provincieSteden = stedenInProvincie(provincie.slug);
@@ -46,15 +46,15 @@ export default function WerkgebiedPage() {
                 <Reveal delay={i * 80} className="h-full">
                 <BezelCard className="h-full" innerClassName="flex h-full flex-col gap-6 p-8">
                   <div>
-                    <h2 className="font-display text-step-2 font-bold">
+                    <h2 className="font-display text-h3 font-semibold">
                       <Link
                         href={`/werkgebied/${provincie.slug}`}
-                        className="transition-colors duration-300 ease-fluid hover:text-accent-fg"
+                        className="transition-colors duration-300 ease-out hover:text-accent-fg"
                       >
                         Tv monteur {provincie.naam}
                       </Link>
                     </h2>
-                    <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
+                    <p className="mt-3 text-[15px] leading-relaxed text-fg-muted">
                       {provincie.intro}
                     </p>
                   </div>
@@ -63,7 +63,7 @@ export default function WerkgebiedPage() {
                       <Link
                         key={stad.slug}
                         href={`/tv-ophangen/${stad.slug}`}
-                        className="rounded-full bg-ink/[0.04] px-3.5 py-1.5 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
+                        className="rounded-full bg-sunk px-3.5 py-1.5 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk"
                       >
                         {stad.naam}
                       </Link>
@@ -74,7 +74,7 @@ export default function WerkgebiedPage() {
                     className="group mt-auto flex w-max items-center gap-2.5 text-sm font-semibold"
                   >
                     Bekijk {provincie.naam}
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink/5 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5">
                       <IconArrowUpRight className="h-3.5 w-3.5" />
                     </span>
                   </Link>
@@ -86,10 +86,10 @@ export default function WerkgebiedPage() {
         </ul>
 
         <Reveal>
-          <p className="mx-auto mt-12 max-w-2xl text-center text-[15px] leading-relaxed text-ink-soft">
+          <p className="mx-auto mt-12 max-w-2xl text-center text-[15px] leading-relaxed text-fg-muted">
             Staat uw woonplaats er niet tussen? Ons werkgebied groeit
             voortdurend en voor grotere klussen rijden we graag een stukje
-            verder. <Link href="/contact" className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4">Neem contact op</Link>{" "}
+            verder. <Link href="/contact" className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4">Neem contact op</Link>{" "}
             en we kijken direct wat er mogelijk is.
           </p>
         </Reveal>

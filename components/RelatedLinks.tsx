@@ -18,7 +18,7 @@ export default function RelatedLinks({
         <Link
           key={href}
           href={href}
-          className="rounded-full bg-ink/[0.04] px-4 py-2 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
+          className="rounded-full bg-sunk px-4 py-2 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk"
         >
           {linkLabel}
         </Link>

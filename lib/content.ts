@@ -81,7 +81,7 @@ export const addons = [
   { naam: "Kabels volledig in de muur wegwerken", prijs: "op maat" },
   { naam: "Soundbar installeren en afstellen", prijs: "€49" },
   { naam: "Surround- of home-cinema-set aansluiten", prijs: "vanaf €79" },
-  { naam: "Tv-beugel nodig? Wij regelen er op aanvraag een", prijs: "op aanvraag" },
+  { naam: "Tv-beugel nodig? Wij regelen er een die bij uw tv en wand past", prijs: "op aanvraag" },
   { naam: "Tv hulp aan huis — instellen, zenders, wifi en apps", prijs: "€60" },
 ];
 
@@ -426,3 +426,31 @@ export const bezwaren = [
       "Wij, en niemand anders. U heeft te maken met het bedrijf dat de klus zelf uitvoert, niet met een platform dat hem doorgeeft aan een partij die u niet kent. Onze monteurs zijn verzekerd en wij zijn aanspreekbaar op het resultaat.",
   },
 ];
+
+/**
+ * Wat de prijs níet verandert. Staat op de prijspagina pal onder de tarieven,
+ * omdat elke concurrent juist op deze drie punten een toeslag rekent: een
+ * wand die anders blijkt, de avond en het weekend, en meerwerk dat ter plekke
+ * wordt bedacht. Een vaste prijs is pas een argument als erbij staat waar hij
+ * tegen vast is.
+ */
+export const prijsGaranties = [
+  {
+    icon: "shield",
+    kop: "Ook als uw wand anders blijkt",
+    tekst:
+      "Gipsplaat, een holle wand of beton achter het stucwerk: wij gebruiken de bevestiging die erbij hoort en het tarief blijft hetzelfde.",
+  },
+  {
+    icon: "clock",
+    kop: "Ook 's avonds en in het weekend",
+    tekst:
+      "Doordeweeks tot 21:00 uur, zaterdag en zondag van 09:00 tot 17:00. Geen avondtarief en geen weekendtoeslag.",
+  },
+  {
+    icon: "check",
+    kop: "Nooit meerwerk zonder uw ja",
+    tekst:
+      "Komen we iets tegen dat extra werk kost, dan hoort u eerst wat het kost. U betaalt pas na afloop, als het hangt en het werkt.",
+  },
+] as const;

@@ -6,6 +6,7 @@ import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
 import PriceCards from "@/components/PriceCards";
+import PrijsGarantie from "@/components/PrijsGarantie";
 import CheckList from "@/components/CheckList";
 import { BezelCard } from "@/components/ui";
 import { addons, type FaqItem } from "@/lib/content";
@@ -82,6 +83,10 @@ export default function PrijzenPage() {
         <div className="mt-8">
           <PriceCards headingLevel="h3" href="#afspraak" />
         </div>
+
+        {/* Pal onder de bedragen, want dit is het moment waarop iemand zich
+            afvraagt wat er nog bij komt. */}
+        <PrijsGarantie className="mt-4" />
 
         {/* Formulier in plaats van een doorverwijzende CTA. Deze pagina houdt
             bezoekers gemiddeld 234 seconden vast met 77% betrokkenheid — de

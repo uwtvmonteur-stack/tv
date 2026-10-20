@@ -10,6 +10,7 @@ import Reveal from "@/components/Reveal";
 import CheckList from "@/components/CheckList";
 import ProvincieChips from "@/components/ProvincieChips";
 import Bezwaren from "@/components/Bezwaren";
+import PrijsGarantie from "@/components/PrijsGarantie";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import RelatedLinks from "@/components/RelatedLinks";
 import { IconCable, IconShield, IconTv } from "@/components/icons";
@@ -298,6 +299,10 @@ export default function TvOphangenPage() {
             .
           </p>
         </Reveal>
+
+        {/* Pal onder de bedragen: "vaste prijs" is pas een argument als erbij
+            staat waar hij tegen vast is. */}
+        <PrijsGarantie className="mt-10" />
 
         {/* Deze CTA hoort direct ná het tariefblok te staan: pas als iemand de
             prijs voor zijn formaat heeft gezien, is "plan een afspraak" een

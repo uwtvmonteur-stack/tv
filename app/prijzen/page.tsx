@@ -8,8 +8,8 @@ import Reveal from "@/components/Reveal";
 import PriceCards from "@/components/PriceCards";
 import PrijsGarantie from "@/components/PrijsGarantie";
 import CheckList from "@/components/CheckList";
-import { BezelCard } from "@/components/ui";
-import { addons, type FaqItem } from "@/lib/content";
+import Prijstabel from "@/components/Prijstabel";
+import { type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -69,9 +69,9 @@ export default function PrijzenPage() {
           { name: "Home", href: "/" },
           { name: "Prijzen", href: "/prijzen" },
         ]}
-        eyebrow="Vaste prijzen"
-        title="Duidelijk vooraf, nooit verrassingen"
-        intro="Bij ons weet u vooraf precies waar u aan toe bent. Alle prijzen zijn inclusief voorrijkosten en btw — wat u hieronder ziet, is wat u betaalt."
+        eyebrow="Tarieven 2026"
+        title="Wat kost een tv laten ophangen?"
+        intro="€99 tot €159, afhankelijk van het formaat — en dat bedrag verandert niet. Niet als uw wand van gipsplaat blijkt, niet 's avonds, niet in het weekend. Inclusief voorrijkosten en btw."
       />
 
       <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
@@ -125,25 +125,21 @@ export default function PrijzenPage() {
 
         <Reveal>
           <h2 className="mt-block font-display text-h2 font-semibold">
-            Aanvullende diensten
+            Alle tarieven op een rij
           </h2>
         </Reveal>
         <Reveal delay={100}>
-          <BezelCard className="mt-8">
-            <ul className="divide-y divide-hairline">
-              {addons.map((addon) => (
-                <li
-                  key={addon.naam}
-                  className="flex flex-col justify-between gap-1 px-7 py-4.5 sm:flex-row sm:items-center sm:gap-4"
-                >
-                  <span className="text-[15px]">{addon.naam}</span>
-                  <span className="shrink-0 font-display font-semibold">
-                    {addon.prijs}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </BezelCard>
+          <div className="mt-8">
+            <Prijstabel />
+          </div>
+        </Reveal>
+        <Reveal delay={150}>
+          <p className="mt-4 max-w-prose text-sm leading-relaxed text-fg-muted">
+            Niet inbegrepen is de tv-beugel zelf. Heeft u er al een, dan
+            monteren wij die — ook als u hem ergens anders kocht. Heeft u er
+            geen, dan zoeken wij er een die bij uw tv en wand past en hoort u
+            het bedrag vóór de afspraak, zodat u dan pas beslist.
+          </p>
         </Reveal>
 
         <Reveal>

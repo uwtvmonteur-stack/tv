@@ -8,6 +8,7 @@ import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
+import RelatedLinks from "@/components/RelatedLinks";
 import { IconArrowUpRight } from "@/components/icons";
 import { DienstIcon } from "@/components/ui";
 import {
@@ -350,6 +351,20 @@ export default async function StadPage({
             </Link>
           </div>
         </Reveal>
+
+        {/* Elke stadpagina draagt een FAQ over gipswanden en noemt het
+            wegwerken van kabels, zonder ooit naar die pagina's te linken.
+            Dat zijn 32 contextuele links die bleven liggen, precies op de
+            onderwerpen waar wij het antwoord op hebben. */}
+        <RelatedLinks
+          items={[
+            ["/tv-ophangen", "Tv laten ophangen"],
+            ["/tv-ophangen-gipswand", "Ophangen aan een gipswand"],
+            ["/kabels-wegwerken", "Kabels wegwerken"],
+            ["/tv-boven-open-haard", "Tv boven de open haard"],
+            ["/prijzen", "Alle tarieven"],
+          ]}
+        />
       </section>
 
       <Reviews

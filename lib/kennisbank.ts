@@ -46,7 +46,7 @@ export const artikelen: Artikel[] = [
   {
     slug: "hoe-hoog-tv-ophangen",
     titel: "Hoe hoog moet je een tv ophangen?",
-    metaTitel: "Hoe Hoog Tv Ophangen? Zo Rekent U Het Uit",
+    metaTitel: "Hoe hoog moet een tv hangen? Zo rekent u het uit",
     beschrijving:
       "Hoe hoog hang je een tv op? Het midden van het scherm hoort op ooghoogte als u zit. Met deze rekenregel en tabel per formaat weet u de juiste hoogte.",
     eyebrow: "Kennisbank · Tv ophangen",
@@ -120,7 +120,7 @@ export const artikelen: Artikel[] = [
   {
     slug: "welke-tv-beugel",
     titel: "Welke tv-beugel past op mijn tv?",
-    metaTitel: "Welke Tv-Beugel Heb Ik Nodig? VESA Uitgelegd",
+    metaTitel: "Welke tv-beugel heb ik nodig? VESA uitgelegd",
     beschrijving:
       "Welke tv-beugel past op uw tv? Meet de VESA-maat, controleer het draagvermogen en kies tussen vast, kantelbaar of draaibaar. Zo past hij gegarandeerd.",
     eyebrow: "Kennisbank · Beugels",
@@ -199,7 +199,7 @@ export const artikelen: Artikel[] = [
   {
     slug: "tv-boven-open-haard",
     titel: "Tv boven de open haard: kan dat?",
-    metaTitel: "Tv Boven Open Haard Ophangen — Kan Dat?",
+    metaTitel: "Tv boven de open haard ophangen — kan dat?",
     beschrijving:
       "Een tv boven de open haard of gashaard ophangen kan, maar let op warmte, kijkhoogte en het type schouw. Dit is waar u op moet letten voordat u gaat boren.",
     eyebrow: "Kennisbank · Tv ophangen",
@@ -259,14 +259,17 @@ export const artikelen: Artikel[] = [
         a: "Ja. Onze monteur bekijkt de schouw, stelt vast welk type wand het is en rekent het draagvermogen na. Kan het niet veilig, dan zeggen we dat en denken we mee over een alternatieve plek.",
       },
     ],
-    dienst: { label: "Tv laten ophangen", href: "/tv-ophangen" },
+    dienst: {
+      label: "Laat ons meten of het bij u kan",
+      href: "/tv-boven-open-haard",
+    },
     verwant: ["hoe-hoog-tv-ophangen", "tv-ophangen-gipswand-plug"],
     datum: "2026-10-10",
   },
   {
     slug: "tv-ophangen-gipswand-plug",
     titel: "Welke plug gebruik je in een gipswand?",
-    metaTitel: "Tv Ophangen Gipswand: Welke Plug Gebruikt U?",
+    metaTitel: "Tv ophangen aan gipswand: welke plug gebruikt u?",
     beschrijving:
       "Een tv ophangen aan een gipswand vraagt andere bevestiging dan baksteen. Welke plug waar hoort, wat zo’n wand draagt en wanneer u in de staanders schroeft.",
     eyebrow: "Kennisbank · Wanden",
@@ -361,7 +364,7 @@ export const artikelen: Artikel[] = [
   {
     slug: "tv-zelf-ophangen-of-laten-doen",
     titel: "Tv zelf ophangen of laten doen?",
-    metaTitel: "Tv Zelf Ophangen of Laten Doen? Een Checklist",
+    metaTitel: "Tv zelf ophangen of laten doen? Een checklist",
     beschrijving:
       "Kunt u uw tv zelf ophangen of is een monteur verstandiger? Een eerlijke checklist op basis van wandtype, schermformaat, kabels en gereedschap.",
     eyebrow: "Kennisbank · Keuzehulp",

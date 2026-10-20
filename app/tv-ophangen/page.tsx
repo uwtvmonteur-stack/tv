@@ -500,6 +500,8 @@ export default function TvOphangenPage() {
         <RelatedLinks
           items={[
             ["/tv-ophangen-gipswand", "Tv ophangen aan gipswand"],
+            ["/kabels-wegwerken", "Kabels wegwerken"],
+            ["/tv-boven-open-haard", "Tv boven de open haard"],
             ["/diensten/tv-installatie", "Complete tv installatie"],
             ["/diensten/soundbar-installatie", "Soundbar installeren"],
             ["/kennisbank/hoe-hoog-tv-ophangen", "Hoe hoog ophangen?"],

@@ -17,12 +17,12 @@ import { artikelen } from "@/lib/kennisbank";
  */
 const GEWIJZIGD = {
   /** Home, dienstenoverzicht, prijzen, contact, over ons. */
-  kern: "2026-10-16",
+  kern: "2026-10-21",
   /** De dienstpagina's zelf, inclusief de gipswandpagina. */
-  diensten: "2026-10-16",
+  diensten: "2026-10-21",
   /** Stad-, provincie- en werkgebiedpagina's. */
-  steden: "2026-10-10",
-  kennisbank: "2026-10-10",
+  steden: "2026-10-21",
+  kennisbank: "2026-10-21",
   privacy: "2026-09-16",
 } as const;
 
@@ -46,6 +46,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       entry(dienstHref(dienst), 0.9, GEWIJZIGD.diensten),
     ),
     entry("/tv-ophangen-gipswand", 0.9, GEWIJZIGD.diensten),
+    entry("/kabels-wegwerken", 0.9, GEWIJZIGD.diensten),
+    entry("/tv-boven-open-haard", 0.9, GEWIJZIGD.diensten),
     entry("/prijzen", 0.9, GEWIJZIGD.kern),
     entry("/kennisbank", 0.7, GEWIJZIGD.kennisbank, "weekly"),
     // Per artikel de eigen publicatiedatum: die staat al in lib/kennisbank.ts

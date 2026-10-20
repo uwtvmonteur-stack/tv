@@ -52,14 +52,25 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/prijzen"
-                  className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
-                >
-                  Prijzen
-                </Link>
-              </li>
+              {/* De specialistische pagina's staan bewust náást `diensten` en
+                  niet erin: ze horen in de voettekst en in de sitemap, maar ze
+                  mogen het dienstenoverzicht en het raster op de homepage niet
+                  uit balans trekken. */}
+              {[
+                ["/kabels-wegwerken", "Kabels wegwerken"],
+                ["/tv-boven-open-haard", "Tv boven de open haard"],
+                ["/tv-ophangen-gipswand", "Ophangen aan een gipswand"],
+                ["/prijzen", "Prijzen"],
+              ].map(([href, label]) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

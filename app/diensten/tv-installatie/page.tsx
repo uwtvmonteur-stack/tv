@@ -18,7 +18,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroImg from "@/public/images/dienst-tv-installatie.jpg";
 
 export const metadata = pageMeta({
-  title: "Tv Laten Installeren aan Huis",
+  title: "Tv laten installeren aan huis — vaste prijs €70",
   description:
     "Nieuwe tv gekocht? Wij maken hem gebruiksklaar aan huis: aansluiten, zenders, wifi en apps instellen en uitleg. Vaste prijs €70. Ophangen kan als optie.",
   path: "/diensten/tv-installatie",
@@ -204,7 +204,7 @@ export default function TvInstallatiePage() {
           </div>
         </Reveal>
 
-        <InlineCta text="Vaste prijs vooraf. Wij gaan pas weg als uw tv hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht." />
+        <InlineCta href="#afspraak" text="Vaste prijs vooraf. Wij gaan pas weg als uw tv hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht." />
 
         <Reveal>
           <h2 className="mt-block font-display text-step-3 font-bold">
@@ -329,7 +329,7 @@ export default function TvInstallatiePage() {
       </section>
 
 
-      <CtaSection
+      <CtaSection href="#afspraak"
         title="Uw nieuwe tv. Wij regelen de rest."
         text="Van aansluiten en instellen tot persoonlijke uitleg — wij zorgen dat uw nieuwe tv gewoon werkt."
       />

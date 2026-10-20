@@ -180,6 +180,15 @@ export default function ContactForm({
   berichtPlaceholder?: string;
 } = {}) {
   const [status, setStatus] = useState<Status>("idle");
+
+  // `useRef` en niet `useState`: dit mag geen hertekening veroorzaken terwijl
+  // iemand in een veld staat te typen.
+  const startGemeld = useRef(false);
+  const meldStart = () => {
+    if (startGemeld.current) return;
+    startGemeld.current = true;
+    trackEvent("formulier_start", { variant });
+  };
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [maatId, setMaatId] = useState("");
   const [beugelId, setBeugelId] = useState("");
@@ -353,7 +362,10 @@ export default function ContactForm({
             ...(totaal !== null ? { waarde: totaal } : {}),
             ...(beugelId ? { beugel: beugelId } : {}),
           });
-          trackAdsConversion(TRACKING.adsFormConversion);
+          // Het bedrag gaat mee naar Google Ads, niet alleen naar GA4: anders
+          // telt een klus van €99 daar even zwaar als een van €250 en kan de
+          // campagne alleen op aantallen sturen.
+          trackAdsConversion(TRACKING.adsFormConversion, totaal);
         }
         setStatus("success");
       } else if (res.status === 503) {
@@ -437,7 +449,17 @@ export default function ContactForm({
 
   return (
     // noValidate: geen browser-bubbels; wij valideren zelf met duidelijke tekst.
-    <form onSubmit={handleSubmit} noValidate className="relative flex flex-col gap-8">
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      // Eén keer melden dat iemand het formulier daadwerkelijk aanraakt.
+      // Zonder dit event is er maar één meetpunt — de geslaagde verzending —
+      // en is "niemand kwam bij het formulier" niet te onderscheiden van
+      // "iedereen haakte af bij stap 4". Dat verschil bepaalt of je aan de
+      // advertenties of aan het formulier moet sleutelen.
+      onFocusCapture={meldStart}
+      className="relative flex flex-col gap-8"
+    >
       <Stap
         nummer={nrWaar}
         titel="Waar moet de monteur zijn?"

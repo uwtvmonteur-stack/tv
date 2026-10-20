@@ -9,7 +9,7 @@ import { pageMeta } from "@/lib/seo";
 import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 
 export const metadata = pageMeta({
-  title: "Over Ons — Eigen, Verzekerde Monteurs",
+  title: "Over ons — eigen, verzekerde monteurs",
   description:
     "Maak kennis met Uw TV Monteur: eigen, ervaren en verzekerde monteurs die in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant tv's ophangen, installeren en instellen.",
   path: "/over-ons",

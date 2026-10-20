@@ -30,8 +30,8 @@ export async function generateMetadata({
   if (!provincie) return {};
   return {
     ...pageMeta({
-      title: `Tv Monteur ${provincie.naam}`,
-      description: `Tv monteur nodig in de provincie ${provincie.naam}? Tv ophangen, installeren en instellen aan huis. Vaak binnen 24 uur, vaste prijzen incl. voorrijkosten.`,
+      title: `Tv ophangen in ${provincie.naam} — vaste prijs vanaf €99`,
+      description: `Tv laten ophangen in ${provincie.naam}? Vaste prijs vooraf, inclusief voorrijkosten en btw. Elke tv, elke wand, ook 's avonds en in het weekend zonder toeslag.`,
       path: `/werkgebied/${provincie.slug}`,
     }),
     other: { "geo.region": `NL-${provincie.iso}` },
@@ -101,8 +101,8 @@ export default async function ProvinciePage({
           { name: "Werkgebied", href: "/werkgebied" },
           { name: provincie.naam, href: `/werkgebied/${provincie.slug}` },
         ]}
-        eyebrow={`Werkgebied ${provincie.naam}`}
-        title={`Tv monteur in de provincie ${provincie.naam}`}
+        eyebrow={`Tv ophangen in ${provincie.naam}`}
+        title={`Tv laten ophangen in ${provincie.naam}`}
         intro={provincie.intro}
         benefits={usps}
         image={heroFoto}
@@ -135,7 +135,7 @@ export default async function ProvinciePage({
             <li key={stad.slug} className="h-full">
               <Reveal delay={i * 60} className="h-full">
               <Link
-                href={`/tv-monteur/${stad.slug}`}
+                href={`/tv-ophangen/${stad.slug}`}
                 className="group flex h-full items-center justify-between gap-3 rounded-[1.5rem] bg-white p-5 ring-1 ring-line shadow-[0_20px_40px_-30px_rgba(25,21,18,0.2)] transition-transform duration-500 ease-fluid hover:-translate-y-1"
               >
                 <span className="font-display font-bold tracking-tight">
@@ -166,7 +166,10 @@ export default async function ProvinciePage({
 
       <Reviews />
 
-      <CtaSection title={`Tv monteur nodig in ${provincie.naam}?`} />
+      <CtaSection
+        title={`Tv laten ophangen in ${provincie.naam}?`}
+        href="#afspraak"
+      />
     </main>
   );
 }

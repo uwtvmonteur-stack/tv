@@ -26,7 +26,7 @@ import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
  * beantwoordde. Deze pagina bedient die vraag in beide kanalen.
  */
 export const metadata = pageMeta({
-  title: "Tv Ophangen aan Gipswand of Holle Wand",
+  title: "Tv ophangen aan een gipswand of holle wand",
   description:
     "Tv ophangen aan gipswand, metal stud of holle wand? Wij rekenen het draagvermogen na en kiezen de bevestiging die bij uw wand hoort. Vaste prijs vooraf.",
   path: "/tv-ophangen-gipswand",
@@ -258,7 +258,7 @@ export default function TvOphangenGipswandPage() {
           </p>
         </Reveal>
 
-        <InlineCta />
+        <InlineCta href="#afspraak" />
 
         <Reveal>
           <h2 className="mt-block font-display text-step-3 font-bold">
@@ -290,7 +290,7 @@ export default function TvOphangenGipswandPage() {
         />
       </section>
 
-      <CtaSection
+      <CtaSection href="#afspraak"
         title="Twijfelt u over uw wand?"
         text="Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich."
       />

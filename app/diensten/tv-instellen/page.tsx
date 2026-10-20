@@ -18,7 +18,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroImg from "@/public/images/dienst-tv-instellen.jpg";
 
 export const metadata = pageMeta({
-  title: "Tv Instellen & Hulp aan Huis",
+  title: "Tv instellen en hulp aan huis — vaste prijs €60",
   description:
     "Werkt uw tv niet meer, geen zenders of geen wifi-verbinding? Onze monteur verhelpt het bij u thuis en legt het rustig uit. Vaste prijs van €60.",
   path: "/diensten/tv-instellen",
@@ -209,7 +209,7 @@ export default function TvInstellenPage() {
           </p>
         </Reveal>
 
-        <InlineCta text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
+        <InlineCta href="#afspraak" text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
 
         <Reveal>
           <h2 className="mt-block font-display text-step-3 font-bold">
@@ -319,7 +319,7 @@ export default function TvInstellenPage() {
       </section>
 
 
-      <CtaSection
+      <CtaSection href="#afspraak"
         title="Vandaag nog hulp bij uw tv?"
         text="Plan online een afspraak — vaak kunnen we binnen 24 uur bij u langskomen."
       />

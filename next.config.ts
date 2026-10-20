@@ -23,6 +23,21 @@ const nextConfig: NextConfig = {
       // Deze redirects blijven staan zolang er advertenties, bookmarks of
       // externe links naar de oude URL's kunnen wijzen — zonder dit levert zo'n
       // klik een 404 op en keurt Google de advertentie af.
+      // De 32 stadpagina's stonden onder /tv-monteur/. In het Nederlands is
+      // "tv monteur" vooral een reparatieterm — wie dat zoekt heeft een kapot
+      // scherm, geen lege muur. De commerciële zoekopdracht is "tv ophangen
+      // [stad]". De pagina's staan nu onder /tv-ophangen/[stad]; deze regel
+      // houdt elke oude link, bladwijzer en advertentie heel.
+      {
+        source: "/tv-monteur/:stad",
+        destination: "/tv-ophangen/:stad",
+        statusCode: 301,
+      },
+      {
+        source: "/tv-monteur",
+        destination: "/werkgebied",
+        statusCode: 301,
+      },
       {
         source: "/tv-ophangen-plannen",
         destination: "/tv-ophangen",

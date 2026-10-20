@@ -25,7 +25,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import familieImg from "@/public/images/dienst-soundbar.jpg";
 
 export const metadata = pageMeta({
-  title: "Soundbar Laten Installeren aan Huis",
+  title: "Soundbar laten installeren aan huis — €49",
   description:
     "Soundbar laten installeren? Wij monteren, sluiten aan en stellen het geluid af op uw kamer — ook surround en home-cinema. Vanaf €49.",
   path: "/diensten/soundbar-installatie",
@@ -219,7 +219,7 @@ export default function SoundbarPage() {
           </p>
         </Reveal>
 
-        <InlineCta text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
+        <InlineCta href="#afspraak" text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
 
         <Reveal>
           <h2 className="mt-block font-display text-step-3 font-bold">
@@ -365,7 +365,7 @@ export default function SoundbarPage() {
       </section>
 
 
-      <CtaSection title="Bioscoopgeluid in uw woonkamer?" />
+      <CtaSection href="#afspraak" title="Bioscoopgeluid in uw woonkamer?" />
     </main>
   );
 }

@@ -8,7 +8,7 @@ import { artikelen } from "@/lib/kennisbank";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Kennisbank — Alles over Tv Ophangen",
+  title: "Kennisbank — alles over tv ophangen",
   description:
     "Antwoorden op de vragen die voorafgaan aan het ophangen van een tv: op welke hoogte, welke beugel, welke plug in een gipswand en wanneer u het beter laat doen.",
   path: "/kennisbank",

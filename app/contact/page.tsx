@@ -13,7 +13,7 @@ import { SITE } from "@/lib/site";
 import { absUrl, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Contact & Afspraak Maken",
+  title: "Contact en afspraak maken",
   description:
     "Plan direct een afspraak met een tv monteur aan huis. Vul het formulier in — wij nemen binnen enkele uren contact met u op.",
   path: "/contact",

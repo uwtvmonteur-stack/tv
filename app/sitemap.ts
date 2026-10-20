@@ -58,7 +58,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       entry(`/werkgebied/${provincie.slug}`, 0.8, GEWIJZIGD.steden),
     ),
     ...steden.map((stad) =>
-      entry(`/tv-monteur/${stad.slug}`, 0.7, GEWIJZIGD.steden),
+      entry(`/tv-ophangen/${stad.slug}`, 0.7, GEWIJZIGD.steden),
     ),
     entry("/over-ons", 0.5, GEWIJZIGD.kern),
     entry("/contact", 0.8, GEWIJZIGD.kern),

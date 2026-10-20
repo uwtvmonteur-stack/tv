@@ -10,7 +10,7 @@ import { provincies, stedenInProvincie } from "@/lib/steden";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Ons Werkgebied — Tv Monteur aan Huis",
+  title: "Ons werkgebied — waar wij tv's ophangen",
   description:
     "Onze tv monteurs zijn actief in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Bekijk alle steden waar we aan huis komen.",
   path: "/werkgebied",
@@ -62,7 +62,7 @@ export default function WerkgebiedPage() {
                     {provincieSteden.map((stad) => (
                       <Link
                         key={stad.slug}
-                        href={`/tv-monteur/${stad.slug}`}
+                        href={`/tv-ophangen/${stad.slug}`}
                         className="rounded-full bg-ink/[0.04] px-3.5 py-1.5 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
                       >
                         {stad.naam}

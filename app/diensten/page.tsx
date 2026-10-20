@@ -10,7 +10,7 @@ import { diensten, dienstHref, usps } from "@/lib/content";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Onze Diensten aan Huis — Tv Monteur",
+  title: "Onze diensten aan huis",
   description:
     "Alle diensten van uw tv monteur aan huis: van montage tot soundbar aansluiten en tv instellen. Vaste prijzen en vaak binnen 24 uur.",
   path: "/diensten",

@@ -13,7 +13,7 @@ import { addons, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Vaste Prijzen, Vooraf Bekend",
+  title: "Wat kost een tv laten ophangen? Prijzen 2026",
   description:
     "Bekijk onze vaste prijzen: tv ophangen vanaf €99, tv installatie €70, soundbar €49. Altijd inclusief voorrijkosten en btw.",
   path: "/prijzen",

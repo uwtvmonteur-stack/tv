@@ -35,7 +35,7 @@ import beugelImg from "@/public/images/dienst-tv-ophangen.jpg";
 import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 
 const meta = pageMeta({
-  title: "Tv Monteur aan Huis — Vaste Prijs, Geen Voorrijkosten",
+  title: "Tv ophangen aan huis — vaste prijs, geen voorrijkosten",
   description:
     "Tv monteur aan huis nodig? Wij hangen uw tv op, sluiten alles aan en werken de kabels weg. Vaste prijs vooraf vanaf €99, 's avonds en in het weekend zonder toeslag.",
   path: "/",
@@ -465,7 +465,7 @@ function Werkgebied() {
                   {topSteden.map((stad) => (
                     <li key={stad.slug}>
                       <Link
-                        href={`/tv-monteur/${stad.slug}`}
+                        href={`/tv-ophangen/${stad.slug}`}
                         className="transition-colors duration-300 ease-fluid hover:text-ink"
                       >
                         Tv monteur {stad.naam}

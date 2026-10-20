@@ -42,9 +42,15 @@ export async function generateMetadata({
   const provincie = provincieBySlug(stad.provincie);
   return {
     ...pageMeta({
-      title: `Tv Monteur ${stad.naam} — Aan Huis`,
-      description: `Tv monteur nodig in ${stad.naam}? Tv ophangen, installeren en instellen aan huis. Vaste prijs vooraf, vaak binnen 24 uur bij u thuis.`,
-      path: `/tv-monteur/${stad.slug}`,
+      // "Tv Monteur {stad}" stond hier, en dat is in het Nederlands vooral
+      // een reparatiezoekopdracht: wie dat intypt heeft een kapot scherm. De
+      // commerciële zoekopdracht van iemand met een lege muur is "tv ophangen
+      // {stad}" of "tv laten ophangen {stad}". Ook de hoofdletters zijn eruit:
+      // Engelse Title Case leest in een Nederlandse zoekresultatenlijst als
+      // machinaal gemaakt en kost doorklikken.
+      title: `Tv ophangen in ${stad.naam} — vaste prijs vanaf €99`,
+      description: `Tv laten ophangen in ${stad.naam}? Vaste prijs vooraf, inclusief voorrijkosten en btw. Elke tv, elke wand, ook 's avonds en in het weekend zonder toeslag.`,
+      path: `/tv-ophangen/${stad.slug}`,
     }),
     other: {
       "geo.region": `NL-${provincie?.iso ?? ""}`,
@@ -149,7 +155,7 @@ export default async function StadPage({
         data={serviceJsonLd({
           name: `Tv monteur ${stad.naam}`,
           description: `Tv ophangen, kabels wegwerken en complete tv installatie aan huis in ${stad.naam} en omgeving.`,
-          path: `/tv-monteur/${stad.slug}`,
+          path: `/tv-ophangen/${stad.slug}`,
           areaServed: {
             "@type": "City",
             name: stad.naam,
@@ -174,10 +180,10 @@ export default async function StadPage({
           { name: "Home", href: "/" },
           { name: "Werkgebied", href: "/werkgebied" },
           { name: provincie.naam, href: `/werkgebied/${provincie.slug}` },
-          { name: stad.naam, href: `/tv-monteur/${stad.slug}` },
+          { name: stad.naam, href: `/tv-ophangen/${stad.slug}` },
         ]}
-        eyebrow={`Tv monteur ${provincie.naam}`}
-        title={`Tv monteur in ${stad.naam}`}
+        eyebrow={`Tv ophangen in ${provincie.naam}`}
+        title={`Tv laten ophangen in ${stad.naam}`}
         // Bewust `stad.blurb` als intro: die tekst gaat over de bouwstijlen en
         // woningtypes van déze stad en verschilt dus per pagina. De generieke
         // intro die hier stond was op alle 32 stadpagina's woordelijk gelijk,
@@ -203,7 +209,7 @@ export default async function StadPage({
         <Reveal>
           <div className="rounded-[2rem] bg-cream-deep/50 p-8 md:p-10">
             <h2 className="font-display text-step-3 font-bold">
-              Tv monteur in elke wijk van {stad.naam}
+              Wij hangen op in elke wijk van {stad.naam}
             </h2>
             {/* Alleen de per-stad geschreven tekst. De inleidende zin die hier
                 stond ("Onze monteurs komen door heel X aan huis — van A en B
@@ -306,7 +312,7 @@ export default async function StadPage({
         {/* Hoort ná het tariefblok: pas als iemand de prijs voor zijn formaat
             kent, kan hij "plan een afspraak" beantwoorden. Stond hier eerder
             vóór de prijzen. */}
-        <InlineCta
+        <InlineCta href="#afspraak"
           text={`Vaste prijs vooraf, ook aan gipswand of holle wand. Kies een dag die u schikt; u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid in ${stad.naam}.`}
         />
 
@@ -329,7 +335,7 @@ export default async function StadPage({
             {nabijeSteden.map((nabijStad) => (
               <Link
                 key={nabijStad.slug}
-                href={`/tv-monteur/${nabijStad.slug}`}
+                href={`/tv-ophangen/${nabijStad.slug}`}
                 className="rounded-full bg-ink/[0.04] px-4 py-2 font-medium ring-1 ring-line transition-colors duration-300 ease-fluid hover:bg-ink/10"
               >
                 Tv monteur {nabijStad.naam}
@@ -351,7 +357,10 @@ export default async function StadPage({
         items={stadReviews}
       />
 
-      <CtaSection title={`Tv monteur nodig in ${stad.naam}?`} />
+      <CtaSection
+        title={`Tv laten ophangen in ${stad.naam}?`}
+        href="#afspraak"
+      />
     </main>
   );
 }

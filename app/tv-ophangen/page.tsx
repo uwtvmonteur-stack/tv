@@ -19,7 +19,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
 export const metadata = pageMeta({
-  title: "Tv Laten Ophangen — Vaste Prijs vanaf €99",
+  title: "Tv laten ophangen — vaste prijs vanaf €99",
   description:
     "Tv laten ophangen door een ervaren monteur: waterpas, getest en kabels weggewerkt. Vaste prijs vanaf €99 incl. voorrijkosten en btw. Ook 's avonds en in het weekend.",
   path: "/tv-ophangen",
@@ -325,7 +325,11 @@ export default function TvOphangenPage() {
         <InlineCta
           href="#afspraak"
           title="Uw prijs staat hierboven al vast"
-          text="Inclusief voorrijkosten en btw, en u betaalt pas na afloop. Kies hieronder een dag die u schikt — ook 's avonds of op zaterdag."
+          // "Kies hieronder" stond hier, terwijl het formulier direct onder de
+          // hero staat en deze knop dus omhoog scrolt. Een bezoeker die naar
+          // boven schiet terwijl hij naar beneden verwacht te gaan, verliest
+          // precies op het beslismoment zijn vertrouwen in de pagina.
+          text="Inclusief voorrijkosten en btw, en u betaalt pas na afloop. Kies hierboven een dag die u schikt — ook 's avonds of op zaterdag."
         />
 
         <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />

@@ -17,10 +17,21 @@ export function trackEvent(name: string, params: Record<string, unknown> = {}) {
   window.gtag("event", name, params);
 }
 
-/** Registreert een Google Ads-conversie op basis van een "AW-…/label"-string. */
-export function trackAdsConversion(sendTo: string) {
+/**
+ * Registreert een Google Ads-conversie op basis van een "AW-…/label"-string.
+ *
+ * `waarde` is nieuw en belangrijk: een klus loopt van €99 tot ruim €250 met
+ * extra's erbij. Zonder bedrag telt Google elke aanvraag even zwaar en biedt
+ * het net zo hard op een zoekwoord dat klussen van €99 oplevert als op een
+ * zoekwoord dat klussen van €250 oplevert. Mét bedrag kan de campagne op
+ * omzet sturen in plaats van op aantallen.
+ */
+export function trackAdsConversion(sendTo: string, waarde?: number | null) {
   if (!sendTo) return;
-  trackEvent("conversion", { send_to: sendTo });
+  trackEvent("conversion", {
+    send_to: sendTo,
+    ...(waarde ? { value: waarde, currency: "EUR" } : {}),
+  });
 }
 
 const adsAccount = (label: string) => label.split("/")[0] ?? "";

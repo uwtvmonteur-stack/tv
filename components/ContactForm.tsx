@@ -151,6 +151,54 @@ function Stap({
   );
 }
 
+/**
+ * Een optioneel blok dat dichtgeklapt begint.
+ *
+ * Met de extra's en het voorkeursmoment als volwaardige stappen werd het
+ * formulier vijf schermen lang op een telefoon, terwijl twee van die vijf
+ * niets verplichts vroegen. Lengte is op zichzelf een afhaakreden: wie
+ * scrollend geen einde ziet, begint niet.
+ *
+ * Bewust `<details>` en geen eigen uitklapcode: het werkt zonder JavaScript,
+ * het is met het toetsenbord te bedienen en een schermlezer leest de
+ * open/dicht-stand vanzelf voor. De velden erin blijven in het formulier
+ * staan, dus wie het blok dicht laat verstuurt gewoon lege waarden.
+ */
+function Optioneel({
+  titel,
+  hint,
+  children,
+}: {
+  titel: string;
+  hint?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <details className="group min-w-0 rounded-md border border-hairline bg-raised">
+      <summary className="flex cursor-pointer items-center justify-between gap-3 px-4 py-3.5 font-display text-[1.0625rem] font-semibold [&::-webkit-details-marker]:hidden">
+        <span className="flex items-baseline gap-3">
+          <span
+            aria-hidden
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-control text-[15px] font-semibold text-fg-muted"
+          >
+            +
+          </span>
+          <span>{titel}</span>
+        </span>
+        <span className="shrink-0 text-sm font-medium text-fg-muted group-open:hidden">
+          Optioneel
+        </span>
+      </summary>
+      <div className="border-t border-hairline px-4 pt-4 pb-4">
+        {hint && (
+          <p className="mb-3 text-sm leading-relaxed text-fg-muted">{hint}</p>
+        )}
+        {children}
+      </div>
+    </details>
+  );
+}
+
 export default function ContactForm({
   planner = false,
   montage = false,
@@ -443,8 +491,6 @@ export default function ContactForm({
   let stap = 0;
   const nrWaar = ++stap;
   const nrTv = montage ? ++stap : 0;
-  const nrExtra = montage ? ++stap : 0;
-  const nrWanneer = planner ? ++stap : 0;
   const nrContact = ++stap;
 
   return (
@@ -537,9 +583,16 @@ export default function ContactForm({
             <p className="mt-6 mb-3 text-sm leading-relaxed text-fg-muted">
               En heeft u al een beugel voor die tv?
             </p>
-            <div className="flex flex-col gap-2.5">
+            {/* Drie korte keuzes naast elkaar in plaats van drie tegels met
+                elk een uitlegregel: dat scheelde ruim een derde van de hoogte
+                van deze stap. De uitleg verdwijnt niet, hij verschijnt onder
+                de keuze die u maakt — precies op het moment dat hij ertoe doet. */}
+            <div className="grid gap-2.5 sm:grid-cols-3">
               {beugelOpties.map((optie) => (
-                <label key={optie.id} className={keuzeStyles}>
+                <label
+                  key={optie.id}
+                  className={`${keuzeStyles} sm:flex-col sm:items-start sm:gap-1`}
+                >
                   <input
                     type="radio"
                     name="beugel"
@@ -548,21 +601,23 @@ export default function ContactForm({
                     onChange={() => setBeugelId(optie.id)}
                     className="sr-only"
                   />
-                  <span className="min-w-0">
-                    <span className="block font-semibold">{optie.label}</span>
-                    <span className="mt-0.5 block text-[13px] leading-relaxed text-fg-muted">
-                      {optie.detail}
-                    </span>
-                  </span>
+                  <span className="min-w-0 font-semibold">{optie.label}</span>
                 </label>
               ))}
             </div>
+            {beugel && (
+              <p
+                aria-live="polite"
+                className="mt-2.5 text-sm leading-relaxed text-fg-muted"
+              >
+                {beugel.detail}
+              </p>
+            )}
           </Stap>
 
-          <Stap
-            nummer={nrExtra}
+          <Optioneel
             titel="Iets erbij, in dezelfde rit?"
-            hint="Optioneel. Alles wat u hier aanvinkt doen we tijdens hetzelfde bezoek — u hoeft ons dus niet twee keer thuis te laten komen."
+            hint="Alles wat u hier aanvinkt doen we tijdens hetzelfde bezoek — u hoeft ons dus niet twee keer thuis te laten komen."
           >
             <div className="flex flex-col gap-2.5">
               {montageExtras.map((extra) => (
@@ -588,15 +643,14 @@ export default function ContactForm({
                 </label>
               ))}
             </div>
-          </Stap>
+          </Optioneel>
         </>
       )}
 
       {planner && (
-        <Stap
-          nummer={nrWanneer}
-          titel="Wanneer schikt het u?"
-          hint="Optioneel en niet bindend — ook ’s avonds en in het weekend, zonder toeslag."
+        <Optioneel
+          titel="Voorkeur voor een dag of dagdeel?"
+          hint="Niet bindend — ook ’s avonds en in het weekend, zonder toeslag. Laat u dit leeg, dan stellen wij zelf de eerstvolgende mogelijkheid voor."
         >
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
@@ -631,7 +685,7 @@ export default function ContactForm({
               </label>
             ))}
           </div>
-        </Stap>
+        </Optioneel>
       )}
 
       <Stap

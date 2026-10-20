@@ -186,6 +186,17 @@ export default async function StadPage({
         benefits={waarom(stad.naam)}
         image={heroFoto}
         imageAlt={`Tv monteur van Uw TV Monteur aan het werk in ${stad.naam}`}
+        formulier={{
+          titel: `Plan uw afspraak in ${stad.naam}`,
+          intro:
+            `Kies het formaat van uw tv, dan staat uw prijs er direct bij \u2014 vast, inclusief voorrijkosten en btw. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid in ${stad.naam}.`,
+          submitLabel: "Afspraak aanvragen",
+          variant: `stad-${stad.slug}`,
+          montage: true,
+          berichtLabel: "Uw tv en uw muur",
+          berichtPlaceholder:
+            "Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat.",
+        }}
       />
 
       <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
@@ -284,7 +295,7 @@ export default async function StadPage({
             Inclusief voorrijkosten in {stad.naam} en btw. Bekijk alle{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               prijzen en aanvullende diensten
             </Link>

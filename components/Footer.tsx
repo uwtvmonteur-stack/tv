@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5">
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
-                <LogoGlyph className="h-5 w-5 text-amber-500" />
+                <LogoGlyph className="h-5 w-5 text-accent-ink" />
               </span>
               <span className="font-display text-lg font-bold tracking-tight">
                 {SITE.name}
@@ -25,11 +25,11 @@ export default function Footer() {
               tv-installatie — vakkundig, netjes en verzekerd.
             </p>
             <div className="mt-6 flex items-center gap-2 text-sm text-white/60">
-              <IconShield className="h-4 w-4 text-amber-500" />
+              <IconShield className="h-4 w-4 text-accent-ink" />
               Volledig verzekerd · 7 dagen per week
             </div>
             <div className="mt-3 flex items-start gap-2 text-sm text-white/60">
-              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent-ink" />
               <span>
                 Actief in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant
                 — en daarbuiten.

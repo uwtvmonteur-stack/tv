@@ -49,7 +49,7 @@ export default function WerkgebiedPage() {
                     <h2 className="font-display text-step-2 font-bold">
                       <Link
                         href={`/werkgebied/${provincie.slug}`}
-                        className="transition-colors duration-300 ease-fluid hover:text-amber-700"
+                        className="transition-colors duration-300 ease-fluid hover:text-accent-fg"
                       >
                         Tv monteur {provincie.naam}
                       </Link>
@@ -89,7 +89,7 @@ export default function WerkgebiedPage() {
           <p className="mx-auto mt-12 max-w-2xl text-center text-[15px] leading-relaxed text-ink-soft">
             Staat uw woonplaats er niet tussen? Ons werkgebied groeit
             voortdurend en voor grotere klussen rijden we graag een stukje
-            verder. <Link href="/contact" className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4">Neem contact op</Link>{" "}
+            verder. <Link href="/contact" className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4">Neem contact op</Link>{" "}
             en we kijken direct wat er mogelijk is.
           </p>
         </Reveal>

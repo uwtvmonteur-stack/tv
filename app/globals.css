@@ -1,194 +1,261 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   Ontwerpsysteem — Uw TV Monteur
+   =========================================================================
+   Eén bron voor kleur, type, ruimte, hoeken, diepte en beweging.
+
+   De vorige versie beschreef een systeem dat de componenten nooit lazen: er
+   stonden tokens voor hoeken, typetrappen en ritme die nul keer werden
+   gebruikt, terwijl de pagina's ondertussen 11 kaartbehandelingen, 9 hoeken,
+   6 eenmalige schaduwen, 14 randkleuren en 11 losse lettergroottes hadden.
+   Dat is wat een site als sjabloon laat lezen: niet één lelijk detail, maar
+   het ontbreken van herhaling.
+
+   Regel voor dit bestand: een waarde die hier niet staat, bestaat niet. Geen
+   losse `text-[15px]`, geen `rounded-[2rem]`, geen eenmalige schaduw.
+   ========================================================================= */
+
 :root {
-  --background: #faf7f2;
-  --foreground: #191512;
+  --background: #f7f4ef;
+  --foreground: #14110f;
 }
 
 @theme inline {
+  /* ---- Oppervlakken --------------------------------------------------
+     Alleen dekkende kleuren. Transparante vlakken (ink/4, ink/5, ink/6)
+     stapelden eerder over elkaar en gaven vier tinten binnen 6% die een
+     mens niet uit elkaar houdt. */
+  --color-paper: #f7f4ef; /* de pagina */
+  --color-raised: #ffffff; /* kaarten */
+  --color-sunk: #ebe3d7; /* verdiepte banden, invoervelden */
+  --color-inverse: #14110f; /* donkere blokken, footer */
+  --color-inverse-raised: #241f1b; /* kaart op donker */
+
+  /* ---- Tekst ---------------------------------------------------------
+     Contrast op paper: fg 17,1:1 · muted 8,2:1 · subtle 5,4:1 */
+  --color-fg: #14110f;
+  --color-fg-muted: #4f4842;
+  --color-fg-subtle: #6b635b;
+  --color-fg-inverse: #f7f4ef;
+  --color-fg-inverse-muted: #c9c0b6; /* 10,5:1 op inverse */
+
+  /* ---- Accent: één messing, vier rollen ------------------------------
+     Eerder stonden hier 13 amber-waarden omdat niemand had vastgelegd wat
+     "accent op donker" of "accent als tekst" betekent. Nu is dat een rol,
+     geen smaak. `accent` vult (wit erop = 6,0:1), `accent-fg` is accent
+     als tékst op paper (6,3:1), `accent-ink` is accent op donker (10:1). */
+  --color-accent: #a04a08;
+  --color-accent-hover: #863d06;
+  --color-accent-fg: #8f4509;
+  --color-accent-tint: #f2e4d4; /* dekkend, vervangt amber-600/[0.16] */
+  --color-accent-ink: #e8b45e;
+
+  /* ---- Lijnen --------------------------------------------------------
+     `hairline` is decoratieve structuur. `control` is de rand van iets
+     waar je op klikt of in typt en haalt daarom 3:1 (WCAG 1.4.11) — de
+     oude invoerrand zat op 1,40:1 en was dus feitelijk onzichtbaar. */
+  --color-hairline: #cfc5b7;
+  --color-hairline-inverse: #3a332d;
+  --color-control: #857a6e;
+
+  --color-success: #1f6b46;
+  --color-danger: #a6232a;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-cream: #faf7f2;
-  --color-cream-deep: #f3eee6;
-  --color-ink: #191512;
-  --color-ink-soft: #57504a;
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
 
-  /* Fluide typografie, geijkt op 375px tot 1280px.
-     Hiervoor stond er 63x text-4xl naast 62x text-3xl en verder bijna niets,
-     waardoor een H1 op mobiel maar 1,20x zo groot was als een H2. Een bezoeker
-     ziet dan geen hierarchie maar een lijst gelijkwaardige koppen -- dat is wat
-     een site als sjabloon laat lezen. Deze trappen zetten die verhouding op
-     1,33 tot 1,63. De letter-spacing zit per trap in het token, want een vaste
-     tracking-tight is te los op 80px en te krap op 19px. clamp() rekent op vw,
-     dus er is geen JS en geen layoutverschuiving: CLS blijft 0,000. */
-  --text-step--1: clamp(0.8125rem, 0.7606rem + 0.221vw, 0.9375rem);
-  --text-step--1--line-height: 1.5;
-  --text-step-0: clamp(1rem, 0.9741rem + 0.11vw, 1.0625rem);
-  --text-step-0--line-height: 1.65;
-  --text-step-1: clamp(1.0625rem, 0.9848rem + 0.332vw, 1.25rem);
-  --text-step-1--line-height: 1.55;
-  --text-step-2: clamp(1.1875rem, 1.058rem + 0.553vw, 1.5rem);
-  --text-step-2--line-height: 1.25;
-  --text-step-2--letter-spacing: -0.015em;
-  --text-step-3: clamp(1.6875rem, 1.299rem + 1.658vw, 2.625rem);
-  --text-step-3--line-height: 1.1;
-  --text-step-3--letter-spacing: -0.021em;
-  --text-step-4: clamp(2.25rem, 1.6283rem + 2.653vw, 3.75rem);
-  --text-step-4--line-height: 1.02;
-  --text-step-4--letter-spacing: -0.026em;
-  --text-step-5: clamp(2.75rem, 1.8175rem + 3.979vw, 5rem);
-  --text-step-5--line-height: 0.95;
-  --text-step-5--letter-spacing: -0.034em;
+  /* ---- Typografie ----------------------------------------------------
+     Fraunces (display) boven Inter Tight (tekst). Een licht geserveerde
+     kop op warm papier leest als een gevestigd vakbedrijf; de geometrische
+     sans die hier stond leest als softwareproduct.
 
-  /* Een systeem voor randen en hoeken. Er stonden zes randsterktes
-     (ring-line 24x, /10 6x, /15 5x, border-line-strong 4x, amber-600/20 3x,
-     border-line 1x) en vijf radii door elkaar. ink/5 op creme is bovendien
-     niet te zien, waardoor kaarten alleen door hun schaduw bestonden en als
-     vage wolken lazen in plaats van als gedefinieerde objecten. */
-  --color-line: rgb(25 21 18 / 0.09);
-  --color-line-strong: rgb(25 21 18 / 0.16);
-  --color-cream-sunk: #ece5da;
-  --radius-shell: 1.75rem;
-  --radius-core: 1.375rem;
-  --radius-bed: 2.25rem;
+     Negen trappen, allemaal in gebruik. Belangrijk: een prijs, een
+     statistiek en een H1 hebben nu elk hun eigen trap. Dat ze eerder
+     dezelfde grootte deelden is waarom pagina's vlak aanvoelden. */
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 
-  /* Verticaal ritme. De homepage ademde met py-24/py-36 terwijl de
-     dienstpagina's -- waar het advertentiegeld landt -- op py-10 met mt-20
-     stonden. De verhouding blok:kop gaat van 2,5 naar 3,6, zodat een kop
-     visueel bij zijn eigen inhoud hoort en niet bij de vorige alinea. */
-  --spacing-section: clamp(5.5rem, 3.635rem + 7.956vw, 10rem);
-  --spacing-block: clamp(4.5rem, 3.464rem + 4.42vw, 7rem);
-  --spacing-heading: clamp(1.25rem, 0.939rem + 1.326vw, 2rem);
+  --text-2xs: 0.8125rem;
+  --text-2xs--line-height: 1.45;
+  --text-xs: 0.875rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: clamp(0.9375rem, 0.92rem + 0.08vw, 1rem);
+  --text-sm--line-height: 1.6;
+  --text-base: clamp(1.0625rem, 1.03rem + 0.15vw, 1.1875rem);
+  --text-base--line-height: 1.62;
+  --text-lead: clamp(1.1875rem, 1.12rem + 0.3vw, 1.375rem);
+  --text-lead--line-height: 1.5;
+  --text-h3: clamp(1.25rem, 1.17rem + 0.35vw, 1.5rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h2: clamp(1.75rem, 1.45rem + 1.3vw, 2.5rem);
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.018em;
+  --text-h1: clamp(2.375rem, 1.75rem + 2.7vw, 3.75rem);
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.022em;
+  --text-hero: clamp(2.75rem, 1.9rem + 3.6vw, 4.75rem);
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.028em;
+  --text-stat: clamp(2.5rem, 1.9rem + 2.6vw, 4rem);
+  --text-stat--line-height: 0.95;
+  --text-stat--letter-spacing: -0.02em;
+
+  /* ---- Ruimte --------------------------------------------------------
+     `gutter` is de zijmarge van elke pagina, `section` het verticale ritme
+     van een blok, `stack` de afstand van kop naar inhoud. Drie tokens in
+     plaats van elf losse py-waardes. */
+  --spacing-gutter: clamp(1.25rem, 0.9rem + 1.5vw, 2rem);
+  --spacing-section: clamp(4rem, 2.6rem + 6vw, 7.5rem);
+  --spacing-stack: clamp(2rem, 1.5rem + 2vw, 3rem);
+
+  /* ---- Breedtes ------------------------------------------------------ */
+  --container-content: 75rem; /* 1200px — standaard */
+  --container-wide: 85rem; /* 1360px — alleen beeld */
+  --container-prose: 68ch; /* leesbare regellengte */
+
+  /* ---- Hoeken --------------------------------------------------------
+     Strakker dan voorheen. Negen hoeken tussen 16 en 40px lazen als
+     zachtheid; precisie is hier juist het product. */
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+
+  /* ---- Diepte: drie stappen, één lichtrichting ----------------------- */
+  --shadow-e1: 0 1px 2px rgb(20 17 15 / 0.05), 0 1px 1px rgb(20 17 15 / 0.04);
+  --shadow-e2: 0 2px 4px rgb(20 17 15 / 0.05), 0 8px 16px -6px rgb(20 17 15 / 0.1);
+  --shadow-e3: 0 4px 8px rgb(20 17 15 / 0.05), 0 24px 40px -16px rgb(20 17 15 / 0.14);
+
+  /* ---- Beweging: drie duren, twee easings, geen veer ------------------
+     De overshoot van de vorige `ease-spring` liet knoppen terugveren. Op
+     een dienst waarbij een televisie van €1500 aan de muur wordt geboord
+     leest dat als speels, niet als zorgvuldig. */
+  --ease-out: cubic-bezier(0.2, 0.65, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.5, 0, 0.3, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 360ms;
+
+  /* =====================================================================
+     TIJDELIJKE ALIASSEN — worden verwijderd zodra alle componenten zijn
+     omgezet. Ze staan hier zodat de site tijdens de verbouwing op geen
+     enkel moment stuk is. Controle vóór verwijdering:
+       grep -rE "cream|ink-soft|ring-line|text-step|ease-fluid" app components
+     ===================================================================== */
+  --color-cream: #f7f4ef;
+  --color-cream-deep: #f0ebe3;
+  --color-ink: #14110f;
+  --color-ink-soft: #4f4842;
+  --color-line: #ded5c7;
+  --color-line-strong: #cfc5b7;
+  --ease-fluid: cubic-bezier(0.2, 0.65, 0.3, 1);
+  --ease-spring: cubic-bezier(0.2, 0.65, 0.3, 1);
+  --text-step-2: var(--text-h3);
+  --text-step-3: var(--text-h2);
+  --text-step-4: var(--text-h1);
+  --text-step-5: var(--text-hero);
+  --spacing-block: clamp(3rem, 2rem + 4vw, 5rem);
+  --spacing-heading: clamp(1.25rem, 0.94rem + 1.33vw, 2rem);
 }
 
 html {
   scroll-behavior: smooth;
+  /* Gelijk aan de hoogte van de vaste navigatie plus lucht. */
   scroll-padding-top: 6.5rem;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
 }
 
+/* Cijfers in één breedte: prijzen en statistieken springen niet. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
 ::selection {
-  background: #d97706;
-  color: #fff;
+  background: #14110f;
+  color: #f7f4ef;
 }
 
-/* Zichtbare, merk-eigen focusring voor toetsenbordnavigatie (amber-700 = 3:1+ op cream, wit én ink) */
+/* ---- Focus -------------------------------------------------------------
+   Twee ringen in plaats van één. De vorige ring was amber op een amber
+   knop (1,0:1) en dus alleen zichtbaar dankzij de offset; raakte de knop
+   een `overflow-hidden`-ouder, dan was hij helemaal weg. Een donkere kern
+   met een lichte halo is zichtbaar op élk oppervlak. */
 :focus-visible {
-  outline: 2px solid #b45309;
-  outline-offset: 3px;
+  outline: 2px solid var(--color-fg);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgb(247 244 239 / 0.9);
 }
 
-/* #hoofdinhoud is programmatisch focusbaar zodat de skip-link de focus echt verplaatst */
+.on-inverse :focus-visible {
+  outline-color: var(--color-fg-inverse);
+  box-shadow: 0 0 0 4px rgb(20 17 15 / 0.9);
+}
+
+/* #hoofdinhoud is programmatisch focusbaar zodat de skip-link de focus
+   daadwerkelijk verplaatst. */
 #hoofdinhoud:focus {
   outline: none;
 }
 
-/* Skip-link: onzichtbaar tot toetsenbordfocus */
 .skip-link {
   position: fixed;
   top: 1rem;
   left: 1rem;
   z-index: 100;
   transform: translateY(-250%);
-  background: #191512;
-  color: #faf7f2;
+  background: var(--color-fg);
+  color: var(--color-fg-inverse);
   padding: 0.75rem 1.5rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
   font-weight: 600;
-  transition: transform 0.3s var(--ease-fluid);
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
 .skip-link:focus-visible {
   transform: translateY(0);
 }
 
-/* Merken-marquee: oneindige, GPU-vriendelijke horizontale scroll */
-.marquee {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-}
-
-.marquee__track {
-  display: flex;
-  width: max-content;
-  animation: marquee 38s linear infinite;
-  will-change: transform;
-}
-
-.marquee:hover .marquee__track {
-  animation-play-state: paused;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee__track {
-    animation: none;
-  }
-}
-
-/* Film-grain overlay for a physical, editorial feel */
+/* ---- Papierkorrel ------------------------------------------------------
+   Onder de vaste chrome (navigatie staat op z-40/z-50), anders ligt de ruis
+   als laatste DOM-element over de knoppen heen. */
 .grain::after {
   content: "";
   position: fixed;
   inset: 0;
-  /* Onder de vaste chrome (navigatie en onderbalk staan op z-40/z-50). Stond
-     dit op 40, dan lag de ruis als laatste element in de DOM juist over de
-     knoppen heen. */
   z-index: 30;
   pointer-events: none;
-  opacity: 0.028;
+  opacity: 0.022;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Scroll-reveal.
+/* ---- Scroll-reveal -----------------------------------------------------
    De verborgen begintoestand geldt ALLEEN wanneer JavaScript de klasse
-   `reveal-on` op <html> heeft gezet (zie het inline script in layout.tsx).
-   Faalt of blokkeert het script, dan blijft alle content gewoon zichtbaar —
-   nooit permanent onzichtbaar. */
-/* Bewust kort en zonder blur-filter: een blur op grote secties is duur op
-   mobiel (INP/scroll-jank) en een lange fade laat snelle scanners naar lege
-   ruimte kijken. */
+   `reveal-on` op <html> heeft gezet (inline script in layout.tsx). Faalt of
+   blokkeert dat script, dan blijft alle inhoud gewoon zichtbaar — nooit
+   permanent onzichtbaar. */
 .reveal {
   transition:
-    opacity 0.55s var(--ease-fluid),
-    transform 0.55s var(--ease-fluid);
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
 .reveal-on .reveal {
   opacity: 0;
-  transform: translateY(1.5rem);
+  transform: translateY(1rem);
 }
 
 .reveal-on .reveal.is-visible,
@@ -197,6 +264,10 @@ body {
   transform: translateY(0);
 }
 
+/* ---- Minder beweging ---------------------------------------------------
+   Dekt nu álle beweging, niet alleen de reveal: de vorige regel liet het
+   mobiele menu, de onderbalk, de hover-liften en de schaalanimaties
+   gewoon doorlopen voor wie daar last van heeft. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -205,5 +276,13 @@ body {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

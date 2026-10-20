@@ -80,7 +80,7 @@ export default function DienstenPage() {
                 <ul className="mt-5 flex flex-col gap-3 text-sm">
                   {usps.map((usp) => (
                     <li key={usp} className="flex items-start gap-3">
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-amber-400">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-ink/20 text-accent-ink">
                         <IconCheck className="h-3 w-3" />
                       </span>
                       {usp}
@@ -90,7 +90,7 @@ export default function DienstenPage() {
               </div>
               <Link
                 href="/prijzen"
-                className="flex items-center justify-center rounded-full bg-amber-700 py-3.5 text-sm font-semibold text-white transition-transform duration-300 ease-fluid active:scale-[0.98]"
+                className="flex items-center justify-center rounded-full bg-accent py-3.5 text-sm font-semibold text-white transition-transform duration-300 ease-fluid active:scale-[0.98]"
               >
                 Bekijk alle prijzen
               </Link>

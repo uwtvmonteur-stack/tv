@@ -151,6 +151,17 @@ export default function TvOphangenGipswandPage() {
         ]}
         image={heroFoto}
         imageAlt="Monteur hangt een televisie waterpas op aan een lichte binnenwand"
+        formulier={{
+          titel: "Plan het ophangen op uw gipswand",
+          intro:
+            "Kies het formaat van uw tv, dan staat uw prijs er direct bij. Een gipswand of holle wand kost bij ons niets extra \u2014 het tarief blijft hetzelfde.",
+          submitLabel: "Afspraak aanvragen",
+          variant: "gipswand-hero",
+          montage: true,
+          berichtLabel: "Uw tv en uw wand",
+          berichtPlaceholder:
+            "Bijvoorbeeld: 55 inch Samsung, gipswand met stalen frame.",
+        }}
       />
 
       <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">
@@ -165,7 +176,7 @@ export default function TvOphangenGipswandPage() {
               nee zeggen.{" "}
               <Link
                 href="/contact"
-                className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
               >
                 Plan een afspraak
               </Link>{" "}
@@ -239,7 +250,7 @@ export default function TvOphangenGipswandPage() {
             montagemateriaal en btw zitten er altijd in.{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               Bekijk de prijzen
             </Link>

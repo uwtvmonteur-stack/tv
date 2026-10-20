@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import { Fraunces, Inter_Tight } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import StickyCta from "@/components/StickyCta";
@@ -13,14 +13,26 @@ import { addons, priceCards } from "@/lib/content";
 import { offerCatalogJsonLd } from "@/lib/seo";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+/**
+ * Fraunces voor koppen, Inter Tight voor alles wat gelezen of ingevuld wordt.
+ *
+ * Hiervoor stond hier Space Grotesk boven Plus Jakarta Sans: een geometrische
+ * display-sans boven de meest gebruikte "startup"-tekstletter van de laatste
+ * jaren. Dat is precies de combinatie die een bezoeker onbewust herkent als
+ * sjabloon. Een licht geserveerde kop op warm papier leest als een bedrijf dat
+ * er al jaren is — en dat is wat iemand wil zien voordat hij een vreemde met
+ * een boormachine naast zijn televisie van €1500 zet.
+ */
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -146,7 +158,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="nl"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} ${jakarta.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${interTight.variable} h-full antialiased`}
     >
       <body className="grain min-h-full flex flex-col">
         <script

@@ -137,6 +137,16 @@ export default function SoundbarPage() {
         ]}
         image={familieImg}
         imageAlt="Stel geniet 's avonds van film en geluid via een wandgemonteerde tv"
+        formulier={{
+          titel: "Plan het aansluiten van uw geluid",
+          intro:
+            "Soundbar aansluiten en afstellen kost \u20ac49, een complete surroundset vanaf \u20ac79. Vast, inclusief voorrijkosten en btw.",
+          submitLabel: "Afspraak aanvragen",
+          variant: "soundbar-hero",
+          berichtLabel: "Welke set heeft u?",
+          berichtPlaceholder:
+            "Bijvoorbeeld: Sonos Beam met subwoofer, tv is een LG van 2023.",
+        }}
       />
 
       <BrandMarquee />
@@ -201,7 +211,7 @@ export default function SoundbarPage() {
             Bekijk alle tarieven en opties op de{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               prijzenpagina
             </Link>

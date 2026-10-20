@@ -11,6 +11,7 @@ import Reviews from "@/components/Reviews";
 import PriceCards from "@/components/PriceCards";
 import {
   BezelCard,
+  Button,
   DienstIcon,
   Eyebrow,
   IconChip,
@@ -67,46 +68,47 @@ function Hero() {
       />
       <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(10_8_7/0.92)_0%,rgb(10_8_7/0.74)_26%,rgb(10_8_7/0.36)_58%,rgb(10_8_7/0.18)_100%)]" />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pt-32 pb-14 md:px-8 md:pt-44 md:pb-20">
+      <div className="on-inverse relative z-10 mx-auto w-full max-w-content px-gutter pt-32 pb-14 md:pt-40 md:pb-20">
         <Reveal immediate>
-          <Eyebrow light>Tv monteur aan huis</Eyebrow>
+          {/* "Tv monteur" is in het Nederlands vooral een reparatieterm: wie
+              dat zoekt heeft een kapot scherm, niet een lege muur. De
+              commerciële zoekopdracht is "tv (laten) ophangen". De bedrijfsnaam
+              blijft Uw TV Monteur; de koppen volgen voortaan de zoekterm. */}
+          <Eyebrow light>Tv ophangen aan huis</Eyebrow>
         </Reveal>
         <Reveal immediate>
-          <h1 className="mt-7 max-w-3xl font-display text-step-5 font-bold text-white">
-            Uw tv monteur aan huis.
-            <span className="mt-2 block text-amber-400">
-              Strak aan de muur, zonder gedoe.
-            </span>
+          {/* De vorige kop herhaalde letterlijk de bovenregel en eindigde op
+              "zonder gedoe" — een gevoel dat elke concurrent ook claimt. Dit
+              zegt wat ons onderscheidt van een platform: u krijgt het bedrijf
+              dat de klus zelf uitvoert. */}
+          <h1 className="mt-6 max-w-4xl font-display text-h1 font-semibold text-balance text-white">
+            Uw tv laten ophangen door de monteur die zelf komt.
           </h1>
         </Reveal>
         <Reveal immediate>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
-            Wij hangen de tv op die u al heeft, aan de beugel die u al heeft —
-            ook als u hem niet bij ons kocht. De prijs die u ziet is de prijs
-            die u betaalt: ook ’s avonds en in het weekend, en ook als uw wand
-            van gipsplaat blijkt.
+          <p className="mt-6 max-w-xl text-lead text-pretty text-white/85">
+            Elke tv, elke wand, ook de beugel die u al had. De prijs die u ziet
+            is de prijs die u betaalt — ook &apos;s avonds, in het weekend, en
+            ook als uw wand van gipsplaat blijkt.
           </p>
         </Reveal>
         <Reveal immediate>
           {/* Eén actie per scherm: alles wijst naar het afspraakformulier —
               dat staat sinds deze herbouw op deze pagina zelf, dus deze knop
               scrolt in plaats van dat hij de bezoeker verhuist. */}
-          <div className="mt-8">
-            <Link
-              href="#afspraak"
-              className="group flex w-full items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-[transform,background-color] duration-300 ease-fluid hover:bg-white active:scale-[0.98] sm:inline-flex sm:w-auto"
-            >
-              Plan een afspraak
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
-                <IconArrowUpRight className="h-4 w-4" />
-              </span>
-            </Link>
+          <div className="mt-8 sm:max-w-xs">
+            <Button href="#afspraak" variant="inverse" maat="lg" breed>
+              Bekijk uw prijs en plan een afspraak
+              <IconArrowUpRight className="h-4 w-4" />
+            </Button>
           </div>
         </Reveal>
         <Reveal immediate>
-          <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/80">
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/85">
             <span className="flex items-center gap-2">
-              <Stars />
+              <span className="text-accent-ink">
+                <Stars />
+              </span>
               <strong className="font-semibold text-white">
                 {SITE.reviews.score} / 5
               </strong>
@@ -124,11 +126,11 @@ function Hero() {
               )}
             </span>
             <span className="flex items-center gap-2">
-              <IconShield className="h-4 w-4 text-amber-400" />
+              <IconShield className="h-4 w-4 text-accent-ink" />
               Volledig verzekerd
             </span>
             <span className="flex items-center gap-2">
-              <IconClock className="h-4 w-4 text-amber-400" />
+              <IconClock className="h-4 w-4 text-accent-ink" />
               Ook &apos;s avonds en in het weekend
             </span>
           </div>
@@ -186,7 +188,7 @@ function Diensten() {
                       "Waterpas gemonteerd én getest",
                     ].map((item) => (
                       <li key={item} className="flex items-center gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-600/[0.16] text-amber-700">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-tint text-accent-fg">
                           <IconCheck className="h-3.5 w-3.5" />
                         </span>
                         {item}
@@ -312,7 +314,7 @@ function Werkwijze() {
                       i > 0 ? "border-t border-white/10" : ""
                     }`}
                   >
-                    <span className="font-display text-sm font-bold tracking-widest text-amber-500">
+                    <span className="font-display text-sm font-bold tracking-widest text-accent-ink">
                       {step.nr}
                     </span>
                     <div>
@@ -376,7 +378,7 @@ function Prijzen() {
           Geen aanbetaling: u betaalt pas na afloop, per pin of betaalverzoek.{" "}
           <Link
             href="/prijzen"
-            className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+            className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
           >
             Bekijk alle prijzen en aanvullende diensten
           </Link>
@@ -454,7 +456,7 @@ function Werkgebied() {
                 <h3 className="font-display text-lg font-bold tracking-tight">
                   <Link
                     href={`/werkgebied/${provincie.slug}`}
-                    className="transition-colors duration-300 ease-fluid hover:text-amber-700"
+                    className="transition-colors duration-300 ease-fluid hover:text-accent-fg"
                   >
                     {provincie.naam}
                   </Link>
@@ -529,7 +531,7 @@ function FaqSectie() {
               Staat uw vraag er niet tussen? Stel hem gerust in het{" "}
               <Link
                 href="/contact"
-                className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
               >
                 aanvraagformulier
               </Link>{" "}

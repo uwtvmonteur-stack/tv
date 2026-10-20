@@ -80,7 +80,7 @@ export default function ServiceHero({
             <ul className="mt-7 flex flex-col gap-2.5">
               {benefits.map((b) => (
                 <li key={b} className="flex items-start gap-3 text-[15px] font-medium">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-600/[0.16] text-amber-700">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-tint text-accent-fg">
                     <IconCheck className="h-3.5 w-3.5" />
                   </span>
                   {b}
@@ -113,17 +113,17 @@ export default function ServiceHero({
                     href={SITE.reviews.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline decoration-amber-600/50 underline-offset-2"
+                    className="underline decoration-accent-fg/60 underline-offset-2"
                   >
                     {SITE.reviews.count} reviews
                   </a>
                 )}
               </span>
               <span className="flex items-center gap-2">
-                <IconClock className="h-4 w-4 text-amber-700" />7 dagen per week
+                <IconClock className="h-4 w-4 text-accent-fg" />7 dagen per week
               </span>
               <span className="flex items-center gap-2">
-                <IconShield className="h-4 w-4 text-amber-700" />
+                <IconShield className="h-4 w-4 text-accent-fg" />
                 Volledig verzekerd
               </span>
             </div>

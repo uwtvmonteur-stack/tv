@@ -36,7 +36,7 @@ export default function PriceCards({
             }`}
           >
             {card.featured && (
-              <span className="absolute -top-3.5 left-1/2 z-10 -translate-x-1/2 rounded-full bg-amber-700 px-4 py-1.5 text-[10px] font-semibold tracking-[0.15em] text-white uppercase shadow-[0_10px_25px_-8px_rgba(217,119,6,0.6)]">
+              <span className="absolute -top-3.5 left-1/2 z-10 -translate-x-1/2 rounded-full bg-accent px-4 py-1.5 text-[10px] font-semibold tracking-[0.15em] text-white uppercase shadow-[0_10px_25px_-8px_rgba(217,119,6,0.6)]">
                 Meest gekozen
               </span>
             )}
@@ -75,8 +75,8 @@ export default function PriceCards({
                     <span
                       className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
                         card.featured
-                          ? "bg-amber-500/20 text-amber-300"
-                          : "bg-amber-600/[0.16] text-amber-700"
+                          ? "bg-accent-ink/20 text-accent-ink"
+                          : "bg-accent-tint text-accent-fg"
                       }`}
                     >
                       <IconCheck className="h-3 w-3" />
@@ -94,7 +94,7 @@ export default function PriceCards({
                 data-maat={card.name.toLowerCase()}
                 className={`mt-8 flex items-center justify-center rounded-full py-3.5 text-sm font-semibold transition-transform duration-300 ease-fluid active:scale-[0.98] ${
                   card.featured
-                    ? "bg-amber-700 text-white hover:bg-amber-800"
+                    ? "bg-accent text-white hover:bg-accent-hover"
                     : "ring-1 ring-ink/15 hover:bg-ink/5"
                 }`}
               >

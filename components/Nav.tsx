@@ -1,12 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IconArrowUpRight } from "./icons";
 import LogoMark from "./Logo";
+import { Button } from "./ui";
 
+/**
+ * "Diensten" stond hier en /tv-ophangen niet — terwijl dat de pagina is waar
+ * het advertentiegeld landt en waar de omzet vandaan komt. Een overzichtshub
+ * met vier kaartjes kreeg dus de navigatiewaarde die de geldpagina hoort te
+ * krijgen. De overige diensten blijven bereikbaar via /tv-ophangen en de
+ * voettekst.
+ */
 const links = [
-  { href: "/diensten", label: "Diensten" },
+  { href: "/tv-ophangen", label: "Tv ophangen" },
   { href: "/prijzen", label: "Prijzen" },
   { href: "/werkgebied", label: "Werkgebied" },
   { href: "/kennisbank", label: "Kennisbank" },
@@ -14,20 +23,41 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
+/**
+ * Staat er een afspraakformulier op deze pagina? Dan moet de knop in de balk
+ * ernaartoe scrollen in plaats van de bezoeker te verhuizen naar /contact.
+ *
+ * Dat was de duurste fout in de oude balk: op /prijzen — de pagina waar
+ * bezoekers het langst blijven — stuurde de meest opvallende knop van het
+ * scherm ze wég van het formulier dat 300 pixels lager stond, inclusief het
+ * tv-formaat dat ze net hadden aangeklikt.
+ */
+function useAfspraakOpPagina() {
+  const pathname = usePathname();
+  const [opPagina, setOpPagina] = useState(false);
+
+  useEffect(() => {
+    setOpPagina(Boolean(document.getElementById("afspraak")));
+  }, [pathname]);
+
+  return opPagina ? "#afspraak" : "/contact";
+}
+
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const afspraakHref = useAfspraakOpPagina();
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    // Achtergrond onbereikbaar maken voor toetsenbord/schermlezer als het menu open is
+    // Achtergrond onbereikbaar maken voor toetsenbord en schermlezer zolang
+    // het menu openstaat.
     const main = document.getElementById("hoofdinhoud");
     const footer = document.querySelector("footer");
     main?.toggleAttribute("inert", open);
     footer?.toggleAttribute("inert", open);
 
-    // Focus het menu in zodra het opent (ARIA-dialoogpatroon).
     if (open) menuRef.current?.querySelector<HTMLElement>("a")?.focus();
 
     function onKeyDown(e: KeyboardEvent) {
@@ -48,10 +78,12 @@ export default function Nav() {
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 md:pt-6">
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-3 md:pt-5">
         <nav
           aria-label="Hoofdnavigatie"
-          className="pointer-events-auto flex w-full max-w-3xl items-center justify-between gap-1 rounded-full bg-cream/90 py-1.5 pr-1.5 pl-2 shadow-[0_16px_50px_-16px_rgba(25,21,18,0.3)] ring-1 ring-line-strong backdrop-blur-md lg:w-auto lg:max-w-none lg:justify-start lg:gap-2"
+          // Rechte hoeken in plaats van een zwevende pil: een balk die als
+          // document leest in plaats van als app-widget.
+          className="pointer-events-auto flex w-full max-w-content items-center justify-between gap-2 rounded-md border border-hairline bg-paper/92 py-2 pr-2 pl-3 shadow-e2 backdrop-blur-md"
         >
           <Link
             href="/"
@@ -60,7 +92,7 @@ export default function Nav() {
             onClick={() => setOpen(false)}
           >
             <LogoMark className="h-9 w-9" />
-            <span className="font-display text-[15px] font-bold tracking-tight whitespace-nowrap">
+            <span className="font-display text-base font-semibold whitespace-nowrap">
               Uw TV Monteur
             </span>
           </Link>
@@ -70,31 +102,24 @@ export default function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2 text-sm font-medium whitespace-nowrap text-ink/80 transition-colors duration-300 ease-fluid hover:text-ink"
+                className="rounded-xs px-3 py-2 text-sm font-medium whitespace-nowrap text-fg-muted transition-colors duration-200 ease-out hover:text-fg"
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Op 320px liep deze cluster door tot x=337: 17px buiten beeld,
-              waardoor 38% van de hamburgerknop onbereikbaar was. De header is
-              `fixed`, dus `body{overflow-x:clip}` ving dat niet af — het werd
-              simpelweg afgesneden. Onder `sm` nu krappere gap, padding-left en
-              knoppadding; vanaf `sm` blijft alles zoals het was. */}
-          <div className="flex items-center gap-1 pl-0 sm:gap-1.5 sm:pl-1">
+          <div className="flex shrink-0 items-center gap-2">
             {/* Eén actie in de balk: de afspraak. Het telefoonnummer staat
-                alleen nog in de footer, zodat niets de afspraakknop afleidt. */}
+                alleen in de voettekst, zodat niets de afspraakknop beconcurreert. */}
             <Link
-              href="/contact"
+              href={afspraakHref}
               inert={open || undefined}
-              className="group flex shrink-0 items-center gap-2.5 rounded-full bg-amber-700 px-3 py-2.5 text-sm font-semibold whitespace-nowrap text-white transition-[transform,background-color] duration-300 ease-fluid hover:bg-amber-800 active:scale-[0.97] sm:px-4.5 sm:py-2 sm:pr-2"
+              className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-sm bg-accent px-4 text-sm font-semibold whitespace-nowrap text-white shadow-e1 transition-colors duration-200 ease-out hover:bg-accent-hover"
             >
               <span className="hidden sm:inline">Afspraak maken</span>
               <span className="sm:hidden">Afspraak</span>
-              <span className="hidden h-7 w-7 items-center justify-center rounded-full bg-white/20 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105 sm:flex">
-                <IconArrowUpRight className="h-3.5 w-3.5" />
-              </span>
+              <IconArrowUpRight className="hidden h-4 w-4 sm:block" />
             </Link>
             <button
               ref={hamburgerRef}
@@ -103,15 +128,15 @@ export default function Nav() {
               aria-expanded={open}
               aria-controls="mobiel-menu"
               onClick={() => setOpen(!open)}
-              className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-full ring-1 ring-line-strong lg:hidden"
+              className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-sm border border-control lg:hidden"
             >
               <span
-                className={`h-[1.5px] w-4 rounded-full bg-ink transition-transform duration-500 ease-fluid ${
+                className={`h-[1.5px] w-4 bg-fg transition-transform duration-200 ease-out ${
                   open ? "translate-y-[3.25px] rotate-45" : ""
                 }`}
               />
               <span
-                className={`h-[1.5px] w-4 rounded-full bg-ink transition-transform duration-500 ease-fluid ${
+                className={`h-[1.5px] w-4 bg-fg transition-transform duration-200 ease-out ${
                   open ? "-translate-y-[3.25px] -rotate-45" : ""
                 }`}
               />
@@ -120,7 +145,7 @@ export default function Nav() {
         </nav>
       </header>
 
-      {/* Fullscreen mobiel menu */}
+      {/* Mobiel menu over het volledige scherm */}
       <div
         ref={menuRef}
         id="mobiel-menu"
@@ -128,39 +153,34 @@ export default function Nav() {
         aria-modal="true"
         aria-label="Menu"
         inert={!open}
-        className={`fixed inset-0 z-40 flex flex-col justify-between bg-cream/90 px-6 pt-32 pb-10 backdrop-blur-3xl transition-opacity duration-500 ease-fluid lg:hidden ${
+        className={`fixed inset-0 z-40 flex flex-col justify-between bg-paper px-gutter pt-28 pb-10 transition-opacity duration-200 ease-out lg:hidden ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <nav aria-label="Mobiel menu" className="flex flex-col gap-2">
-          {links.map((link, i) => (
+        <nav aria-label="Mobiel menu" className="flex flex-col">
+          {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              style={{ transitionDelay: open ? `${100 + i * 50}ms` : "0ms" }}
-              className={`font-display text-4xl font-bold tracking-tight transition-all duration-700 ease-fluid ${
-                open ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
-              }`}
+              // Geen gestapelde vertragingen meer: het oude menu bouwde zich
+              // in 400 ms op terwijl de bezoeker al wist waar hij heen wilde.
+              className="border-b border-hairline py-4 font-display text-h3 font-semibold"
             >
               {link.label}
             </Link>
           ))}
         </nav>
-        <div
-          style={{ transitionDelay: open ? "400ms" : "0ms" }}
-          className={`flex flex-col gap-3 transition-all duration-700 ease-fluid ${
-            open ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
-          }`}
-        >
-          <Link
-            href="/contact"
+        <div className="mt-8">
+          <Button
+            href={afspraakHref}
+            maat="lg"
+            breed
             onClick={() => setOpen(false)}
-            className="flex items-center justify-center gap-2.5 rounded-full bg-ink px-6 py-4 text-base font-semibold text-cream"
           >
             Afspraak maken
             <IconArrowUpRight className="h-4 w-4" />
-          </Link>
+          </Button>
         </div>
       </div>
     </>

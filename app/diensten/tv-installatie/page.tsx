@@ -134,6 +134,16 @@ export default function TvInstallatiePage() {
         ]}
         image={heroImg}
         imageAlt="Volledig geïnstalleerde tv aan de muur in een moderne woonkamer"
+        formulier={{
+          titel: "Plan uw tv-installatie",
+          intro:
+            "Vaste prijs van \u20ac70, inclusief voorrijkosten en btw. Wilt u de tv ook opgehangen hebben? Zet het erbij, dan rekenen we dat vooraf voor u uit.",
+          submitLabel: "Afspraak aanvragen",
+          variant: "tv-installatie-hero",
+          berichtLabel: "Wat moet er aangesloten worden?",
+          berichtPlaceholder:
+            "Bijvoorbeeld: nieuwe Samsung, decoder van Ziggo en een soundbar.",
+        }}
       />
 
       <BrandMarquee />
@@ -250,7 +260,7 @@ export default function TvInstallatiePage() {
                   wordt gemonteerd? Bekijk dan onze{" "}
                   <Link
                     href="/tv-ophangen"
-                    className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+                    className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
                   >
                     tv ophangservice
                   </Link>{" "}
@@ -273,7 +283,7 @@ export default function TvInstallatiePage() {
               Twijfelt u welke service bij u past? Zet het kort in het{" "}
               <Link
                 href="/contact"
-                className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
               >
                 aanvraagformulier
               </Link>{" "}

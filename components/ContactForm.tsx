@@ -64,7 +64,7 @@ const labelStyles =
  * telefoon de helft van het werk dat een uitklaplijst kost.
  */
 const keuzeStyles =
-  "relative flex cursor-pointer items-start justify-between gap-4 rounded-2xl bg-cream px-4 py-3.5 text-left ring-1 ring-line-strong transition-[background-color,box-shadow] duration-300 ease-fluid has-[:checked]:bg-amber-600/[0.16] has-[:checked]:ring-2 has-[:checked]:ring-amber-700 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ink";
+  "relative flex cursor-pointer items-start justify-between gap-4 rounded-2xl bg-cream px-4 py-3.5 text-left ring-1 ring-line-strong transition-[background-color,box-shadow] duration-300 ease-fluid has-[:checked]:bg-accent-tint has-[:checked]:ring-2 has-[:checked]:ring-accent has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ink";
 
 type Status = "idle" | "submitting" | "success" | "mailto" | "error";
 
@@ -379,7 +379,7 @@ export default function ContactForm({
         ref={resultRef}
         tabIndex={-1}
         role="status"
-        className="rounded-2xl bg-amber-600/[0.16] p-6 text-center ring-1 ring-amber-600/20 focus:outline-none"
+        className="rounded-2xl bg-accent-tint p-6 text-center ring-1 ring-accent/25 focus:outline-none"
       >
         <p className="font-display text-step-2 font-bold">
           Bedankt! Uw aanvraag is ontvangen.
@@ -397,7 +397,7 @@ export default function ContactForm({
         ref={resultRef}
         tabIndex={-1}
         role="status"
-        className="rounded-2xl bg-amber-600/[0.16] p-6 text-center ring-1 ring-amber-600/20 focus:outline-none"
+        className="rounded-2xl bg-accent-tint p-6 text-center ring-1 ring-accent/25 focus:outline-none"
       >
         <p className="font-display text-step-2 font-bold">
           Nog één stap: verstuur de e-mail
@@ -408,7 +408,7 @@ export default function ContactForm({
           e-mailprogramma geopend? Mail uw gegevens dan naar{" "}
           <a
             href={`mailto:${SITE.email}`}
-            className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+            className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
           >
             {SITE.email}
           </a>
@@ -417,7 +417,7 @@ export default function ContactForm({
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-4 text-sm font-semibold underline decoration-amber-600/50 underline-offset-4"
+          className="mt-4 text-sm font-semibold underline decoration-accent-fg/60 underline-offset-4"
         >
           Terug naar het formulier
         </button>
@@ -447,7 +447,7 @@ export default function ContactForm({
           <div>
             <label htmlFor="postcode" className={labelStyles}>
               Postcode{" "}
-              <span className="text-amber-700" aria-hidden="true">
+              <span className="text-accent-fg" aria-hidden="true">
                 *
               </span>
             </label>
@@ -621,7 +621,7 @@ export default function ContactForm({
           <div>
             <label htmlFor="naam" className={labelStyles}>
               Uw naam{" "}
-              <span className="text-amber-700" aria-hidden="true">
+              <span className="text-accent-fg" aria-hidden="true">
                 *
               </span>
             </label>
@@ -640,7 +640,7 @@ export default function ContactForm({
           <div>
             <label htmlFor="telefoon" className={labelStyles}>
               Telefoonnummer{" "}
-              <span className="text-amber-700" aria-hidden="true">
+              <span className="text-accent-fg" aria-hidden="true">
                 *
               </span>
             </label>
@@ -757,7 +757,7 @@ export default function ContactForm({
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="group flex w-full items-center justify-center gap-3 rounded-full bg-amber-700 py-2.5 pr-2.5 pl-6 text-base font-semibold text-white transition-[transform,background-color] duration-300 ease-fluid hover:bg-amber-800 active:scale-[0.98] disabled:opacity-70"
+          className="group flex w-full items-center justify-center gap-3 rounded-full bg-accent py-2.5 pr-2.5 pl-6 text-base font-semibold text-white transition-[transform,background-color] duration-300 ease-fluid hover:bg-accent-hover active:scale-[0.98] disabled:opacity-70"
         >
           {status === "submitting"
             ? "Bezig met verzenden…"
@@ -770,7 +770,7 @@ export default function ContactForm({
         <p className="mt-3 text-center text-sm text-ink-soft">
           U zit nog nergens aan vast — u krijgt eerst een voorstel voor dag en
           tijd.{" "}
-          <span className="text-amber-700" aria-hidden="true">
+          <span className="text-accent-fg" aria-hidden="true">
             *
           </span>{" "}
           Verplicht veld.

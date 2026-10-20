@@ -87,7 +87,7 @@ export default function ContactPage() {
                   {SITE.whatsapp && (
                     <a
                       href={SITE.whatsapp}
-                      className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-fluid hover:text-amber-400"
+                      className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-fluid hover:text-accent-ink"
                     >
                       <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
                         <IconChat className="h-4.5 w-4.5" />
@@ -97,7 +97,7 @@ export default function ContactPage() {
                   )}
                   <a
                     href={`mailto:${SITE.email}`}
-                    className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-fluid hover:text-amber-400"
+                    className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-fluid hover:text-accent-ink"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
                       <IconMail className="h-4.5 w-4.5" />

@@ -189,7 +189,7 @@ export default async function ArtikelPage({
             Staat uw vraag er niet bij?{" "}
             <Link
               href="/contact"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               Stel hem via het contactformulier
             </Link>

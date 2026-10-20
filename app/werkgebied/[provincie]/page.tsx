@@ -107,6 +107,17 @@ export default async function ProvinciePage({
         benefits={usps}
         image={heroFoto}
         imageAlt={`Tv monteur van Uw TV Monteur aan het werk in ${provincie.naam}`}
+        formulier={{
+          titel: `Plan uw afspraak in ${provincie.naam}`,
+          intro:
+            `Kies het formaat van uw tv, dan staat uw prijs er direct bij \u2014 vast, inclusief voorrijkosten en btw. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid.`,
+          submitLabel: "Afspraak aanvragen",
+          variant: `provincie-${provincie.slug}`,
+          montage: true,
+          berichtLabel: "Uw tv en uw muur",
+          berichtPlaceholder:
+            "Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat.",
+        }}
       />
 
       <section className="mx-auto w-full max-w-6xl px-4 py-section md:px-8">

@@ -20,7 +20,7 @@ export default function Stappen({
             <Reveal delay={i * 60} className="h-full">
               <div className="h-full rounded-[1.75rem] bg-ink/[0.04] p-1.5 ring-1 ring-line">
                 <div className="h-full rounded-[calc(1.75rem-0.375rem)] bg-white p-6">
-                  <span className="font-display text-sm font-bold tracking-widest text-amber-700">
+                  <span className="font-display text-sm font-bold tracking-widest text-accent-fg">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-3 font-display text-lg font-bold tracking-tight">

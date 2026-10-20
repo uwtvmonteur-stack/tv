@@ -125,6 +125,16 @@ export default function TvInstellenPage() {
         ]}
         image={heroImg}
         imageAlt="Ingestelde smart-tv met heldere beeldweergave in de woonkamer"
+        formulier={{
+          titel: "Plan tv-hulp aan huis",
+          intro:
+            "Vaste prijs van \u20ac60, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt.",
+          submitLabel: "Afspraak aanvragen",
+          variant: "tv-instellen-hero",
+          berichtLabel: "Wat lukt er niet?",
+          berichtPlaceholder:
+            "Bijvoorbeeld: na de storing zijn alle zenders weg en Netflix start niet meer.",
+        }}
       />
 
       <BrandMarquee />
@@ -184,14 +194,14 @@ export default function TvInstellenPage() {
             Bekijk alle{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               prijzen
             </Link>{" "}
             of{" "}
             <Link
               href="/contact"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               plan direct een afspraak
             </Link>

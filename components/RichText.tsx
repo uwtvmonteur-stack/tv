@@ -30,7 +30,7 @@ export default function RichText({ children }: { children: string }) {
       <Link
         key={`${start}-${m[2]}`}
         href={m[2]}
-        className="font-medium text-ink underline decoration-amber-600/50 underline-offset-2 transition-colors hover:decoration-amber-600"
+        className="font-medium text-ink underline decoration-accent-fg/60 underline-offset-2 transition-colors hover:decoration-accent-fg"
       >
         {m[1]}
       </Link>,

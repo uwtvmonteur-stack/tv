@@ -237,7 +237,7 @@ export default function TvOphangenPage() {
               letten. Liever meteen geregeld?{" "}
               <Link
                 href="/contact"
-                className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
               >
                 Plan een afspraak
               </Link>{" "}
@@ -301,7 +301,7 @@ export default function TvOphangenPage() {
             ook dat spreken we vooraf af. Bekijk alle tarieven en opties op de{" "}
             <Link
               href="/prijzen"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               prijzenpagina
             </Link>
@@ -340,7 +340,7 @@ export default function TvOphangenPage() {
             overal veilig hangt. Heeft u een{" "}
             <Link
               href="/tv-ophangen-gipswand"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               gipswand of holle wand
             </Link>
@@ -389,7 +389,7 @@ export default function TvOphangenPage() {
             Wilt u zelf controleren of een beugel op uw tv past?{" "}
             <Link
               href="/kennisbank/welke-tv-beugel"
-              className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+              className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
             >
               Zo meet u de VESA-maat
             </Link>
@@ -421,7 +421,7 @@ export default function TvOphangenPage() {
               Wilt u het zelf narekenen?{" "}
               <Link
                 href="/kennisbank/hoe-hoog-tv-ophangen"
-                className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
               >
                 In onze kennisbank staat de rekenregel met een tabel per
                 schermformaat
@@ -449,7 +449,7 @@ export default function TvOphangenPage() {
               tegen een vaste prijs met u af. Meer weten? Bekijk onze{" "}
               <Link
                 href="/prijzen"
-                className="font-semibold text-ink underline decoration-amber-600/50 underline-offset-4"
+                className="font-semibold text-ink underline decoration-accent-fg/60 underline-offset-4"
               >
                 prijzen en opties
               </Link>

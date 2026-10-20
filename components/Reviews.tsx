@@ -41,7 +41,7 @@ export default function Reviews({
                       href={SITE.reviews.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-ink-soft underline decoration-amber-600/50 underline-offset-2 hover:text-ink"
+                      className="text-xs text-ink-soft underline decoration-accent-fg/60 underline-offset-2 hover:text-ink"
                     >
                       {SITE.reviews.count} beoordelingen op Google
                     </a>

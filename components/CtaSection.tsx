@@ -46,7 +46,7 @@ export default function CtaSection({
             <div className="mt-10">
               <Link
                 href={href}
-                className="group inline-flex items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-[transform,background-color] duration-300 ease-fluid hover:bg-white active:scale-[0.98]"
               >
                 Plan een afspraak
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">

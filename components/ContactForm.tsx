@@ -379,7 +379,7 @@ export default function ContactForm({
         ref={resultRef}
         tabIndex={-1}
         role="status"
-        className="rounded-2xl bg-amber-600/10 p-6 text-center ring-1 ring-amber-600/20 focus:outline-none"
+        className="rounded-2xl bg-amber-600/[0.16] p-6 text-center ring-1 ring-amber-600/20 focus:outline-none"
       >
         <p className="font-display text-step-2 font-bold">
           Bedankt! Uw aanvraag is ontvangen.
@@ -397,7 +397,7 @@ export default function ContactForm({
         ref={resultRef}
         tabIndex={-1}
         role="status"
-        className="rounded-2xl bg-amber-600/10 p-6 text-center ring-1 ring-amber-600/20 focus:outline-none"
+        className="rounded-2xl bg-amber-600/[0.16] p-6 text-center ring-1 ring-amber-600/20 focus:outline-none"
       >
         <p className="font-display text-step-2 font-bold">
           Nog één stap: verstuur de e-mail

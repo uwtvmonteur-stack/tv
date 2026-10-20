@@ -61,7 +61,7 @@ export default function StickyCta() {
         <Link
           href={eigenFormulier ? "#afspraak" : "/contact"}
           tabIndex={show ? undefined : -1}
-          className={`${btn} bg-amber-700 text-white`}
+          className={`${btn} bg-amber-700 text-white hover:bg-amber-800`}
         >
           Afspraak maken
           <IconArrowUpRight className="h-4 w-4" />

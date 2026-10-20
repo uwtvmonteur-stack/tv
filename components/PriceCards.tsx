@@ -76,7 +76,7 @@ export default function PriceCards({
                       className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
                         card.featured
                           ? "bg-amber-500/20 text-amber-300"
-                          : "bg-amber-600/10 text-amber-700"
+                          : "bg-amber-600/[0.16] text-amber-700"
                       }`}
                     >
                       <IconCheck className="h-3 w-3" />
@@ -94,7 +94,7 @@ export default function PriceCards({
                 data-maat={card.name.toLowerCase()}
                 className={`mt-8 flex items-center justify-center rounded-full py-3.5 text-sm font-semibold transition-transform duration-300 ease-fluid active:scale-[0.98] ${
                   card.featured
-                    ? "bg-amber-700 text-white"
+                    ? "bg-amber-700 text-white hover:bg-amber-800"
                     : "ring-1 ring-ink/15 hover:bg-ink/5"
                 }`}
               >

@@ -94,7 +94,7 @@ function Hero() {
           <div className="mt-8">
             <Link
               href="#afspraak"
-              className="group flex w-full items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-transform duration-300 ease-fluid active:scale-[0.98] sm:inline-flex sm:w-auto"
+              className="group flex w-full items-center justify-center gap-3 rounded-full bg-cream py-2.5 pr-2.5 pl-7 text-base font-semibold text-ink transition-[transform,background-color] duration-300 ease-fluid hover:bg-white active:scale-[0.98] sm:inline-flex sm:w-auto"
             >
               Plan een afspraak
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
@@ -186,7 +186,7 @@ function Diensten() {
                       "Waterpas gemonteerd én getest",
                     ].map((item) => (
                       <li key={item} className="flex items-center gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-600/10 text-amber-700">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-600/[0.16] text-amber-700">
                           <IconCheck className="h-3.5 w-3.5" />
                         </span>
                         {item}

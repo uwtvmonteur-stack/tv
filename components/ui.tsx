@@ -29,7 +29,7 @@ export function Eyebrow({
       className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[10px] font-medium tracking-[0.2em] uppercase ring-1 ${
         light
           ? "bg-white/10 text-white/90 ring-white/20"
-          : "bg-amber-600/10 text-amber-800 ring-amber-600/20"
+          : "bg-amber-600/[0.16] text-amber-800 ring-amber-600/20"
       }`}
     >
       {children}
@@ -61,7 +61,7 @@ export function BezelCard({
 
 export function IconChip({ children }: { children: ReactNode }) {
   return (
-    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-600/10 text-amber-700">
+    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-600/[0.16] text-amber-700">
       {children}
     </span>
   );

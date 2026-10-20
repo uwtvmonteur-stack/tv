@@ -32,20 +32,34 @@ const links = [
  * scherm ze wég van het formulier dat 300 pixels lager stond, inclusief het
  * tv-formaat dat ze net hadden aangeklikt.
  */
-function useAfspraakOpPagina() {
-  const pathname = usePathname();
-  const [opPagina, setOpPagina] = useState(false);
+const ZONDER_FORMULIER = new Set([
+  "/diensten",
+  "/over-ons",
+  "/werkgebied",
+  "/kennisbank",
+  "/privacy",
+]);
 
-  useEffect(() => {
-    setOpPagina(Boolean(document.getElementById("afspraak")));
-  }, [pathname]);
-
-  return opPagina ? "#afspraak" : "/contact";
+/**
+ * Een vaste regel op basis van het pad, en bewust geen zoekopdracht in de DOM
+ * binnen een effect: dat laatste zet de knop pas goed ná de eerste tekening,
+ * zodat iemand die meteen klikt alsnog naar /contact vertrekt. Zo klopt de
+ * link al in de HTML die van de server komt.
+ *
+ * Alle pagina's met koopintentie dragen sinds deze herbouw zelf een
+ * formulier; alleen de overzichts- en informatiepagina's hierboven niet.
+ * Komt er een pagina bij zonder formulier, zet hem dan in deze lijst.
+ */
+function afspraakHref(pathname: string) {
+  if (ZONDER_FORMULIER.has(pathname) || pathname.startsWith("/kennisbank/")) {
+    return "/contact";
+  }
+  return "#afspraak";
 }
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const afspraakHref = useAfspraakOpPagina();
+  const href = afspraakHref(usePathname());
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -113,7 +127,7 @@ export default function Nav() {
             {/* Eén actie in de balk: de afspraak. Het telefoonnummer staat
                 alleen in de voettekst, zodat niets de afspraakknop beconcurreert. */}
             <Link
-              href={afspraakHref}
+              href={href}
               inert={open || undefined}
               className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-sm bg-accent px-4 text-sm font-semibold whitespace-nowrap text-white shadow-e1 transition-colors duration-200 ease-out hover:bg-accent-hover"
             >
@@ -173,7 +187,7 @@ export default function Nav() {
         </nav>
         <div className="mt-8">
           <Button
-            href={afspraakHref}
+            href={href}
             maat="lg"
             breed
             onClick={() => setOpen(false)}

@@ -200,6 +200,16 @@
   }
   .section {
     @apply py-16 sm:py-20 lg:py-24;
+    /* Hier stond `content-visibility: auto`, dat secties buiten beeld
+       overslaat. Gemeten winst op een trage telefoon: LCP van 3090 naar
+       2700 ms, en de grootste layout-berekening van 1305 naar 712 ms.
+       Toch eruit gehaald: axe (en dus Lighthouse en PageSpeed Insights) kan
+       de achtergrondkleur van overgeslagen inhoud niet bepalen en meldt dan
+       contrastfouten die er niet zijn — de toegankelijkheidsscore zakte van
+       100 naar 96 op twee elementen die in werkelijkheid 5,9:1 en 5,5:1
+       halen. Een meting die spookfouten geeft is schadelijker dan 390 ms:
+       dan leer je jezelf aan om die meting te negeren. Wil je die tijd
+       alsnog winnen, dan is een kortere homepage de eerlijke weg. */
   }
 
   /* ---- Knoppen ----------------------------------------------------------

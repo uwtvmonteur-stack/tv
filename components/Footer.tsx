@@ -38,15 +38,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">
+            <h3 className="text-2xs font-semibold tracking-[0.16em] text-white/50 uppercase">
               Diensten
             </h3>
-            <ul className="mt-5 flex flex-col gap-3 text-[15px]">
+            <ul className="mt-5 flex flex-col gap-3 text-sm">
               {diensten.map((dienst) => (
                 <li key={dienst.slug}>
                   <Link
                     href={dienstHref(dienst)}
-                    className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
+                    className="inline-flex min-h-11 items-center text-white/70 transition-colors duration-300 ease-out hover:text-white"
                   >
                     {dienst.naam}
                   </Link>
@@ -65,7 +65,7 @@ export default function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
+                    className="inline-flex min-h-11 items-center text-white/70 transition-colors duration-300 ease-out hover:text-white"
                   >
                     {label}
                   </Link>
@@ -75,15 +75,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">
+            <h3 className="text-2xs font-semibold tracking-[0.16em] text-white/50 uppercase">
               Werkgebied
             </h3>
-            <ul className="mt-5 flex flex-col gap-3 text-[15px]">
+            <ul className="mt-5 flex flex-col gap-3 text-sm">
               {provincies.map((provincie) => (
                 <li key={provincie.slug}>
                   <Link
                     href={`/werkgebied/${provincie.slug}`}
-                    className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
+                    className="inline-flex min-h-11 items-center text-white/70 transition-colors duration-300 ease-out hover:text-white"
                   >
                     Tv monteur {provincie.naam}
                   </Link>
@@ -92,7 +92,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/werkgebied"
-                  className="text-white/70 transition-colors duration-300 ease-out hover:text-white"
+                  className="inline-flex min-h-11 items-center text-white/70 transition-colors duration-300 ease-out hover:text-white"
                 >
                   Volledig werkgebied
                 </Link>
@@ -101,14 +101,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">
+            <h3 className="text-2xs font-semibold tracking-[0.16em] text-white/50 uppercase">
               Contact
             </h3>
-            <ul className="mt-5 flex flex-col gap-3 text-[15px] text-white/70">
+            <ul className="mt-5 flex flex-col gap-3 text-sm text-white/70">
               <li>
                 <a
                   href={`tel:${SITE.phone}`}
-                  className="transition-colors duration-300 ease-out hover:text-white"
+                  className="inline-flex min-h-11 items-center transition-colors duration-300 ease-out hover:text-white"
                 >
                   {SITE.phoneDisplay}
                 </a>
@@ -116,7 +116,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="transition-colors duration-300 ease-out hover:text-white"
+                  className="inline-flex min-h-11 items-center transition-colors duration-300 ease-out hover:text-white"
                 >
                   {SITE.email}
                 </a>
@@ -125,7 +125,7 @@ export default function Footer() {
                 <li>
                   <a
                     href={SITE.whatsapp}
-                    className="transition-colors duration-300 ease-out hover:text-white"
+                    className="inline-flex min-h-11 items-center transition-colors duration-300 ease-out hover:text-white"
                   >
                     WhatsApp
                   </a>
@@ -134,7 +134,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/kennisbank"
-                  className="transition-colors duration-300 ease-out hover:text-white"
+                  className="inline-flex min-h-11 items-center transition-colors duration-300 ease-out hover:text-white"
                 >
                   Kennisbank
                 </Link>
@@ -142,7 +142,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/over-ons"
-                  className="transition-colors duration-300 ease-out hover:text-white"
+                  className="inline-flex min-h-11 items-center transition-colors duration-300 ease-out hover:text-white"
                 >
                   Over ons
                 </Link>
@@ -150,7 +150,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="transition-colors duration-300 ease-out hover:text-white"
+                  className="inline-flex min-h-11 items-center transition-colors duration-300 ease-out hover:text-white"
                 >
                   Offerte aanvragen
                 </Link>
@@ -158,7 +158,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="transition-colors duration-300 ease-out hover:text-white"
+                  className="inline-flex min-h-11 items-center transition-colors duration-300 ease-out hover:text-white"
                 >
                   Privacyverklaring
                 </Link>
@@ -178,7 +178,7 @@ export default function Footer() {
         <div className="mt-14 border-t border-white/10 pt-8">
           <div className="grid gap-8 sm:grid-cols-2">
             <div>
-              <h3 className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">
+              <h3 className="text-2xs font-semibold tracking-[0.16em] text-white/50 uppercase">
                 Ons werkgebied
               </h3>
               <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
@@ -186,7 +186,7 @@ export default function Footer() {
                   <li key={provincie.slug}>
                     <Link
                       href={`/werkgebied/${provincie.slug}`}
-                      className="text-white/55 transition-colors duration-300 ease-out hover:text-white"
+                      className="inline-flex min-h-11 items-center text-white/55 transition-colors duration-300 ease-out hover:text-white"
                     >
                       Tv monteur {provincie.naam}
                     </Link>
@@ -195,7 +195,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/werkgebied"
-                    className="font-medium text-white/75 transition-colors duration-300 ease-out hover:text-white"
+                    className="inline-flex min-h-11 items-center font-medium text-white/75 transition-colors duration-300 ease-out hover:text-white"
                   >
                     Alle {steden.length} steden
                   </Link>
@@ -204,7 +204,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h3 className="text-[11px] font-semibold tracking-[0.16em] text-white/50 uppercase">
+              <h3 className="text-2xs font-semibold tracking-[0.16em] text-white/50 uppercase">
                 Kennisbank
               </h3>
               <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
@@ -212,7 +212,7 @@ export default function Footer() {
                   <li key={artikel.slug}>
                     <Link
                       href={`/kennisbank/${artikel.slug}`}
-                      className="text-white/55 transition-colors duration-300 ease-out hover:text-white"
+                      className="inline-flex min-h-11 items-center text-white/55 transition-colors duration-300 ease-out hover:text-white"
                     >
                       {artikel.titel}
                     </Link>

@@ -54,7 +54,7 @@ export default function WerkgebiedPage() {
                         Tv monteur {provincie.naam}
                       </Link>
                     </h2>
-                    <p className="mt-3 text-[15px] leading-relaxed text-fg-muted">
+                    <p className="mt-3 text-sm leading-relaxed text-fg-muted">
                       {provincie.intro}
                     </p>
                   </div>
@@ -86,7 +86,7 @@ export default function WerkgebiedPage() {
         </ul>
 
         <Reveal>
-          <p className="mx-auto mt-12 max-w-2xl text-center text-[15px] leading-relaxed text-fg-muted">
+          <p className="mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed text-fg-muted">
             Staat uw woonplaats er niet tussen? Ons werkgebied groeit
             voortdurend en voor grotere klussen rijden we graag een stukje
             verder. <Link href="/contact" className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4">Neem contact op</Link>{" "}

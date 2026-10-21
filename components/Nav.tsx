@@ -102,11 +102,17 @@ export default function Nav() {
           <Link
             href="/"
             inert={open || undefined}
-            className="flex shrink-0 items-center gap-2.5 pr-2"
+            // `min-w-0` met `truncate` op de naam in plaats van `shrink-0`:
+            // op een smalle Android (360 px) stonden logo, offerteknop en
+            // hamburger samen net te breed, en omdat niets mocht krimpen
+            // schoof de hele pagina horizontaal. Nu kort de merknaam af —
+            // zichtbaar vanaf ongeveer 340 px, en geen enkel scherm erboven
+            // verandert.
+            className="flex min-w-0 items-center gap-2.5 pr-2"
             onClick={() => setOpen(false)}
           >
             <LogoMark className="h-9 w-9" />
-            <span className="font-display text-base font-semibold whitespace-nowrap">
+            <span className="truncate font-display text-base font-semibold">
               Uw TV Monteur
             </span>
           </Link>

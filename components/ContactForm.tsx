@@ -1,6 +1,12 @@
 "use client";
 
-import { useRef, useState, type FormEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 import { IconArrowUpRight } from "./icons";
 import { trackAdsConversion, trackEvent } from "./Analytics";
 import { SITE, TRACKING } from "@/lib/site";
@@ -121,6 +127,14 @@ export default function ContactForm({
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const resultRef = useRef<HTMLDivElement>(null);
 
+  // Na het verzenden verdwijnt het formulier en komt het antwoord ervoor in de
+  // plaats. Zonder deze focus merkt een schermlezer daar niets van — de
+  // bezoeker hoort niets meer en weet niet of zijn aanvraag staat. Focus
+  // scrollt het paneel bovendien in beeld, wat op een telefoon net zo nodig is.
+  useEffect(() => {
+    if (status === "success" || status === "mailto") resultRef.current?.focus();
+  }, [status]);
+
   // `useRef` en niet `useState`: dit mag geen hertekening veroorzaken terwijl
   // iemand in een veld staat te typen.
   const startGemeld = useRef(false);
@@ -223,11 +237,13 @@ export default function ContactForm({
       } else if (res.status === 503) {
         openMailto();
       } else if (res.status === 422) {
-        setFieldErrors({
-          email: "Controleer uw e-mailadres; het lijkt niet compleet.",
-        });
-        setStatus("idle");
-        form.querySelector<HTMLInputElement>("#email")?.focus();
+        // De server keurt dezelfde velden af als het formulier hierboven, dus
+        // dit hoort niet voor te komen. Gebeurt het toch, dan tonen we wat er
+        // mis is én de algemene melding met het e-mailadres eronder. Eerder
+        // wees dit altijd naar het e-mailveld — dan zoekt iemand een fout in
+        // het enige veld dat optioneel is, en komt hij er nooit meer uit.
+        setFieldErrors(valideer(payload));
+        setStatus("error");
       } else {
         setStatus("error");
       }

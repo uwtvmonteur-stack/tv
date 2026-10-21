@@ -74,7 +74,7 @@ export default function ServiceHero({
 
             <ul className="mt-7 flex flex-col gap-2.5">
               {benefits.map((b) => (
-                <li key={b} className="flex items-start gap-3 text-[15px] font-medium">
+                <li key={b} className="flex items-start gap-3 text-sm font-medium">
                   <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-tint text-accent-fg">
                     <IconCheck className="h-3.5 w-3.5" />
                   </span>

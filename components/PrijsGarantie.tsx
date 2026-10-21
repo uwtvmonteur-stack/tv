@@ -35,7 +35,7 @@ export default function PrijsGarantie({
               <h3 className="mt-5 font-display text-[1.0625rem] leading-snug font-semibold">
                 {garantie.kop}
               </h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
+              <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                 {garantie.tekst}
               </p>
             </div>

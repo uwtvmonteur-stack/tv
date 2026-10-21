@@ -56,7 +56,11 @@ export default function Reviews({
           </Reveal>
 
           <Reveal>
-            <ul className="mt-8 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <ul
+              tabIndex={0}
+              aria-label="Reviews van klanten, horizontaal te verschuiven"
+              className="mt-8 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
               {items.map((review) => (
                 <li
                   key={review.name}

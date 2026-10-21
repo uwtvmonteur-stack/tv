@@ -72,7 +72,7 @@ export default function ContactPage() {
                   </h2>
                   {/* Onzekerheid over wat er volgt is de tweede reden om een
                       formulier niet af te maken, na de angst vast te zitten. */}
-                  <ol className="mt-6 flex flex-col gap-5 text-[15px] leading-relaxed text-white/70">
+                  <ol className="mt-6 flex flex-col gap-5 text-sm leading-relaxed text-white/70">
                     {vervolgstappen.map((stap, i) => (
                       <li key={stap} className="flex gap-3.5">
                         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-fg-inverse">
@@ -83,7 +83,7 @@ export default function ContactPage() {
                     ))}
                   </ol>
                 </div>
-                <div className="flex flex-col gap-4 text-[15px]">
+                <div className="flex flex-col gap-4 text-sm">
                   {SITE.whatsapp && (
                     <a
                       href={SITE.whatsapp}

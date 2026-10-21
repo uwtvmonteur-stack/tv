@@ -357,7 +357,7 @@ export default function TvOphangenPage() {
                 <h3 className="font-display text-lg font-semibold tracking-tight">
                   {m.h3}
                 </h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
+                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                   {m.text}
                 </p>
               </li>

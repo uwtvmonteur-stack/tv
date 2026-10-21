@@ -255,7 +255,7 @@ export default function TvInstallatiePage() {
                 <h3 className="font-display text-lg font-semibold tracking-tight">
                   Alleen tv ophangen
                 </h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
+                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                   Wilt u vooral dat uw televisie veilig en waterpas aan de muur
                   wordt gemonteerd? Bekijk dan onze{" "}
                   <Link
@@ -271,7 +271,7 @@ export default function TvInstallatiePage() {
                 <h3 className="font-display text-lg font-semibold tracking-tight">
                   Complete tv installatie
                 </h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-fg-muted">
+                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                   Wilt u dat uw tv wordt aangesloten, met wifi wordt verbonden,
                   zenders en apps krijgt, met uw apparatuur samenwerkt en aan u
                   wordt uitgelegd? Dan is de complete tv installatie aan huis de
@@ -279,7 +279,7 @@ export default function TvInstallatiePage() {
                 </p>
               </div>
             </div>
-            <p className="mt-6 text-[15px] leading-relaxed text-fg-muted">
+            <p className="mt-6 text-sm leading-relaxed text-fg-muted">
               Twijfelt u welke service bij u past? Zet het kort in het{" "}
               <Link
                 href="/contact"

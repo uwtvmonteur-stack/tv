@@ -48,7 +48,7 @@ export default function Faq({ items }: { items: FaqItem[] }) {
                 style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
               >
                 <div className="overflow-hidden">
-                  <p className="px-6 pb-6 text-[15px] leading-relaxed text-fg-muted">
+                  <p className="px-6 pb-6 text-sm leading-relaxed text-fg-muted">
                     {item.a}
                   </p>
                 </div>

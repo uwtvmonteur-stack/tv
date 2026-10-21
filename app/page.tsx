@@ -23,7 +23,13 @@ import {
   IconClock,
     IconShield,
 } from "@/components/icons";
-import { bezwaren, diensten, dienstHref, faqAlgemeen } from "@/lib/content";
+import {
+  VANAF_PRIJS,
+  bezwaren,
+  diensten,
+  dienstHref,
+  faqAlgemeen,
+} from "@/lib/content";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta } from "@/lib/seo";
 import { SITE } from "@/lib/site";
@@ -89,18 +95,24 @@ function Hero() {
         </Reveal>
         <Reveal immediate>
           <p className="mt-6 max-w-xl text-lead text-pretty text-white/85">
-            Elke tv, elke wand, ook de beugel die u al had. De prijs die u ziet
-            is de prijs die u betaalt — ook &apos;s avonds, in het weekend, en
-            ook als uw wand van gipsplaat blijkt.
+            Elke tv, elke wand, ook de beugel die u al had. Vanaf {VANAF_PRIJS}{" "}
+            inclusief voorrijkosten en btw, en het bedrag uit uw offerte blijft
+            staan — ook &apos;s avonds, in het weekend, en ook als uw wand van
+            gipsplaat blijkt.
           </p>
         </Reveal>
         <Reveal immediate>
-          {/* Eén actie per scherm: alles wijst naar het afspraakformulier —
+          {/* Eén actie per scherm: alles wijst naar het offerteformulier —
               dat staat sinds deze herbouw op deze pagina zelf, dus deze knop
-              scrolt in plaats van dat hij de bezoeker verhuist. */}
+              scrolt in plaats van dat hij de bezoeker verhuist.
+
+              Stond hier "Bekijk uw prijs": een knop die een bedrag belooft en
+              een formulier geeft. Dat is de duurste soort teleurstelling, want
+              die valt precies op het moment dat de bezoeker besloot te
+              klikken. */}
           <div className="mt-8 sm:max-w-xs">
             <Button href="#offerte" variant="inverse" maat="lg" breed>
-              Bekijk uw prijs
+              Offerte aanvragen
               <IconArrowUpRight className="h-4 w-4" />
             </Button>
           </div>

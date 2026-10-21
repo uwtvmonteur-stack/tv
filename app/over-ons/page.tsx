@@ -48,9 +48,9 @@ export default function OverOnsPage() {
                   waterpas, veilig en zonder zichtbare kabels.
                 </p>
                 <p>
-                  We geloven in duidelijke afspraken en vaste prijzen zonder
-                  kleine lettertjes. Niet omdat het moet, maar omdat we vinden
-                  dat het zo hoort.
+                  We geloven in duidelijke afspraken: u weet het bedrag
+                  voordat wij beginnen, zonder kleine lettertjes. Niet omdat
+                  het moet, maar omdat we vinden dat het zo hoort.
                 </p>
               </div>
             </Reveal>

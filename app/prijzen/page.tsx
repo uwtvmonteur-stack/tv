@@ -37,7 +37,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Ik heb een bijzondere situatie — wat kost dat?",
-    a: "Voor bijzondere klussen, zoals een tv boven een open haard, extra grote schermen of kabels volledig in de muur, maken we vooraf een vaste prijsafspraak op maat. Zo komt u nooit voor verrassingen te staan.",
+    a: "Elke klus krijgt een offerte op maat, dus ook een bijzondere situatie. Bij een tv boven een open haard, extra grote schermen of kabels volledig in de muur komen we eerst kijken of meten voordat we een bedrag noemen. Daarna staat dat bedrag vast, ook als het werk tegenvalt.",
   },
 ];
 

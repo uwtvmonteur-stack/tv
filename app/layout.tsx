@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     template: "%s | Uw TV Monteur",
   },
   description:
-    "Tv laten ophangen door de monteur die zelf komt. Elke tv, elke wand, vaste prijs vooraf inclusief voorrijkosten en btw — ook 's avonds en in het weekend zonder toeslag.",
+    "Tv laten ophangen door de monteur die zelf komt. Elke tv, elke wand, vanaf €89 met offerte vooraf — ook 's avonds en in het weekend zonder toeslag.",
   openGraph: {
     siteName: SITE.name,
     locale: "nl_NL",

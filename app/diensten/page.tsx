@@ -34,7 +34,7 @@ export default function DienstenPage() {
         ]}
         eyebrow="Onze diensten"
         title="Onze diensten aan huis"
-        intro="Van tv ophangen en complete installatie tot soundbar aansluiten en tv instellen — kies hieronder de dienst die bij u past. Overal vaste prijzen, inclusief voorrijkosten en btw."
+        intro="Van tv ophangen en complete installatie tot soundbar aansluiten en tv instellen — kies hieronder de dienst die bij u past. U krijgt vooraf een vrijblijvende offerte, altijd inclusief voorrijkosten en btw."
       />
 
       <section className="mx-auto w-full max-w-content px-4 pb-8 md:px-8">

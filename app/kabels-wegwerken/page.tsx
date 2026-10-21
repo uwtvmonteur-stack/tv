@@ -141,12 +141,11 @@ export default function KabelsWegwerkenPage() {
         image={heroFoto}
         imageAlt="Kabels van een wandgemonteerde tv weggewerkt in een goot in muurkleur"
         formulier={{
-          titel: "Plan het wegwerken van uw kabels",
+          titel: "Vraag uw offerte aan voor het kabelwerk",
           intro:
             "Vinkt u het aan bij uw afspraak, dan doen we het in dezelfde rit — u hoeft ons dus geen tweede keer thuis te laten komen.",
-          submitLabel: "Afspraak aanvragen",
+          submitLabel: "Offerte aanvragen",
           variant: "kabels-wegwerken-hero",
-          montage: true,
           berichtLabel: "Uw tv en uw wand",
           berichtPlaceholder:
             "Bijvoorbeeld: 55 inch, stopcontact zit 2 meter links van de tv.",
@@ -194,7 +193,7 @@ export default function KabelsWegwerkenPage() {
         <PrijsGarantie className="mt-10" />
 
         <InlineCta
-          href="#afspraak"
+          href="#offerte"
           title="Zal ik het meteen meenemen?"
           text="Kabels wegwerken tijdens het ophangen scheelt u een tweede afspraak en een tweede keer thuisblijven."
         />
@@ -250,7 +249,7 @@ export default function KabelsWegwerkenPage() {
 
       <Reviews />
 
-      <CtaSection href="#afspraak" title="Geen kabel meer in het zicht?" />
+      <CtaSection href="#offerte" title="Geen kabel meer in het zicht?" />
     </main>
   );
 }

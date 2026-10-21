@@ -126,10 +126,10 @@ export default function TvInstellenPage() {
         image={heroImg}
         imageAlt="Ingestelde smart-tv met heldere beeldweergave in de woonkamer"
         formulier={{
-          titel: "Plan tv-hulp aan huis",
+          titel: "Vraag uw offerte aan voor tv-hulp",
           intro:
             "Vaste prijs van \u20ac60, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt.",
-          submitLabel: "Afspraak aanvragen",
+          submitLabel: "Offerte aanvragen",
           variant: "tv-instellen-hero",
           berichtLabel: "Wat lukt er niet?",
           berichtPlaceholder:
@@ -209,7 +209,7 @@ export default function TvInstellenPage() {
           </p>
         </Reveal>
 
-        <InlineCta href="#afspraak" text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
+        <InlineCta href="#offerte" text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
 
         <Reveal>
           <h2 className="mt-block font-display text-h2 font-semibold">
@@ -237,7 +237,7 @@ export default function TvInstellenPage() {
           title="Zo werkt tv hulp aan huis"
           steps={[
             {
-              title: "Afspraak inplannen",
+              title: "Offerte aanvragen",
               text: "Plan online een moment dat u uitkomt. Vertel kort wat er niet lukt, dan komt de monteur voorbereid.",
             },
             {
@@ -319,7 +319,7 @@ export default function TvInstellenPage() {
       </section>
 
 
-      <CtaSection href="#afspraak"
+      <CtaSection href="#offerte"
         title="Vandaag nog hulp bij uw tv?"
         text="Plan online een afspraak — vaak kunnen we binnen 24 uur bij u langskomen."
       />

@@ -9,7 +9,7 @@ import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SITE } from "@/lib/site";
 import { provincies } from "@/lib/steden";
-import { addons, priceCards } from "@/lib/content";
+import { tarieven } from "@/lib/content";
 import { offerCatalogJsonLd } from "@/lib/seo";
 import "./globals.css";
 
@@ -90,10 +90,10 @@ const graph = {
       description:
         "Tv monteur aan huis: tv ophangen, tv installatie, kabels wegwerken, soundbar-installatie en tv hulp in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant.",
       // Concreet in plaats van "€€": de laagste losse dienst (kabelgoot, vanaf
-      // €39) tot de hoogste (tv vanaf 65 inch ophangen, €159). Google toont dit
+      // €39) tot een gemiddelde complete klus. Google toont dit
       // in het bedrijfspaneel, en een bereik dat de prijslijst volgt is
       // controleerbaar — "€€" zegt een bezoeker niets.
-      priceRange: "€39–€159",
+      priceRange: "€39–€250",
       // Bewust alleen de vier provincies waar we daadwerkelijk rijden. De
       // eerdere `Country: Nederland` sprak dat tegen: twee tegenstrijdige
       // gebieden in één schema laten Google geen servicegebied bepalen, en het
@@ -133,13 +133,12 @@ const graph = {
       // Het volledige aanbod met prijzen, op élke pagina. Tot nu toe stonden de
       // tarieven alleen in het Service-schema van /prijzen, waardoor Google de
       // diensten aan die ene pagina koppelde in plaats van aan het bedrijf.
-      hasOfferCatalog: offerCatalogJsonLd([
-        ...priceCards.map((card) => ({
-          naam: `Tv ophangen ${card.size.replace(/^Voor tv's /, "")}`,
-          prijs: card.price,
+      hasOfferCatalog: offerCatalogJsonLd(
+        tarieven.map((tarief) => ({
+          naam: tarief.naam,
+          prijs: tarief.prijs,
         })),
-        ...addons,
-      ]),
+      ),
     },
     {
       "@type": "WebSite",

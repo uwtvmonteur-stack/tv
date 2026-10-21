@@ -49,7 +49,7 @@ export async function generateMetadata({
       // {stad}" of "tv laten ophangen {stad}". Ook de hoofdletters zijn eruit:
       // Engelse Title Case leest in een Nederlandse zoekresultatenlijst als
       // machinaal gemaakt en kost doorklikken.
-      title: `Tv ophangen in ${stad.naam} — vaste prijs vanaf €99`,
+      title: `Tv ophangen in ${stad.naam} — vanaf €89, offerte vooraf`,
       description: `Tv laten ophangen in ${stad.naam}? Vaste prijs vooraf, inclusief voorrijkosten en btw. Elke tv, elke wand, ook 's avonds en in het weekend zonder toeslag.`,
       path: `/tv-ophangen/${stad.slug}`,
     }),
@@ -134,7 +134,7 @@ export default async function StadPage({
         `Wat betaal ik voor tv ophangen in ${stad.naam}?`,
         `Hoeveel kost tv-montage in ${stad.naam}?`,
       ][qv],
-      a: `Tv ophangen in ${stad.naam} start bij €99, altijd inclusief voorrijkosten en btw — de exacte prijs hangt af van het schermformaat (zie de tarieven hierboven). Voor ${stad.naam} rekenen we geen voorrijtoeslag, in welke wijk u ook woont. Kabels wegwerken kan vanaf €39 extra.`,
+      a: `Tv ophangen in ${stad.naam} start bij €89, altijd inclusief voorrijkosten en btw — de exacte prijs hangt af van het schermformaat (zie de tarieven hierboven). Voor ${stad.naam} rekenen we geen voorrijtoeslag, in welke wijk u ook woont. Kabels wegwerken kan vanaf €39 extra.`,
     },
     {
       q: [
@@ -194,12 +194,11 @@ export default async function StadPage({
         image={heroFoto}
         imageAlt={`Tv monteur van Uw TV Monteur aan het werk in ${stad.naam}`}
         formulier={{
-          titel: `Plan uw afspraak in ${stad.naam}`,
+          titel: `Vraag uw offerte aan in ${stad.naam}`,
           intro:
-            `Kies het formaat van uw tv, dan staat uw prijs er direct bij \u2014 vast, inclusief voorrijkosten en btw. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid in ${stad.naam}.`,
-          submitLabel: "Afspraak aanvragen",
+            `Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij. Ook in ${stad.naam}.`,
+          submitLabel: "Offerte aanvragen",
           variant: `stad-${stad.slug}`,
-          montage: true,
           berichtLabel: "Uw tv en uw muur",
           berichtPlaceholder:
             "Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat.",
@@ -289,13 +288,13 @@ export default async function StadPage({
           </h2>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
             <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
-              Tot 43 inch — €99
+              Elke tv, elke wand — vanaf €89
             </span>
             <span className="rounded-full bg-inverse text-fg-inverse px-4 py-2">
-              44 t/m 64 inch — €129 · populair
+              Inclusief voorrijkosten en btw
             </span>
             <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
-              Vanaf 65 inch — €159
+              Exacte bedrag in uw offerte
             </span>
           </div>
           <p className="mt-5 text-sm text-fg-muted">
@@ -313,8 +312,8 @@ export default async function StadPage({
         {/* Hoort ná het tariefblok: pas als iemand de prijs voor zijn formaat
             kent, kan hij "plan een afspraak" beantwoorden. Stond hier eerder
             vóór de prijzen. */}
-        <InlineCta href="#afspraak"
-          text={`Vaste prijs vooraf, ook aan gipswand of holle wand. Kies een dag die u schikt; u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid in ${stad.naam}.`}
+        <InlineCta href="#offerte"
+          text={`Vanaf €89, ook aan gipswand of holle wand. Vraag vrijblijvend uw offerte aan; u hoort binnen enkele uren wat het in ${stad.naam} kost.`}
         />
 
         <Reveal>
@@ -374,7 +373,7 @@ export default async function StadPage({
 
       <CtaSection
         title={`Tv laten ophangen in ${stad.naam}?`}
-        href="#afspraak"
+        href="#offerte"
       />
     </main>
   );

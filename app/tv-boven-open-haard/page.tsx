@@ -135,9 +135,8 @@ export default function TvBovenOpenHaardPage() {
           titel: "Laat ons eerst even kijken",
           intro:
             "Zet in het bericht wat voor haard u heeft — hout, gas of elektrisch — en hoe hoog de schouw zit. Dan weet de monteur vooraf wat hij moet meenemen.",
-          submitLabel: "Afspraak aanvragen",
+          submitLabel: "Offerte aanvragen",
           variant: "open-haard-hero",
-          montage: true,
           berichtLabel: "Uw haard en uw tv",
           berichtPlaceholder:
             "Bijvoorbeeld: gashaard met schouw, 55 inch Samsung, schouw op 1,30 m.",
@@ -176,7 +175,7 @@ export default function TvBovenOpenHaardPage() {
         </ul>
 
         <InlineCta
-          href="#afspraak"
+          href="#offerte"
           title="Liever eerst zekerheid dan een gok"
           text="Wij meten het bij u thuis en zeggen eerlijk wat er kan. Kan het niet veilig, dan boren we niet."
         />
@@ -228,7 +227,7 @@ export default function TvBovenOpenHaardPage() {
 
       <Reviews />
 
-      <CtaSection href="#afspraak" title="Zal ik komen kijken of het kan?" />
+      <CtaSection href="#offerte" title="Zal ik komen kijken of het kan?" />
     </main>
   );
 }

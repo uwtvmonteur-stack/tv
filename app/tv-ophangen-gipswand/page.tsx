@@ -152,12 +152,11 @@ export default function TvOphangenGipswandPage() {
         image={heroFoto}
         imageAlt="Monteur hangt een televisie waterpas op aan een lichte binnenwand"
         formulier={{
-          titel: "Plan het ophangen op uw gipswand",
+          titel: "Vraag uw offerte aan voor uw gipswand",
           intro:
-            "Kies het formaat van uw tv, dan staat uw prijs er direct bij. Een gipswand of holle wand kost bij ons niets extra \u2014 het tarief blijft hetzelfde.",
-          submitLabel: "Afspraak aanvragen",
+            "Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij. Een gipswand of holle wand kost bij ons niets extra.",
+          submitLabel: "Offerte aanvragen",
           variant: "gipswand-hero",
-          montage: true,
           berichtLabel: "Uw tv en uw wand",
           berichtPlaceholder:
             "Bijvoorbeeld: 55 inch Samsung, gipswand met stalen frame.",
@@ -178,7 +177,7 @@ export default function TvOphangenGipswandPage() {
                 href="/contact"
                 className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
               >
-                Plan een afspraak
+                Offerte aanvragen
               </Link>{" "}
               en zet erbij wat voor wand u denkt te hebben.
             </p>
@@ -258,7 +257,7 @@ export default function TvOphangenGipswandPage() {
           </p>
         </Reveal>
 
-        <InlineCta href="#afspraak" />
+        <InlineCta href="#offerte" />
 
         <Reveal>
           <h2 className="mt-block font-display text-h2 font-semibold">
@@ -285,12 +284,12 @@ export default function TvOphangenGipswandPage() {
             ["/kennisbank/welke-tv-beugel", "Welke beugel past?"],
             ["/prijzen", "Prijzen"],
             ["/diensten/tv-installatie", "Tv installatie"],
-            ["/contact", "Afspraak maken"],
+            ["/contact", "Offerte aanvragen"],
           ]}
         />
       </section>
 
-      <CtaSection href="#afspraak"
+      <CtaSection href="#offerte"
         title="Twijfelt u over uw wand?"
         text="Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich."
       />

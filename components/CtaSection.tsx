@@ -10,9 +10,9 @@ export default function CtaSection({
   // Om precies dezelfde reden is eerder "Vandaag gebeld" van /tv-ophangen
   // gehaald. Deze standaard staat op home, /diensten, /over-ons, /prijzen, de
   // kennisbank en de 32 stadpagina's — dus zesvoudig dezelfde loze belofte.
-  title = "Kies een avond of een zaterdag die u schikt",
+  title = "Vraag vrijblijvend uw offerte aan",
   text = "Vraag online uw afspraak aan — u hoort binnen enkele uren wat de eerstvolgende mogelijkheid is. 's Avonds tot 21:00 en in het weekend zonder toeslag, en u betaalt pas na afloop.",
-  // Staat het formulier op dezelfde pagina, dan geeft die pagina `#afspraak`
+  // Staat het formulier op dezelfde pagina, dan geeft die pagina `#offerte`
   // mee: deze afsluiter hoeft niemand te verhuizen naar /contact voor iets wat
   // een paar regels hoger staat.
   href = "/contact",
@@ -48,7 +48,7 @@ export default function CtaSection({
                 href={href}
                 className="group inline-flex items-center justify-center gap-3 rounded-full bg-paper py-2.5 pr-2.5 pl-7 text-base font-semibold text-fg transition-[transform,background-color] duration-300 ease-out hover:bg-white active:scale-[0.98]"
               >
-                Plan een afspraak
+                Offerte aanvragen
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                   <IconArrowUpRight className="h-4 w-4" />
                 </span>

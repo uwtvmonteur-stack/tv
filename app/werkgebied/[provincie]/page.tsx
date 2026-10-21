@@ -30,7 +30,7 @@ export async function generateMetadata({
   if (!provincie) return {};
   return {
     ...pageMeta({
-      title: `Tv ophangen in ${provincie.naam} — vaste prijs vanaf €99`,
+      title: `Tv ophangen in ${provincie.naam} — vanaf €89, offerte vooraf`,
       description: `Tv laten ophangen in ${provincie.naam}? Vaste prijs vooraf, inclusief voorrijkosten en btw. Elke tv, elke wand, ook 's avonds en in het weekend zonder toeslag.`,
       path: `/werkgebied/${provincie.slug}`,
     }),
@@ -68,7 +68,7 @@ export default async function ProvinciePage({
         `Zijn er voorrijkosten in ${provincie.naam}?`,
         `Betaal ik extra voor de rit naar ${provincie.naam}?`,
       ][qv],
-      a: `Nee. In heel ${provincie.naam} zijn de voorrijkosten bij de vaste prijs inbegrepen: tv ophangen vanaf €99, inclusief btw. De prijs die we afspreken is de prijs die u betaalt.`,
+      a: `Nee. In heel ${provincie.naam} zijn de voorrijkosten bij het tarief inbegrepen: tv ophangen vanaf €89, inclusief btw. De prijs die we afspreken is de prijs die u betaalt.`,
     },
     {
       q: [
@@ -108,12 +108,11 @@ export default async function ProvinciePage({
         image={heroFoto}
         imageAlt={`Tv monteur van Uw TV Monteur aan het werk in ${provincie.naam}`}
         formulier={{
-          titel: `Plan uw afspraak in ${provincie.naam}`,
+          titel: `Vraag uw offerte aan in ${provincie.naam}`,
           intro:
-            `Kies het formaat van uw tv, dan staat uw prijs er direct bij \u2014 vast, inclusief voorrijkosten en btw. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid.`,
-          submitLabel: "Afspraak aanvragen",
+            `Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij.`,
+          submitLabel: "Offerte aanvragen",
           variant: `provincie-${provincie.slug}`,
-          montage: true,
           berichtLabel: "Uw tv en uw muur",
           berichtPlaceholder:
             "Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat.",
@@ -168,7 +167,7 @@ export default async function ProvinciePage({
 
       <CtaSection
         title={`Tv laten ophangen in ${provincie.naam}?`}
-        href="#afspraak"
+        href="#offerte"
       />
     </main>
   );

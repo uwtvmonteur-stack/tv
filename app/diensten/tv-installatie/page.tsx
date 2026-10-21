@@ -79,7 +79,7 @@ const situaties: IconCard[] = [
 const faqItems: FaqItem[] = [
   {
     q: "Kunnen jullie mijn tv ook ophangen?",
-    a: "Ja. Het ophangen van uw tv aan de muur kan als extra optie tijdens dezelfde afspraak worden uitgevoerd, vanaf €99.",
+    a: "Ja. Het ophangen van uw tv aan de muur kan als extra optie tijdens dezelfde afspraak worden uitgevoerd, vanaf €89.",
   },
   {
     q: "Installeren jullie ook Netflix en andere apps?",
@@ -135,10 +135,10 @@ export default function TvInstallatiePage() {
         image={heroImg}
         imageAlt="Volledig geïnstalleerde tv aan de muur in een moderne woonkamer"
         formulier={{
-          titel: "Plan uw tv-installatie",
+          titel: "Vraag uw offerte aan voor de installatie",
           intro:
             "Vaste prijs van \u20ac70, inclusief voorrijkosten en btw. Wilt u de tv ook opgehangen hebben? Zet het erbij, dan rekenen we dat vooraf voor u uit.",
-          submitLabel: "Afspraak aanvragen",
+          submitLabel: "Offerte aanvragen",
           variant: "tv-installatie-hero",
           berichtLabel: "Wat moet er aangesloten worden?",
           berichtPlaceholder:
@@ -204,7 +204,7 @@ export default function TvInstallatiePage() {
           </div>
         </Reveal>
 
-        <InlineCta href="#afspraak" text="Vaste prijs vooraf. Wij gaan pas weg als uw tv hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht." />
+        <InlineCta href="#offerte" text="Vaste prijs vooraf. Wij gaan pas weg als uw tv hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht." />
 
         <Reveal>
           <h2 className="mt-block font-display text-h2 font-semibold">
@@ -221,7 +221,7 @@ export default function TvInstallatiePage() {
           title="Zo werkt onze tv installatie"
           steps={[
             {
-              title: "Afspraak maken",
+              title: "Offerte aanvragen",
               text: "Plan eenvoudig online een afspraak. Wij nemen binnen enkele uren contact met u op om een geschikt moment af te spreken.",
             },
             {
@@ -264,7 +264,7 @@ export default function TvInstallatiePage() {
                   >
                     tv ophangservice
                   </Link>{" "}
-                  vanaf €99.
+                  vanaf €89.
                 </p>
               </div>
               <div>
@@ -329,7 +329,7 @@ export default function TvInstallatiePage() {
       </section>
 
 
-      <CtaSection href="#afspraak"
+      <CtaSection href="#offerte"
         title="Uw nieuwe tv. Wij regelen de rest."
         text="Van aansluiten en instellen tot persoonlijke uitleg — wij zorgen dat uw nieuwe tv gewoon werkt."
       />

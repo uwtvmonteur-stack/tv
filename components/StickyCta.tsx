@@ -22,7 +22,7 @@ export default function StickyCta() {
   // in plaats van naar /contact, en verdwijnt hij zodra dat formulier in beeld
   // komt — anders dekt de balk precies de velden af die ingevuld moeten worden.
   useEffect(() => {
-    const formulier = document.getElementById("afspraak");
+    const formulier = document.getElementById("offerte");
 
     const onScroll = () => {
       setEigenFormulier(!!formulier);
@@ -59,11 +59,11 @@ export default function StickyCta() {
         }`}
       >
         <Link
-          href={eigenFormulier ? "#afspraak" : "/contact"}
+          href={eigenFormulier ? "#offerte" : "/contact"}
           tabIndex={show ? undefined : -1}
           className={`${btn} bg-accent text-white hover:bg-accent-hover`}
         >
-          Afspraak maken
+          Offerte aanvragen
           <IconArrowUpRight className="h-4 w-4" />
         </Link>
         {SITE.whatsapp && (

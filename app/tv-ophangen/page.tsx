@@ -19,9 +19,9 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
 export const metadata = pageMeta({
-  title: "Tv laten ophangen — vaste prijs vanaf €99",
+  title: "Tv laten ophangen — vanaf €89, offerte vooraf",
   description:
-    "Tv laten ophangen door een ervaren monteur: waterpas, getest en kabels weggewerkt. Vaste prijs vanaf €99 incl. voorrijkosten en btw. Ook 's avonds en in het weekend.",
+    "Tv laten ophangen door een ervaren monteur: waterpas, getest en kabels weggewerkt. Vanaf €89 incl. voorrijkosten en btw, met een vrijblijvende offerte vooraf. Ook 's avonds en in het weekend.",
   path: "/tv-ophangen",
 });
 
@@ -38,7 +38,7 @@ const inbegrepen = [
 
 const stappen = [
   {
-    title: "Afspraak maken",
+    title: "Offerte aanvragen",
     text: "Geef online door welk moment u uitkomt — ook 's avonds en in het weekend. Wij bevestigen binnen enkele uren.",
   },
   {
@@ -129,7 +129,7 @@ const situaties: IconCard[] = [
 const faqItems: FaqItem[] = [
   {
     q: "Wat kost een tv ophangen?",
-    a: "Tv ophangen heeft een vaste prijs op basis van het schermformaat, altijd inclusief voorrijkosten en btw — de tarieven per formaat vindt u hierboven. Het wegwerken van kabels kan er tegen meerprijs bij, altijd vooraf afgesproken.",
+    a: "Tv ophangen begint bij €89, altijd inclusief voorrijkosten en btw. Wat het bij u wordt hangt af van uw tv, uw wand en wat er verder moet gebeuren; dat zetten wij vooraf vrijblijvend in een offerte — de tarieven per formaat vindt u hierboven. Het wegwerken van kabels kan er tegen meerprijs bij, altijd vooraf afgesproken.",
   },
   {
     q: "Hoe snel kunnen jullie de tv ophangen?",
@@ -164,7 +164,7 @@ export default function TvOphangenPage() {
         data={serviceJsonLd({
           name: "Tv ophangen",
           description:
-            "Tv ophangen aan huis door een ervaren monteur: elke beugel, elke muur, waterpas gemonteerd, kabels weggewerkt en alles aangesloten. Vaste prijzen vanaf €99.",
+            "Tv ophangen aan huis door een ervaren monteur: elke beugel, elke muur, waterpas gemonteerd, kabels weggewerkt en alles aangesloten. Vanaf €89, met vooraf een vrijblijvende offerte.",
           path: "/tv-ophangen",
           offers: [
             { name: "Tv ophangen tot 43 inch", price: "99" },
@@ -208,12 +208,11 @@ export default function TvOphangenPage() {
         // hero, dus de foto blijft het verkoopargument, en `planner` zet de
         // datum- en dagdeelkeuze aan die tot nu toe nergens werd getoond.
         formulier={{
-          titel: "Plan het ophangen van uw tv",
+          titel: "Vraag uw offerte aan voor het ophangen",
           intro:
-            "Kies het formaat van uw tv, dan staat uw prijs er direct bij — vast, inclusief voorrijkosten en btw. U krijgt binnen enkele uren bericht met de eerstvolgende mogelijkheid.",
-          submitLabel: "Afspraak aanvragen",
+            "Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij. Daarna plannen we pas een afspraak, en alleen als u akkoord gaat.",
+          submitLabel: "Offerte aanvragen",
           variant: "tv-ophangen-hero",
-          montage: true,
           berichtLabel: "Uw tv en uw muur",
           berichtPlaceholder:
             "Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat.",
@@ -239,7 +238,7 @@ export default function TvOphangenPage() {
                 href="/contact"
                 className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
               >
-                Plan een afspraak
+                Offerte aanvragen
               </Link>{" "}
               — u hoort binnen enkele uren van ons.
             </p>
@@ -286,13 +285,13 @@ export default function TvOphangenPage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
             <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
-              Tot 43 inch — €99
+              Elke tv, elke wand — vanaf €89
             </span>
             <span className="rounded-full bg-inverse text-fg-inverse px-4 py-2">
-              44 t/m 64 inch — €129 · populair
+              Inclusief voorrijkosten en btw
             </span>
             <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
-              Vanaf 65 inch — €159
+              Exacte bedrag in uw offerte
             </span>
           </div>
           <p className="mt-5 max-w-2xl text-sm text-fg-muted">
@@ -318,18 +317,18 @@ export default function TvOphangenPage() {
             vraag die hij kán beantwoorden. Stond eerder per ongeluk vóór de
             prijzen, en deze pagina converteerde 0% terwijl de dienstpagina's
             mét de CTA ná de prijs 9 tot 25% doen. */}
-        {/* `#afspraak`: het formulier staat op deze pagina zelf, onder de hero.
+        {/* `#offerte`: het formulier staat op deze pagina zelf, onder de hero.
             Hiervóór sprong deze knop naar /contact en haalde hij de bezoeker
             juist weg van het formulier, op het moment dat hij zijn prijs net
             had gezien. */}
         <InlineCta
-          href="#afspraak"
+          href="#offerte"
           title="Uw prijs staat hierboven al vast"
           // "Kies hieronder" stond hier, terwijl het formulier direct onder de
           // hero staat en deze knop dus omhoog scrolt. Een bezoeker die naar
           // boven schiet terwijl hij naar beneden verwacht te gaan, verliest
           // precies op het beslismoment zijn vertrouwen in de pagina.
-          text="Inclusief voorrijkosten en btw, en u betaalt pas na afloop. Kies hierboven een dag die u schikt — ook 's avonds of op zaterdag."
+          text="Vanaf €89, inclusief voorrijkosten en btw, en u betaalt pas na afloop. Vraag hierboven vrijblijvend uw offerte aan."
         />
 
         <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />
@@ -515,8 +514,8 @@ export default function TvOphangenPage() {
       {/* "Vandaag gebeld" beloofde een telefoontje terwijl er bewust nergens
           een belknop staat en de datumkiezer pas morgen begint. */}
       <CtaSection
-        href="#afspraak"
-        title="Tv ophangen? Kies een dag die u schikt"
+        href="#offerte"
+        title="Tv ophangen? Vraag vrijblijvend uw offerte aan"
         text="Vraag online uw afspraak aan — u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid. Ook 's avonds en in het weekend, zonder toeslag."
       />
     </main>

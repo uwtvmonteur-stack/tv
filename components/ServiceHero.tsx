@@ -17,11 +17,6 @@ export type HeroFormulier = {
   variant: string;
   berichtLabel: string;
   berichtPlaceholder: string;
-  /**
-   * Zet de montagevragen aan: het formaat van de tv met de prijs erbij, de
-   * beugelvraag en de extra's. Alleen voor pagina's over ophangen.
-   */
-  montage?: boolean;
 };
 
 export default function ServiceHero({
@@ -92,10 +87,10 @@ export default function ServiceHero({
                 footer, zodat niets de afspraakknop beconcurreert. */}
             <div className="mt-8">
               <Link
-                href={formulier ? "#afspraak" : "/contact"}
+                href={formulier ? "#offerte" : "/contact"}
                 className="group flex w-full items-center justify-center gap-3 rounded-full bg-inverse py-2.5 pr-2.5 pl-7 text-base font-semibold text-fg-inverse transition-transform duration-300 ease-out active:scale-[0.98] sm:w-auto sm:inline-flex"
               >
-                {formulier ? "Plan uw afspraak" : "Plan een afspraak"}
+                {"Offerte aanvragen"}
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
                   <IconArrowUpRight className="h-4 w-4" />
                 </span>
@@ -149,7 +144,7 @@ export default function ServiceHero({
 
       {formulier && (
         <section
-          id="afspraak"
+          id="offerte"
           className="mx-auto w-full max-w-content px-4 pt-12 md:px-8 md:pt-14"
         >
           {/* `immediate`: dit is het conversiepunt en mag nooit even onzichtbaar
@@ -167,8 +162,6 @@ export default function ServiceHero({
                 </div>
                 <div className="mt-8">
                   <ContactForm
-                    planner
-                    montage={formulier.montage}
                     variant={formulier.variant}
                     submitLabel={formulier.submitLabel}
                     berichtLabel={formulier.berichtLabel}

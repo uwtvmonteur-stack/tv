@@ -13,15 +13,15 @@ import { SITE } from "@/lib/site";
 import { absUrl, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Contact en afspraak maken",
+  title: "Offerte aanvragen of contact opnemen",
   description:
-    "Plan direct een afspraak met een tv monteur aan huis. Vul het formulier in — wij nemen binnen enkele uren contact met u op.",
+    "Vraag een vrijblijvende offerte aan voor tv ophangen aan huis. Vul het formulier in — wij nemen binnen enkele uren contact met u op.",
   path: "/contact",
 });
 
 const vervolgstappen = [
-  "U krijgt binnen enkele uren bericht van ons met de eerstvolgende mogelijkheden.",
-  "Samen kiezen we een dag en tijd die u schikt — ook 's avonds of in het weekend, zonder toeslag.",
+  "U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij.",
+  "Gaat u akkoord? Dan kiezen we samen een dag en tijd die u schikt — ook 's avonds of in het weekend, zonder toeslag.",
   "De monteur belt een half uur voor aankomst, en u weet de prijs al voordat hij de deur binnenkomt.",
 ];
 
@@ -43,7 +43,7 @@ export default function ContactPage() {
           { name: "Contact", href: "/contact" },
         ]}
         eyebrow="Contact"
-        title="Plan uw afspraak"
+        title="Vraag uw offerte aan"
       />
 
       <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
@@ -53,12 +53,12 @@ export default function ContactPage() {
           <Reveal immediate className="lg:col-span-3">
             <BezelCard className="h-full" innerClassName="p-6 md:p-10">
               <h2 className="mb-8 font-display text-h2 font-semibold">
-                Afspraak aanvragen
+                Offerte aanvragen
               </h2>
               {/* `montage`: ophangen is waar de overgrote meerderheid voor
                   komt, en de prijs vóór het telefoonnummer tonen is hier het
                   hele punt. Wie voor iets anders komt, laat de tv-vraag leeg. */}
-              <ContactForm montage planner variant="contact" />
+              <ContactForm variant="contact" />
             </BezelCard>
           </Reveal>
 

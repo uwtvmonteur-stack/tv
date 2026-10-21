@@ -15,10 +15,10 @@ import { IconArrowUpRight } from "./icons";
 export default function InlineCta({
   title = "Klaar om een datum te kiezen?",
   text = "Vaste prijs vooraf, ook aan gipswand of holle wand. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid.",
-  label = "Afspraak aanvragen",
+  label = "Offerte aanvragen",
   /**
    * Standaard naar /contact. Pagina's die zélf een afspraakformulier dragen
-   * geven `#afspraak` mee, zodat deze knop naar dat formulier springt in
+   * geven `#offerte` mee, zodat deze knop naar dat formulier springt in
    * plaats van de bezoeker van de pagina te halen — precies op het moment dat
    * hij zijn prijs heeft gezien. Bewust een prop en geen detectie in de
    * browser: zo blijft dit een servercomponent zonder JavaScript.

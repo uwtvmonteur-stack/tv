@@ -5,17 +5,17 @@ import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
-import PriceCards from "@/components/PriceCards";
+import Prijsindicatie from "@/components/Prijsindicatie";
 import PrijsGarantie from "@/components/PrijsGarantie";
 import CheckList from "@/components/CheckList";
 import Prijstabel from "@/components/Prijstabel";
-import { type FaqItem } from "@/lib/content";
+import { tarieven, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "Wat kost een tv laten ophangen? Prijzen 2026",
   description:
-    "Bekijk onze vaste prijzen: tv ophangen vanaf €99, tv installatie €70, soundbar €49. Altijd inclusief voorrijkosten en btw.",
+    "Tv ophangen vanaf €89, inclusief voorrijkosten en btw. Vraag een vrijblijvende offerte aan; u weet het exacte bedrag voordat wij langskomen.",
   path: "/prijzen",
 });
 
@@ -28,8 +28,8 @@ const inbegrepen = [
 
 const faqItems: FaqItem[] = [
   {
-    q: "Zijn er ooit extra kosten bovenop de vaste prijs?",
-    a: "Nee — de prijs die we vooraf afspreken is definitief. Alleen als u ter plekke extra werk laat uitvoeren (bijvoorbeeld alsnog de kabels laten wegwerken) komt dat er transparant bij, altijd eerst in overleg.",
+    q: "Zijn er ooit extra kosten bovenop de offerte?",
+    a: "Nee — het bedrag uit uw offerte is definitief. Alleen als u ter plekke extra werk laat uitvoeren (bijvoorbeeld alsnog de kabels laten wegwerken) komt dat er transparant bij, altijd eerst in overleg.",
   },
   {
     q: "Hoe kan ik betalen?",
@@ -48,18 +48,15 @@ export default function PrijzenPage() {
         data={serviceJsonLd({
           name: "Tv montage en installatie",
           description:
-            "Tv ophangen en installeren tegen vaste tarieven, inclusief voorrijkosten en btw.",
+            "Tv ophangen en installeren vanaf €89, inclusief voorrijkosten en btw. Het exacte bedrag staat in een vrijblijvende offerte.",
           path: "/prijzen",
-          offers: [
-            { name: "Tv ophangen tot 43 inch", price: "99" },
-            { name: "Tv ophangen 44 t/m 64 inch", price: "129" },
-            { name: "Tv ophangen vanaf 65 inch", price: "159" },
-            { name: "Complete tv installatie", price: "70" },
-            { name: "Kabels wegwerken in kabelgoot", price: "39" },
-            { name: "Soundbar installeren", price: "49" },
-            { name: "Surround- of home-cinema-set aansluiten", price: "79" },
-            { name: "Tv hulp aan huis", price: "60" },
-          ],
+          // Bewust alleen vanafbedragen, afgeleid van dezelfde bron als de
+          // tabel op de pagina. Een hard bedrag in een rich result dat
+          // afwijkt van de offerte is een reden voor afkeuring - en terecht.
+          offers: tarieven.map((tarief) => ({
+            name: tarief.naam,
+            price: tarief.prijs,
+          })),
         })}
       />
       <JsonLd data={faqJsonLd(faqItems)} />
@@ -71,17 +68,17 @@ export default function PrijzenPage() {
         ]}
         eyebrow="Tarieven 2026"
         title="Wat kost een tv laten ophangen?"
-        intro="€99 tot €159, afhankelijk van het formaat — en dat bedrag verandert niet. Niet als uw wand van gipsplaat blijkt, niet 's avonds, niet in het weekend. Inclusief voorrijkosten en btw."
+        intro="Tv ophangen begint bij €89, inclusief voorrijkosten en btw. Wat het bij u precies wordt hangt af van uw tv, uw wand en wat er verder moet gebeuren — dat zetten wij vrijblijvend voor u op papier."
       />
 
       <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
         <Reveal>
           <h2 className="font-display text-h2 font-semibold">
-            Onze tarieven per tv-formaat
+            Tv ophangen vanaf €89
           </h2>
         </Reveal>
         <div className="mt-8">
-          <PriceCards headingLevel="h3" href="#afspraak" />
+          <Prijsindicatie href="#offerte" />
         </div>
 
         {/* Pal onder de bedragen, want dit is het moment waarop iemand zich
@@ -93,27 +90,25 @@ export default function PrijzenPage() {
             hoogste van de site — en leverde nul aanvragen op, simpelweg omdat
             er niets te versturen viel. Direct onder de tarieven, want dat is
             het moment waarop iemand weet wat zijn formaat kost. */}
-        <section id="afspraak" className="mt-12">
+        <section id="offerte" className="mt-12">
           <Reveal immediate>
             <div className="rounded-lg bg-sunk p-1.5 border border-hairline">
               <div className="rounded-lg bg-white p-6 md:p-10">
                 <div className="max-w-2xl">
                   <h2 className="font-display text-h2 font-semibold">
-                    Dit is de prijs die u betaalt
+                    Vraag uw offerte aan
                   </h2>
                   <p className="mt-3 leading-relaxed text-fg-muted">
                     Geen voorrijkosten, geen btw-verrassing en geen meerwerk
-                    zonder uw toestemming. Kies een dag die u schikt; u krijgt
-                    binnen enkele uren bericht over de eerstvolgende
-                    mogelijkheid.
+                    zonder uw toestemming. Vertel kort wat er moet gebeuren,
+                    dan krijgt u binnen enkele uren een vrijblijvende offerte
+                    met het bedrag erbij.
                   </p>
                 </div>
                 <div className="mt-8">
                   <ContactForm
-                    montage
-                    planner
                     variant="prijzen"
-                    submitLabel="Afspraak aanvragen"
+                    submitLabel="Offerte aanvragen"
                     berichtLabel="Uw tv en uw muur"
                     berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, bakstenen muur, ik heb nog geen beugel."
                   />
@@ -168,7 +163,7 @@ export default function PrijzenPage() {
 
       <Reviews />
 
-      <CtaSection title="Weten waar u aan toe bent?" href="#afspraak" />
+      <CtaSection title="Weten waar u aan toe bent?" href="#offerte" />
     </main>
   );
 }

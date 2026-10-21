@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import { SITE } from "@/lib/site";
 
 /**
- * Ontvangt het afspraakformulier en verstuurt het via SMTP.
+ * Ontvangt de offerteaanvraag en verstuurt die via SMTP.
  *
  * Environment Variables (op Vercel of in .env.local):
  * - SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS  (verplicht)
@@ -46,23 +46,23 @@ export async function POST(request: Request) {
   const naam = clean(body.naam, 120);
   const telefoon = clean(body.telefoon, 40);
   const email = clean(body.email, 160);
+  const straat = clean(body.straat, 160);
   const postcode = clean(body.postcode, 12);
-  const huisnummer = clean(body.huisnummer, 12);
-  const datum = clean(body.datum, 20);
-  const dagdeel = clean(body.dagdeel, 40);
-  const bericht = clean(body.bericht, 2000);
-  // De keuzes uit het formulier, als leesbare tekst. `prijs` is het bedrag dat
-  // de klant tijdens het invullen op het scherm zag; dat staat bewust in de
-  // mail, zodat de toegezegde prijs later na te lezen is.
-  const tvmaat = clean(body.tvmaat, 160);
-  const beugel = clean(body.beugel, 120);
-  const extras = clean(body.extras, 500);
-  const prijs = clean(body.prijs, 40);
+  const plaats = clean(body.plaats, 80);
+  const omschrijving = clean(body.omschrijving, 4000);
 
   // E-mail is optioneel: wij bellen terug, dus naam en telefoon zijn wat we
   // nodig hebben. Staat er wél een adres, dan moet het bruikbaar zijn — anders
   // komt de bevestiging nooit aan en merkt niemand dat.
-  if (!naam || !telefoon || (email && !EMAIL_RE.test(email))) {
+  if (
+    !naam ||
+    !telefoon ||
+    !straat ||
+    !postcode ||
+    !plaats ||
+    !omschrijving ||
+    (email && !EMAIL_RE.test(email))
+  ) {
     return Response.json({ error: "validation" }, { status: 422 });
   }
 
@@ -84,28 +84,22 @@ export async function POST(request: Request) {
 
   const to = MAIL_TO || SITE.email;
   const from = MAIL_FROM || SMTP_USER;
-  const adres = [postcode, huisnummer].filter(Boolean).join(" ");
-
-  // Een regel die wegvalt als hij leeg is: de aanvraagmail moet in één blik te
-  // lezen zijn, en een rij met een streepje erachter leest niemand.
-  const optioneel = (label: string, waarde: string) =>
-    (waarde ? [[label, waarde]] : []) as [string, string][];
+  // Eén adresregel, zoals je hem op een envelop zou schrijven: de monteur
+  // moet er een route mee kunnen plannen zonder velden samen te rapen.
+  const adres = [straat, [postcode, plaats].filter(Boolean).join(" ")]
+    .filter(Boolean)
+    .join(", ");
 
   const regels: [string, string][] = [
     ["Naam", naam],
     ["Telefoon", telefoon],
     ["E-mail", email || "– (klant wordt gebeld)"],
-    ["Postcode / huisnummer", adres || "–"],
-    ...optioneel("Tv", tvmaat),
-    ...optioneel("Beugel", beugel),
-    ...optioneel("Extra's", extras),
-    ...optioneel("Prijs op het scherm", prijs),
-    ...optioneel("Voorkeursmoment", [datum, dagdeel].filter(Boolean).join(" · ")),
-    ["Bericht", bericht || "–"],
+    ["Adres", adres || "–"],
+    ["Wat er moet gebeuren", omschrijving || "–"],
   ];
 
   const text = regels.map(([k, v]) => `${k}: ${v}`).join("\n");
-  const html = `<h2 style="font-family:sans-serif">Nieuwe afspraakaanvraag</h2>
+  const html = `<h2 style="font-family:sans-serif">Nieuwe offerteaanvraag</h2>
 <table style="font-family:sans-serif;font-size:15px;border-collapse:collapse">
 ${regels
   .map(
@@ -123,7 +117,7 @@ ${regels
       // Zonder e-mailadres is er niets om op te antwoorden; een leeg `replyTo`
       // laat sommige servers de mail juist weigeren.
       ...(email ? { replyTo: `"${naam.replace(/"/g, "")}" <${email}>` } : {}),
-      subject: `Afspraakaanvraag — ${naam}${postcode ? ` (${postcode})` : ""}`,
+      subject: `Offerteaanvraag — ${naam}${plaats ? ` (${plaats})` : ""}`,
       text,
       html,
     });
@@ -149,7 +143,7 @@ ${regels
       from: `"${SITE.name}" <${from}>`,
       to: email,
       replyTo: to,
-      subject: `Uw afspraakaanvraag bij ${SITE.name}`,
+      subject: `Uw offerteaanvraag bij ${SITE.name}`,
       text: `Beste ${naam},
 
 Bedankt voor uw aanvraag. ${SITE.reactie}

@@ -138,10 +138,10 @@ export default function SoundbarPage() {
         image={familieImg}
         imageAlt="Stel geniet 's avonds van film en geluid via een wandgemonteerde tv"
         formulier={{
-          titel: "Plan het aansluiten van uw geluid",
+          titel: "Vraag uw offerte aan voor uw geluid",
           intro:
             "Soundbar aansluiten en afstellen kost \u20ac49, een complete surroundset vanaf \u20ac79. Vast, inclusief voorrijkosten en btw.",
-          submitLabel: "Afspraak aanvragen",
+          submitLabel: "Offerte aanvragen",
           variant: "soundbar-hero",
           berichtLabel: "Welke set heeft u?",
           berichtPlaceholder:
@@ -219,7 +219,7 @@ export default function SoundbarPage() {
           </p>
         </Reveal>
 
-        <InlineCta href="#afspraak" text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
+        <InlineCta href="#offerte" text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
 
         <Reveal>
           <h2 className="mt-block font-display text-h2 font-semibold">
@@ -289,7 +289,7 @@ export default function SoundbarPage() {
           title="Zo verloopt de soundbar-installatie"
           steps={[
             {
-              title: "Afspraak inplannen",
+              title: "Offerte aanvragen",
               text: "Kies online een moment dat u uitkomt. Geef door welke soundbar of set u heeft, dan komt de monteur voorbereid.",
             },
             {
@@ -365,7 +365,7 @@ export default function SoundbarPage() {
       </section>
 
 
-      <CtaSection href="#afspraak" title="Bioscoopgeluid in uw woonkamer?" />
+      <CtaSection href="#offerte" title="Bioscoopgeluid in uw woonkamer?" />
     </main>
   );
 }

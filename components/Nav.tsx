@@ -54,7 +54,7 @@ function afspraakHref(pathname: string) {
   if (ZONDER_FORMULIER.has(pathname) || pathname.startsWith("/kennisbank/")) {
     return "/contact";
   }
-  return "#afspraak";
+  return "#offerte";
 }
 
 export default function Nav() {
@@ -131,8 +131,8 @@ export default function Nav() {
               inert={open || undefined}
               className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-sm bg-accent px-4 text-sm font-semibold whitespace-nowrap text-white shadow-e1 transition-colors duration-200 ease-out hover:bg-accent-hover"
             >
-              <span className="hidden sm:inline">Afspraak maken</span>
-              <span className="sm:hidden">Afspraak</span>
+              <span className="hidden sm:inline">Offerte aanvragen</span>
+              <span className="sm:hidden">Offerte</span>
               <IconArrowUpRight className="hidden h-4 w-4 sm:block" />
             </Link>
             <button
@@ -192,7 +192,7 @@ export default function Nav() {
             breed
             onClick={() => setOpen(false)}
           >
-            Afspraak maken
+            Offerte aanvragen
             <IconArrowUpRight className="h-4 w-4" />
           </Button>
         </div>

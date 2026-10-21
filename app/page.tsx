@@ -8,7 +8,7 @@ import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
 import Reviews from "@/components/Reviews";
-import PriceCards from "@/components/PriceCards";
+import Prijsindicatie from "@/components/Prijsindicatie";
 import {
   BezelCard,
   Button,
@@ -35,9 +35,9 @@ import beugelImg from "@/public/images/dienst-tv-ophangen.jpg";
 import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 
 const meta = pageMeta({
-  title: "Tv ophangen aan huis — vaste prijs, geen voorrijkosten",
+  title: "Tv ophangen aan huis — vanaf €89, offerte vooraf",
   description:
-    "Tv laten ophangen aan huis? Wij hangen uw tv op, sluiten alles aan en werken de kabels weg. Vaste prijs vooraf vanaf €99, 's avonds en in het weekend zonder toeslag.",
+    "Tv laten ophangen aan huis? Wij hangen uw tv op, sluiten alles aan en werken de kabels weg. Vrijblijvende offerte, vanaf €89 inclusief voorrijkosten en btw — ook 's avonds en in het weekend zonder toeslag.",
   path: "/",
 });
 
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     // Console liet zien. De oplossing was hier "tv monteur", maar dat is in
     // het Nederlands vooral een reparatieterm. Daarom nu de merknaam voorop:
     // die is uniek van ons, en de exacte zoekterm blijft van /tv-ophangen.
-    absolute: "Uw TV Monteur — tv aan de muur, vaste prijs vooraf",
+    absolute: "Uw TV Monteur — tv aan de muur, vanaf €89",
   },
 };
 
@@ -99,7 +99,7 @@ function Hero() {
               dat staat sinds deze herbouw op deze pagina zelf, dus deze knop
               scrolt in plaats van dat hij de bezoeker verhuist. */}
           <div className="mt-8 sm:max-w-xs">
-            <Button href="#afspraak" variant="inverse" maat="lg" breed>
+            <Button href="#offerte" variant="inverse" maat="lg" breed>
               Bekijk uw prijs
               <IconArrowUpRight className="h-4 w-4" />
             </Button>
@@ -146,7 +146,7 @@ function Diensten() {
   const [tvOphangen, tvInstallatie, soundbar, instellen] = diensten;
 
   return (
-    <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
+    <section className="mx-auto w-full max-w-content px-gutter py-section">
       <Reveal>
         <div className="max-w-2xl">
           <Eyebrow>Onze diensten</Eyebrow>
@@ -281,7 +281,7 @@ function Diensten() {
 const steps = [
   {
     nr: "01",
-    title: "Plan uw afspraak",
+    title: "Vraag uw offerte aan",
     text: "Online in één minuut geregeld, ook 's avonds en in het weekend. Wij nemen binnen enkele uren contact met u op om datum en tijd te bevestigen.",
   },
   {
@@ -355,14 +355,14 @@ function Prijzen() {
   return (
     <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
       <Reveal>
-        <div className="mx-auto max-w-2xl text-center">
-          <Eyebrow>Vaste prijzen</Eyebrow>
+        <div className="max-w-2xl">
+          <Eyebrow>Wat het kost</Eyebrow>
           <h2 className="mt-6 font-display text-h2 font-semibold">
-            Duidelijk vooraf, nooit verrassingen
+            Tv ophangen vanaf €89
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-            De prijs die we vooraf afspreken is de prijs die u betaalt — zonder
-            kleine lettertjes.
+            U krijgt het exacte bedrag vooraf op papier. Gaat u akkoord, dan
+            plannen we de afspraak — en betaalt u precies dat.
           </p>
         </div>
       </Reveal>
@@ -372,7 +372,7 @@ function Prijzen() {
             paginawissel tussen "ik weet de prijs" en "ik vraag aan" is de
             duurste stap van de hele site. De kaart geeft het gekozen formaat
             mee aan het formulier. */}
-        <PriceCards headingLevel="h3" href="#afspraak" />
+        <Prijsindicatie href="#offerte" />
       </div>
 
       <Reveal delay={200}>
@@ -398,10 +398,10 @@ function Prijzen() {
  * verkeer het makkelijkst verdwijnt. Het formulier staat nu direct onder de
  * prijzen, zodat de prijs en het aanvragen één beweging zijn.
  */
-function Afspraak() {
+function OfferteBlok() {
   return (
     <section
-      id="afspraak"
+      id="offerte"
       className="mx-auto w-full max-w-content scroll-mt-24 px-4 pb-section md:px-8"
     >
       <Reveal immediate>
@@ -412,14 +412,12 @@ function Afspraak() {
                 Vraag uw afspraak aan
               </h2>
               <p className="mt-3 leading-relaxed text-fg-muted">
-                Kies het formaat van uw tv, dan staat uw prijs er direct bij. U
+                Vertel kort wat er moet gebeuren en waar u woont. U
                 hoort binnen enkele uren wat de eerstvolgende mogelijkheid is.
               </p>
             </div>
             <div className="mt-8">
               <ContactForm
-                montage
-                planner
                 variant="home"
                 berichtLabel="Uw tv en uw muur"
                 berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
@@ -563,10 +561,10 @@ export default function Page() {
       <Reviews />
       <Bezwaren />
       <Prijzen />
-      <Afspraak />
+      <OfferteBlok />
       <FaqSectie />
       <Werkgebied />
-      <CtaSection href="#afspraak" />
+      <CtaSection href="#offerte" />
     </main>
   );
 }

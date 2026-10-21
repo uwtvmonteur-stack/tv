@@ -402,7 +402,7 @@ export const artikelen: Artikel[] = [
         kop: "De rekensom, zonder reclame",
         alineas: [
           "Zelf doen kost u een beugel, pluggen en schroeven, en eventueel een kabelgoot. Heeft u geen boorhamer of leidingzoeker, dan komt daar huur of aanschaf bij. Reken daarnaast op een uur of twee werk, en op het natrekken van de bouten na een week.",
-          "Laten doen kost bij ons een vaste prijs per schermformaat, inclusief voorrijkosten, montagemateriaal en btw. Het verschil is niet enorm bij een kleine televisie aan een makkelijke muur: daar is zelf doen gewoon verstandig.",
+          "Laten doen begint bij ons op €89, inclusief voorrijkosten, montagemateriaal en btw; wat het bij u wordt zetten we vooraf in een vrijblijvende offerte. Het verschil is niet enorm bij een kleine televisie aan een makkelijke muur: daar is zelf doen gewoon verstandig.",
           "Het verschil wordt groot zodra er iets bijzonders aan de hand is. Een scheur in de gipsplaat repareren, een geraakte leiding, of een televisie van duizend euro die van de muur komt: dan is de montage ineens het goedkoopste deel van het verhaal.",
         ],
       },
@@ -429,7 +429,7 @@ export const artikelen: Artikel[] = [
       },
       {
         q: "Hoeveel kost het om een tv te laten ophangen?",
-        a: "Bij ons geldt een vaste prijs per schermformaat, altijd inclusief voorrijkosten, montagemateriaal en btw. Op de prijzenpagina staan alle tarieven en opties.",
+        a: "Tv ophangen begint bij ons op €89, altijd inclusief voorrijkosten, montagemateriaal en btw. Wat het bij u precies kost hangt af van uw tv, uw wand en wat er verder moet gebeuren; dat zetten wij vrijblijvend in een offerte. Op de prijzenpagina staan alle vanafbedragen.",
       },
       {
         q: "Wat als ik al begonnen ben en het lukt niet?",

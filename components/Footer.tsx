@@ -152,7 +152,7 @@ export default function Footer() {
                   href="/contact"
                   className="transition-colors duration-300 ease-out hover:text-white"
                 >
-                  Afspraak maken
+                  Offerte aanvragen
                 </Link>
               </li>
               <li>

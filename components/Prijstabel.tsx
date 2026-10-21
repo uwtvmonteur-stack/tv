@@ -1,4 +1,4 @@
-import { addons, priceCards } from "@/lib/content";
+import { tarieven } from "@/lib/content";
 
 /**
  * Alle tarieven in één echte tabel.
@@ -14,19 +14,12 @@ import { addons, priceCards } from "@/lib/content";
  * drie elkaar niet kunnen tegenspreken.
  */
 export default function Prijstabel() {
-  const rijen = [
-    ...priceCards.map((kaart) => ({
-      dienst: `Tv ophangen, ${kaart.size.replace(/^Voor tv's /, "")}`,
-      prijs: kaart.price,
-    })),
-    ...addons.map((addon) => ({ dienst: addon.naam, prijs: addon.prijs })),
-  ];
-
   return (
     <div className="overflow-hidden rounded-md border border-hairline bg-raised shadow-e1">
       <table className="w-full border-collapse text-left">
         <caption className="sr-only">
-          Tarieven van Uw TV Monteur, inclusief voorrijkosten en btw
+          Vanafprijzen van Uw TV Monteur, inclusief voorrijkosten en btw. Het
+          exacte bedrag staat in uw offerte.
         </caption>
         <thead>
           <tr className="border-b border-hairline bg-sunk">
@@ -45,19 +38,24 @@ export default function Prijstabel() {
           </tr>
         </thead>
         <tbody>
-          {rijen.map((rij) => (
+          {tarieven.map((tarief) => (
             <tr
-              key={rij.dienst}
+              key={tarief.naam}
               className="border-b border-hairline last:border-0"
             >
               <th
                 scope="row"
-                className="px-5 py-4 text-sm font-normal text-pretty"
+                className="px-5 py-4 text-left font-normal text-pretty"
               >
-                {rij.dienst}
+                <span className="block text-sm font-semibold">
+                  {tarief.naam}
+                </span>
+                <span className="mt-0.5 block text-sm text-fg-muted">
+                  {tarief.toelichting}
+                </span>
               </th>
-              <td className="px-5 py-4 text-right font-display text-base font-semibold whitespace-nowrap tabular">
-                {rij.prijs}
+              <td className="px-5 py-4 text-right align-top font-display text-base font-semibold whitespace-nowrap tabular">
+                {tarief.prijs}
               </td>
             </tr>
           ))}

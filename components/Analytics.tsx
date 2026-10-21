@@ -20,11 +20,12 @@ export function trackEvent(name: string, params: Record<string, unknown> = {}) {
 /**
  * Registreert een Google Ads-conversie op basis van een "AW-…/label"-string.
  *
- * `waarde` is nieuw en belangrijk: een klus loopt van €99 tot ruim €250 met
- * extra's erbij. Zonder bedrag telt Google elke aanvraag even zwaar en biedt
- * het net zo hard op een zoekwoord dat klussen van €99 oplevert als op een
- * zoekwoord dat klussen van €250 oplevert. Mét bedrag kan de campagne op
- * omzet sturen in plaats van op aantallen.
+ * `waarde` hoort bij een conversie met een bedrag erachter: een klus loopt
+ * van €89 tot ruim €250. Zonder bedrag telt Google elke aanvraag even zwaar
+ * en biedt het net zo hard op een zoekwoord dat klussen van €89 oplevert
+ * als op een zoekwoord dat klussen van €250 oplevert. Sinds de site met
+ * offertes werkt kent het formulier dat bedrag niet meer; het hoort nu uit
+ * de offerte zelf terug te komen.
  */
 export function trackAdsConversion(sendTo: string, waarde?: number | null) {
   if (!sendTo) return;

@@ -35,123 +35,120 @@ export const diensten: Dienst[] = [
   },
 ];
 
-export const priceCards = [
-  {
-    name: "Compact",
-    size: "Voor tv's tot 43 inch",
-    price: "€99",
-    features: [
-      "Montage op elke muur",
-      "Waterpas gemonteerd én getest",
-      "Aansluiten en instellen",
-      "Incl. voorrijkosten en btw",
-    ],
-    featured: false,
-  },
-  {
-    name: "Standaard",
-    size: "Voor tv's van 44 t/m 64 inch",
-    price: "€129",
-    features: [
-      "Montage op elke muur",
-      "Waterpas gemonteerd én getest",
-      "Aansluiten en instellen",
-      "Kabelcheck en persoonlijk advies",
-      "Incl. voorrijkosten en btw",
-    ],
-    featured: true,
-  },
-  {
-    name: "Groot",
-    size: "Voor tv's vanaf 65 inch",
-    price: "€159",
-    features: [
-      "Montage op elke muur",
-      "Met twee monteurs indien nodig",
-      "Aansluiten en instellen",
-      "Incl. voorrijkosten en btw",
-    ],
-    featured: false,
-  },
-];
-
-export const addons = [
-  { naam: "Complete tv installatie zonder ophangen: tv op meubel aansluiten en gebruiksklaar maken", prijs: "€70" },
-  { naam: "Kabels wegwerken in kabelgoot (gespoten in muurkleur)", prijs: "vanaf €39" },
-  { naam: "Kabels volledig in de muur wegwerken", prijs: "op maat" },
-  { naam: "Soundbar installeren en afstellen", prijs: "€49" },
-  { naam: "Surround- of home-cinema-set aansluiten", prijs: "vanaf €79" },
-  { naam: "Tv-beugel nodig? Wij regelen er een die bij uw tv en wand past", prijs: "op aanvraag" },
-  { naam: "Tv hulp aan huis — instellen, zenders, wifi en apps", prijs: "€60" },
-];
-
 /**
- * Numeriek bedrag uit een prijsnotatie als "€129" of "vanaf €39"; `null` als er
- * geen bedrag in staat ("op maat"). Zo blijft de prijslijst de enige bron: het
- * formulier rekent met exact de tekst die de bezoeker op /prijzen ziet.
+ * De vanafprijs, sitebreed op één plek.
+ *
+ * Hiervoor stonden hier drie vaste tarieven per tv-formaat (€99 / €129 /
+ * €159). Die zijn vervangen door één vanafprijs met een offerte erachter:
+ * het formaat van de tv is namelijk niet wat de klus duur maakt. Een wand
+ * die anders blijkt, kabels die weg moeten, een beugel die er nog niet is of
+ * een plek boven een haard bepalen het werk veel sterker — en dat valt
+ * vooraf niet in drie hokjes te vangen.
+ *
+ * Wijzig je dit bedrag, dan verandert het overal mee: koppen, metadata,
+ * schema.org en llms.txt lezen allemaal deze constante of verwijzen ernaar.
  */
-export function prijsBedrag(prijs: string) {
-  const cijfers = prijs.replace(/[^0-9]/g, "");
-  return cijfers ? Number(cijfers) : null;
-}
+export const VANAF_PRIJS = "€89";
+
+export type Tarief = {
+  naam: string;
+  /** "vanaf €89" of "op offerte" — altijd tekst, nooit een hard bedrag. */
+  prijs: string;
+  toelichting: string;
+};
 
 /**
- * Een prijs zonder vast bedrag ("vanaf €39", "op maat") mag nooit als hard
- * totaal op het scherm komen; die maakt het totaal een vanaf-prijs.
- */
-export const prijsIsOpen = (prijs: string) =>
-  /vanaf|op maat|op aanvraag/i.test(prijs) || prijsBedrag(prijs) === null;
-
-/**
- * De drie montagetarieven als tikkeuze in het afspraakformulier, afgeleid van
- * `priceCards` in plaats van herhaald: een prijs die in het formulier afwijkt
- * van de prijslijst kost precies het vertrouwen dat de vaste prijs moet
+ * Wat wij doen en wat het ongeveer kost. Bewust allemaal vanafprijzen: het
+ * exacte bedrag staat in de offerte, en een bedrag dat op de site anders is
+ * dan in de offerte kost precies het vertrouwen dat die offerte moet
  * opbouwen.
  */
-export const montageMaten = priceCards.map((card) => ({
-  id: card.name.toLowerCase(),
-  naam: card.name,
-  label: card.size.replace(/^Voor tv's /, ""),
-  prijs: card.price,
-  bedrag: prijsBedrag(card.price),
-  populair: card.featured,
-}));
-
-/**
- * Extra's die in dezelfde rit meekunnen. Kort geformuleerd omdat ze naast een
- * vinkje staan; de volledige omschrijving staat in `addons`.
- */
-export const montageExtras = [
-  { id: "kabelgoot", label: "Kabels wegwerken in een kabelgoot", prijs: "vanaf €39" },
-  { id: "kabels-in-muur", label: "Kabels volledig in de muur wegwerken", prijs: "op maat" },
-  { id: "soundbar", label: "Soundbar aansluiten en afstellen", prijs: "€49" },
-].map((extra) => ({
-  ...extra,
-  bedrag: prijsBedrag(extra.prijs),
-  open: prijsIsOpen(extra.prijs),
-}));
-
-/**
- * De beugelvraag. Staat bewust in het formulier en niet alleen in de FAQ: wie
- * nog geen beugel heeft moet er eerst zelf een kopen voordat wij kunnen komen,
- * en dat is de meest voorkomende reden dat een afspraak alsnog afketst. Door
- * het hier te vragen lossen we het in dezelfde rit op.
- */
-export const beugelOpties = [
+export const tarieven: Tarief[] = [
   {
-    id: "eigen",
-    label: "Ja, die heb ik al",
-    detail: "Wij hangen hem op — ook als u hem ergens anders kocht.",
+    naam: "Tv ophangen",
+    prijs: `vanaf ${VANAF_PRIJS}`,
+    toelichting:
+      "Elke tv, elke wand. Waterpas gemonteerd, aangesloten en belast getest.",
   },
   {
-    id: "nodig",
-    label: "Nee, ik heb er nog een nodig",
-    detail: "Wij regelen er een die bij uw tv en wand past. De prijs hoort u vooraf.",
+    naam: "Complete tv installatie zonder ophangen",
+    prijs: "€70",
+    toelichting:
+      "Tv op een meubel plaatsen, alles aansluiten en gebruiksklaar maken.",
   },
   {
-    id: "advies",
-    label: "Dat weet ik niet",
-    detail: "Zet uw tv in het bericht; wij zoeken uit wat erbij past.",
+    naam: "Kabels wegwerken in een kabelgoot",
+    prijs: "vanaf €39",
+    toelichting: "Gespoten in de kleur van uw muur, in dezelfde rit.",
+  },
+  {
+    naam: "Kabels volledig in de muur wegwerken",
+    prijs: "op offerte",
+    toelichting:
+      "Hakken, dichtzetten en afwerken. Hangt af van uw wand en de afstand.",
+  },
+  {
+    naam: "Soundbar aansluiten en afstellen",
+    prijs: "€49",
+    toelichting: "Via HDMI ARC of eARC, afgesteld op uw ruimte.",
+  },
+  {
+    naam: "Surround- of home-cinema-set aansluiten",
+    prijs: "vanaf €79",
+    toelichting: "Inclusief subwoofer en achterspeakers.",
+  },
+  {
+    naam: "Tv-beugel die bij uw tv en wand past",
+    prijs: "op offerte",
+    toelichting:
+      "Heeft u er al een, dan monteren wij die — ook als u hem elders kocht.",
+  },
+  {
+    naam: "Tv boven een open haard",
+    prijs: "op offerte",
+    toelichting:
+      "Alleen na meting van de temperatuur en het draagvermogen ter plekke.",
+  },
+  {
+    naam: "Tv hulp aan huis — instellen, zenders, wifi en apps",
+    prijs: "€60",
+    toelichting: "Opgelost én uitgelegd, in gewone taal.",
+  },
+];
+
+/**
+ * Waarom een offerte en geen vast tarief per formaat.
+ *
+ * Dit blok vervangt de drie prijskaarten. Een bezoeker die geen bedrag ziet
+ * wil weten wáár het dan van afhangt; krijgt hij dat niet te horen, dan leest
+ * "offerte" als "ze willen niet zeggen wat het kost". Deze vijf punten zijn
+ * precies de dingen die de monteur ter plekke beoordeelt.
+ */
+export const prijsFactoren = [
+  {
+    kop: "Uw tv",
+    tekst:
+      "Formaat en gewicht bepalen de beugel en of er twee monteurs nodig zijn.",
+  },
+  {
+    kop: "Uw wand",
+    tekst:
+      "Steen, beton, gipsplaat of een holle voorzetwand vraagt elk een andere bevestiging.",
+  },
+  {
+    kop: "De beugel",
+    tekst:
+      "Heeft u er al een? Dan hangen wij die op. Zo niet, dan regelen wij er een die past.",
+  },
+  {
+    kop: "De kabels",
+    tekst:
+      "Zichtbaar laten, in een goot in muurkleur, of volledig weg in de wand.",
+  },
+  {
+    kop: "De plek",
+    tekst:
+      "Een gewone woonkamerwand is iets anders dan boven een haard of op een trapportaal.",
   },
 ];
 
@@ -167,7 +164,7 @@ export const stats = [
  * Gebruikt op de diensten-, tv-ophangen- en stad-pagina's.
  */
 export const usps = [
-  "Vaste prijzen, inclusief voorrijkosten en btw",
+  "Vrijblijvende offerte, vanaf €89 inclusief voorrijkosten en btw",
   "Vaak binnen 24 uur een afspraak",
   "Volledig verzekerde monteurs",
   "Ook 's avonds en in het weekend, zonder toeslag",
@@ -389,7 +386,7 @@ export const faqAlgemeen: FaqItem[] = [
   },
   {
     q: "Wat kost het wegwerken van kabels?",
-    a: "Kabels wegwerken in een kabelgoot, gespoten in de kleur van uw muur, kan al vanaf €39. Wilt u de kabels volledig in de muur weggewerkt hebben? Dan maken we vooraf een vaste prijsafspraak op maat.",
+    a: "Kabels wegwerken in een kabelgoot, gespoten in de kleur van uw muur, kan al vanaf €39 als we het in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk; dat bedrag staat in uw offerte, zodat u het kent voordat er gehakt wordt.",
   },
   {
     q: "Zijn jullie monteurs verzekerd?",
@@ -413,7 +410,7 @@ export const bezwaren = [
   {
     vraag: "Mijn wand is van gipsplaat of hol",
     antwoord:
-      "Dat kost bij ons niets extra. Wij controleren het draagvermogen en gebruiken de bevestiging die bij uw wand hoort. De prijs die u vooraf ziet blijft staan, ook als de wand anders blijkt dan u dacht.",
+      "Dat kost bij ons niets extra. Wij controleren het draagvermogen en gebruiken de bevestiging die bij uw wand hoort. Het bedrag uit uw offerte blijft staan, ook als de wand anders blijkt dan u dacht.",
   },
   {
     vraag: "Bij mij kan het alleen 's avonds of in het weekend",
@@ -437,9 +434,9 @@ export const bezwaren = [
 export const prijsGaranties = [
   {
     icon: "shield",
-    kop: "Ook als uw wand anders blijkt",
+    kop: "Het bedrag uit uw offerte is het bedrag",
     tekst:
-      "Gipsplaat, een holle wand of beton achter het stucwerk: wij gebruiken de bevestiging die erbij hoort en het tarief blijft hetzelfde.",
+      "Gipsplaat, een holle wand of beton achter het stucwerk: wij gebruiken de bevestiging die erbij hoort en uw offerte verandert daar niet van.",
   },
   {
     icon: "clock",

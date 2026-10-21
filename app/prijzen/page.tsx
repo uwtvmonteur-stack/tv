@@ -1,15 +1,18 @@
-import PageHeader from "@/components/PageHeader";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import CtaSection from "@/components/CtaSection";
-import Reviews from "@/components/Reviews";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
-import Reveal from "@/components/Reveal";
-import Prijsindicatie from "@/components/Prijsindicatie";
-import PrijsGarantie from "@/components/PrijsGarantie";
-import CheckList from "@/components/CheckList";
 import Prijstabel from "@/components/Prijstabel";
-import { tarieven, type FaqItem } from "@/lib/content";
+import { Icon } from "@/components/Icon";
+import {
+  CheckList,
+  HeroActions,
+  PageHero,
+  PrijsBlok,
+  Section,
+  SectionHeading,
+} from "@/components/sections";
+import { VANAF_PRIJS, prijsGaranties, tarieven, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -24,6 +27,13 @@ const inbegrepen = [
   "Opruimen van al het verpakkings- en boorafval",
   "Volledig verzekerde monteurs aan huis",
   "Geen aanbetaling — u betaalt pas na afloop",
+];
+
+/** Wat de aanvraag zelf wel en niet van iemand vraagt — niet wat er in de prijs zit. */
+const aanvraagBelofte = [
+  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+  "Het bedrag is inclusief voorrijkosten en btw",
+  "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
 const faqItems: FaqItem[] = [
@@ -43,7 +53,7 @@ const faqItems: FaqItem[] = [
 
 export default function PrijzenPage() {
   return (
-    <main>
+    <>
       <JsonLd
         data={serviceJsonLd({
           name: "Tv montage en installatie",
@@ -61,109 +71,121 @@ export default function PrijzenPage() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHeader
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Prijzen", href: "/prijzen" },
-        ]}
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Prijzen", href: "/prijzen" },
+            ]}
+          />
+        }
         eyebrow="Tarieven 2026"
         title="Wat kost een tv laten ophangen?"
-        intro="Tv ophangen begint bij €89, inclusief voorrijkosten en btw. Wat het bij u precies wordt hangt af van uw tv, uw wand en wat er verder moet gebeuren — dat zetten wij vrijblijvend voor u op papier."
-      />
+        lead={`Tv ophangen begint bij ${VANAF_PRIJS}, inclusief voorrijkosten en btw. Wat het bij u precies wordt hangt af van uw tv, uw wand en wat er verder moet gebeuren — dat zetten wij vrijblijvend voor u op papier.`}
+      >
+        <HeroActions tweedeHref="#tarieven" tweedeLabel="Alle tarieven" />
+      </PageHero>
 
-      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
-        <Reveal>
-          <h2 className="font-display text-h2 font-semibold">
-            Tv ophangen vanaf €89
-          </h2>
-        </Reveal>
-        <div className="mt-8">
-          <Prijsindicatie href="#offerte" />
+      <Section tone="surface" labelledBy="vanafprijs">
+        <SectionHeading
+          id="vanafprijs"
+          eyebrow="Wat het kost"
+          title={`Tv ophangen vanaf ${VANAF_PRIJS}, met een offerte vooraf`}
+          lead="Wij werken niet met een vast tarief per tv-formaat, want het formaat is niet wat de klus duur maakt. Daarom krijgt u eerst een vrijblijvende offerte en pas daarna een afspraak."
+        />
+        <div className="mt-12">
+          <PrijsBlok />
         </div>
+      </Section>
 
-        {/* Pal onder de bedragen, want dit is het moment waarop iemand zich
-            afvraagt wat er nog bij komt. */}
-        <PrijsGarantie className="mt-4" />
+      <Section id="tarieven" labelledBy="tarieven-kop">
+        <SectionHeading
+          id="tarieven-kop"
+          eyebrow="Alle tarieven"
+          title="Wat elke dienst kost"
+          lead="Drie diensten hebben een vast bedrag: een complete tv-installatie zonder ophangen, een soundbar aansluiten en tv-hulp aan huis. Het ophangen zelf krijgt altijd een offerte, omdat uw wand, uw beugel en uw kabels het werk bepalen."
+        />
+        <div className="mt-10">
+          {/* De bedragen staan alleen in de tabel en nergens in de lopende
+              tekst: anders staan er twee bronnen voor één prijs en gaan ze op
+              het eerste tariefwijzigingsmoment uit elkaar lopen. */}
+          <Prijstabel />
+        </div>
+        <p className="mt-6 max-w-3xl text-ink-600">
+          Niet inbegrepen is de tv-beugel zelf. Heeft u er al een, dan monteren
+          wij die — ook als u hem ergens anders kocht. Heeft u er geen, dan
+          zoeken wij er een die bij uw tv en wand past en hoort u het bedrag vóór
+          de afspraak, zodat u dan pas beslist.
+        </p>
 
-        {/* Formulier in plaats van een doorverwijzende CTA. Deze pagina houdt
-            bezoekers gemiddeld 234 seconden vast met 77% betrokkenheid — de
-            hoogste van de site — en leverde nul aanvragen op, simpelweg omdat
-            er niets te versturen viel. Direct onder de tarieven, want dat is
-            het moment waarop iemand weet wat zijn formaat kost. */}
-        <section id="offerte" className="mt-12">
-          <Reveal immediate>
-            <div className="rounded-lg bg-sunk p-1.5 border border-hairline">
-              <div className="rounded-lg bg-white p-6 md:p-10">
-                <div className="max-w-2xl">
-                  <h2 className="font-display text-h2 font-semibold">
-                    Vraag uw offerte aan
-                  </h2>
-                  <p className="mt-3 leading-relaxed text-fg-muted">
-                    Geen voorrijkosten, geen btw-verrassing en geen meerwerk
-                    zonder uw toestemming. Vertel kort wat er moet gebeuren,
-                    dan krijgt u binnen enkele uren een vrijblijvende offerte
-                    met het bedrag erbij.
-                  </p>
-                </div>
-                <div className="mt-8">
-                  <ContactForm
-                    variant="prijzen"
-                    submitLabel="Offerte aanvragen"
-                    berichtLabel="Uw tv en uw muur"
-                    berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, bakstenen muur, ik heb nog geen beugel."
-                  />
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </section>
+        <h3 className="mt-14 text-h3">Altijd inbegrepen</h3>
+        <CheckList
+          items={inbegrepen}
+          className="mt-6 grid max-w-4xl gap-3 sm:grid-cols-2"
+        />
+      </Section>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Alle tarieven op een rij
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <div className="mt-8">
-            <Prijstabel />
-          </div>
-        </Reveal>
-        <Reveal delay={150}>
-          <p className="mt-4 max-w-prose text-sm leading-relaxed text-fg-muted">
-            Niet inbegrepen is de tv-beugel zelf. Heeft u er al een, dan
-            monteren wij die — ook als u hem ergens anders kocht. Heeft u er
-            geen, dan zoeken wij er een die bij uw tv en wand past en hoort u
-            het bedrag vóór de afspraak, zodat u dan pas beslist.
-          </p>
-        </Reveal>
+      {/* Donker, omdat dit het antwoord is op de vraag die de tabel oproept:
+          waar is die prijs tegen vast? Elke concurrent rekent juist op deze
+          drie punten een toeslag. */}
+      <Section tone="dark" labelledBy="garanties">
+        <SectionHeading
+          dark
+          id="garanties"
+          eyebrow="Waar uw prijs tegen vast is"
+          title="Wat uw bedrag niet verandert"
+          lead="Een vaste prijs is pas een argument als erbij staat waar hij tegen vast is. Dit zijn de drie dingen die het bedrag uit uw offerte niet raken."
+        />
+        <ul className="mt-12 grid gap-4 lg:grid-cols-3">
+          {prijsGaranties.map((garantie) => (
+            <li
+              key={garantie.kop}
+              className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10"
+            >
+              <span className="grid size-12 place-items-center rounded-xl bg-accent-400/15 text-accent-300">
+                <Icon name={garantie.icon} className="size-6" />
+              </span>
+              <h3 className="mt-5 text-h3 text-white">{garantie.kop}</h3>
+              <p className="mt-2 text-ink-300">{garantie.tekst}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Altijd inbegrepen
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={inbegrepen}
-            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
+      <Section labelledBy="faq">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <SectionHeading
+            id="faq"
+            eyebrow="Veelgestelde vragen"
+            title="Vragen over de prijs"
+            lead="Over wat er bij komt, hoe u betaalt en wat een bijzondere situatie kost."
           />
-        </Reveal>
+          <Faq items={faqItems} />
+        </div>
+      </Section>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Veelgestelde vragen over prijzen
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <div className="mt-8 max-w-3xl">
-            <Faq items={faqItems} />
+      {/* Het formulier staat op deze pagina zelf. Deze pagina houdt bezoekers
+          het langst vast van de hele site en leverde nul aanvragen op, simpelweg
+          omdat er niets te versturen viel. */}
+      <Section id="offerte" tone="surface" labelledBy="offerte-kop">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <SectionHeading
+              id="offerte-kop"
+              eyebrow="Offerte aanvragen"
+              title="Weten wat het bij u wordt?"
+              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij."
+            />
+            <CheckList items={aanvraagBelofte} className="mt-8" />
           </div>
-        </Reveal>
-      </section>
-
-      <Reviews />
-
-      <CtaSection title="Weten waar u aan toe bent?" href="#offerte" />
-    </main>
+          <ContactForm
+            variant="prijzen"
+            berichtLabel="Uw tv en uw muur"
+            berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, bakstenen muur, ik heb nog geen beugel."
+          />
+        </div>
+      </Section>
+    </>
   );
 }

@@ -1,20 +1,23 @@
 import Link from "next/link";
-import ServiceHero from "@/components/ServiceHero";
-import Stappen from "@/components/Stappen";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
-import CtaSection from "@/components/CtaSection";
-import InlineCta from "@/components/InlineCta";
-import Reviews from "@/components/Reviews";
-import JsonLd from "@/components/JsonLd";
-import Reveal from "@/components/Reveal";
-import CheckList from "@/components/CheckList";
-import ProvincieChips from "@/components/ProvincieChips";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
+import InlineCta from "@/components/InlineCta";
+import JsonLd from "@/components/JsonLd";
+import ProvincieChips from "@/components/ProvincieChips";
 import RelatedLinks from "@/components/RelatedLinks";
-import { IconCable, IconShield, IconTv } from "@/components/icons";
-import { reviewsPerDienst, type FaqItem } from "@/lib/content";
+import Reviews from "@/components/Reviews";
+import { Icon } from "@/components/Icon";
+import {
+  CheckList,
+  HeroActions,
+  PageHero,
+  Section,
+  SectionHeading,
+} from "@/components/sections";
+import { VANAF_PRIJS, reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
-import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
 /**
  * Eigen pagina voor de moeilijke wanden — ons enige echte onderscheid.
@@ -31,6 +34,13 @@ export const metadata = pageMeta({
     "Tv ophangen aan gipswand, metal stud of holle wand? Wij rekenen het draagvermogen na en kiezen de bevestiging die bij uw wand hoort. Vaste prijs vooraf.",
   path: "/tv-ophangen-gipswand",
 });
+
+const heroPunten = [
+  "Frame opgespoord of hollewandbevestiging die het gewicht verdeelt",
+  "Draagvermogen vooraf nagerekend, beugel belast getest",
+  "Eigen monteurs in loondienst, volledig verzekerd werk",
+  "Kan het niet veilig? Dan zeggen we dat vóórdat we boren",
+];
 
 const inbegrepen = [
   "Wandonderzoek: we bepalen of het gipsplaat, gipsblok of een voorzetwand is",
@@ -71,17 +81,17 @@ const stappen = [
 
 const wandtypes: IconCard[] = [
   {
-    icon: <IconShield className="h-6 w-6" />,
+    icon: <Icon name="drill" className="size-6" />,
     h3: "Gipsplaat op metal stud",
     text: "De meest voorkomende binnenwand in nieuwbouw. Achter de platen zitten stalen profielen, meestal om de 60 cm. Zitten uw beugelgaten op die profielen, dan schroeven we daarin en hangt uw tv net zo stevig als op steen. Vallen ze ertussen, dan verdelen we het gewicht met tuimelankers of een montageplaat.",
   },
   {
-    icon: <IconCable className="h-6 w-6" />,
+    icon: <Icon name="home" className="size-6" />,
     h3: "Gipsblok of voorzetwand",
     text: "Massief gipsblok draagt meer dan gipsplaat, maar is brozer. We gebruiken dan speciale gipspluggen die de druk over een groter vlak spreiden. Bij een voorzetwand vóór metselwerk boren we waar mogelijk door naar de achterliggende steen — dat is altijd de sterkste oplossing.",
   },
   {
-    icon: <IconTv className="h-6 w-6" />,
+    icon: <Icon name="tool" className="size-6" />,
     h3: "Holle wand of systeemwand",
     text: "Bij holle wanden verankeren kantelpluggen of tuimelankers zich achter de plaat. Voor een tv vanaf 55 inch zoeken we eerst naar het draagframe; een kantelbare of draaibare beugel vraagt namelijk veel meer van de bevestiging dan een vaste.",
   },
@@ -89,9 +99,16 @@ const wandtypes: IconCard[] = [
 
 const risicos = [
   "Een vaste beugel belast de wand recht naar beneden; een draaibare arm vermenigvuldigt die kracht",
-  "Gipsplaat van 9,5 mm draagt minder dan 12,5 mm — dat verschil zie je niet, wij meten het",
+  "Gipsplaat van 9,5 mm draagt minder dan 12,5 mm — dat verschil ziet u niet, wij meten het",
   "Pluggen die alleen in de gipsplaat grijpen, trekken op termijn los door trillingen",
   "Achter voorzetwanden lopen vaak leidingen; blind boren is het grootste risico in huis",
+];
+
+const offerteBelofte = [
+  "Een gipswand of holle wand kost bij ons niets extra",
+  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+  "Het bedrag is inclusief voorrijkosten en btw",
+  "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
 const faqItems: FaqItem[] = [
@@ -123,7 +140,7 @@ const faqItems: FaqItem[] = [
 
 export default function TvOphangenGipswandPage() {
   return (
-    <main>
+    <>
       <JsonLd
         data={serviceJsonLd({
           name: "Tv ophangen aan gipswand of holle wand",
@@ -134,149 +151,130 @@ export default function TvOphangenGipswandPage() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <ServiceHero
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Tv ophangen", href: "/tv-ophangen" },
-          { name: "Gipswand & holle wand", href: "/tv-ophangen-gipswand" },
-        ]}
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Tv ophangen", href: "/tv-ophangen" },
+              { name: "Gipswand & holle wand", href: "/tv-ophangen-gipswand" },
+            ]}
+          />
+        }
         eyebrow="Gipswand · holle wand · metal stud"
         title="Tv ophangen aan een gipswand"
-        intro="Kreeg u te horen dat het niet kan? Bezorgdiensten van elektronicawinkels monteren alleen aan massief steen of beton. Wij komen juist voor de lastige wanden: we zoeken het frame, rekenen het draagvermogen na en gebruiken bevestiging die bij úw wand past."
-        benefits={[
-          "Frame opgespoord of hollewandbevestiging die het gewicht verdeelt",
-          "Draagvermogen vooraf nagerekend, beugel belast getest",
-          "Eigen monteurs in loondienst, volledig verzekerd werk",
-          "Kan het niet veilig? Dan zeggen we dat vóórdat we boren",
-        ]}
-        image={heroFoto}
+        lead="Kreeg u te horen dat het niet kan? Bezorgdiensten van elektronicawinkels monteren alleen aan massief steen of beton. Wij komen juist voor de lastige wanden: we zoeken het frame, rekenen het draagvermogen na en gebruiken bevestiging die bij úw wand past."
+        image="/images/dienst-tv-ophangen.jpg"
         imageAlt="Monteur hangt een televisie waterpas op aan een lichte binnenwand"
-        formulier={{
-          titel: "Vraag uw offerte aan voor uw gipswand",
-          intro:
-            "Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij. Een gipswand of holle wand kost bij ons niets extra.",
-          submitLabel: "Offerte aanvragen",
-          variant: "gipswand-hero",
-          berichtLabel: "Uw tv en uw wand",
-          berichtPlaceholder:
-            "Bijvoorbeeld: 55 inch Samsung, gipswand met stalen frame.",
-        }}
+      >
+        <CheckList
+          items={heroPunten}
+          dark
+          className="mt-8 grid gap-3 sm:grid-cols-2"
+        />
+        <HeroActions
+          tweedeHref="/tv-ophangen"
+          tweedeLabel="Alles over tv ophangen"
+        />
+      </PageHero>
+
+      <Section tone="surface" labelledBy="wandtypes">
+        <SectionHeading
+          id="wandtypes"
+          eyebrow="Welke wand heeft u?"
+          title="Drie wanden die er hetzelfde uitzien en anders werken"
+          lead="Een tv aan een gipswand is geen kwestie van zwaardere pluggen pakken. Het gaat om weten wát er achter de plaat zit en hoeveel kracht uw beugel erop uitoefent; die twee bepalen samen of uw televisie over vijf jaar nog net zo recht hangt. U hoeft het niet zelf te weten — de monteur stelt het ter plekke vast."
+        />
+        <IconCardGrid items={wandtypes} columns={3} className="mt-10" />
+        <p className="mt-10 max-w-3xl text-ink-600">
+          Twijfelt u welke u heeft?{" "}
+          <Link href="#offerte" className="link">
+            Vraag vrijblijvend uw offerte aan
+          </Link>{" "}
+          en zet erbij wat voor wand u denkt te hebben — dan weet de monteur
+          vooraf wat hij moet meenemen.
+        </p>
+      </Section>
+
+      <Section labelledBy="risicos">
+        <SectionHeading
+          id="risicos"
+          eyebrow="Waarom het misgaat"
+          title="Wat er misgaat als het verkeerd wordt gedaan"
+          lead="De meeste tv's die van een wand komen, vallen niet meteen. Ze zakken eerst, en dan laat de bevestiging los."
+        />
+        <CheckList
+          items={risicos}
+          className="mt-10 grid max-w-4xl gap-3 sm:grid-cols-2"
+        />
+      </Section>
+
+      <Section tone="surface" labelledBy="inbegrepen">
+        <SectionHeading
+          id="inbegrepen"
+          eyebrow="Wat u krijgt"
+          title="Wat er is inbegrepen"
+          lead="Hetzelfde bedrag als bij een gewone montage. Een moeilijke wand kost bij ons niets extra."
+        />
+        <CheckList
+          items={inbegrepen}
+          className="mt-10 grid max-w-4xl gap-3 sm:grid-cols-2"
+        />
+      </Section>
+
+      <Section labelledBy="werkwijze">
+        <SectionHeading
+          id="werkwijze"
+          eyebrow="Zo werkt het"
+          title="Zo pakken wij een gipswand aan"
+          lead="Van uw aanvraag tot een beugel die belast is getest — zes stappen, en u hoeft er zelf maar één van te doen."
+        />
+        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {stappen.map((stap, i) => (
+            <li key={stap.title} className="card p-5">
+              <p className="eyebrow">Stap {i + 1}</p>
+              <h3 className="mt-3 font-display font-bold text-ink-950">
+                {stap.title}
+              </h3>
+              <p className="mt-1.5 text-sm text-ink-600">{stap.text}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      <Reviews
+        title="Klanten over het ophangen van hun tv"
+        items={reviewsPerDienst["tv-ophangen"]}
       />
 
-      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
-        <Reveal immediate>
-          <div className="max-w-3xl">
-            <p className="leading-relaxed text-fg-muted">
-              Een tv aan een gipswand is geen kwestie van zwaardere pluggen
-              pakken. Het gaat om weten wát er achter de plaat zit en hoeveel
-              kracht uw beugel er precies op uitoefent. Die twee dingen samen
-              bepalen of uw televisie over vijf jaar nog net zo recht hangt. Op
-              deze pagina leest u hoe wij dat aanpakken — en wanneer we eerlijk
-              nee zeggen.{" "}
-              <Link
-                href="/contact"
-                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-              >
-                Offerte aanvragen
-              </Link>{" "}
-              en zet erbij wat voor wand u denkt te hebben.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Welke wand heeft u?
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Elk type vraagt een andere bevestiging. U hoeft het niet zelf te
-            weten — de monteur stelt het ter plekke vast.
-          </p>
-        </Reveal>
-        <IconCardGrid items={wandtypes} columns={3} />
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Wat er misgaat als het verkeerd wordt gedaan
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            De meeste tv&apos;s die van een wand komen, vallen niet meteen. Ze
-            zakken eerst, en dan laat de bevestiging los.
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={risicos}
-            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
-            medium
-          />
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Wat er is inbegrepen
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Dezelfde vaste prijs als een gewone montage. Een moeilijke wand kost
-            bij ons niets extra.
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={inbegrepen}
-            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
-          />
-        </Reveal>
-      </section>
-
-      <div id="reviews" className="pt-6">
-        <Reviews
-          title="Klanten over het ophangen van hun tv"
-          items={reviewsPerDienst["tv-ophangen"]}
+      <Section labelledBy="prijs">
+        <SectionHeading
+          id="prijs"
+          eyebrow="Wat het kost"
+          title="Wat kost tv ophangen aan een gipswand?"
+          lead={`Hetzelfde als elke andere montage: uw wandtype verandert het bedrag niet. Tv ophangen begint bij ${VANAF_PRIJS}, inclusief voorrijkosten, montagemateriaal en btw. Wat het bij u wordt, staat vooraf in uw vrijblijvende offerte.`}
         />
-      </div>
-
-      <section className="mx-auto w-full max-w-content px-4 pb-10 md:px-8">
-        <Stappen title="Zo pakken wij een gipswand aan" steps={stappen} />
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Wat kost het?
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Hetzelfde als elke andere montage: de prijs hangt alleen af van het
-            schermformaat, niet van het wandtype. Voorrijkosten,
-            montagemateriaal en btw zitten er altijd in.{" "}
-            <Link
-              href="/prijzen"
-              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-            >
-              Bekijk de prijzen
-            </Link>
-            .
-          </p>
-        </Reveal>
+        <p className="mt-8 max-w-3xl text-ink-600">
+          Wij rekenen geen toeslag voor een wand die anders blijkt dan u dacht.
+          Komen we iets tegen dat extra werk kost, dan hoort u eerst wat dat
+          kost — en u betaalt pas na afloop.{" "}
+          <Link href="/prijzen" className="link">
+            Bekijk alle tarieven
+          </Link>
+          .
+        </p>
 
         <InlineCta href="#offerte" />
+      </Section>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Veelgestelde vragen over tv ophangen aan gipswand
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <div className="mt-8 max-w-3xl">
-            <Faq items={faqItems} />
-          </div>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Ook bij u in de buurt
-          </h2>
-          <ProvincieChips prefix="Tv ophangen" withOverview />
-        </Reveal>
-
+      <Section tone="surface" labelledBy="werkgebied">
+        <SectionHeading
+          id="werkgebied"
+          eyebrow="Werkgebied"
+          title="Ook bij u in de buurt"
+          lead="Onze monteurs rijden dagelijks in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant."
+        />
+        <ProvincieChips prefix="Tv ophangen" withOverview />
         <RelatedLinks
           items={[
             ["/tv-ophangen", "Tv ophangen"],
@@ -284,15 +282,49 @@ export default function TvOphangenGipswandPage() {
             ["/kennisbank/welke-tv-beugel", "Welke beugel past?"],
             ["/prijzen", "Prijzen"],
             ["/diensten/tv-installatie", "Tv installatie"],
-            ["/contact", "Offerte aanvragen"],
+            ["/contact", "Contact opnemen"],
           ]}
         />
-      </section>
+      </Section>
 
-      <CtaSection href="#offerte"
-        title="Twijfelt u over uw wand?"
-        text="Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich."
-      />
-    </main>
+      <Section labelledBy="faq">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <SectionHeading
+            id="faq"
+            eyebrow="Veelgestelde vragen"
+            title="Veelgestelde vragen over tv ophangen aan gipswand"
+            lead={
+              <>
+                Staat uw vraag er niet bij? Zet hem in het{" "}
+                <Link href="#offerte" className="link">
+                  offerteformulier
+                </Link>{" "}
+                — u krijgt er antwoord op bij uw offerte.
+              </>
+            }
+          />
+          <Faq items={faqItems} />
+        </div>
+      </Section>
+
+      <Section id="offerte" tone="surface" labelledBy="offerte-kop">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <SectionHeading
+              id="offerte-kop"
+              eyebrow="Offerte aanvragen"
+              title="Twijfelt u over uw wand?"
+              lead="Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij."
+            />
+            <CheckList items={offerteBelofte} className="mt-8" />
+          </div>
+          <ContactForm
+            variant="gipswand"
+            berichtLabel="Uw tv en uw wand"
+            berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, gipswand met stalen frame."
+          />
+        </div>
+      </Section>
+    </>
   );
 }

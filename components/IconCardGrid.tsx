@@ -1,12 +1,15 @@
 import type { ReactNode } from "react";
-import Reveal from "./Reveal";
-import { BezelCard, IconChip } from "./ui";
 
 export type IconCard = { icon?: ReactNode; h3: string; text: string };
 
 /**
- * Gedeelde kaart-grid (semantische <ul>/<li>) — één bron voor het icoon-kaart-patroon.
- * Icoon is optioneel; `columns` kiest 2 of 3 kolommen; `hover` voegt een lift toe.
+ * Gedeelde kaartenrij met een icoon erboven — één bron voor dit patroon,
+ * zodat de dienstpagina's niet elk hun eigen kaart tekenen.
+ *
+ * Het icoon is optioneel; `columns` kiest twee of drie kolommen en `hover`
+ * voegt de lift toe die een aanklikbare kaart hoort te hebben. Staat de kaart
+ * niet in een link, dan blijft `hover` uit: beweging die nergens heen leidt
+ * belooft iets wat er niet is.
  */
 export default function IconCardGrid({
   items,
@@ -23,30 +26,17 @@ export default function IconCardGrid({
     columns === 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
   return (
     <ul className={`grid gap-4 ${cols} ${className}`}>
-      {items.map((item, i) => (
-        <li key={i} className="h-full">
-          <Reveal delay={(i % columns) * 60} className="h-full">
-            <BezelCard
-              className={`h-full ${
-                hover
-                  ? "transition-transform duration-500 ease-out hover:-translate-y-1"
-                  : ""
-              }`}
-              innerClassName={
-                item.icon ? "flex h-full flex-col gap-4 p-7" : "p-7"
-              }
-            >
-              {item.icon && <IconChip>{item.icon}</IconChip>}
-              <div>
-                <h3 className="font-display text-lg font-semibold tracking-tight">
-                  {item.h3}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  {item.text}
-                </p>
-              </div>
-            </BezelCard>
-          </Reveal>
+      {items.map((item) => (
+        <li key={item.h3} className="h-full">
+          <div className={`card h-full p-6 ${hover ? "card-hover" : ""}`}>
+            {item.icon && (
+              <span className="grid size-11 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+                {item.icon}
+              </span>
+            )}
+            <h3 className={`text-h3 ${item.icon ? "mt-5" : ""}`}>{item.h3}</h3>
+            <p className="mt-2 text-ink-600">{item.text}</p>
+          </div>
         </li>
       ))}
     </ul>

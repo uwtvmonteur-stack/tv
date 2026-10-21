@@ -1,22 +1,30 @@
 import Link from "next/link";
-import ServiceHero from "@/components/ServiceHero";
-import Stappen from "@/components/Stappen";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
-import CtaSection from "@/components/CtaSection";
-import InlineCta from "@/components/InlineCta";
-import Reviews from "@/components/Reviews";
-import JsonLd from "@/components/JsonLd";
-import Reveal from "@/components/Reveal";
-import CheckList from "@/components/CheckList";
-import ProvincieChips from "@/components/ProvincieChips";
-import Bezwaren from "@/components/Bezwaren";
-import PrijsGarantie from "@/components/PrijsGarantie";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
+import JsonLd from "@/components/JsonLd";
+import ProvincieChips from "@/components/ProvincieChips";
 import RelatedLinks from "@/components/RelatedLinks";
-import { IconCable, IconShield, IconTv } from "@/components/icons";
-import { bezwaren, reviewsPerDienst, type FaqItem } from "@/lib/content";
+import Reviews from "@/components/Reviews";
+import { Icon } from "@/components/Icon";
+import {
+  CheckList,
+  HeroActions,
+  HowItWorks,
+  PageHero,
+  PrijsBlok,
+  Section,
+  SectionHeading,
+  TrustBar,
+} from "@/components/sections";
+import {
+  VANAF_PRIJS,
+  bezwaren,
+  reviewsPerDienst,
+  type FaqItem,
+} from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
-import heroFoto from "@/public/images/dienst-tv-ophangen.jpg";
 
 export const metadata = pageMeta({
   title: "Tv laten ophangen — vanaf €89, offerte vooraf",
@@ -24,6 +32,21 @@ export const metadata = pageMeta({
     "Tv laten ophangen door een ervaren monteur: waterpas, getest en kabels weggewerkt. Vanaf €89 incl. voorrijkosten en btw, met een vrijblijvende offerte vooraf. Ook 's avonds en in het weekend.",
   path: "/tv-ophangen",
 });
+
+/**
+ * De vier punten die boven de vouw horen te staan.
+ *
+ * Hier landt ruim de helft van het advertentiebudget. Een bezoeker komt met
+ * één vraag — kan het bij mij, en wat kost het? — en beslist in de hero of hij
+ * verder leest. Dit zijn precies de vier punten waarop de rest van de markt
+ * een voorbehoud maakt.
+ */
+const heroPunten = [
+  "Kaarsrecht opgehangen, op de hoogte die bij uw bank past",
+  "Kabels netjes weggewerkt — u ziet er niets meer van",
+  "Elke muur: steen, beton, gipswand of holle wand",
+  "Vaste prijs vooraf — u betaalt pas als hij hangt en werkt",
+];
 
 const inbegrepen = [
   "Advies over de beste plek, hoogte en het juiste beugeltype",
@@ -36,13 +59,13 @@ const inbegrepen = [
   "Opruimen: het boorafval nemen we mee",
 ];
 
-const stappen = [
+/**
+ * Wat de monteur bij u thuis doet. De aanvraag zelf staat erboven al in
+ * `HowItWorks`, dus begint deze lijst op het moment dat hij binnenkomt.
+ */
+const montagestappen = [
   {
-    title: "Offerte aanvragen",
-    text: "Geef online door welk moment u uitkomt — ook 's avonds en in het weekend. Wij bevestigen binnen enkele uren.",
-  },
-  {
-    title: "Muur & tv beoordelen",
+    title: "Muur en tv beoordelen",
     text: "De monteur bekijkt het muurtype, het draagvermogen en het formaat en gewicht van uw televisie.",
   },
   {
@@ -54,11 +77,11 @@ const stappen = [
     text: "De beugel wordt met de juiste pluggen en bevestiging waterpas en stevig aan de muur gezet.",
   },
   {
-    title: "Ophangen & waterpas zetten",
+    title: "Ophangen en waterpas zetten",
     text: "De tv wordt opgehangen, exact waterpas gezet en op de ideale kijkhoogte afgesteld.",
   },
   {
-    title: "Aansluiten & controleren",
+    title: "Aansluiten en controleren",
     text: "We sluiten uw apparatuur aan, werken de kabels weg, testen alles en ruimen netjes op.",
   },
 ];
@@ -110,26 +133,34 @@ const beugelFactoren = [
 
 const situaties: IconCard[] = [
   {
-    icon: <IconTv className="h-6 w-6" />,
+    icon: <Icon name="tv" className="size-6" />,
     h3: "Tv ophangen boven een dressoir",
     text: "Een populaire plek. We kiezen de juiste hoogte voor comfortabel kijken vanaf de bank, houden ruimte voor een soundbar en laten de kabels netjes achter het meubel verdwijnen.",
   },
   {
-    icon: <IconShield className="h-6 w-6" />,
+    icon: <Icon name="flame" className="size-6" />,
     h3: "Tv ophangen boven een open haard",
     text: "Kan een mooie oplossing zijn, mits het draagvermogen en de warmte-afgifte het toelaten. We beoordelen uw situatie altijd eerst ter plekke.",
   },
   {
-    icon: <IconCable className="h-6 w-6" />,
+    icon: <Icon name="cable" className="size-6" />,
     h3: "Tv ophangen en aansluiten",
     text: "Na het ophangen sluiten we alles in de juiste volgorde aan en houden we rekening met de ruimte voor een soundbar. Hulp met zenders en apps kan erbij.",
   },
 ];
 
+/** Wat de aanvraag zelf wel en niet van iemand vraagt. */
+const offerteBelofte = [
+  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+  "Het bedrag is inclusief voorrijkosten en btw",
+  "Geen aanbetaling — u betaalt pas na afloop",
+  "Ook 's avonds en in het weekend, zonder toeslag",
+];
+
 const faqItems: FaqItem[] = [
   {
     q: "Wat kost een tv ophangen?",
-    a: "Tv ophangen begint bij €89, altijd inclusief voorrijkosten en btw. Wat het bij u wordt hangt af van uw tv, uw wand en wat er verder moet gebeuren; dat zetten wij vooraf vrijblijvend in een offerte — de tarieven per formaat vindt u hierboven. Het wegwerken van kabels kan er tegen meerprijs bij, altijd vooraf afgesproken.",
+    a: "Tv ophangen begint bij €89, altijd inclusief voorrijkosten en btw. Wat het bij u wordt hangt af van uw tv, uw wand en wat er verder moet gebeuren; dat zetten wij vooraf vrijblijvend in een offerte — waar uw prijs van afhangt, staat hierboven. Het wegwerken van kabels kan er tegen meerprijs bij, altijd vooraf afgesproken.",
   },
   {
     q: "Hoe snel kunnen jullie de tv ophangen?",
@@ -141,7 +172,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Moet ik zelf een tv-beugel hebben?",
-    a: "Heeft u er al een? Die monteren we gewoon. Heeft u er geen, dan regelen wij de juiste beugel voor uw tv — geef bij uw aanvraag het merk en het formaat door, dan krijgt u de prijs van de beugel er direct bij in de bevestiging. U weet dus vóór de afspraak wat het totaal wordt.",
+    a: "Heeft u er al een? Die monteren we gewoon. Heeft u er geen, dan regelen wij de juiste beugel voor uw tv — geef bij uw aanvraag het merk en het formaat door, dan krijgt u de prijs van de beugel er direct bij in uw offerte. U weet dus vóór de afspraak wat het totaal wordt.",
   },
   {
     q: "Kan een zware of grote tv aan de muur?",
@@ -159,18 +190,18 @@ const faqItems: FaqItem[] = [
 
 export default function TvOphangenPage() {
   return (
-    <main>
+    <>
       <JsonLd
         data={serviceJsonLd({
           name: "Tv ophangen",
           description:
             "Tv ophangen aan huis door een ervaren monteur: elke beugel, elke muur, waterpas gemonteerd, kabels weggewerkt en alles aangesloten. Vanaf €89, met vooraf een vrijblijvende offerte.",
           path: "/tv-ophangen",
-          offers: [
-            { name: "Tv ophangen tot 43 inch", price: "99" },
-            { name: "Tv ophangen 44 t/m 64 inch", price: "129" },
-            { name: "Tv ophangen vanaf 65 inch", price: "159" },
-          ],
+          // Eén vanafprijs, uit dezelfde bron als de pagina. Hier stonden drie
+          // vaste bedragen per schermformaat (99/129/159); die tarieven bestaan
+          // niet meer, en een hard bedrag in een rich result dat afwijkt van de
+          // offerte is een reden voor afkeuring.
+          offers: [{ name: "Tv ophangen", price: `vanaf ${VANAF_PRIJS}` }],
         })}
       />
       {/* Inclusief de vier bezwaren die verderop op deze pagina staan. */}
@@ -184,318 +215,283 @@ export default function TvOphangenPage() {
         ])}
       />
 
-      <ServiceHero
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Diensten", href: "/diensten" },
-          { name: "Tv ophangen", href: "/tv-ophangen" },
-        ]}
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Diensten", href: "/diensten" },
+              { name: "Tv ophangen", href: "/tv-ophangen" },
+            ]}
+          />
+        }
         eyebrow="Tv ophangen aan huis · ook ’s avonds en in het weekend"
         title="Tv laten ophangen"
-        intro="U wijst aan waar hij moet hangen, wij doen de rest: de juiste hoogte voor uw bank, kaarsrecht opgehangen, kabels weggewerkt en alles aangesloten. U hoeft niets voor te bereiden en niets op te ruimen."
-        benefits={[
-          "Kaarsrecht opgehangen, op de hoogte die bij uw bank past",
-          "Kabels netjes weggewerkt — u ziet er niets meer van",
-          "Elke muur: steen, beton, gipswand of holle wand",
-          "Vaste prijs vooraf — u betaalt pas als hij hangt en werkt",
-        ]}
-        image={heroFoto}
+        lead="U wijst aan waar hij moet hangen, wij doen de rest: de juiste hoogte voor uw bank, kaarsrecht opgehangen, kabels weggewerkt en alles aangesloten. U hoeft niets voor te bereiden en niets op te ruimen."
+        image="/images/dienst-tv-ophangen.jpg"
         imageAlt="Monteur hangt een grote televisie waterpas aan de woonkamermuur"
-        // Deze pagina ontvangt ruim de helft van het advertentiebudget en had
-        // geen enkel formulierveld: elke CTA sprong naar /contact. Van 33
-        // sessies in een week kwam er nul tot een aanvraag, terwijl de
-        // dienstpagina's mét formulier 9 tot 25% halen. Het blok staat ónder de
-        // hero, dus de foto blijft het verkoopargument, en `planner` zet de
-        // datum- en dagdeelkeuze aan die tot nu toe nergens werd getoond.
-        formulier={{
-          titel: "Vraag uw offerte aan voor het ophangen",
-          intro:
-            "Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij. Daarna plannen we pas een afspraak, en alleen als u akkoord gaat.",
-          submitLabel: "Offerte aanvragen",
-          variant: "tv-ophangen-hero",
-          berichtLabel: "Uw tv en uw muur",
-          berichtPlaceholder:
-            "Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat.",
-        }}
-      />
+      >
+        <CheckList
+          items={heroPunten}
+          dark
+          className="mt-8 grid gap-3 sm:grid-cols-2"
+        />
+        <HeroActions />
+      </PageHero>
 
-      <Bezwaren />
+      <Section tone="surface">
+        <TrustBar />
+      </Section>
 
-      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
-        <Reveal immediate>
-          <div className="max-w-3xl">
-            <p className="leading-relaxed text-fg-muted">
-              Een tv ophangen lijkt eenvoudig, maar er komt meer bij kijken dan
-              vier gaten boren. Het juiste beugeltype, het draagvermogen van de
-              muur, de perfecte hoogte en het onzichtbaar wegwerken van kabels
-              bepalen samen of het resultaat écht strak en veilig is. Onze
-              monteurs hangen elke week televisies op — van een compacte 32 inch
-              in de slaapkamer tot een 85 inch boven de open haard — en kennen
-              voor elke situatie de beste oplossing. Op deze pagina leest u wat
-              een tv ophangen kost, wat er is inbegrepen en waar u op moet
-              letten. Liever meteen geregeld?{" "}
-              <Link
-                href="/contact"
-                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-              >
-                Offerte aanvragen
-              </Link>{" "}
-              — u hoort binnen enkele uren van ons.
-            </p>
-          </div>
-        </Reveal>
+      <Section labelledBy="inbegrepen">
+        <SectionHeading
+          id="inbegrepen"
+          eyebrow="Wat u krijgt"
+          title="Wat is inbegrepen bij het ophangen van een tv?"
+          lead="Een tv ophangen is meer dan vier gaten boren. Het beugeltype, het draagvermogen van de muur, de kijkhoogte en het wegwerken van de kabels bepalen samen of het resultaat strak én veilig is. Wij regelen dat van begin tot eind; u hoeft zelf niets voor te bereiden."
+        />
+        <CheckList
+          items={inbegrepen}
+          className="mt-10 grid max-w-4xl gap-3 sm:grid-cols-2"
+        />
+        <p className="mt-8 max-w-3xl text-ink-600">
+          Onze monteurs hangen elke week televisies op — van een compacte 32 inch
+          in de slaapkamer tot een 85 inch boven de open haard — en kennen voor
+          elke situatie de beste oplossing. Hieronder leest u wat een tv ophangen
+          kost, hoe wij werken en waar u op moet letten. Liever meteen geregeld?{" "}
+          <Link href="#offerte" className="link">
+            Vraag vrijblijvend uw offerte aan
+          </Link>{" "}
+          — u hoort binnen enkele uren van ons.
+        </p>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Wat is inbegrepen bij het ophangen van een tv?
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Bij onze tv-ophangservice regelen we alles van begin tot eind. U
-            hoeft zelf niets voor te bereiden.
+        <h3 className="mt-14 text-h3">Tv ophangen en kabels wegwerken</h3>
+        <div className="prose-tv mt-4 max-w-3xl">
+          <p>
+            Een zwevende tv verdient een muur zonder kabelspaghetti. Bij het
+            ophangen werken we de stroom-, hdmi- en netwerkkabels netjes weg. De
+            meest gekozen oplossing is een slanke kabelgoot in exact uw
+            muurkleur (vanaf €39): van een afstandje vrijwel onzichtbaar en snel
+            geplaatst.
           </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={inbegrepen}
-            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
-          />
-        </Reveal>
-      </section>
+          <p>
+            Wilt u helemaal geen kabel meer zien, dan kunnen we de bekabeling
+            waar mogelijk volledig in de muur wegwerken. Dat spreken we vooraf
+            tegen een vaste prijs met u af. Lees hoe wij{" "}
+            <Link href="/kabels-wegwerken">kabels wegwerken</Link>, of bekijk
+            alle <Link href="/prijzen">prijzen en opties</Link>.
+          </p>
+        </div>
+      </Section>
 
       {/* Bewijs komt ná de belofte en vóór de prijs: eerst vertellen wat we
           leveren, dan laten zien dat we het leveren, dan wat het kost. */}
-      <div id="reviews" className="pt-6">
-        <Reviews
-          title="Klanten over het ophangen van hun tv"
-          items={reviewsPerDienst["tv-ophangen"]}
-        />
-      </div>
+      <Reviews
+        title="Klanten over het ophangen van hun tv"
+        items={reviewsPerDienst["tv-ophangen"]}
+      />
 
-      <section className="mx-auto w-full max-w-content px-4 pb-10 md:px-8">
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Wat kost een tv ophangen?
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            De prijs hangt alleen af van het schermformaat, want dat bepaalt het
-            werk: een scherm vanaf 65 inch is zwaar en kwetsbaar, vraagt een
-            stevigere beugel en wordt door twee monteurs opgehangen.
-            Voorrijkosten, montagemateriaal en btw zitten er altijd in. De prijs
-            die we vooraf afspreken is de prijs die u betaalt.
+      <Section labelledBy="prijs">
+        <SectionHeading
+          id="prijs"
+          eyebrow="Wat het kost"
+          title="Wat kost een tv ophangen?"
+          lead={`Tv ophangen begint bij ${VANAF_PRIJS}, inclusief voorrijkosten en btw. Wij noemen geen vast tarief per tv-formaat, want het formaat is niet wat de klus duur maakt: uw wand, uw beugel en uw kabels bepalen het werk. Dat zetten wij vrijblijvend voor u op papier.`}
+        />
+        {/* Het prijsblok draagt zelf de offerteknop. Daarom staat er geen
+            tweede oproep onder: dit is het moment waarop iemand beslist, en
+            twee knoppen naast elkaar maken van die beslissing een keuze. */}
+        <div className="mt-12">
+          <PrijsBlok />
+        </div>
+        <p className="mt-10 max-w-3xl text-ink-600">
+          Heeft u nog geen beugel, of wilt u de kabels weggewerkt? Geef het door
+          bij uw aanvraag, dan staat het totaalbedrag in uw offerte — u weet het
+          dus vóór de afspraak. Komen we ter plekke iets tegen dat extra werk
+          kost, dan hoort u eerst wat dat kost; u betaalt pas na afloop, als hij
+          hangt en werkt. Bekijk alle tarieven en wat er altijd bij zit op de{" "}
+          <Link href="/prijzen" className="link">
+            prijzenpagina
+          </Link>
+          .
+        </p>
+      </Section>
+
+      <Section tone="surface" labelledBy="werkwijze">
+        <SectionHeading
+          id="werkwijze"
+          eyebrow="Zo werkt het"
+          title="Zo werkt het tv ophangen aan huis"
+          lead="U geeft bij uw aanvraag door welk moment u uitkomt — ook 's avonds en in het weekend — en krijgt binnen enkele uren het bedrag. Daartussen hoeft u niets uit te zoeken."
+        />
+        <div className="mt-12">
+          <HowItWorks />
+        </div>
+
+        <h3 className="mt-16 text-h3">Wat de monteur bij u thuis doet</h3>
+        <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {montagestappen.map((stap, i) => (
+            <li key={stap.title} className="card p-5">
+              <p className="eyebrow">Stap {i + 1}</p>
+              <h4 className="mt-3 font-display font-bold text-ink-950">
+                {stap.title}
+              </h4>
+              <p className="mt-1.5 text-sm text-ink-600">{stap.text}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      <Section labelledBy="wanden">
+        <SectionHeading
+          id="wanden"
+          eyebrow="Elke wand"
+          title="Tv ophangen aan verschillende soorten muren"
+          lead={
+            <>
+              Elke muur vraagt om een andere aanpak en bevestiging. Onze
+              monteurs herkennen het muurtype en kiezen de juiste pluggen, zodat
+              uw tv overal veilig hangt. Heeft u een{" "}
+              <Link href="/tv-ophangen-gipswand" className="link">
+                gipswand of holle wand
+              </Link>
+              ? Daar leest u precies hoe we dat aanpakken.
+            </>
+          }
+        />
+        <ul className="mt-10 max-w-4xl divide-y divide-ink-200 border-y border-ink-200">
+          {muren.map((muur) => (
+            <li key={muur.h3} className="py-6">
+              <h3 className="text-h3">{muur.h3}</h3>
+              <p className="mt-2 text-ink-600">{muur.text}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section tone="surface" labelledBy="beugel">
+        <SectionHeading
+          id="beugel"
+          eyebrow="De beugel"
+          title="Welke tv-beugel heb ik nodig?"
+          lead="Er zijn drie hoofdtypen tv-beugels, elk met eigen voordelen. Welke het beste past, hangt af van uw kijkpositie, de ruimte en het formaat van uw tv."
+        />
+        <IconCardGrid items={beugels} columns={3} className="mt-10" />
+        <p className="mt-10 max-w-3xl text-ink-600">
+          Of een beugel precies past, hoeft u niet zelf uit te zoeken — de
+          monteur controleert het ter plekke. Handig om te weten waar het van
+          afhangt:
+        </p>
+        <CheckList
+          items={beugelFactoren}
+          className="mt-6 grid max-w-4xl gap-3 sm:grid-cols-2"
+        />
+        <p className="mt-6 max-w-3xl text-ink-600">
+          Wilt u zelf controleren of een beugel op uw tv past?{" "}
+          <Link href="/kennisbank/welke-tv-beugel" className="link">
+            Zo meet u de VESA-maat
+          </Link>
+          .
+        </p>
+      </Section>
+
+      <Section labelledBy="hoogte">
+        <SectionHeading
+          id="hoogte"
+          eyebrow="De juiste hoogte"
+          title="Hoe hoog moet een tv worden opgehangen?"
+        />
+        <div className="prose-tv mt-6 max-w-3xl">
+          <p>
+            De ideale hoogte hangt af van uw zithoogte, de kijkafstand en het
+            formaat van de tv. Als vuistregel houdt u het midden van het scherm
+            ongeveer op ooghoogte wanneer u ontspannen op de bank zit. Voor de
+            meeste woonkamers komt dat neer op het midden van het scherm op
+            ongeveer 100 tot 120 cm boven de vloer — maar de juiste hoogte is
+            altijd persoonlijk.
           </p>
-          <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
-              Elke tv, elke wand — vanaf €89
-            </span>
-            <span className="rounded-full bg-inverse text-fg-inverse px-4 py-2">
-              Inclusief voorrijkosten en btw
-            </span>
-            <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
-              Exacte bedrag in uw offerte
-            </span>
-          </div>
-          <p className="mt-5 max-w-2xl text-sm text-fg-muted">
-            Heeft u nog geen beugel, of wilt u de kabels weggewerkt? Geef het
-            door bij uw aanvraag, dan staat het totaalbedrag in de bevestiging —
-            ook dat spreken we vooraf af. Bekijk alle tarieven en opties op de{" "}
-            <Link
-              href="/prijzen"
-              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-            >
-              prijzenpagina
+          <p>
+            Hangt de tv boven een dressoir of open haard, dan komt hij vaak wat
+            hoger. In dat geval adviseren we een kantelbare beugel, zodat u het
+            scherm iets naar beneden richt en comfortabel blijft kijken zonder
+            reflectie of nekklachten. Onze monteur bepaalt de hoogte altijd
+            samen met u vóórdat er geboord wordt.
+          </p>
+          <p>
+            Wilt u het zelf narekenen?{" "}
+            <Link href="/kennisbank/hoe-hoog-tv-ophangen">
+              In onze kennisbank staat de rekenregel met een tabel per
+              schermformaat
             </Link>
             .
           </p>
-        </Reveal>
+        </div>
+      </Section>
 
-        {/* Pal onder de bedragen: "vaste prijs" is pas een argument als erbij
-            staat waar hij tegen vast is. */}
-        <PrijsGarantie className="mt-10" />
-
-        {/* Deze CTA hoort direct ná het tariefblok te staan: pas als iemand de
-            prijs voor zijn formaat heeft gezien, is "plan een afspraak" een
-            vraag die hij kán beantwoorden. Stond eerder per ongeluk vóór de
-            prijzen, en deze pagina converteerde 0% terwijl de dienstpagina's
-            mét de CTA ná de prijs 9 tot 25% doen. */}
-        {/* `#offerte`: het formulier staat op deze pagina zelf, onder de hero.
-            Hiervóór sprong deze knop naar /contact en haalde hij de bezoeker
-            juist weg van het formulier, op het moment dat hij zijn prijs net
-            had gezien. */}
-        <InlineCta
-          href="#offerte"
-          title="Uw prijs staat hierboven al vast"
-          // "Kies hieronder" stond hier, terwijl het formulier direct onder de
-          // hero staat en deze knop dus omhoog scrolt. Een bezoeker die naar
-          // boven schiet terwijl hij naar beneden verwacht te gaan, verliest
-          // precies op het beslismoment zijn vertrouwen in de pagina.
-          text="Vanaf €89, inclusief voorrijkosten en btw, en u betaalt pas na afloop. Vraag hierboven vrijblijvend uw offerte aan."
+      <Section tone="surface" labelledBy="situaties">
+        <SectionHeading
+          id="situaties"
+          eyebrow="Elke woonkamer"
+          title="Tv ophangen in elke situatie"
+          lead="Elke woonkamer is anders. Voor de meest voorkomende situaties weten onze monteurs precies wat er nodig is."
         />
+        <IconCardGrid items={situaties} columns={3} className="mt-10" />
+      </Section>
 
-        <Stappen title="Zo werkt het tv ophangen aan huis" steps={stappen} />
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Tv ophangen aan verschillende soorten muren
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Elke muur vraagt om een andere aanpak en bevestiging. Onze monteurs
-            herkennen het muurtype en kiezen de juiste pluggen, zodat uw tv
-            overal veilig hangt. Heeft u een{" "}
-            <Link
-              href="/tv-ophangen-gipswand"
-              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
+      <Section tone="dark" labelledBy="bezwaren">
+        <SectionHeading
+          dark
+          id="bezwaren"
+          eyebrow="Uw twijfels"
+          title="Vier punten waarop u elders een voorbehoud krijgt"
+          lead="Dit zijn de dingen die bezoekers tegenhouden. Bij ons leveren ze geen toeslag en geen nee op."
+        />
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
+          {bezwaren.map((bezwaar) => (
+            <li
+              key={bezwaar.vraag}
+              className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10"
             >
-              gipswand of holle wand
-            </Link>
-            ? Daar leest u precies hoe we dat aanpakken.
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <ul className="mt-8 max-w-4xl divide-y divide-hairline border-y border-hairline">
-            {muren.map((m) => (
-              <li key={m.h3} className="py-6">
-                <h3 className="font-display text-lg font-semibold tracking-tight">
-                  {m.h3}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  {m.text}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+              <h3 className="flex items-start gap-3 text-h3 text-white">
+                <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl bg-accent-400/15 text-accent-300">
+                  <Icon name="check-circle" className="size-5" />
+                </span>
+                {bezwaar.vraag}
+              </h3>
+              <p className="mt-3 text-ink-300">{bezwaar.antwoord}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Welke tv-beugel heb ik nodig?
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Er zijn drie hoofdtypen tv-beugels, elk met eigen voordelen. Welke
-            het beste past, hangt af van uw kijkpositie, de ruimte en het formaat
-            van uw tv.
-          </p>
-        </Reveal>
-        <IconCardGrid items={beugels} columns={3} />
-        <Reveal>
-          <p className="mt-8 max-w-3xl leading-relaxed text-fg-muted">
-            Of een beugel precies past, hoeft u niet zelf uit te zoeken — de
-            monteur controleert het ter plekke. Handig om te weten waar het van
-            afhangt:
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={beugelFactoren}
-            className="mt-6 grid max-w-4xl gap-3 sm:grid-cols-2"
+      <Section labelledBy="werkgebied">
+        <SectionHeading
+          id="werkgebied"
+          eyebrow="Werkgebied"
+          title="Tv ophangen in ons werkgebied"
+          lead="Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Bekijk of we ook bij u in de buurt zijn."
+        />
+        <ProvincieChips prefix="Tv ophangen" withOverview />
+      </Section>
+
+      <Section tone="surface" labelledBy="faq">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <SectionHeading
+            id="faq"
+            eyebrow="Veelgestelde vragen"
+            title="Veelgestelde vragen over tv ophangen"
+            lead={
+              <>
+                Staat uw vraag er niet bij? Zet hem in het{" "}
+                <Link href="#offerte" className="link">
+                  offerteformulier
+                </Link>{" "}
+                — u krijgt er antwoord op bij uw offerte.
+              </>
+            }
           />
-          <p className="mt-5 max-w-2xl text-sm text-fg-muted">
-            Wilt u zelf controleren of een beugel op uw tv past?{" "}
-            <Link
-              href="/kennisbank/welke-tv-beugel"
-              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-            >
-              Zo meet u de VESA-maat
-            </Link>
-            .
-          </p>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Hoe hoog moet een tv worden opgehangen?
-          </h2>
-          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-fg-muted">
-            <p>
-              De ideale hoogte hangt af van uw zithoogte, de kijkafstand en het
-              formaat van de tv. Als vuistregel houdt u het midden van het
-              scherm ongeveer op ooghoogte wanneer u ontspannen op de bank zit.
-              Voor de meeste woonkamers komt dat neer op het midden van het
-              scherm op ongeveer 100 tot 120 cm boven de vloer — maar de juiste
-              hoogte is altijd persoonlijk.
-            </p>
-            <p>
-              Hangt de tv boven een dressoir of open haard, dan komt hij vaak wat
-              hoger. In dat geval adviseren we een kantelbare beugel, zodat u het
-              scherm iets naar beneden richt en comfortabel blijft kijken zonder
-              reflectie of nekklachten. Onze monteur bepaalt de hoogte altijd
-              samen met u vóórdat er geboord wordt.
-            </p>
-            <p>
-              Wilt u het zelf narekenen?{" "}
-              <Link
-                href="/kennisbank/hoe-hoog-tv-ophangen"
-                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-              >
-                In onze kennisbank staat de rekenregel met een tabel per
-                schermformaat
-              </Link>
-              .
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Tv ophangen en kabels wegwerken
-          </h2>
-          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-fg-muted">
-            <p>
-              Een zwevende tv verdient een muur zonder kabelspaghetti. Bij het
-              ophangen werken we de stroom-, hdmi- en netwerkkabels netjes weg.
-              De meest gekozen oplossing is een slanke kabelgoot in exact uw
-              muurkleur (vanaf €39): van een afstandje vrijwel onzichtbaar en snel
-              geplaatst.
-            </p>
-            <p>
-              Wilt u helemaal geen kabel meer zien, dan kunnen we de bekabeling
-              waar mogelijk volledig in de muur wegwerken. Dat spreken we vooraf
-              tegen een vaste prijs met u af. Meer weten? Bekijk onze{" "}
-              <Link
-                href="/prijzen"
-                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-              >
-                prijzen en opties
-              </Link>
-              .
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Tv ophangen in elke situatie
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Elke woonkamer is anders. Voor de meest voorkomende situaties weten
-            onze monteurs precies wat er nodig is.
-          </p>
-        </Reveal>
-        <IconCardGrid items={situaties} columns={2} hover />
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Tv ophangen in ons werkgebied
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht
-            en Noord-Brabant. Bekijk of we ook bij u in de buurt zijn:
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <ProvincieChips prefix="Tv ophangen" withOverview />
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Veelgestelde vragen over tv ophangen
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <div className="mt-8 max-w-3xl">
-            <Faq items={faqItems} />
-          </div>
-        </Reveal>
-
+          <Faq items={faqItems} />
+        </div>
         <RelatedLinks
           items={[
             ["/tv-ophangen-gipswand", "Tv ophangen aan gipswand"],
@@ -508,16 +504,31 @@ export default function TvOphangenPage() {
             ["/prijzen", "Bekijk onze prijzen"],
           ]}
         />
-      </section>
+      </Section>
 
-
-      {/* "Vandaag gebeld" beloofde een telefoontje terwijl er bewust nergens
-          een belknop staat en de datumkiezer pas morgen begint. */}
-      <CtaSection
-        href="#offerte"
-        title="Tv ophangen? Vraag vrijblijvend uw offerte aan"
-        text="Vraag online uw afspraak aan — u krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid. Ook 's avonds en in het weekend, zonder toeslag."
-      />
-    </main>
+      {/* Het formulier staat op de pagina zelf en niet achter een knop naar
+          /contact. Deze pagina ontvangt ruim de helft van het advertentiebudget
+          en had geen enkel formulierveld: van 33 sessies in een week kwam er
+          nul tot een aanvraag, terwijl de dienstpagina's mét formulier 9 tot
+          25% halen. */}
+      <Section id="offerte" labelledBy="offerte-kop">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <SectionHeading
+              id="offerte-kop"
+              eyebrow="Offerte aanvragen"
+              title="Vraag uw offerte aan voor het ophangen"
+              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij. Daarna plannen we pas een afspraak, en alleen als u akkoord gaat."
+            />
+            <CheckList items={offerteBelofte} className="mt-8" />
+          </div>
+          <ContactForm
+            variant="tv-ophangen"
+            berichtLabel="Uw tv en uw muur"
+            berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
+          />
+        </div>
+      </Section>
+    </>
   );
 }

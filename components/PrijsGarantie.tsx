@@ -1,13 +1,5 @@
-import Reveal from "./Reveal";
-import { IconCheck, IconClock, IconShield } from "./icons";
-import { IconChip } from "./ui";
+import { Icon } from "./Icon";
 import { prijsGaranties } from "@/lib/content";
-
-function GarantieIcon({ naam }: { naam: string }) {
-  if (naam === "clock") return <IconClock className="h-5 w-5" />;
-  if (naam === "check") return <IconCheck className="h-5 w-5" />;
-  return <IconShield className="h-5 w-5" />;
-}
 
 /**
  * De drie dingen die de prijs niet veranderen, direct onder de tarieven.
@@ -25,21 +17,15 @@ export default function PrijsGarantie({
 }) {
   return (
     <ul className={`grid gap-4 md:grid-cols-3 ${className}`}>
-      {prijsGaranties.map((garantie, i) => (
+      {prijsGaranties.map((garantie) => (
         <li key={garantie.kop}>
-          <Reveal delay={i * 80} className="h-full">
-            <div className="flex h-full flex-col rounded-md bg-white p-7 border border-hairline">
-              <IconChip>
-                <GarantieIcon naam={garantie.icon} />
-              </IconChip>
-              <h3 className="mt-5 font-display text-[1.0625rem] leading-snug font-semibold">
-                {garantie.kop}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                {garantie.tekst}
-              </p>
-            </div>
-          </Reveal>
+          <div className="card h-full p-6">
+            <span className="grid size-12 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+              <Icon name={garantie.icon} className="size-6" />
+            </span>
+            <h3 className="mt-5 text-lg">{garantie.kop}</h3>
+            <p className="mt-2 text-sm text-ink-600">{garantie.tekst}</p>
+          </div>
         </li>
       ))}
     </ul>

@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ServiceHero from "@/components/ServiceHero";
-import CtaSection from "@/components/CtaSection";
-import InlineCta from "@/components/InlineCta";
-import Reviews from "@/components/Reviews";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
-import Reveal from "@/components/Reveal";
+import ProvincieChips from "@/components/ProvincieChips";
 import RelatedLinks from "@/components/RelatedLinks";
-import { IconArrowUpRight } from "@/components/icons";
-import { DienstIcon } from "@/components/ui";
+import Reviews from "@/components/Reviews";
+import { DienstIcon, Icon, type IconName } from "@/components/Icon";
 import {
+  CheckList,
+  HeroActions,
+  HowItWorks,
+  PageHero,
+  PrijsBlok,
+  Section,
+  SectionHeading,
+  TrustBar,
+} from "@/components/sections";
+import {
+  VANAF_PRIJS,
   diensten,
   dienstHref,
   reviews,
   reviewsPerDienst,
-  usps,
   type FaqItem,
   type Review,
 } from "@/lib/content";
@@ -24,7 +32,6 @@ import { provincieBySlug, stadBySlug, steden } from "@/lib/steden";
 import { lokaalTekst } from "@/lib/stedenLokaal";
 import { stedenMontage } from "@/lib/stedenMontage";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
-import heroFoto from "@/public/images/monteur-aan-het-werk.jpg";
 
 export const dynamicParams = false;
 
@@ -62,9 +69,12 @@ export async function generateMetadata({
   };
 }
 
-const waarom = (naam: string) => [
-  `Vaak binnen 24 uur een monteur in ${naam}`,
-  ...usps.filter((u) => !u.startsWith("Vaak binnen 24 uur")),
+/** Wat de aanvraag zelf wel en niet van iemand vraagt. */
+const offerteBelofte = [
+  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+  "Het bedrag is inclusief voorrijkosten en btw",
+  "Geen aanbetaling — u betaalt pas na afloop",
+  "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
 /**
@@ -88,6 +98,39 @@ function opsomming(namen: string[]) {
   return `${namen.slice(0, -1).join(", ")} en ${namen[namen.length - 1]}`;
 }
 
+/**
+ * De bewijsregel onder de heroknop, met de plaatsnaam erin.
+ *
+ * Bewust alleen afspraken die wij in het hele werkgebied nakomen — geen
+ * reistijd, geen "monteur om de hoek" en geen wijkclaim. Zulke regels zijn
+ * niet te onderbouwen, en ze lezen op 32 pagina's als hetzelfde sjabloon met
+ * een andere plaatsnaam erin. Het telefoonnummer staat hier niet: de
+ * offerteaanvraag is de enige handeling op dit scherm.
+ */
+function HeroFeiten({ plaats }: { plaats: string }) {
+  const feiten: { icon: IconName; tekst: string }[] = [
+    { icon: "clock", tekst: `Vaak binnen 24 uur een monteur in ${plaats}` },
+    {
+      icon: "euro",
+      tekst: `Voorrijkosten in ${plaats} zitten in de prijs`,
+    },
+    {
+      icon: "calendar",
+      tekst: "Ook 's avonds en in het weekend, zonder toeslag",
+    },
+  ];
+  return (
+    <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-ink-200">
+      {feiten.map((feit) => (
+        <li key={feit.tekst} className="flex items-center gap-2">
+          <Icon name={feit.icon} className="size-5 text-accent-300" />
+          {feit.tekst}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default async function StadPage({
   params,
 }: {
@@ -105,11 +148,21 @@ export default async function StadPage({
     .map((nabijSlug) => stadBySlug(nabijSlug))
     .filter((s) => s !== undefined);
 
+  // De twee teksten die alleen op déze stadpagina staan. Beide dekken alle 32
+  // steden; de `&&` hieronder is er voor een stad die later wordt toegevoegd
+  // voordat zijn tekst geschreven is.
+  const buurtTekst = lokaalTekst[stad.slug];
+  const wandTekst = stedenMontage[stad.slug];
+
   // Varieer de vraagformulering per stad (op volgnummer), zodat de FAQ's niet
   // op alle 32 stadpagina's woordelijk identiek zijn (dunne-content-preventie).
   const qv = stadIndex % 3;
+  // Een tweede volgnummer, op 2 in plaats van 3: samen met `qv` levert dat
+  // zes verschillende vraagcombinaties over de 32 steden in plaats van drie,
+  // en krijgen twee buursteden met hetzelfde restgetal toch een andere FAQ.
+  const qv2 = stadIndex % 2;
   // Drie wijken verspreid over de lijst in plaats van de eerste drie: zo noemt
-  // het antwoord per stad andere namen dan het chipsoverzicht hierboven opent.
+  // het antwoord per stad andere namen dan de wijkenlijst hierboven opent.
   const wijkSelectie = [0, 2, 4]
     .map((i) => stad.wijken[i % stad.wijken.length])
     .filter((wijk, i, lijst) => lijst.indexOf(wijk) === i);
@@ -134,24 +187,31 @@ export default async function StadPage({
         `Wat betaal ik voor tv ophangen in ${stad.naam}?`,
         `Hoeveel kost tv-montage in ${stad.naam}?`,
       ][qv],
-      a: `Tv ophangen in ${stad.naam} start bij €89, altijd inclusief voorrijkosten en btw — de exacte prijs hangt af van het schermformaat (zie de tarieven hierboven). Voor ${stad.naam} rekenen we geen voorrijtoeslag, in welke wijk u ook woont. Kabels wegwerken kan vanaf €39 extra.`,
+      // Dit antwoord verwees naar "de tarieven hierboven" en naar een prijs
+      // per schermformaat. Die tabel staat niet op deze pagina en die
+      // tarieven bestaan niet meer: het formaat is niet wat de klus duur
+      // maakt. Het antwoord noemt nu dezelfde drie dingen als het prijsblok.
+      a: `Tv ophangen in ${stad.naam} begint bij ${VANAF_PRIJS}, altijd inclusief voorrijkosten en btw. Wat het bij u wordt, bepalen uw wand, uw beugel en de kabels die weg moeten — dat staat vrijblijvend in uw offerte voordat wij langskomen. Voor ${stad.naam} rekenen we geen voorrijtoeslag, in welke wijk u ook woont. Kabels wegwerken kan vanaf €39 extra.`,
     },
     {
       q: [
-        `In welke wijken van ${stad.naam} komen jullie?`,
+        `In welke wijken van ${stad.naam} komen wij?`,
         `Komen jullie in alle wijken van ${stad.naam}?`,
         `Werken jullie door heel ${stad.naam}?`,
       ][qv],
       a: `Ja. We komen onder meer in ${opsomming(wijkSelectie)}, en net zo goed in de rest van ${stad.naam}. Staat uw wijk er niet bij? Dan helpen we u vrijwel altijd alsnog, net als in de omliggende plaatsen en de rest van ${provincie.naam}.`,
     },
     {
-      q: `Hangen jullie ook een tv op aan een gipswand in ${stad.naam}?`,
+      q: [
+        `Hangen jullie ook een tv op aan een gipswand in ${stad.naam}?`,
+        `Kan een tv in ${stad.naam} ook aan een gipswand of voorzetwand?`,
+      ][qv2],
       a: `Ja, daar worden we juist vaak voor gebeld. Veel woningen hebben tegenwoordig een voorzetwand of gipsplaat in plaats van massief metselwerk, en daar houdt een gewone plug een tv niet. Onze monteur stelt in ${stad.naam} ter plekke het wandtype vast, zoekt de staanders op en rekent het draagvermogen na voordat er geboord wordt.`,
     },
   ];
 
   return (
-    <main>
+    <>
       <JsonLd
         data={serviceJsonLd({
           name: `Tv monteur ${stad.naam}`,
@@ -167,214 +227,246 @@ export default async function StadPage({
               longitude: stad.lng,
             },
           },
-          offers: [
-            { name: "Tv ophangen tot 43 inch", price: "99" },
-            { name: "Tv ophangen 44 t/m 64 inch", price: "129" },
-            { name: "Tv ophangen vanaf 65 inch", price: "159" },
-          ],
+          // Hier stonden de drie oude vaste tarieven per schermformaat (99 /
+          // 129 / 159). Die prijzen bestaan niet meer, en ze stonden als hard
+          // `price` in het schema van 32 pagina's die zelf "vanaf €89, offerte
+          // vooraf" zeggen. Eén vanafbedrag uit `VANAF_PRIJS` wordt `minPrice`
+          // en spreekt de pagina dus niet tegen.
+          offers: [{ name: "Tv ophangen", price: `vanaf ${VANAF_PRIJS}` }],
         })}
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <ServiceHero
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Werkgebied", href: "/werkgebied" },
-          { name: provincie.naam, href: `/werkgebied/${provincie.slug}` },
-          { name: stad.naam, href: `/tv-ophangen/${stad.slug}` },
-        ]}
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Werkgebied", href: "/werkgebied" },
+              { name: provincie.naam, href: `/werkgebied/${provincie.slug}` },
+              { name: stad.naam, href: `/tv-ophangen/${stad.slug}` },
+            ]}
+          />
+        }
         eyebrow={`Tv ophangen in ${provincie.naam}`}
         title={`Tv laten ophangen in ${stad.naam}`}
         // Bewust `stad.blurb` als intro: die tekst gaat over de bouwstijlen en
         // woningtypes van déze stad en verschilt dus per pagina. De generieke
         // intro die hier stond was op alle 32 stadpagina's woordelijk gelijk,
         // waardoor Google ze als bijna-duplicaten uit de resultaten filterde.
-        intro={stad.blurb}
-        benefits={waarom(stad.naam)}
-        image={heroFoto}
-        imageAlt={`Tv monteur van Uw TV Monteur aan het werk in ${stad.naam}`}
-        formulier={{
-          titel: `Vraag uw offerte aan in ${stad.naam}`,
-          intro:
-            `Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij. Ook in ${stad.naam}.`,
-          submitLabel: "Offerte aanvragen",
-          variant: `stad-${stad.slug}`,
-          berichtLabel: "Uw tv en uw muur",
-          berichtPlaceholder:
-            "Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat.",
-        }}
-      />
+        lead={stad.blurb}
+        image="/images/monteur-aan-het-werk.jpg"
+        // Geen plaatsnaam in de alt-tekst: het is op alle 32 pagina's dezelfde
+        // foto, en dan is "aan het werk in Helmond" eenendertig keer onwaar.
+        imageAlt="Monteur van Uw TV Monteur hangt een televisie waterpas aan de wand"
+      >
+        <HeroActions />
+        <HeroFeiten plaats={stad.naam} />
+      </PageHero>
 
-      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
-        <Reveal>
-          <div className="rounded-lg bg-sunk p-8 md:p-10">
-            <h2 className="font-display text-h2 font-semibold">
-              Wij hangen op in elke wijk van {stad.naam}
-            </h2>
-            {/* Alleen de per-stad geschreven tekst. De inleidende zin die hier
-                stond ("Onze monteurs komen door heel X aan huis — van A en B
-                tot F") was een sjabloon dat op elke stadpagina hetzelfde las;
-                de wijknamen eronder zeggen hetzelfde, maar dan concreet. */}
-            {lokaalTekst[stad.slug] && (
-              <p className="mt-4 max-w-3xl leading-relaxed text-fg-muted">
-                {lokaalTekst[stad.slug]}
-              </p>
-            )}
-            <ul className="mt-6 flex flex-wrap gap-2.5">
-              {stad.wijken.map((wijk) => (
-                <li
-                  key={wijk}
-                  className="rounded-full bg-white px-4 py-2 text-sm font-medium border border-hairline"
-                >
-                  {wijk}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
+      <Section tone="surface">
+        <TrustBar />
+      </Section>
 
-        {/* De bouwperiodes die in deze stad overheersen, en wat die betekenen
-            voor plug, beugel en haalbare plek. Dit is het enige onderwerp dat
-            per stad werkelijk verschilt: de rest van de pagina is noodzakelijk
-            sjabloon. Search Console liet zien dat 19 van de 32 stadpagina's
-            wel waren gevonden maar nooit opgehaald, en het verschil tussen
-            twee willekeurige stadpagina's was 31% letterlijk gelijke zinnen.
-            Deze sectie verdubbelt het deel van de pagina dat alleen hier staat,
-            en is tegelijk het antwoord dat een bezoeker echt zoekt. */}
-        {stedenMontage[stad.slug] && (
-          <Reveal>
-            <h2 className="mt-block font-display text-h2 font-semibold">
-              Welke muur heeft u in {stad.naam}?
-            </h2>
-            <p className="mt-6 max-w-3xl leading-relaxed text-fg-muted">
-              {stedenMontage[stad.slug]}
-            </p>
-            <p className="mt-4 max-w-3xl leading-relaxed text-fg-muted">
-              Weet u niet zeker wat voor wand u heeft? Dat hoeft ook niet — onze
-              monteur bepaalt het ter plekke en neemt de pluggen voor elk
-              wandtype mee. De prijs verandert er niet door.
-            </p>
-          </Reveal>
-        )}
-
-        {/* Geen DienstenMiniGrid meer op stadpagina's: die rendert vijf
-            dienstbeschrijvingen die op alle 32 pagina's woordelijk gelijk zijn,
-            en juist díe tekst gebruikte Google als samenvatting in plaats van
-            de lokale alinea hierboven. De links blijven — die dragen de interne
-            linkstructuur naar de dienstpagina's — maar zonder de dubbele tekst.
-            De provinciepagina's gebruiken de grid nog wel. */}
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Onze diensten in {stad.naam}
-          </h2>
-          <ul className="mt-8 flex flex-wrap gap-2.5 text-sm">
-            {diensten.map((dienst) => (
-              <li key={dienst.slug}>
-                <Link
-                  href={dienstHref(dienst)}
-                  className="flex items-center gap-2.5 rounded-full bg-sunk px-4 py-2.5 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk"
-                >
-                  <DienstIcon slug={dienst.slug} className="h-4 w-4" />
-                  {dienst.naam} in {stad.naam}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Wat kost tv ophangen in {stad.naam}?
-          </h2>
-          <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
-              Elke tv, elke wand — vanaf €89
-            </span>
-            <span className="rounded-full bg-inverse text-fg-inverse px-4 py-2">
-              Inclusief voorrijkosten en btw
-            </span>
-            <span className="rounded-full bg-sunk px-4 py-2 border border-hairline">
-              Exacte bedrag in uw offerte
-            </span>
-          </div>
-          <p className="mt-5 text-sm text-fg-muted">
-            Inclusief voorrijkosten in {stad.naam} en btw. Bekijk alle{" "}
-            <Link
-              href="/prijzen"
-              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
+      <Section labelledBy="buurt">
+        <SectionHeading
+          id="buurt"
+          eyebrow={`Werkgebied ${stad.naam}`}
+          title={`In welke wijken van ${stad.naam} komen wij?`}
+          lead={buurtTekst}
+        />
+        {/* De wijknamen komen uit `lib/steden.ts` en worden hier niet
+            aangevuld: een verzonnen buurt is op een lokale pagina precies het
+            detail waaraan een bezoeker ziet dat het een sjabloon is. */}
+        <ul className="mt-8 flex flex-wrap gap-2.5">
+          {stad.wijken.map((wijk) => (
+            <li
+              key={wijk}
+              className="inline-flex items-center rounded-full bg-surface px-4 py-2 text-sm font-medium text-ink-700 ring-1 ring-ink-200"
             >
-              prijzen en aanvullende diensten
-            </Link>
-            .
+              {wijk}
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* De bouwperiodes die in deze stad overheersen, en wat die betekenen
+          voor plug, beugel en haalbare plek. Dit is het enige onderwerp dat
+          per stad werkelijk verschilt: de rest van de pagina is noodzakelijk
+          sjabloon. Search Console liet zien dat 19 van de 32 stadpagina's wel
+          waren gevonden maar nooit opgehaald, en het verschil tussen twee
+          willekeurige stadpagina's was 31% letterlijk gelijke zinnen. Deze
+          sectie verdubbelt het deel van de pagina dat alleen hier staat, en is
+          tegelijk het antwoord dat een bezoeker echt zoekt. */}
+      <Section tone="surface" labelledBy="wand">
+        <SectionHeading
+          id="wand"
+          eyebrow="Uw wand"
+          title={`Welke muur heeft u in ${stad.naam}?`}
+        />
+        <div className="mt-6 max-w-3xl space-y-4 text-lg text-ink-700">
+          {wandTekst && <p>{wandTekst}</p>}
+          <p>
+            Weet u niet zeker wat voor wand u heeft? Dat hoeft ook niet — onze
+            monteur bepaalt het ter plekke en neemt de pluggen voor elk
+            wandtype mee. De prijs verandert er niet door.
           </p>
-        </Reveal>
+        </div>
+      </Section>
 
-        {/* Hoort ná het tariefblok: pas als iemand de prijs voor zijn formaat
-            kent, kan hij "plan een afspraak" beantwoorden. Stond hier eerder
-            vóór de prijzen. */}
-        <InlineCta href="#offerte"
-          text={`Vanaf €89, ook aan gipswand of holle wand. Vraag vrijblijvend uw offerte aan; u hoort binnen enkele uren wat het in ${stad.naam} kost.`}
+      <Section labelledBy="werkwijze">
+        <SectionHeading
+          id="werkwijze"
+          center
+          eyebrow="Zo werkt het"
+          title={`Van aanvraag tot waterpas in ${stad.naam}`}
+          lead="U vraagt aan, u krijgt het bedrag, wij hangen hem op. Daartussen hoeft u niets uit te zoeken."
         />
+        <div className="mt-14">
+          <HowItWorks />
+        </div>
+      </Section>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Veelgestelde vragen — {stad.naam}
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <div className="mt-8 max-w-3xl">
-            <Faq items={faqItems} />
-          </div>
-        </Reveal>
+      <Section tone="surface" labelledBy="prijs">
+        <SectionHeading
+          id="prijs"
+          eyebrow="Wat het kost"
+          title={`Wat kost tv ophangen in ${stad.naam}?`}
+          lead={`Tv ophangen begint bij ${VANAF_PRIJS}, inclusief voorrijkosten in ${stad.naam} en btw. Wij noemen geen tarief per tv-formaat, want het formaat is niet wat de klus duur maakt — uw wand, uw beugel en uw kabels bepalen het werk.`}
+        />
+        <div className="mt-12">
+          <PrijsBlok />
+        </div>
+        <p className="mt-8">
+          <Link href="/prijzen" className="link inline-flex min-h-11 items-center">
+            Alle tarieven en wat er altijd bij zit
+          </Link>
+        </p>
+      </Section>
 
-        <Reveal>
-          <div className="mt-16 flex flex-wrap items-center gap-2.5 text-sm">
-            <span className="font-semibold">
-              Ook actief in de buurt van {stad.naam}:
-            </span>
-            {nabijeSteden.map((nabijStad) => (
+      {/* Alleen de links naar de dienstpagina's, zonder hun beschrijvingen:
+          die teksten zijn op alle 32 stadpagina's woordelijk gelijk, en juist
+          díe tekst gebruikte Google als samenvatting in plaats van de lokale
+          alinea's hierboven. De ankertekst is de naam van de doelpagina en
+          niet "<dienst> in <stad>": die pagina's gaan over de dienst en niet
+          over deze plaats. */}
+      <Section labelledBy="diensten">
+        <SectionHeading
+          id="diensten"
+          eyebrow={`Diensten in ${stad.naam}`}
+          title="Ophangen, aansluiten, instellen — in één bezoek"
+          lead="Eén monteur, één afspraak. Of het nu om de tv, de soundbar of de kabels gaat."
+        />
+        <ul className="mt-8 flex flex-wrap gap-3">
+          {diensten.map((dienst) => (
+            <li key={dienst.slug}>
               <Link
-                key={nabijStad.slug}
-                href={`/tv-ophangen/${nabijStad.slug}`}
-                className="rounded-full bg-sunk px-4 py-2 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk"
+                href={dienstHref(dienst)}
+                className="inline-flex min-h-11 items-center gap-2.5 rounded-full bg-white px-4 text-sm font-semibold text-ink-800 ring-1 ring-ink-200 transition duration-200 hover:bg-accent-50 hover:text-accent-800 hover:ring-accent-200"
               >
-                Tv monteur {nabijStad.naam}
+                <DienstIcon slug={dienst.slug} className="size-4" />
+                {dienst.naam}
               </Link>
-            ))}
-            <Link
-              href={`/werkgebied/${provincie.slug}`}
-              className="group flex items-center gap-2 rounded-sm px-4 py-2 font-semibold"
-            >
-              Heel {provincie.naam}
-              <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5" />
-            </Link>
-          </div>
-        </Reveal>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-        {/* Elke stadpagina draagt een FAQ over gipswanden en noemt het
-            wegwerken van kabels, zonder ooit naar die pagina's te linken.
-            Dat zijn 32 contextuele links die bleven liggen, precies op de
-            onderwerpen waar wij het antwoord op hebben. */}
-        <RelatedLinks
-          items={[
-            ["/tv-ophangen", "Tv laten ophangen"],
-            ["/tv-ophangen-gipswand", "Ophangen aan een gipswand"],
-            ["/kabels-wegwerken", "Kabels wegwerken"],
-            ["/tv-boven-open-haard", "Tv boven de open haard"],
-            ["/prijzen", "Alle tarieven"],
-          ]}
-        />
-      </section>
-
+      {/* Brengt zijn eigen surface-sectie mee; de secties ervoor en erna zijn
+          daarom wit. */}
       <Reviews
         title={`Wat klanten in ${provincie.naam} zeggen`}
         items={stadReviews}
       />
 
-      <CtaSection
-        title={`Tv laten ophangen in ${stad.naam}?`}
-        href="#offerte"
-      />
-    </main>
+      <Section labelledBy="faq">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <SectionHeading
+            id="faq"
+            eyebrow="Veelgestelde vragen"
+            title={`Vragen over tv ophangen in ${stad.naam}`}
+            lead={
+              <>
+                Staat uw vraag er niet bij? Zet hem in het{" "}
+                <Link href="#offerte" className="link">
+                  offerteformulier
+                </Link>{" "}
+                — u krijgt er antwoord op bij uw offerte.
+              </>
+            }
+          />
+          <Faq items={faqItems} />
+        </div>
+        {/* Elke stadpagina draagt een FAQ over gipswanden en noemt het
+            wegwerken van kabels, zonder ooit naar die pagina's te linken. Dat
+            zijn 32 contextuele links die bleven liggen, precies op de
+            onderwerpen waar wij het antwoord op hebben. */}
+        <RelatedLinks
+          items={[
+            ["/tv-ophangen", "Tv laten ophangen"],
+            ["/tv-ophangen-gipswand", "Tv ophangen aan een gipswand"],
+            ["/kabels-wegwerken", "Tv-kabels wegwerken"],
+            ["/tv-boven-open-haard", "Tv ophangen boven een open haard"],
+            ["/prijzen", "Alle tarieven"],
+          ]}
+        />
+      </Section>
+
+      <Section tone="surface" labelledBy="nabij">
+        <SectionHeading
+          id="nabij"
+          eyebrow="In de buurt"
+          title={`Ook actief rond ${stad.naam}`}
+          lead={`Onze monteurs rijden dagelijks tussen ${stad.naam} en ${opsomming(
+            nabijeSteden.map((s) => s.naam),
+          )}. Woont u net over de gemeentegrens, dan komen wij er net zo goed.`}
+        />
+        {/* Ankertekst volgt de titel van de doelpagina ("Tv ophangen in
+            <stad>") en niet "tv monteur <stad>": dat laatste is in het
+            Nederlands de reparatieterm. De href verandert nooit. */}
+        <ul className="mt-8 flex flex-wrap gap-3">
+          {nabijeSteden.map((nabijStad) => (
+            <li key={nabijStad.slug}>
+              <Link
+                href={`/tv-ophangen/${nabijStad.slug}`}
+                className="inline-flex min-h-11 items-center rounded-full bg-white px-4 text-sm font-semibold text-ink-800 ring-1 ring-ink-200 transition duration-200 hover:bg-accent-50 hover:text-accent-800 hover:ring-accent-200"
+              >
+                Tv ophangen in {nabijStad.naam}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        {/* De provincie van deze stad zit hier zelf ook in. Eén rij met één
+            ankertekst per provinciepagina is beter dan een losse "Heel
+            <provincie>"-link ernaast: twee links naar dezelfde pagina in één
+            sectie verdelen de waarde over twee ankerteksten. */}
+        <ProvincieChips prefix="Tv ophangen" withOverview />
+      </Section>
+
+      {/* Het formulier staat op de pagina zelf en niet achter een knop naar
+          /contact: dat was een paginawissel op het moment dat iemand besloten
+          heeft, en dat is de stap waar verkeer het makkelijkst verdwijnt. */}
+      <Section id="offerte" labelledBy="offerte-kop">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <SectionHeading
+              id="offerte-kop"
+              eyebrow="Offerte aanvragen"
+              title={`Vraag uw offerte aan in ${stad.naam}`}
+              lead={`Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend — ook in ${stad.naam}.`}
+            />
+            <CheckList items={offerteBelofte} className="mt-8" />
+          </div>
+          {/* `variant` is het meetlabel in GA4, per stad: zo blijft zichtbaar
+              welke stadpagina's aanvragen opleveren. Het formulier brengt zijn
+              eigen witte kaart mee, dus staat er geen `card` om. */}
+          <ContactForm
+            variant={`stad-${stad.slug}`}
+            berichtLabel="Uw tv en uw muur"
+            berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
+          />
+        </div>
+      </Section>
+    </>
   );
 }

@@ -8,6 +8,23 @@ export const SITE = {
   // in sticky balk, contactpagina en footer worden niet getoond. Weer aanzetten:
   // "https://wa.me/31642548451".
   whatsapp: "",
+  /**
+   * Openingstijden op één plek. Stonden eerder los in het schema in
+   * app/layout.tsx, in de koptekstbalk, in de voettekst en op de
+   * contactpagina: vier plekken die uit elkaar kunnen lopen, terwijl een
+   * bezoeker die net buiten die tijden belt je daar precies op afrekent.
+   */
+  openingstijden: {
+    weekdagen: { van: "08:00", tot: "21:00" },
+    weekend: { van: "09:00", tot: "17:00" },
+    /** Voor de balk bovenaan: moet op één regel passen. */
+    kort: "Ma–vr 08:00–21:00, za–zo 09:00–17:00",
+    /** Voor de voettekst en de contactpagina, twee regels. */
+    lang: [
+      "Maandag t/m vrijdag 08:00–21:00",
+      "Zaterdag en zondag 09:00–17:00",
+    ],
+  },
   kvk: "93769865",
   btw: "NL005041113B60",
   /**

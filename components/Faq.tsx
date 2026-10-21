@@ -1,62 +1,43 @@
-"use client";
-
-import { useId, useState } from "react";
-import { IconPlus } from "./icons";
+import { Icon } from "./Icon";
 import type { FaqItem } from "@/lib/content";
 
+/**
+ * Uitklapvragen op `<details>`/`<summary>`.
+ *
+ * Hiervoor was dit een clientcomponent met `useState`: één vraag open, de rest
+ * dicht, en de antwoorden pas zichtbaar nadat JavaScript geladen was. Een
+ * bezoeker met een haperende verbinding zag dan een rij knoppen zonder tekst,
+ * en een toetsenbordgebruiker moest wachten tot de handler eraan hing.
+ * `<details>` kan hetzelfde zonder één regel JavaScript: openen en sluiten met
+ * Enter of Space, en de tekst staat altijd in de HTML — ook voor de
+ * zoekmachine die de FAQ-schema bij deze vragen moet kunnen terugvinden.
+ */
 export default function Faq({ items }: { items: FaqItem[] }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const baseId = useId();
-
   return (
     <div className="flex flex-col gap-3">
-      {items.map((item, i) => {
-        const isOpen = openIndex === i;
-        const btnId = `${baseId}-btn-${i}`;
-        const panelId = `${baseId}-panel-${i}`;
-        return (
-          <div
-            key={item.q}
-            className="overflow-hidden rounded-md border border-hairline bg-raised shadow-e1"
-          >
-            <div>
-              <h3 className="m-0">
-                <button
-                  type="button"
-                  id={btnId}
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-display text-base font-semibold tracking-tight md:text-lg"
-                >
-                  <span>{item.q}</span>
-                  <span
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out ${
-                      isOpen ? "rotate-45" : ""
-                    }`}
-                  >
-                    <IconPlus className="h-4 w-4" />
-                  </span>
-                </button>
-              </h3>
-              <div
-                id={panelId}
-                role="region"
-                aria-labelledby={btnId}
-                aria-hidden={!isOpen}
-                className="grid transition-[grid-template-rows] duration-500 ease-out"
-                style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
-              >
-                <div className="overflow-hidden">
-                  <p className="px-6 pb-6 text-sm leading-relaxed text-fg-muted">
-                    {item.a}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {items.map((item, i) => (
+        <details
+          key={item.q}
+          // De eerste staat open: dan ziet een bezoeker meteen dát er
+          // antwoorden onder zitten en niet alleen een rij vragen.
+          open={i === 0}
+          // Geen `overflow-hidden`: de focusring van de summary loopt tot net
+          // buiten de kaart, en die mag niet worden afgesneden.
+          className="card group"
+        >
+          <summary className="list-none [&::-webkit-details-marker]:hidden">
+            {/* De kop draagt de opvulling, zodat de hele aanraakrij (ruim boven
+                de 48px) de summary zelf is en niet alleen de tekst erin. */}
+            <h3 className="flex min-h-12 cursor-pointer items-center justify-between gap-4 px-5 py-4 text-lg transition group-hover:text-accent-700 sm:px-6">
+              <span>{item.q}</span>
+              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent-50 text-accent-700 ring-1 ring-accent-200 transition duration-300 group-hover:bg-accent-100 group-open:rotate-45">
+                <Icon name="plus" className="size-5" strokeWidth={2} />
+              </span>
+            </h3>
+          </summary>
+          <p className="px-5 pb-5 text-ink-600 sm:px-6">{item.a}</p>
+        </details>
+      ))}
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter_Tight } from "next/font/google";
-import Nav from "@/components/Nav";
+import { Inter, Sora } from "next/font/google";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StickyCta from "@/components/StickyCta";
+import StickyBar from "@/components/StickyBar";
 import Analytics from "@/components/Analytics";
 import JsonLd from "@/components/JsonLd";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
@@ -14,23 +14,24 @@ import { offerCatalogJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 /**
- * Fraunces voor koppen, Inter Tight voor alles wat gelezen of ingevuld wordt.
+ * Sora voor koppen, Inter voor alles wat gelezen of ingevuld wordt.
  *
- * Hiervoor stond hier Space Grotesk boven Plus Jakarta Sans: een geometrische
- * display-sans boven de meest gebruikte "startup"-tekstletter van de laatste
- * jaren. Dat is precies de combinatie die een bezoeker onbewust herkent als
- * sjabloon. Een licht geserveerde kop op warm papier leest als een bedrijf dat
- * er al jaren is — en dat is wat iemand wil zien voordat hij een vreemde met
- * een boormachine naast zijn televisie van €1500 zet.
+ * Beide variabel, zodat één bestand alle gewichten dekt: de koppen staan op
+ * 700 en de knoppen op 600 zonder dat er een tweede download bij komt.
+ * `display: "swap"` omdat de tekst eerder leesbaar moet zijn dan mooi — een
+ * onzichtbare kop kost meer dan een kop die één keer verspringt.
+ *
+ * De namen van de CSS-variabelen zijn vast: app/globals.css leest
+ * `--font-sora` als `font-display` en `--font-inter` als `font-sans`.
  */
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
   display: "swap",
 });
 
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -60,7 +61,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#191512",
+  themeColor: "#0b0d11",
 };
 
 const graph = {
@@ -106,14 +107,14 @@ const graph = {
         {
           "@type": "OpeningHoursSpecification",
           dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          opens: "08:00",
-          closes: "21:00",
+          opens: SITE.openingstijden.weekdagen.van,
+          closes: SITE.openingstijden.weekdagen.tot,
         },
         {
           "@type": "OpeningHoursSpecification",
           dayOfWeek: ["Saturday", "Sunday"],
-          opens: "09:00",
-          closes: "17:00",
+          opens: SITE.openingstijden.weekend.van,
+          closes: SITE.openingstijden.weekend.tot,
         },
       ],
       // Los van `telephone` hierboven: Google gebruikt het losse veld voor de
@@ -157,25 +158,22 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="nl"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${fraunces.variable} ${interTight.variable} h-full antialiased`}
+      className={`${sora.variable} ${inter.variable}`}
     >
-      <body className="grain min-h-full flex flex-col">
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "document.documentElement.classList.add('reveal-on')",
-          }}
-        />
-        <a href="#hoofdinhoud" className="skip-link">
-          Direct naar inhoud
+      <body className="flex min-h-dvh flex-col">
+        <a
+          href="#hoofdinhoud"
+          className="sr-only rounded-xl bg-accent-400 px-4 py-3 font-bold text-ink-950 focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50"
+        >
+          Direct naar de inhoud
         </a>
         <JsonLd data={graph} />
-        <Nav />
-        <div id="hoofdinhoud" tabIndex={-1}>
+        <Header />
+        <main id="hoofdinhoud" tabIndex={-1} className="flex-1">
           {children}
-        </div>
+        </main>
         <Footer />
-        <StickyCta />
+        <StickyBar />
         <Analytics />
         {/* Vercel Web Analytics (paginaweergaven) en Speed Insights (Core Web Vitals) */}
         <VercelAnalytics />

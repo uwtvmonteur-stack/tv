@@ -1,11 +1,16 @@
 import Link from "next/link";
-import PageHeader from "@/components/PageHeader";
-import CtaSection from "@/components/CtaSection";
-import Reviews from "@/components/Reviews";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import JsonLd from "@/components/JsonLd";
-import Reveal from "@/components/Reveal";
-import { BezelCard } from "@/components/ui";
-import { IconArrowUpRight } from "@/components/icons";
+import Reviews from "@/components/Reviews";
+import { Icon } from "@/components/Icon";
+import {
+  CtaBand,
+  HeroActions,
+  PageHero,
+  Section,
+  SectionHeading,
+  TrustBar,
+} from "@/components/sections";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
@@ -25,79 +30,91 @@ export default function WerkgebiedPage() {
   );
 
   return (
-    <main>
+    <>
       <JsonLd data={itemList} />
-      <PageHeader
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Werkgebied", href: "/werkgebied" },
-        ]}
+
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Werkgebied", href: "/werkgebied" },
+            ]}
+          />
+        }
         eyebrow="Werkgebied"
         title="Wij hangen uw tv op bij u in de buurt"
-        intro="Onze monteurs zijn dagelijks onderweg in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant — daar helpen we u vaak al binnen 24 uur."
-      />
+        lead="Onze monteurs zijn dagelijks onderweg in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant — daar helpen we u vaak al binnen 24 uur."
+      >
+        {/* Deze pagina draagt zelf geen formulier, dus wijst de knop naar
+            /contact en niet naar #offerte. */}
+        <HeroActions href="/contact" />
+      </PageHero>
 
-      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
-        <ul className="grid gap-4 md:grid-cols-2">
-          {provincies.map((provincie, i) => {
-            const provincieSteden = stedenInProvincie(provincie.slug);
-            return (
-              <li key={provincie.slug} className="h-full">
-                <Reveal delay={i * 80} className="h-full">
-                <BezelCard className="h-full" innerClassName="flex h-full flex-col gap-6 p-8">
-                  <div>
-                    <h2 className="font-display text-h3 font-semibold">
-                      <Link
-                        href={`/werkgebied/${provincie.slug}`}
-                        className="transition-colors duration-300 ease-out hover:text-accent-fg"
-                      >
-                        Tv monteur {provincie.naam}
-                      </Link>
-                    </h2>
-                    <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                      {provincie.intro}
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap gap-2 text-sm">
-                    {provincieSteden.map((stad) => (
-                      <Link
-                        key={stad.slug}
-                        href={`/tv-ophangen/${stad.slug}`}
-                        className="rounded-full bg-sunk px-3.5 py-1.5 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk"
-                      >
-                        {stad.naam}
-                      </Link>
-                    ))}
-                  </div>
-                  <Link
-                    href={`/werkgebied/${provincie.slug}`}
-                    className="group mt-auto flex w-max items-center gap-2.5 text-sm font-semibold"
-                  >
-                    Bekijk {provincie.naam}
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5">
-                      <IconArrowUpRight className="h-3.5 w-3.5" />
-                    </span>
-                  </Link>
-                </BezelCard>
-                </Reveal>
-              </li>
-            );
-          })}
+      <Section tone="surface">
+        <TrustBar />
+      </Section>
+
+      <Section labelledBy="provincies">
+        <SectionHeading
+          id="provincies"
+          eyebrow="Vier provincies"
+          title="Kies uw provincie of uw plaats"
+          lead="Elke plaats heeft zijn eigen pagina, met wat de bebouwing daar betekent voor het ophangen van uw tv."
+        />
+
+        {/* Dit is de spilpagina naar alle 32 plaatspagina's: de volledige
+            lijst staat hier dus uitgeschreven en niet achter "bekijk meer".
+            De ankertekst is de titel van de doelpagina ("Tv ophangen in
+            <plaats>"), want een link die alleen de plaatsnaam draagt zegt
+            Google niet waarvoor die plaats staat. */}
+        <ul className="mt-12 grid gap-4 lg:grid-cols-2">
+          {provincies.map((provincie) => (
+            <li key={provincie.slug} className="card flex flex-col p-6 sm:p-8">
+              {/* De provincienaam is geen link, de regel onderaan wel: twee
+                  links naar dezelfde pagina in één kaart verdelen de waarde
+                  van die link over twee ankerteksten. */}
+              <h3 className="text-h3">{provincie.naam}</h3>
+              <p className="mt-3 text-ink-600">{provincie.intro}</p>
+              <ul className="mt-5 grid gap-x-8 sm:grid-cols-2">
+                {stedenInProvincie(provincie.slug).map((stad) => (
+                  <li key={stad.slug}>
+                    <Link
+                      href={`/tv-ophangen/${stad.slug}`}
+                      className="link inline-flex min-h-11 items-center"
+                    >
+                      Tv ophangen in {stad.naam}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={`/werkgebied/${provincie.slug}`}
+                className="mt-auto flex min-h-11 items-center gap-1.5 pt-6 font-semibold text-accent-700 hover:text-accent-800"
+              >
+                Tv ophangen in {provincie.naam}
+                <Icon name="arrow-right" className="size-4" />
+              </Link>
+            </li>
+          ))}
         </ul>
 
-        <Reveal>
-          <p className="mx-auto mt-12 max-w-2xl text-center text-sm leading-relaxed text-fg-muted">
-            Staat uw woonplaats er niet tussen? Ons werkgebied groeit
-            voortdurend en voor grotere klussen rijden we graag een stukje
-            verder. <Link href="/contact" className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4">Neem contact op</Link>{" "}
-            en we kijken direct wat er mogelijk is.
-          </p>
-        </Reveal>
-      </section>
+        <p className="mt-12 max-w-2xl text-ink-600">
+          Staat uw woonplaats er niet tussen? Ons werkgebied groeit
+          voortdurend en voor grotere klussen rijden we graag een stukje
+          verder.{" "}
+          <Link href="/contact" className="link">
+            Neem contact op
+          </Link>{" "}
+          en we kijken wat er mogelijk is.
+        </p>
+      </Section>
 
+      {/* Brengt zijn eigen surface-sectie mee; de secties ervoor en erna zijn
+          daarom wit. */}
       <Reviews />
 
-      <CtaSection />
-    </main>
+      <CtaBand tone="white" href="/contact" />
+    </>
   );
 }

@@ -1,12 +1,15 @@
-import Image from "next/image";
-import PageHeader from "@/components/PageHeader";
-import CtaSection from "@/components/CtaSection";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Reviews from "@/components/Reviews";
-import Reveal from "@/components/Reveal";
-import StatsGrid from "@/components/StatsGrid";
-import CheckList from "@/components/CheckList";
+import {
+  CheckList,
+  CtaBand,
+  PageHero,
+  Section,
+  SectionHeading,
+  StatRow,
+} from "@/components/sections";
+import { stats } from "@/lib/content";
 import { pageMeta } from "@/lib/seo";
-import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 
 export const metadata = pageMeta({
   title: "Over ons — eigen, verzekerde monteurs",
@@ -24,65 +27,70 @@ const waarden = [
 
 export default function OverOnsPage() {
   return (
-    <main>
-      <PageHeader
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Over ons", href: "/over-ons" },
-        ]}
+    <>
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Over ons", href: "/over-ons" },
+            ]}
+          />
+        }
         eyebrow="Over ons"
         title="De monteurs die Nederland laten kijken"
-        intro="Uw TV Monteur begon met één busje en één overtuiging: een tv hoort gewoon perfect opgehangen te worden — half werk bestaat niet. Inmiddels rijdt er een heel team op uit, met bij elke klus diezelfde standaard."
+        lead="Uw TV Monteur begon met één busje en één overtuiging: een tv hoort gewoon perfect opgehangen te worden — half werk bestaat niet. Inmiddels rijdt er een heel team op uit, met bij elke klus diezelfde standaard."
+        image="/images/monteur-aan-het-werk.jpg"
+        imageAlt="Monteur van Uw TV Monteur monteert een tv perfect waterpas"
       />
 
-      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+      <Section labelledBy="verhaal-kop">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
           <div>
-            <Reveal>
-              <div className="max-w-xl space-y-4 leading-relaxed text-fg-muted">
-                <p>
-                  Wat begon als een eenmanszaak groeide uit tot een hecht team
-                  van ervaren tv-monteurs, actief in Zuid-Holland,
-                  Noord-Holland, Utrecht en Noord-Brabant. Ze volgen onze interne
-                  opleiding en werken allemaal volgens dezelfde standaard:
-                  waterpas, veilig en zonder zichtbare kabels.
-                </p>
-                <p>
-                  We geloven in duidelijke afspraken: u weet het bedrag
-                  voordat wij beginnen, zonder kleine lettertjes. Niet omdat
-                  het moet, maar omdat we vinden dat het zo hoort.
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
-              <CheckList
-                items={waarden}
-                className="mt-8 flex flex-col gap-3"
-                medium
-              />
-            </Reveal>
-          </div>
-          <Reveal delay={150}>
-            <div className="rounded-lg bg-sunk p-1.5 border border-hairline transition-transform duration-700 ease-out md:rotate-2 md:hover:rotate-0">
-              <div className="overflow-hidden rounded-lg">
-                <Image
-                  src={monteurImg}
-                  alt="Monteur van Uw TV Monteur monteert een tv perfect waterpas"
-                  placeholder="blur"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="h-auto w-full object-cover"
-                />
-              </div>
+            <SectionHeading
+              id="verhaal-kop"
+              eyebrow="Hoe wij werken"
+              title="Eén standaard, bij elke klus"
+            />
+            <div className="prose-tv mt-6">
+              <p>
+                Wat begon als een eenmanszaak groeide uit tot een hecht team van
+                ervaren tv-monteurs, actief in Zuid-Holland, Noord-Holland,
+                Utrecht en Noord-Brabant. Ze volgen onze interne opleiding en
+                werken allemaal volgens dezelfde standaard: waterpas, veilig en
+                zonder zichtbare kabels.
+              </p>
+              <p>
+                We geloven in duidelijke afspraken: u weet het bedrag voordat
+                wij beginnen, zonder kleine lettertjes. Niet omdat het moet,
+                maar omdat we vinden dat het zo hoort.
+              </p>
             </div>
-          </Reveal>
+          </div>
+          <CheckList items={waarden} className="text-lg lg:mt-20" />
         </div>
+      </Section>
 
-        <StatsGrid className="mt-24" />
-      </section>
+      <Section tone="dark" labelledBy="cijfers-kop">
+        <SectionHeading
+          id="cijfers-kop"
+          dark
+          center
+          eyebrow="In cijfers"
+          title="Waar dat inmiddels op uitkomt"
+        />
+        <div className="mt-12">
+          <StatRow items={stats} dark />
+        </div>
+      </Section>
 
       <Reviews />
 
-      <CtaSection title="Ervaar het zelf" />
-    </main>
+      <CtaBand
+        title="Ervaar het zelf"
+        text="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend."
+        tone="white"
+      />
+    </>
   );
 }

@@ -6,8 +6,9 @@ import {
   useState,
   type FormEvent,
   type ReactNode,
+  type RefObject,
 } from "react";
-import { IconArrowUpRight } from "./icons";
+import { Icon, type IconName } from "./Icon";
 import { trackAdsConversion, trackEvent } from "./Analytics";
 import { SITE, TRACKING } from "@/lib/site";
 
@@ -46,12 +47,6 @@ type Status = "idle" | "submitting" | "success" | "error" | "mailto";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 const POSTCODE_RE = /^[1-9][0-9]{3}\s*[a-zA-Z]{0,2}$/;
 
-const inputStyles =
-  "w-full rounded-md border border-control bg-paper px-4 py-3.5 text-base transition-shadow duration-200 ease-out placeholder:text-fg-muted/80 focus:ring-2 focus:ring-fg focus:outline-none sm:text-sm";
-
-const labelStyles =
-  "mb-1.5 block text-2xs font-semibold tracking-[0.12em] text-fg-muted uppercase";
-
 function valideer(p: Record<Veld, string>): FieldErrors {
   const fouten: FieldErrors = {};
   if (!p.naam.trim()) fouten.naam = "Wij willen graag weten hoe we u mogen noemen.";
@@ -72,11 +67,20 @@ function valideer(p: Record<Veld, string>): FieldErrors {
   return fouten;
 }
 
+/**
+ * Het sterretje bij een verplicht veld; de uitleg staat onder de knop.
+ * Bewust niet `aria-hidden`: de velden hebben geen `required`-attribuut (het
+ * formulier valideert zelf), dus dit sterretje is het enige wat een
+ * schermlezer vertelt dat een veld verplicht is.
+ */
+const Verplicht = () => <span className="text-danger">*</span>;
+
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} className="mt-1.5 text-sm font-medium text-danger">
-      {message}
+    <p id={id} className="field-error flex items-start gap-1.5">
+      <Icon name="info" className="mt-0.5 size-4 shrink-0" />
+      <span>{message}</span>
     </p>
   );
 }
@@ -96,11 +100,34 @@ function Veldje({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={id} className={labelStyles}>
+      <label htmlFor={id} className="label">
         {label}
       </label>
       {children}
       <FieldError id={`${id}-fout`} message={fout} />
+    </div>
+  );
+}
+
+/** Het antwoordpaneel dat na het verzenden in de plaats van het formulier komt. */
+function Paneel({
+  titel,
+  icoon,
+  children,
+  paneelRef,
+}: {
+  titel: string;
+  icoon: IconName;
+  children: ReactNode;
+  paneelRef: RefObject<HTMLDivElement | null>;
+}) {
+  return (
+    <div ref={paneelRef} tabIndex={-1} className="card p-6 sm:p-8">
+      <span className="grid size-12 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+        <Icon name={icoon} className="size-6" />
+      </span>
+      <h3 className="mt-5 text-h3">{titel}</h3>
+      <p className="mt-3 text-ink-600">{children}</p>
     </div>
   );
 }
@@ -146,6 +173,12 @@ export default function ContactForm({
 
   const beschrijf = (veld: Veld) =>
     fieldErrors[veld] ? `${veld}-fout` : undefined;
+
+  // Het foute veld krijgt een rode ring boven op `input`. Een foutmelding die
+  // alleen onder het veld staat, wordt op een volle telefoonschermhoogte
+  // gemist; de rand wijst aan wáár gekeken moet worden.
+  const veldKlasse = (veld: Veld) =>
+    fieldErrors[veld] ? "input ring-2 ring-danger" : "input";
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -254,42 +287,28 @@ export default function ContactForm({
 
   if (status === "success") {
     return (
-      <div
-        ref={resultRef}
-        tabIndex={-1}
-        className="rounded-md border border-hairline bg-raised p-8 shadow-e1"
+      <Paneel
+        paneelRef={resultRef}
+        icoon="check-circle"
+        titel="Uw aanvraag staat bij ons"
       >
-        <h3 className="font-display text-h3 font-semibold">
-          Uw aanvraag staat bij ons
-        </h3>
-        <p className="mt-3 leading-relaxed text-fg-muted">
-          {SITE.reactie} U krijgt een vrijblijvende offerte met het bedrag
-          erbij; pas als u daarmee akkoord gaat, plannen we de afspraak in.
-        </p>
-      </div>
+        {SITE.reactie} U krijgt een vrijblijvende offerte met het bedrag erbij;
+        pas als u daarmee akkoord gaat, plannen we de afspraak in.
+      </Paneel>
     );
   }
 
   if (status === "mailto") {
     return (
-      <div
-        ref={resultRef}
-        tabIndex={-1}
-        className="rounded-md border border-hairline bg-raised p-8 shadow-e1"
-      >
-        <h3 className="font-display text-h3 font-semibold">
-          Bijna verstuurd
-        </h3>
-        <p className="mt-3 leading-relaxed text-fg-muted">
-          Wij hebben een e-mail voor u klaargezet met uw gegevens erin. Verstuur
-          die, dan komt uw aanvraag bij ons binnen. Lukt dat niet? Mail ons dan
-          rechtstreeks op{" "}
-          <a className="font-semibold underline" href={`mailto:${SITE.email}`}>
-            {SITE.email}
-          </a>
-          .
-        </p>
-      </div>
+      <Paneel paneelRef={resultRef} icoon="mail" titel="Bijna verstuurd">
+        Wij hebben een e-mail voor u klaargezet met uw gegevens erin. Verstuur
+        die, dan komt uw aanvraag bij ons binnen. Lukt dat niet? Mail ons dan
+        rechtstreeks op{" "}
+        <a className="link" href={`mailto:${SITE.email}`}>
+          {SITE.email}
+        </a>
+        .
+      </Paneel>
     );
   }
 
@@ -302,10 +321,27 @@ export default function ContactForm({
       // en is "niemand kwam bij het formulier" niet te onderscheiden van
       // "iedereen haakte halverwege af".
       onFocusCapture={meldStart}
-      className="flex flex-col gap-6"
+      className="card flex flex-col gap-6 p-6 sm:p-8"
     >
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Veldje id="naam" label="Uw naam *" fout={fieldErrors.naam}>
+      <div>
+        <h3 className="text-h3">Uw offerteaanvraag</h3>
+        <p className="mt-2 text-ink-600">
+          Drie dingen: uw gegevens, uw adres en wat er moet gebeuren. U krijgt
+          binnen enkele uren een vrijblijvende offerte met het bedrag erbij —
+          pas als u akkoord gaat, plannen wij een afspraak.
+        </p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+        <Veldje
+          id="naam"
+          label={
+            <>
+              Uw naam <Verplicht />
+            </>
+          }
+          fout={fieldErrors.naam}
+        >
           <input
             id="naam"
             name="naam"
@@ -313,13 +349,17 @@ export default function ContactForm({
             placeholder="Jan de Vries"
             aria-invalid={!!fieldErrors.naam}
             aria-describedby={beschrijf("naam")}
-            className={inputStyles}
+            className={veldKlasse("naam")}
           />
         </Veldje>
 
         <Veldje
           id="telefoon"
-          label="Telefoonnummer *"
+          label={
+            <>
+              Telefoonnummer <Verplicht />
+            </>
+          }
           fout={fieldErrors.telefoon}
         >
           <input
@@ -331,7 +371,7 @@ export default function ContactForm({
             placeholder="06 12 34 56 78"
             aria-invalid={!!fieldErrors.telefoon}
             aria-describedby={beschrijf("telefoon")}
-            className={inputStyles}
+            className={veldKlasse("telefoon")}
           />
         </Veldje>
 
@@ -339,7 +379,8 @@ export default function ContactForm({
           id="email"
           label={
             <>
-              E-mailadres <span className="normal-case">(optioneel)</span>
+              E-mailadres{" "}
+              <span className="font-normal text-ink-500">(optioneel)</span>
             </>
           }
           fout={fieldErrors.email}
@@ -354,13 +395,17 @@ export default function ContactForm({
             placeholder="jan@voorbeeld.nl"
             aria-invalid={!!fieldErrors.email}
             aria-describedby={beschrijf("email")}
-            className={inputStyles}
+            className={veldKlasse("email")}
           />
         </Veldje>
 
         <Veldje
           id="straat"
-          label="Straat en huisnummer *"
+          label={
+            <>
+              Straat en huisnummer <Verplicht />
+            </>
+          }
           fout={fieldErrors.straat}
           className="sm:col-span-2"
         >
@@ -371,11 +416,19 @@ export default function ContactForm({
             placeholder="Dorpsstraat 12"
             aria-invalid={!!fieldErrors.straat}
             aria-describedby={beschrijf("straat")}
-            className={inputStyles}
+            className={veldKlasse("straat")}
           />
         </Veldje>
 
-        <Veldje id="postcode" label="Postcode *" fout={fieldErrors.postcode}>
+        <Veldje
+          id="postcode"
+          label={
+            <>
+              Postcode <Verplicht />
+            </>
+          }
+          fout={fieldErrors.postcode}
+        >
           <input
             id="postcode"
             name="postcode"
@@ -383,11 +436,19 @@ export default function ContactForm({
             placeholder="3511 AB"
             aria-invalid={!!fieldErrors.postcode}
             aria-describedby={beschrijf("postcode")}
-            className={inputStyles}
+            className={veldKlasse("postcode")}
           />
         </Veldje>
 
-        <Veldje id="plaats" label="Plaats *" fout={fieldErrors.plaats}>
+        <Veldje
+          id="plaats"
+          label={
+            <>
+              Plaats <Verplicht />
+            </>
+          }
+          fout={fieldErrors.plaats}
+        >
           <input
             id="plaats"
             name="plaats"
@@ -395,13 +456,17 @@ export default function ContactForm({
             placeholder="Utrecht"
             aria-invalid={!!fieldErrors.plaats}
             aria-describedby={beschrijf("plaats")}
-            className={inputStyles}
+            className={veldKlasse("plaats")}
           />
         </Veldje>
 
         <Veldje
           id="omschrijving"
-          label={`${berichtLabel} *`}
+          label={
+            <>
+              {berichtLabel} <Verplicht />
+            </>
+          }
           fout={fieldErrors.omschrijving}
           className="sm:col-span-2"
         >
@@ -412,7 +477,7 @@ export default function ContactForm({
             placeholder={berichtPlaceholder}
             aria-invalid={!!fieldErrors.omschrijving}
             aria-describedby={beschrijf("omschrijving")}
-            className={`${inputStyles} resize-y`}
+            className={`${veldKlasse("omschrijving")} resize-y`}
           />
         </Veldje>
       </div>
@@ -430,14 +495,29 @@ export default function ContactForm({
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-sm bg-accent px-7 text-base font-semibold text-white shadow-e1 transition-colors duration-200 ease-out hover:bg-accent-hover disabled:opacity-70 sm:w-auto"
+          className="btn-primary btn-lg w-full"
         >
-          {status === "submitting" ? "Bezig met versturen…" : submitLabel}
-          <IconArrowUpRight className="h-4 w-4" />
+          {status === "submitting" ? (
+            <>
+              <span
+                className="size-5 animate-spin rounded-full border-2 border-ink-950/25 border-t-ink-950"
+                aria-hidden="true"
+              />
+              Bezig met versturen…
+            </>
+          ) : (
+            <>
+              {submitLabel}
+              <Icon name="arrow-right" className="size-5" />
+            </>
+          )}
         </button>
 
         {status === "error" && (
-          <p className="mt-3 text-sm font-medium text-danger">
+          <p
+            role="alert"
+            className="mt-4 rounded-xl bg-danger/10 p-4 text-sm font-semibold text-danger ring-1 ring-danger/20"
+          >
             Er ging iets mis bij het versturen. Probeer het nog eens, of mail
             ons op{" "}
             <a className="underline" href={`mailto:${SITE.email}`}>
@@ -447,9 +527,12 @@ export default function ContactForm({
           </p>
         )}
 
-        <p className="mt-3 max-w-prose text-sm leading-relaxed text-fg-muted">
-          U zit nergens aan vast. De offerte is gratis en vrijblijvend; pas als
-          u akkoord gaat, plannen we een afspraak. * Verplicht veld.
+        <p className="mt-4 flex items-start gap-2 text-sm text-ink-500">
+          <Icon name="lock" className="mt-0.5 size-4 shrink-0" />
+          <span>
+            Velden met * zijn verplicht. Wij gebruiken uw gegevens alleen om u
+            deze offerte te sturen — geen nieuwsbrief, geen spam.
+          </span>
         </p>
       </div>
     </form>

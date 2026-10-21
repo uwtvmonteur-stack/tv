@@ -11,14 +11,16 @@ export default function RelatedLinks({
   return (
     <nav
       aria-label="Gerelateerde pagina's"
-      className="mt-16 flex flex-wrap items-center gap-2.5 text-sm"
+      className="mt-16 flex flex-wrap items-center gap-x-3 gap-y-2"
     >
-      <span className="font-semibold">{label}</span>
+      <span className="font-display font-bold text-ink-950">{label}</span>
       {items.map(([href, linkLabel]) => (
         <Link
           key={href}
           href={href}
-          className="rounded-full bg-sunk px-4 py-2 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk"
+          // Pil van 44px hoog: dit is op een telefoon een rij kleine
+          // doelen naast elkaar, en die moeten elk met een duim te raken zijn.
+          className="inline-flex min-h-11 items-center rounded-full bg-white px-4 text-sm font-semibold text-ink-800 ring-1 ring-ink-200 transition duration-200 hover:bg-accent-50 hover:text-accent-800 hover:ring-accent-200"
         >
           {linkLabel}
         </Link>

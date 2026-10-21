@@ -1,44 +1,26 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import CtaSection from "@/components/CtaSection";
-import Bezwaren from "@/components/Bezwaren";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
-import Reveal from "@/components/Reveal";
 import Reviews from "@/components/Reviews";
-import Prijsindicatie from "@/components/Prijsindicatie";
+import { Icon, Stars } from "@/components/Icon";
 import {
-  BezelCard,
-  Button,
-  DienstIcon,
-  Eyebrow,
-  IconChip,
-  Stars,
-} from "@/components/ui";
-import {
-  IconArrowUpRight,
-  IconCheck,
-  IconClock,
-    IconShield,
-} from "@/components/icons";
-import {
-  VANAF_PRIJS,
-  bezwaren,
-  diensten,
-  dienstHref,
-  faqAlgemeen,
-} from "@/lib/content";
+  CheckList,
+  HeroActions,
+  HowItWorks,
+  PageHero,
+  PrijsBlok,
+  Section,
+  SectionHeading,
+  ServiceCards,
+  TrustBar,
+} from "@/components/sections";
+import { VANAF_PRIJS, bezwaren, faqAlgemeen } from "@/lib/content";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta } from "@/lib/seo";
 import { SITE } from "@/lib/site";
-import heroImg from "@/public/images/hero-woonkamer.jpg";
-// tv-beugel-detail.jpg toont een beugel die fysiek niet kan bestaan: de arm
-// raakt alleen de rechterrand van het scherm, zonder VESA-bevestiging. Op de
-// homepagekaart van een tv-ophangbedrijf is dat precies het verkeerde beeld.
-import beugelImg from "@/public/images/dienst-tv-ophangen.jpg";
-import monteurImg from "@/public/images/monteur-aan-het-werk.jpg";
 
 const meta = pageMeta({
   title: "Tv ophangen aan huis — vanaf €89, offerte vooraf",
@@ -60,465 +42,73 @@ export const metadata: Metadata = {
   },
 };
 
-function Hero() {
-  return (
-    // `svh` i.p.v. `dvh`: dvh groeit zodra de mobiele adresbalk inklapt en
-    // verschuift dan de hele hero (layout shift tijdens het scrollen).
-    <section className="relative flex min-h-[max(33rem,86svh)] items-end overflow-hidden">
-      <Image
-        src={heroImg}
-        alt="Wandgemonteerde tv in een sfeervolle moderne woonkamer bij schemering"
-        fill
-        priority
-        placeholder="blur"
-        sizes="100vw"
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(to_top,rgb(10_8_7/0.92)_0%,rgb(10_8_7/0.74)_26%,rgb(10_8_7/0.36)_58%,rgb(10_8_7/0.18)_100%)]" />
-
-      <div className="on-inverse relative z-10 mx-auto w-full max-w-content px-gutter pt-32 pb-14 md:pt-40 md:pb-20">
-        <Reveal immediate>
-          {/* "Tv monteur" is in het Nederlands vooral een reparatieterm: wie
-              dat zoekt heeft een kapot scherm, niet een lege muur. De
-              commerciële zoekopdracht is "tv (laten) ophangen". De bedrijfsnaam
-              blijft Uw TV Monteur; de koppen volgen voortaan de zoekterm. */}
-          <Eyebrow light>Tv ophangen aan huis</Eyebrow>
-        </Reveal>
-        <Reveal immediate>
-          {/* De vorige kop herhaalde letterlijk de bovenregel en eindigde op
-              "zonder gedoe" — een gevoel dat elke concurrent ook claimt. Dit
-              zegt wat ons onderscheidt van een platform: u krijgt het bedrijf
-              dat de klus zelf uitvoert. */}
-          <h1 className="mt-6 max-w-4xl font-display text-h1 font-semibold text-balance text-white">
-            Uw tv laten ophangen door de monteur die zelf komt.
-          </h1>
-        </Reveal>
-        <Reveal immediate>
-          <p className="mt-6 max-w-xl text-lead text-pretty text-white/85">
-            Elke tv, elke wand, ook de beugel die u al had. Vanaf {VANAF_PRIJS}{" "}
-            inclusief voorrijkosten en btw, en het bedrag uit uw offerte blijft
-            staan — ook &apos;s avonds, in het weekend, en ook als uw wand van
-            gipsplaat blijkt.
-          </p>
-        </Reveal>
-        <Reveal immediate>
-          {/* Eén actie per scherm: alles wijst naar het offerteformulier —
-              dat staat sinds deze herbouw op deze pagina zelf, dus deze knop
-              scrolt in plaats van dat hij de bezoeker verhuist.
-
-              Stond hier "Bekijk uw prijs": een knop die een bedrag belooft en
-              een formulier geeft. Dat is de duurste soort teleurstelling, want
-              die valt precies op het moment dat de bezoeker besloot te
-              klikken. */}
-          <div className="mt-8 sm:max-w-xs">
-            <Button href="#offerte" variant="inverse" maat="lg" breed>
-              Offerte aanvragen
-              <IconArrowUpRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </Reveal>
-        <Reveal immediate>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/85">
-            <span className="flex items-center gap-2">
-              <span className="text-accent-ink">
-                <Stars />
-              </span>
-              <strong className="font-semibold text-white">
-                {SITE.reviews.score} / 5
-              </strong>
-              {SITE.reviews.url ? (
-                <a
-                  href={SITE.reviews.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline decoration-white/40 underline-offset-2"
-                >
-                  {SITE.reviews.count} reviews
-                </a>
-              ) : (
-                <>{SITE.reviews.count} reviews</>
-              )}
-            </span>
-            <span className="flex items-center gap-2">
-              <IconShield className="h-4 w-4 text-accent-ink" />
-              Volledig verzekerd
-            </span>
-            <span className="flex items-center gap-2">
-              <IconClock className="h-4 w-4 text-accent-ink" />
-              Ook &apos;s avonds en in het weekend
-            </span>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function Diensten() {
-  const [tvOphangen, tvInstallatie, soundbar, instellen] = diensten;
-
-  return (
-    <section className="mx-auto w-full max-w-content px-gutter py-section">
-      <Reveal>
-        <div className="max-w-2xl">
-          <Eyebrow>Onze diensten</Eyebrow>
-          <h2 className="mt-6 font-display text-h2 font-semibold">
-            Alles voor het perfecte kijkmoment
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-            Van tv ophangen tot alles ingesteld: één monteur, één afspraak, en
-            alles werkt.
-          </p>
-        </div>
-      </Reveal>
-
-      <ul className="mt-14 grid gap-4 lg:grid-cols-12">
-        <li className="lg:col-span-7 lg:row-span-2">
-          <Reveal className="h-full">
-          <Link
-            href={dienstHref(tvOphangen)}
-            className="group block h-full"
-          >
-            <BezelCard className="h-full transition-transform duration-500 ease-out group-hover:-translate-y-1">
-              <div className="flex h-full flex-col overflow-hidden rounded-lg md:flex-row">
-                <div className="flex flex-1 flex-col justify-between gap-8 p-8 md:p-10">
-                  <div>
-                    <IconChip>
-                      <DienstIcon slug={tvOphangen.slug} />
-                    </IconChip>
-                    <h3 className="mt-6 font-display text-h3 font-semibold">
-                      {tvOphangen.naam}
-                    </h3>
-                    <p className="mt-4 leading-relaxed text-fg-muted">
-                      Vast, kantelbaar of volledig draaibaar — wij monteren elke
-                      tv op elke muur. Heeft u nog geen beugel? Dan regelen we er
-                      op aanvraag een voor u.
-                    </p>
-                  </div>
-                  <ul className="flex flex-col gap-3 text-sm font-medium">
-                    {[
-                      "Gratis beugeladvies op maat",
-                      "Elke muur: steen, beton, hout of gips",
-                      "Waterpas gemonteerd én getest",
-                    ].map((item) => (
-                      <li key={item} className="flex items-center gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-tint text-accent-fg">
-                          <IconCheck className="h-3.5 w-3.5" />
-                        </span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="relative min-h-64 md:w-2/5">
-                  <Image
-                    src={beugelImg}
-                    alt="Monteur bevestigt een televisie aan de wandbeugel in een woonkamer"
-                    fill
-                    placeholder="blur"
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            </BezelCard>
-          </Link>
-          </Reveal>
-        </li>
-
-        {[tvInstallatie, soundbar].map((dienst, i) => (
-          <li key={dienst.slug} className="lg:col-span-5">
-            <Reveal delay={100 + i * 100} className="h-full">
-            <Link href={dienstHref(dienst)} className="group block h-full">
-              <BezelCard
-                className="h-full transition-transform duration-500 ease-out group-hover:-translate-y-1"
-                innerClassName="p-8 md:p-9"
-              >
-                <IconChip>
-                  <DienstIcon slug={dienst.slug} />
-                </IconChip>
-                <h3 className="mt-6 font-display text-h3 font-semibold">
-                  {dienst.naam}
-                </h3>
-                <p className="mt-3 leading-relaxed text-fg-muted">
-                  {dienst.kort}
-                </p>
-              </BezelCard>
-            </Link>
-            </Reveal>
-          </li>
-        ))}
-
-        <li className="lg:col-span-12">
-          <Reveal delay={100} className="h-full">
-          <Link href={dienstHref(instellen)} className="group block h-full">
-            <BezelCard
-              className="h-full transition-transform duration-500 ease-out group-hover:-translate-y-1"
-              innerClassName="flex items-center gap-6 p-8"
-            >
-              <IconChip>
-                <DienstIcon slug={instellen.slug} />
-              </IconChip>
-              <div>
-                <h3 className="font-display text-h3 font-semibold">
-                  {instellen.naam}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  {instellen.kort}
-                </p>
-              </div>
-            </BezelCard>
-          </Link>
-          </Reveal>
-        </li>
-      </ul>
-
-      <Reveal>
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/diensten"
-            className="group flex items-center gap-2.5 rounded-sm py-2.5 pr-2.5 pl-6 text-sm font-semibold border border-control transition-colors duration-300 ease-out hover:bg-sunk"
-          >
-            Bekijk alle diensten
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5">
-              <IconArrowUpRight className="h-3.5 w-3.5" />
-            </span>
-          </Link>
-        </div>
-      </Reveal>
-    </section>
-  );
-}
-
-const steps = [
-  {
-    nr: "01",
-    title: "Vraag uw offerte aan",
-    text: "Online in één minuut geregeld, ook 's avonds en in het weekend. Wij nemen binnen enkele uren contact met u op om datum en tijd te bevestigen.",
-  },
-  {
-    nr: "02",
-    title: "De monteur komt langs",
-    text: "Met het juiste gereedschap en beschermmateriaal. Een halfuur voor aankomst krijgt u een belletje, zodat u nooit hoeft te wachten.",
-  },
-  {
-    nr: "03",
-    title: "Achteroverleunen",
-    text: "Uw tv hangt perfect waterpas, alles is aangesloten en ingesteld, en wij nemen al het verpakkings- en boorafval mee terug.",
-  },
+/**
+ * De herkenningspunten. Geformuleerd als de situatie van de bezoeker en niet
+ * als ons aanbod: wie zichzelf terugleest in de lijst, leest daarna ook de
+ * rest van de pagina.
+ */
+const herkenning = [
+  "De tv staat nog in de doos en u weet niet welke beugel u nodig heeft",
+  "U weet niet of uw wand het gewicht van uw tv houdt",
+  "U wilt de kabels niet langs de muur zien hangen",
+  "Elke site noemt een ander bedrag, dus u weet niet wat redelijk is",
+  "U kunt alleen 's avonds of in het weekend",
+  "U gaat niet zelf boren naast een tv die een maandsalaris kostte",
 ];
 
-function Werkwijze() {
-  return (
-    <section className="px-2 md:px-6">
-      <div className="mx-auto max-w-7xl rounded-lg bg-inverse px-4 py-24 text-fg-inverse md:px-8 md:py-32">
-        <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-2 lg:items-center">
-          <div>
-            <Reveal>
-              <Eyebrow light>Onze werkwijze</Eyebrow>
-              <h2 className="mt-6 font-display text-h2 font-semibold">
-                Geregeld in drie stappen
-              </h2>
-            </Reveal>
-            <div className="mt-12 flex flex-col">
-              {steps.map((step, i) => (
-                <Reveal key={step.nr} delay={i * 100}>
-                  <div
-                    className={`flex gap-6 py-8 ${
-                      i > 0 ? "border-t border-white/10" : ""
-                    }`}
-                  >
-                    <span className="font-display text-sm font-semibold tracking-widest text-accent-ink">
-                      {step.nr}
-                    </span>
-                    <div>
-                      <h3 className="font-display text-h3 font-semibold">
-                        {step.title}
-                      </h3>
-                      <p className="mt-3 leading-relaxed text-white/70">
-                        {step.text}
-                      </p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-          <Reveal delay={150}>
-            <div className="rounded-lg bg-white/5 p-1.5 ring-1 ring-white/10 transition-transform duration-700 ease-out md:rotate-2 md:hover:rotate-0">
-              <div className="overflow-hidden rounded-lg">
-                <Image
-                  src={monteurImg}
-                  alt="Monteur van Uw TV Monteur monteert een tv perfect waterpas"
-                  placeholder="blur"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="h-auto w-full object-cover"
-                />
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Prijzen() {
-  return (
-    <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
-      <Reveal>
-        <div className="max-w-2xl">
-          <Eyebrow>Wat het kost</Eyebrow>
-          <h2 className="mt-6 font-display text-h2 font-semibold">
-            Tv ophangen vanaf €89
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-            U krijgt het exacte bedrag vooraf op papier. Gaat u akkoord, dan
-            plannen we de afspraak — en betaalt u precies dat.
-          </p>
-        </div>
-      </Reveal>
-
-      <div className="mt-16">
-        {/* Naar het formulier op deze pagina, niet naar /contact: een
-            paginawissel tussen "ik weet de prijs" en "ik vraag aan" is de
-            duurste stap van de hele site. De kaart geeft het gekozen formaat
-            mee aan het formulier. */}
-        <Prijsindicatie href="#offerte" />
-      </div>
-
-      <Reveal delay={200}>
-        <p className="mt-10 text-center text-sm text-fg-muted">
-          Geen aanbetaling: u betaalt pas na afloop, per pin of betaalverzoek.{" "}
-          <Link
-            href="/prijzen"
-            className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-          >
-            Bekijk alle prijzen en aanvullende diensten
-          </Link>
-        </p>
-      </Reveal>
-    </section>
-  );
-}
+/** Wat de offerteaanvraag wél en niet van iemand vraagt. */
+const offerteBelofte = [
+  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+  "Het bedrag is inclusief voorrijkosten en btw",
+  "Geen aanbetaling — u betaalt pas na afloop",
+  "Ook 's avonds en in het weekend, zonder toeslag",
+];
 
 /**
- * Het afspraakformulier op de homepage zelf.
+ * De bewijsregel onder de heroknoppen.
  *
- * Tot nu toe eindigde elke weg op deze pagina bij een knop naar /contact. Dat
- * is een paginawissel op het moment dat iemand besloten heeft — de stap waar
- * verkeer het makkelijkst verdwijnt. Het formulier staat nu direct onder de
- * prijzen, zodat de prijs en het aanvragen één beweging zijn.
+ * Het telefoonnummer staat hier bewust niet, ook niet als knop ernaast: één
+ * actie per scherm. Deze regel is er om die ene actie te rechtvaardigen, niet
+ * om er een tweede naast te zetten.
  */
-function OfferteBlok() {
+function HeroBewijs() {
   return (
-    <section
-      id="offerte"
-      className="mx-auto w-full max-w-content scroll-mt-24 px-4 pb-section md:px-8"
-    >
-      <Reveal immediate>
-        <div className="rounded-lg bg-sunk p-1.5 border border-hairline">
-          <div className="rounded-lg bg-white p-6 md:p-10">
-            <div className="max-w-2xl">
-              <h2 className="font-display text-h2 font-semibold">
-                Vraag uw afspraak aan
-              </h2>
-              <p className="mt-3 leading-relaxed text-fg-muted">
-                Vertel kort wat er moet gebeuren en waar u woont. U
-                hoort binnen enkele uren wat de eerstvolgende mogelijkheid is.
-              </p>
-            </div>
-            <div className="mt-8">
-              <ContactForm
-                variant="home"
-                berichtLabel="Uw tv en uw muur"
-                berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
-              />
-            </div>
-          </div>
-        </div>
-      </Reveal>
-    </section>
-  );
-}
-
-function Werkgebied() {
-  return (
-    <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
-      <Reveal>
-        <div className="max-w-2xl">
-          <Eyebrow>Werkgebied</Eyebrow>
-          <h2 className="mt-6 font-display text-h2 font-semibold">
-            Een tv monteur bij u in de buurt
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-            Dagelijks onderweg in Zuid-Holland, Noord-Holland, Utrecht en
-            Noord-Brabant. Kijk of we ook bij u in de buurt komen.
-          </p>
-        </div>
-      </Reveal>
-
-      <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {provincies.map((provincie, i) => {
-          const topSteden = stedenInProvincie(provincie.slug).slice(0, 3);
-          return (
-            <li key={provincie.slug} className="h-full">
-              <Reveal delay={i * 80} className="h-full">
-              <BezelCard className="h-full" innerClassName="flex h-full flex-col gap-4 p-7">
-                <h3 className="font-display text-lg font-semibold tracking-tight">
-                  <Link
-                    href={`/werkgebied/${provincie.slug}`}
-                    className="transition-colors duration-300 ease-out hover:text-accent-fg"
-                  >
-                    {provincie.naam}
-                  </Link>
-                </h3>
-                <ul className="flex flex-col gap-2 text-sm text-fg-muted">
-                  {topSteden.map((stad) => (
-                    <li key={stad.slug}>
-                      <Link
-                        href={`/tv-ophangen/${stad.slug}`}
-                        className="transition-colors duration-300 ease-out hover:text-fg"
-                      >
-                        Tv monteur {stad.naam}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href={`/werkgebied/${provincie.slug}`}
-                  className="group mt-auto flex w-max items-center gap-2 text-sm font-semibold"
-                >
-                  Alle plaatsen
-                  <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5" />
-                </Link>
-              </BezelCard>
-              </Reveal>
-            </li>
-          );
-        })}
-      </ul>
-
-      <Reveal>
-        <div className="mt-10 flex justify-center">
-          <Link
-            href="/werkgebied"
-            className="group flex items-center gap-2.5 rounded-sm py-2.5 pr-2.5 pl-6 text-sm font-semibold border border-control transition-colors duration-300 ease-out hover:bg-sunk"
+    <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-ink-200">
+      <li className="flex items-center gap-2">
+        <Stars />
+        <strong className="tabular font-semibold text-white">
+          {SITE.reviews.score} / 5
+        </strong>
+        {/* Een score zonder vindplaats is een bewering. Staat de link naar het
+            bedrijfsprofiel in SITE.reviews, dan kan de bezoeker hem nalezen. */}
+        {SITE.reviews.url ? (
+          <a
+            href={SITE.reviews.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-white/40 underline-offset-4 hover:text-white"
           >
-            Bekijk het volledige werkgebied
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5">
-              <IconArrowUpRight className="h-3.5 w-3.5" />
-            </span>
-          </Link>
-        </div>
-      </Reveal>
-    </section>
+            {SITE.reviews.count} reviews
+          </a>
+        ) : (
+          <span>{SITE.reviews.count} reviews</span>
+        )}
+      </li>
+      <li className="flex items-center gap-2">
+        <Icon name="shield" className="size-5 text-accent-300" />
+        Volledig verzekerd
+      </li>
+      <li className="flex items-center gap-2">
+        <Icon name="clock" className="size-5 text-accent-300" />
+        Ook &apos;s avonds en in het weekend
+      </li>
+    </ul>
   );
 }
 
-function FaqSectie() {
+export default function Page() {
   return (
-    <section className="mx-auto w-full max-w-content px-4 py-24 md:px-8 md:py-36">
+    <>
       {/* De vier bezwaren staan zichtbaar op deze pagina als vraag met
           antwoord, dus horen ze ook in het FAQPage-schema: dit is wat
           zoekmachines en AI-antwoordmachines uitlezen, en het zijn precies de
@@ -532,51 +122,229 @@ function FaqSectie() {
           ...faqAlgemeen,
         ])}
       />
-      <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
-        <div className="lg:col-span-2">
-          <Reveal>
-            <Eyebrow>Veelgestelde vragen</Eyebrow>
-            <h2 className="mt-6 font-display text-h2 font-semibold">
-              Alles wat u wilt weten
-            </h2>
-            <p className="mt-5 leading-relaxed text-fg-muted">
-              Staat uw vraag er niet tussen? Stel hem gerust in het{" "}
-              <Link
-                href="/contact"
-                className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-              >
-                aanvraagformulier
-              </Link>{" "}
-              — we denken graag met u mee.
-            </p>
-          </Reveal>
-        </div>
-        <Reveal delay={100} className="lg:col-span-3">
-          <Faq items={faqAlgemeen} />
-        </Reveal>
-      </div>
-    </section>
-  );
-}
 
-export default function Page() {
-  return (
-    <main>
-      {/* Volgorde volgt de beslisvolgorde van een advertentiebezoeker: wat doen
-          jullie → hoe gaat het → bewijs → mijn twijfels → wat kost het →
-          aanvragen. Het aanvragen stond hier eerst helemaal aan het eind, en
-          alleen als een knop naar een andere pagina; de prijzen stonden vóór
-          het bewijs en de twijfels bleven onderaan in de FAQ liggen. */}
-      <Hero />
-      <Diensten />
-      <Werkwijze />
+      {/* "Tv monteur" is in het Nederlands vooral een reparatieterm: wie dat
+          zoekt heeft een kapot scherm, niet een lege muur. De commerciële
+          zoekopdracht is "tv (laten) ophangen". De bedrijfsnaam blijft Uw TV
+          Monteur; de koppen volgen de zoekterm. */}
+      <PageHero
+        eyebrow="Tv ophangen aan huis"
+        title="Uw tv laten ophangen door de monteur die zelf komt."
+        lead={
+          <>
+            Elke tv, elke wand, ook de beugel die u al had. Vanaf {VANAF_PRIJS}{" "}
+            inclusief voorrijkosten en btw, en het bedrag uit uw offerte blijft
+            staan — ook &apos;s avonds, in het weekend, en ook als uw wand van
+            gipsplaat blijkt.
+          </>
+        }
+        image="/images/hero-woonkamer.jpg"
+        imageAlt="Wandgemonteerde tv in een sfeervolle moderne woonkamer bij schemering"
+      >
+        <HeroActions />
+        <HeroBewijs />
+      </PageHero>
+
+      <Section tone="surface">
+        <TrustBar />
+      </Section>
+
+      <Section labelledBy="herkenning">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <SectionHeading
+              id="herkenning"
+              eyebrow="Herkent u dit?"
+              title="Een tv ophangen is één middag uitzoeken en één keer goed boren"
+              lead="Het uitzoeken hoeft u niet te doen en het boren niet zelf. Wij komen langs, hangen hem waterpas op en laten het schoon achter."
+            />
+            <CheckList items={herkenning} className="mt-8 text-lg" />
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-lift">
+            {/* Niet tv-beugel-detail.jpg: die foto toont een beugel die fysiek
+                niet kan bestaan — de arm raakt alleen de rechterrand van het
+                scherm, zonder VESA-bevestiging. Op de homepage van een
+                tv-ophangbedrijf is dat precies het verkeerde beeld. */}
+            <Image
+              src="/images/monteur-aan-het-werk.jpg"
+              alt="Monteur van Uw TV Monteur hangt een televisie waterpas aan de wand"
+              fill
+              sizes="(min-width: 1024px) 600px, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </Section>
+
+      <Section tone="surface" labelledBy="diensten">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <SectionHeading
+            id="diensten"
+            eyebrow="Onze diensten"
+            title="Ophangen, aansluiten, instellen — in één bezoek"
+            lead="Eén monteur, één afspraak. Of het nu om de tv, de soundbar of de kabels gaat."
+          />
+          <Link href="/diensten" className="btn-ghost shrink-0">
+            Alle diensten
+            <Icon name="arrow-right" className="size-4" />
+          </Link>
+        </div>
+        <div className="mt-12">
+          <ServiceCards />
+        </div>
+      </Section>
+
+      <Section labelledBy="werkwijze">
+        <SectionHeading
+          id="werkwijze"
+          center
+          eyebrow="Zo werkt het"
+          title="Van aanvraag tot waterpas in drie stappen"
+          lead="U vraagt aan, u krijgt het bedrag, wij hangen hem op. Daartussen hoeft u niets uit te zoeken."
+        />
+        <div className="mt-14">
+          <HowItWorks />
+        </div>
+      </Section>
+
+      <Section tone="surface" labelledBy="prijs">
+        <SectionHeading
+          id="prijs"
+          eyebrow="Wat het kost"
+          title={`Tv ophangen vanaf ${VANAF_PRIJS}, met een offerte vooraf`}
+          lead="Wij noemen geen vast tarief per tv-formaat, want het formaat is niet wat de klus duur maakt. Uw wand, uw beugel en uw kabels bepalen het werk — en dat zetten wij vrijblijvend op papier."
+        />
+        <div className="mt-12">
+          <PrijsBlok />
+        </div>
+        <p className="mt-8">
+          <Link href="/prijzen" className="link inline-flex min-h-11 items-center">
+            Alle tarieven en wat er altijd bij zit
+          </Link>
+        </p>
+      </Section>
+
+      {/* Eigen sectie met eigen achtergrond; staat hier tussen het prijsblok
+          (surface) en de bezwaren (donker). */}
       <Reviews />
-      <Bezwaren />
-      <Prijzen />
-      <OfferteBlok />
-      <FaqSectie />
-      <Werkgebied />
-      <CtaSection href="#offerte" />
-    </main>
+
+      <Section tone="dark" labelledBy="bezwaren">
+        <SectionHeading
+          dark
+          id="bezwaren"
+          eyebrow="Uw twijfels"
+          title="Vier punten waarop u elders een voorbehoud krijgt"
+          lead="Dit zijn de dingen die bezoekers tegenhouden. Bij ons leveren ze geen toeslag en geen nee op."
+        />
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
+          {bezwaren.map((bezwaar) => (
+            <li
+              key={bezwaar.vraag}
+              className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10"
+            >
+              <h3 className="flex items-start gap-3 text-h3 text-white">
+                <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl bg-accent-400/15 text-accent-300">
+                  <Icon name="check-circle" className="size-5" />
+                </span>
+                {bezwaar.vraag}
+              </h3>
+              <p className="mt-3 text-ink-300">{bezwaar.antwoord}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section labelledBy="werkgebied">
+        <SectionHeading
+          id="werkgebied"
+          center
+          eyebrow="Werkgebied"
+          title="Een tv monteur uit uw eigen regio"
+          lead="Wij rijden dagelijks in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Kies uw provincie of uw plaats."
+        />
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {provincies.map((provincie) => (
+            <li key={provincie.slug} className="card flex flex-col p-6">
+              {/* De provincienaam is geen link, de regel onderaan wel: twee
+                  links naar dezelfde pagina in één kaart verdelen de waarde van
+                  die link over twee ankerteksten. */}
+              <h3 className="text-h3">{provincie.naam}</h3>
+              <ul className="mt-3">
+                {stedenInProvincie(provincie.slug)
+                  .slice(0, 3)
+                  .map((stad) => (
+                    <li key={stad.slug}>
+                      {/* Ankertekst volgt de titel van de doelpagina ("Tv
+                          ophangen in <stad>") en niet "tv monteur <stad>": dat
+                          laatste is in het Nederlands de reparatieterm. */}
+                      <Link
+                        href={`/tv-ophangen/${stad.slug}`}
+                        className="link inline-flex min-h-11 items-center"
+                      >
+                        Tv ophangen in {stad.naam}
+                      </Link>
+                    </li>
+                  ))}
+              </ul>
+              <Link
+                href={`/werkgebied/${provincie.slug}`}
+                className="mt-auto flex min-h-11 items-center gap-1.5 pt-4 font-semibold text-accent-700 hover:text-accent-800"
+              >
+                Alle plaatsen in {provincie.naam}
+                <Icon name="arrow-right" className="size-4" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-10 flex justify-center">
+          <Link href="/werkgebied" className="btn-ghost">
+            Het volledige werkgebied
+            <Icon name="arrow-right" className="size-4" />
+          </Link>
+        </div>
+      </Section>
+
+      <Section tone="surface" labelledBy="faq">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <SectionHeading
+            id="faq"
+            eyebrow="Veelgestelde vragen"
+            title="Goed om te weten"
+            lead={
+              <>
+                Staat uw vraag er niet bij? Zet hem in het{" "}
+                <Link href="#offerte" className="link">
+                  offerteformulier
+                </Link>{" "}
+                — u krijgt er antwoord op bij uw offerte.
+              </>
+            }
+          />
+          <Faq items={faqAlgemeen} />
+        </div>
+      </Section>
+
+      {/* Het formulier staat op de pagina zelf en niet achter een knop naar
+          /contact: dat was een paginawissel op het moment dat iemand besloten
+          heeft, en dat is de stap waar verkeer het makkelijkst verdwijnt. */}
+      <Section id="offerte" labelledBy="offerte-kop">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <SectionHeading
+              id="offerte-kop"
+              eyebrow="Offerte aanvragen"
+              title="Vertel kort wat er moet gebeuren"
+              lead="Uw gegevens, uw adres en wat er moet gebeuren. U krijgt binnen enkele uren het bedrag, vrijblijvend."
+            />
+            <CheckList items={offerteBelofte} className="mt-8" />
+          </div>
+          <ContactForm
+            variant="home"
+            berichtLabel="Uw tv en uw muur"
+            berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
+          />
+        </div>
+      </Section>
+    </>
   );
 }

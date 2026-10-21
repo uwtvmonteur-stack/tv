@@ -1,14 +1,9 @@
+import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import PageHeader from "@/components/PageHeader";
-import Reviews from "@/components/Reviews";
 import JsonLd from "@/components/JsonLd";
-import Reveal from "@/components/Reveal";
-import { BezelCard, Eyebrow } from "@/components/ui";
-import {
-  IconChat,
-  IconClock,
-  IconMail,
-  } from "@/components/icons";
+import Reviews from "@/components/Reviews";
+import { Icon } from "@/components/Icon";
+import { PageHero, Section, SectionHeading } from "@/components/sections";
 import { SITE } from "@/lib/site";
 import { absUrl, pageMeta } from "@/lib/seo";
 
@@ -35,93 +30,91 @@ export default function ContactPage() {
   };
 
   return (
-    <main>
+    <>
       <JsonLd data={contactJsonLd} />
-      <PageHeader
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Contact", href: "/contact" },
-        ]}
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Contact", href: "/contact" },
+            ]}
+          />
+        }
         eyebrow="Contact"
         title="Vraag uw offerte aan"
+        lead="Drie dingen zijn genoeg: wie u bent, waar u woont en wat er moet gebeuren. De prijs krijgt u daarna, vrijblijvend."
       />
 
-      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
-        <div className="grid gap-5 lg:grid-cols-5">
-          {/* `immediate`: het formulier is het conversiepunt en mag nooit
-              (kort) onzichtbaar zijn door de scroll-animatie. */}
-          <Reveal immediate className="lg:col-span-3">
-            <BezelCard className="h-full" innerClassName="p-6 md:p-10">
-              <h2 className="mb-8 font-display text-h2 font-semibold">
-                Offerte aanvragen
-              </h2>
-              {/* `montage`: ophangen is waar de overgrote meerderheid voor
-                  komt, en de prijs vóór het telefoonnummer tonen is hier het
-                  hele punt. Wie voor iets anders komt, laat de tv-vraag leeg. */}
-              <ContactForm variant="contact" />
-            </BezelCard>
-          </Reveal>
+      <Section id="offerte" labelledBy="offerte-kop">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.3fr]">
+          <div>
+            <SectionHeading
+              id="offerte-kop"
+              eyebrow="Na het versturen"
+              title="Wat gebeurt er daarna?"
+            />
+            {/* Onzekerheid over wat er volgt is de tweede reden om een
+                formulier niet af te maken, na de angst vast te zitten aan een
+                bedrag. Daarom staat het hier naast het formulier en niet in
+                een bedankscherm dat de twijfelaar nooit ziet. */}
+            <ol className="mt-8 flex flex-col gap-5">
+              {vervolgstappen.map((stap, i) => (
+                <li key={stap} className="flex gap-4">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-ink-950 font-display text-sm font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <span className="text-ink-700">{stap}</span>
+                </li>
+              ))}
+            </ol>
 
-          <Reveal delay={100} className="lg:col-span-2">
-            <div className="h-full rounded-lg bg-sunk p-1.5 border border-hairline">
-              <div className="flex h-full flex-col justify-between gap-10 rounded-lg bg-inverse p-8 text-fg-inverse md:p-10">
-                <div>
-                  <Eyebrow light>Na het versturen</Eyebrow>
-                  <h2 className="mt-6 font-display text-h2 font-semibold">
-                    Wat gebeurt er daarna?
-                  </h2>
-                  {/* Onzekerheid over wat er volgt is de tweede reden om een
-                      formulier niet af te maken, na de angst vast te zitten. */}
-                  <ol className="mt-6 flex flex-col gap-5 text-sm leading-relaxed text-white/70">
-                    {vervolgstappen.map((stap, i) => (
-                      <li key={stap} className="flex gap-3.5">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-fg-inverse">
-                          {i + 1}
-                        </span>
-                        <span>{stap}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-                <div className="flex flex-col gap-4 text-sm">
-                  {SITE.whatsapp && (
-                    <a
-                      href={SITE.whatsapp}
-                      className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-out hover:text-accent-ink"
-                    >
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
-                        <IconChat className="h-4.5 w-4.5" />
-                      </span>
+            <dl className="mt-10 flex flex-col gap-4 border-t border-ink-200 pt-8 text-sm">
+              {SITE.whatsapp && (
+                <div className="flex items-center gap-3">
+                  <dt className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+                    <Icon name="whatsapp" />
+                    <span className="sr-only">WhatsApp</span>
+                  </dt>
+                  <dd>
+                    <a href={SITE.whatsapp} className="link">
                       WhatsApp ons
                     </a>
-                  )}
-                  <a
-                    href={`mailto:${SITE.email}`}
-                    className="flex items-center gap-3.5 font-semibold transition-colors duration-300 ease-out hover:text-accent-ink"
-                  >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
-                      <IconMail className="h-4.5 w-4.5" />
-                    </span>
+                  </dd>
+                </div>
+              )}
+              <div className="flex items-center gap-3">
+                <dt className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+                  <Icon name="mail" />
+                  <span className="sr-only">E-mail</span>
+                </dt>
+                <dd>
+                  <a href={`mailto:${SITE.email}`} className="link">
                     {SITE.email}
                   </a>
-                  <div className="mt-2 flex items-start gap-3.5 text-white/70">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10">
-                      <IconClock className="h-4.5 w-4.5" />
-                    </span>
-                    <span className="pt-2 leading-relaxed">
-                      Ma t/m vr 08:00 – 21:00
-                      <br />
-                      Zaterdag en zondag 09:00 – 17:00
-                    </span>
-                  </div>
-                </div>
+                </dd>
               </div>
-            </div>
-          </Reveal>
+              <div className="flex items-start gap-3">
+                <dt className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+                  <Icon name="clock" />
+                  <span className="sr-only">Openingstijden</span>
+                </dt>
+                <dd className="pt-2 text-ink-600">
+                  {SITE.openingstijden.lang.map((regel) => (
+                    <span key={regel} className="block">
+                      {regel}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <ContactForm variant="contact" />
         </div>
-      </section>
+      </Section>
 
       <Reviews />
-    </main>
+    </>
   );
 }

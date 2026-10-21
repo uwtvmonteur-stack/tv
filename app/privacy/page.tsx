@@ -1,12 +1,12 @@
-import PageHeader from "@/components/PageHeader";
-import Reveal from "@/components/Reveal";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { PageHero, Section } from "@/components/sections";
 import { SITE } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = {
   ...pageMeta({
     title: "Privacyverklaring",
-    description: `Hoe ${SITE.name} omgaat met de gegevens die u via het afspraakformulier, telefoon of e-mail met ons deelt.`,
+    description: `Hoe ${SITE.name} omgaat met de gegevens die u via het offerteformulier, telefoon of e-mail met ons deelt.`,
     path: "/privacy",
   }),
   robots: { index: false, follow: true },
@@ -16,19 +16,22 @@ const secties: { h2: string; p: string[] }[] = [
   {
     h2: "Welke gegevens wij verwerken",
     p: [
-      "Wanneer u een afspraak aanvraagt via het formulier, per telefoon, WhatsApp of e-mail, verwerken wij de gegevens die u zelf opgeeft: uw naam, telefoonnummer, e-mailadres, postcode en huisnummer en de inhoud van uw bericht.",
+      // Dit moet kloppen met wat het formulier werkelijk vraagt. Hier stond
+      // "postcode en huisnummer" en "WhatsApp": het formulier vraagt sinds de
+      // omzetting naar offertes om een volledig adres, en WhatsApp staat uit.
+      "Wanneer u een offerte aanvraagt via het formulier, per telefoon of per e-mail, verwerken wij de gegevens die u zelf opgeeft: uw naam, telefoonnummer, eventueel uw e-mailadres, uw straat en huisnummer, postcode en plaats, en de omschrijving van het werk.",
     ],
   },
   {
     h2: "Waarvoor wij ze gebruiken",
     p: [
-      "Uitsluitend om contact met u op te nemen over uw aanvraag, de afspraak in te plannen en de werkzaamheden uit te voeren en te factureren. Wij gebruiken uw gegevens niet voor nieuwsbrieven of andere marketing en verkopen ze nooit aan derden.",
+      "Uitsluitend om u een offerte te sturen, contact met u op te nemen over uw aanvraag, de afspraak in te plannen en de werkzaamheden uit te voeren en te factureren. Wij gebruiken uw gegevens niet voor nieuwsbrieven of andere marketing en verkopen ze nooit aan derden.",
     ],
   },
   {
     h2: "Bewaartermijn",
     p: [
-      "Aanvragen die niet tot een opdracht leiden verwijderen wij binnen zes maanden. Gegevens van uitgevoerde opdrachten bewaren wij zolang de wettelijke (fiscale) bewaarplicht dat vereist.",
+      "Aanvragen die niet tot een opdracht leiden verwijderen wij binnen zes maanden. Gegevens van uitgevoerde opdrachten bewaren wij zolang de wettelijke fiscale bewaarplicht dat vereist.",
     ],
   },
   {
@@ -47,40 +50,39 @@ const secties: { h2: string; p: string[] }[] = [
 
 export default function PrivacyPage() {
   return (
-    <main>
-      <PageHeader
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Privacyverklaring", href: "/privacy" },
-        ]}
+    <>
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Privacyverklaring", href: "/privacy" },
+            ]}
+          />
+        }
         eyebrow="Privacy"
         title="Privacyverklaring"
-        intro="Kort en duidelijk: wij gebruiken uw gegevens alleen om uw afspraak te regelen en uit te voeren."
+        lead="Kort en duidelijk: wij gebruiken uw gegevens alleen om uw offerte te maken en het werk uit te voeren."
       />
-      <section className="mx-auto w-full max-w-3xl px-4 py-10 md:px-8">
-        <Reveal immediate>
-          <div className="flex flex-col gap-10">
-            {secties.map((s) => (
-              <div key={s.h2}>
-                <h2 className="font-display text-h3 font-semibold">
-                  {s.h2}
-                </h2>
-                {s.p.map((tekst) => (
-                  <p key={tekst} className="mt-3 leading-relaxed text-fg-muted">
-                    {tekst}
-                  </p>
-                ))}
-              </div>
-            ))}
-            <p className="text-sm text-fg-muted">
-              {SITE.name}
-              {SITE.kvk ? ` · KvK ${SITE.kvk}` : ""}
-              {SITE.btw ? ` · BTW ${SITE.btw}` : ""} · {SITE.email} ·{" "}
-              {SITE.phoneDisplay}
-            </p>
-          </div>
-        </Reveal>
-      </section>
-    </main>
+
+      <Section>
+        <div className="prose-tv max-w-prose">
+          {secties.map((s) => (
+            <section key={s.h2}>
+              <h2>{s.h2}</h2>
+              {s.p.map((tekst) => (
+                <p key={tekst}>{tekst}</p>
+              ))}
+            </section>
+          ))}
+          <p className="text-sm text-ink-500">
+            {SITE.name}
+            {SITE.kvk ? ` · KvK ${SITE.kvk}` : ""}
+            {SITE.btw ? ` · BTW ${SITE.btw}` : ""} · {SITE.email} ·{" "}
+            {SITE.phoneDisplay}
+          </p>
+        </div>
+      </Section>
+    </>
   );
 }

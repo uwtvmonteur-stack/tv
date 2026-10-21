@@ -1,27 +1,27 @@
 import Link from "next/link";
-import Reveal from "./Reveal";
-import { IconArrowUpRight } from "./icons";
+import { Icon } from "./Icon";
 
 /**
- * Compacte CTA voor midden op een pagina. Uit Analytics blijkt dat maar 16% van
- * de bezoekers de onderkant van een dienstpagina haalt, waardoor de grote
- * CtaSection daar de meeste mensen nooit bereikt. Deze variant staat direct
- * onder het tariefblok — het moment waarop iemand beslist — en pareert kort de
- * drie bezwaren die dan spelen: prijs, haalbaarheid en wachttijd.
+ * Compacte oproep midden op een pagina.
  *
- * De kop is bewust geen <h2>: dit introduceert geen nieuw onderwerp en hoort
+ * Maar een klein deel van de bezoekers haalt de onderkant van een
+ * dienstpagina, waardoor het grote slotblok daar de meeste mensen nooit
+ * bereikt. Deze variant staat direct onder het prijsblok — het moment waarop
+ * iemand beslist — en pareert kort de bezwaren die dan spelen.
+ *
+ * De kop is bewust geen h2: dit introduceert geen nieuw onderwerp en hoort
  * dus niet in de documentstructuur die zoekmachines uitlezen.
  */
 export default function InlineCta({
-  title = "Klaar om een datum te kiezen?",
-  text = "Vaste prijs vooraf, ook aan gipswand of holle wand. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid.",
+  title = "Klaar om het bedrag te weten?",
+  text = "U krijgt uw prijs vooraf in een vrijblijvende offerte, ook aan een gipswand of holle wand. Binnen enkele uren bericht.",
   label = "Offerte aanvragen",
   /**
-   * Standaard naar /contact. Pagina's die zélf een afspraakformulier dragen
-   * geven `#offerte` mee, zodat deze knop naar dat formulier springt in
-   * plaats van de bezoeker van de pagina te halen — precies op het moment dat
-   * hij zijn prijs heeft gezien. Bewust een prop en geen detectie in de
-   * browser: zo blijft dit een servercomponent zonder JavaScript.
+   * Standaard naar /contact. Pagina's die zélf een formulier dragen geven
+   * `#offerte` mee, zodat deze knop naar dat formulier springt in plaats van
+   * de bezoeker van de pagina te halen — precies op het moment dat hij zijn
+   * prijs heeft gezien. Bewust een prop en geen detectie in de browser: zo
+   * blijft dit een servercomponent zonder JavaScript.
    */
   href = "/contact",
 }: {
@@ -31,24 +31,22 @@ export default function InlineCta({
   href?: string;
 }) {
   return (
-    <Reveal>
-      <div className="mt-12 flex flex-col gap-6 rounded-lg bg-inverse px-7 py-8 text-fg-inverse md:flex-row md:items-center md:justify-between md:px-10">
+    <div className="relative mt-12 overflow-hidden rounded-3xl bg-ink-950 px-7 py-8 text-white md:px-10">
+      <div className="bg-grid absolute inset-0" aria-hidden="true" />
+      <div
+        className="absolute -right-20 -top-20 size-64 rounded-full bg-accent-500/20 blur-3xl"
+        aria-hidden="true"
+      />
+      <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div className="max-w-xl">
-          <p className="font-display text-h3 font-semibold">
-            {title}
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-fg-inverse-muted">{text}</p>
+          <p className="font-display text-h3 font-bold text-white">{title}</p>
+          <p className="mt-2 text-ink-300">{text}</p>
         </div>
-        <Link
-          href={href}
-          className="group inline-flex shrink-0 items-center justify-center gap-3 rounded-full bg-paper py-2.5 pr-2.5 pl-7 text-base font-semibold text-fg transition-transform duration-300 ease-out active:scale-[0.98]"
-        >
+        <Link href={href} className="btn-primary shrink-0">
           {label}
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-sunk transition-transform duration-500 ease-out group-hover:-translate-y-px group-hover:translate-x-0.5 group-hover:scale-105">
-            <IconArrowUpRight className="h-4 w-4" />
-          </span>
+          <Icon name="arrow-right" className="size-5" />
         </Link>
       </div>
-    </Reveal>
+    </div>
   );
 }

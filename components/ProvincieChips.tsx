@@ -3,7 +3,10 @@ import { provincies } from "@/lib/steden";
 
 /**
  * Gedeelde rij provincie-links als chips. `prefix` bepaalt het label
- * (bijv. "Tv ophangen" → "Tv ophangen Zuid-Holland").
+ * (bijvoorbeeld "Tv ophangen" wordt "Tv ophangen Zuid-Holland").
+ *
+ * `min-h-11` is hier geen detail: dit zijn tien tot twaalf links naast en
+ * onder elkaar, en dat is precies de situatie waarin een duim ernaast mikt.
  */
 export default function ProvincieChips({
   prefix,
@@ -13,7 +16,7 @@ export default function ProvincieChips({
   withOverview?: boolean;
 }) {
   const chip =
-    "rounded-full bg-sunk px-4 py-2 font-medium border border-hairline transition-colors duration-300 ease-out hover:bg-sunk";
+    "inline-flex min-h-11 items-center rounded-full bg-white px-4 font-medium ring-1 ring-ink-300 transition hover:bg-accent-50 hover:ring-accent-300";
   return (
     <div className="mt-6 flex flex-wrap gap-2.5 text-sm">
       {provincies.map((provincie) => (

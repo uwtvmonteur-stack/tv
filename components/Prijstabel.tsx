@@ -14,24 +14,26 @@ import { tarieven } from "@/lib/content";
  * drie elkaar niet kunnen tegenspreken.
  */
 export default function Prijstabel() {
+  // `bg-white` op de omlijsting, zodat de tabel ook op een grijze sectie als
+  // papier leest en alleen de kopregel grijs is.
   return (
-    <div className="overflow-hidden rounded-md border border-hairline bg-raised shadow-e1">
+    <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-ink-200">
       <table className="w-full border-collapse text-left">
         <caption className="sr-only">
           Vanafprijzen van Uw TV Monteur, inclusief voorrijkosten en btw. Het
           exacte bedrag staat in uw offerte.
         </caption>
         <thead>
-          <tr className="border-b border-hairline bg-sunk">
+          <tr className="border-b border-ink-200 bg-surface">
             <th
               scope="col"
-              className="px-5 py-3 text-2xs font-semibold tracking-[0.12em] uppercase text-fg-muted"
+              className="px-4 py-3 text-sm font-semibold text-ink-600 sm:px-6"
             >
               Dienst
             </th>
             <th
               scope="col"
-              className="px-5 py-3 text-right text-2xs font-semibold tracking-[0.12em] uppercase text-fg-muted"
+              className="px-4 py-3 text-right text-sm font-semibold text-ink-600 sm:px-6"
             >
               Prijs
             </th>
@@ -39,22 +41,23 @@ export default function Prijstabel() {
         </thead>
         <tbody>
           {tarieven.map((tarief) => (
-            <tr
-              key={tarief.naam}
-              className="border-b border-hairline last:border-0"
-            >
+            <tr key={tarief.naam} className="border-b border-ink-100 last:border-0">
+              {/* Smalle opvulling links en rechts, en het bedrag zonder
+                  afbreking: op 360px moeten dienst en bedrag naast elkaar
+                  blijven passen zonder dat de tabel horizontaal gaat schuiven.
+                  De dienstnaam is de enige kolom die mag afbreken. */}
               <th
                 scope="row"
-                className="px-5 py-4 text-left font-normal text-pretty"
+                className="px-4 py-4 text-left font-normal text-pretty sm:px-6"
               >
-                <span className="block text-sm font-semibold">
+                <span className="block font-display font-bold text-ink-950">
                   {tarief.naam}
                 </span>
-                <span className="mt-0.5 block text-sm text-fg-muted">
+                <span className="mt-1 block text-sm text-ink-600">
                   {tarief.toelichting}
                 </span>
               </th>
-              <td className="px-5 py-4 text-right align-top font-display text-base font-semibold whitespace-nowrap tabular">
+              <td className="px-4 py-4 text-right align-top font-display font-bold whitespace-nowrap text-ink-950 tabular sm:px-6">
                 {tarief.prijs}
               </td>
             </tr>

@@ -1,21 +1,25 @@
 import Link from "next/link";
-import ServiceHero from "@/components/ServiceHero";
-import Stappen from "@/components/Stappen";
-import CtaSection from "@/components/CtaSection";
-import InlineCta from "@/components/InlineCta";
-import Reviews from "@/components/Reviews";
-import Faq from "@/components/Faq";
-import JsonLd from "@/components/JsonLd";
-import Reveal from "@/components/Reveal";
-import CheckList from "@/components/CheckList";
-import ProvincieChips from "@/components/ProvincieChips";
 import Bezwaren from "@/components/Bezwaren";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
+import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
+import InlineCta from "@/components/InlineCta";
+import JsonLd from "@/components/JsonLd";
+import PrijsGarantie from "@/components/PrijsGarantie";
+import ProvincieChips from "@/components/ProvincieChips";
 import RelatedLinks from "@/components/RelatedLinks";
-import { IconCable, IconChat, IconSliders, IconTv } from "@/components/icons";
+import Reviews from "@/components/Reviews";
+import { Icon } from "@/components/Icon";
+import {
+  CheckList,
+  HeroActions,
+  PageHero,
+  Section,
+  SectionHeading,
+} from "@/components/sections";
 import { reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
-import heroImg from "@/public/images/dienst-tv-instellen.jpg";
 
 export const metadata = pageMeta({
   title: "Tv instellen en hulp aan huis — vaste prijs €60",
@@ -24,6 +28,13 @@ export const metadata = pageMeta({
   path: "/diensten/tv-instellen",
 });
 
+/**
+ * Het vaste bedrag van deze dienst, gelijk aan de regel "Tv hulp aan huis" in
+ * `tarieven`. Eén plek op de pagina, zodat kop, prijsblok en offerteblok niet
+ * uit elkaar kunnen lopen.
+ */
+const PRIJS = "€60";
+
 const hulpItems = [
   "Geen of verkeerde zenders? Opnieuw afstemmen en sorteren",
   "Geen wifi of internet? De verbinding herstellen",
@@ -31,6 +42,22 @@ const hulpItems = [
   "Afstandsbediening die niet reageert — of een universele instellen",
   "Slecht of verkeerd beeld en geluid? De juiste instellingen terugzetten",
   "Rustige uitleg, net zo lang tot u het zelf kunt",
+];
+
+/** Wat het vaste bedrag dekt — staat naast het bedrag, dus korter dan `hulpItems`. */
+const prijsDekking = [
+  "Het hele bezoek, hoeveel instellingen er ook langskomen",
+  "Zenders, wifi, apps en afstandsbediening op orde",
+  "Uitleg aan huis, op uw tempo en zo vaak als u wilt",
+  "Voorrijkosten en btw inbegrepen",
+];
+
+/** Wat de aanvraag zelf wel en niet van u vraagt — niet wat er in de prijs zit. */
+const aanvraagBelofte = [
+  `Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw`,
+  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+  "Geen aanbetaling — u betaalt pas na afloop",
+  "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
 const streaming = [
@@ -44,24 +71,43 @@ const streaming = [
   "YouTube",
 ];
 
+const stappen = [
+  {
+    title: "Offerte aanvragen",
+    text: "Vertel kort wat er niet lukt en waar u woont, dan komt de monteur voorbereid en weet u het bedrag vooraf.",
+  },
+  {
+    title: "Monteur komt langs",
+    text: "Hij bekijkt uw tv en opstelling en luistert naar wat u wilt of wat er misgaat.",
+  },
+  {
+    title: "Oplossen & instellen",
+    text: "Zenders, wifi, apps en de afstandsbediening — alles wordt opgelost en netjes ingesteld.",
+  },
+  {
+    title: "Rustige uitleg",
+    text: "We leggen alles stap voor stap uit, in gewone taal en op uw tempo.",
+  },
+];
+
 const situaties: IconCard[] = [
   {
-    icon: <IconTv className="h-6 w-6" />,
+    icon: <Icon name="tv" className="size-6" />,
     h3: "Ineens geen beeld of geluid",
     text: "Verkeerde bron, een instelling die is omgesprongen of een verbinding die eruit ligt? Wij zoeken uit waar het aan ligt en zetten uw tv weer aan het werk.",
   },
   {
-    icon: <IconCable className="h-6 w-6" />,
+    icon: <Icon name="cable" className="size-6" />,
     h3: "Na een verhuizing of storing",
-    text: "Beeld weg, geen zenders of internet? We sluiten alles opnieuw aan, stellen het in en controleren de verbindingen — meestal binnen een uur weer werkend.",
+    text: "Beeld weg, geen zenders of internet? We sluiten alles opnieuw aan, stellen het in en controleren de verbindingen — meestal werkt alles weer voordat wij de deur uit zijn.",
   },
   {
-    icon: <IconSliders className="h-6 w-6" />,
+    icon: <Icon name="sliders" className="size-6" />,
     h3: "Eén afstandsbediening voor alles",
     text: "We koppelen en programmeren een universele afstandsbediening, zodat u tv, soundbar en mediaspeler met één bediening aanstuurt.",
   },
   {
-    icon: <IconChat className="h-6 w-6" />,
+    icon: <Icon name="chat" className="size-6" />,
     h3: "Zenders kwijt of door elkaar",
     text: "Ineens andere zenders of alles door elkaar? We zoeken de zenders opnieuw, zetten uw favorieten weer op de juiste plek en leggen uit hoe u het zelf bijhoudt.",
   },
@@ -96,7 +142,7 @@ const faqItems: FaqItem[] = [
 
 export default function TvInstellenPage() {
   return (
-    <main>
+    <>
       <JsonLd
         data={serviceJsonLd({
           name: "Tv hulp aan huis",
@@ -108,206 +154,229 @@ export default function TvInstellenPage() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <ServiceHero
-        crumbs={[
-          { name: "Home", href: "/" },
-          { name: "Diensten", href: "/diensten" },
-          { name: "Tv instellen & hulp", href: "/diensten/tv-instellen" },
-        ]}
-        eyebrow="Tv hulp aan huis · vaste prijs €60"
-        title="Tv hulp aan huis: uw tv snel weer werkend"
-        intro="Werkt uw tv niet meer zoals het hoort? Geen zenders, geen wifi of internet, een app die niet opstart of een afstandsbediening die niet reageert? Onze monteur komt bij u thuis, verhelpt het en legt rustig uit hoe u het zelf houdt — in gewone taal, zonder jargon."
-        benefits={[
-          "Alles werkt weer na één bezoek",
-          "Zenders, wifi en apps op orde",
-          "Uitleg in gewone taal — ook prettig voor senioren",
-          "Vaste prijs van €60, incl. voorrijkosten",
-        ]}
-        image={heroImg}
-        imageAlt="Ingestelde smart-tv met heldere beeldweergave in de woonkamer"
-        formulier={{
-          titel: "Vraag uw offerte aan voor tv-hulp",
-          intro:
-            "Vaste prijs van \u20ac60, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt.",
-          submitLabel: "Offerte aanvragen",
-          variant: "tv-instellen-hero",
-          berichtLabel: "Wat lukt er niet?",
-          berichtPlaceholder:
-            "Bijvoorbeeld: na de storing zijn alle zenders weg en Netflix start niet meer.",
-        }}
-      />
-
-      <Bezwaren />
-
-      <section className="mx-auto w-full max-w-content px-4 py-section md:px-8">
-        <Reveal immediate>
-          <div className="max-w-3xl">
-            <p className="leading-relaxed text-fg-muted">
-              Moderne tv&apos;s kunnen ontzettend veel, en juist daardoor gaat er
-              weleens iets mis: zenders die verdwijnen, geen internet, een app
-              die hapert of een instelling die per ongeluk is veranderd. Wij
-              verhelpen dat soort problemen met de instellingen, software en
-              verbindingen van uw tv — en leggen meteen uit hoe u het zelf houdt.
-              Hardwarereparaties (zoals een kapot scherm) doen we niet.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Waarmee we u helpen
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <CheckList
-            items={hulpItems}
-            className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-2"
+      <PageHero
+        breadcrumbs={
+          <Breadcrumbs
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Diensten", href: "/diensten" },
+              { name: "Tv instellen & hulp", href: "/diensten/tv-instellen" },
+            ]}
           />
-        </Reveal>
-      </section>
+        }
+        eyebrow={`Tv hulp aan huis · vaste prijs ${PRIJS}`}
+        title="Tv hulp aan huis: uw tv snel weer werkend"
+        lead="Werkt uw tv niet meer zoals het hoort? Geen zenders, geen wifi of internet, een app die niet opstart of een afstandsbediening die niet reageert? Onze monteur komt bij u thuis, verhelpt het en legt rustig uit hoe u het zelf houdt — in gewone taal, zonder jargon."
+        image="/images/dienst-tv-instellen.jpg"
+        imageAlt="Ingestelde smart-tv met heldere beeldweergave in de woonkamer"
+      >
+        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <CheckList
+          dark
+          items={[
+            "Alles werkt weer na één bezoek",
+            "Zenders, wifi en apps op orde",
+            "Uitleg in gewone taal — ook prettig voor senioren",
+            `Vaste prijs van ${PRIJS}, incl. voorrijkosten`,
+          ]}
+          className="mt-8 grid gap-3 sm:grid-cols-2"
+        />
+      </PageHero>
+
+      <Section labelledBy="hulp">
+        <SectionHeading
+          id="hulp"
+          eyebrow="Waarmee we helpen"
+          title="Waarmee we u helpen"
+          lead="Moderne tv's kunnen ontzettend veel, en juist daardoor gaat er weleens iets mis: zenders die verdwijnen, geen internet, een app die hapert of een instelling die per ongeluk is veranderd. Wij verhelpen dat soort problemen met de instellingen, software en verbindingen van uw tv — en leggen meteen uit hoe u het zelf houdt. Hardwarereparaties, zoals een kapot scherm, doen we niet."
+        />
+        <CheckList
+          items={hulpItems}
+          className="mt-10 grid max-w-4xl gap-3 sm:grid-cols-2"
+        />
+      </Section>
 
       {/* Bewijs komt ná de belofte en vóór de prijs: eerst vertellen wat we
           leveren, dan laten zien dat we het leveren, dan wat het kost. */}
-      <div id="reviews" className="pt-6">
-        <Reviews
-          title="Klanten over onze hulp aan huis"
-          items={reviewsPerDienst["tv-instellen"]}
+      <Reviews
+        title="Klanten over onze hulp aan huis"
+        items={reviewsPerDienst["tv-instellen"]}
+      />
+
+      {/* Brengt zijn eigen witte sectie mee, vlak vóór de prijs. */}
+      <Bezwaren />
+
+      <Section id="prijs" tone="surface" labelledBy="prijs-kop">
+        <SectionHeading
+          id="prijs-kop"
+          eyebrow="Wat het kost"
+          title="Wat kost tv hulp aan huis?"
+          lead="De meeste hulpvragen lost onze monteur op voor één vast bedrag, inclusief voorrijkosten en btw. Vooraf afgesproken, geen verrassingen achteraf."
         />
-      </div>
 
-      <section className="mx-auto w-full max-w-content px-4 pb-10 md:px-8">
-        <Reveal>
-          <h2 className="font-display text-h2 font-semibold">
-            Wat kost tv hulp aan huis?
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            De meeste hulpvragen lost onze monteur op voor een vaste prijs van
-            €60, inclusief voorrijkosten en btw. Vooraf afgesproken, geen
-            verrassingen achteraf.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-2.5 text-sm font-medium">
-            <span className="rounded-full bg-inverse text-fg-inverse px-4 py-2">
-              Tv hulp — vaste prijs €60
-            </span>
+        {/* Een vast bedrag, en daarom géén `PrijsBlok`: dat blok hoort bij het
+            ophangen, waar de prijs uit een offerte komt. Hier is het bedrag
+            zelf het argument, dus staat het groot en alleen op de kaart. */}
+        <div className="mt-12 grid gap-5 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <div className="relative h-full overflow-hidden rounded-3xl bg-ink-950 p-8 text-white">
+              <div className="bg-grid absolute inset-0" aria-hidden="true" />
+              <div
+                className="absolute -right-16 -top-16 size-64 rounded-full bg-accent-500/25 blur-3xl"
+                aria-hidden="true"
+              />
+              <div className="relative flex h-full flex-col justify-between">
+                <div>
+                  <p className="eyebrow-dark">Vaste prijs</p>
+                  <p className="mt-5 font-display text-stat font-bold tabular">
+                    {PRIJS}
+                  </p>
+                  <p className="mt-3 text-ink-300">
+                    Voor het hele bezoek, inclusief voorrijkosten en btw. Geen
+                    uurtarief dat oploopt terwijl wij het uitzoeken.
+                  </p>
+                </div>
+                <Link href="#offerte" className="btn-primary btn-lg mt-8 w-full">
+                  Offerte aanvragen
+                  <Icon name="arrow-right" className="size-5" />
+                </Link>
+              </div>
+            </div>
           </div>
-          <p className="mt-5 text-sm text-fg-muted">
-            Bekijk alle{" "}
-            <Link
-              href="/prijzen"
-              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
+
+          <div className="lg:col-span-3">
+            <h3 className="text-h3">Wat er in dat bedrag zit</h3>
+            <CheckList items={prijsDekking} className="mt-5" />
+            <p className="mt-6 text-ink-600">
+              Bekijk alle{" "}
+              <Link href="/prijzen" className="link">
+                prijzen
+              </Link>{" "}
+              of zet uw vraag meteen in het{" "}
+              <Link href="#offerte" className="link">
+                aanvraagformulier
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+
+        {/* Geen eigen kop boven dit blok: de drie garanties zijn zelf h3's, en
+            een kop ernaast zou op hetzelfde niveau staan als wat hij aankondigt. */}
+        <p className="lead mt-16 max-w-3xl">
+          Een vaste prijs is pas een argument als erbij staat waar hij tegen
+          vast is. Dit zijn de drie dingen die uw bedrag niet veranderen.
+        </p>
+        <PrijsGarantie className="mt-8" />
+      </Section>
+
+      <Section labelledBy="streaming">
+        <SectionHeading
+          id="streaming"
+          eyebrow="Streaming"
+          title="Hulp met streaming en apps"
+          lead="Doet Netflix, Viaplay of NPO Start het niet, of komt u niet meer ingelogd? We zetten uw streaming-apps weer goed en helpen u met inloggen. Uw wachtwoorden blijven van u — die vullen we alleen samen met u in."
+        />
+        <ul className="mt-10 flex flex-wrap gap-2.5">
+          {streaming.map((dienst) => (
+            <li
+              key={dienst}
+              className="inline-flex min-h-11 items-center rounded-full bg-white px-4 text-sm font-semibold text-ink-800 ring-1 ring-ink-200"
             >
-              prijzen
-            </Link>{" "}
-            of{" "}
-            <Link
-              href="/contact"
-              className="font-semibold text-fg underline decoration-accent-fg/60 underline-offset-4"
-            >
-              plan direct een afspraak
-            </Link>
-            .
-          </p>
-        </Reveal>
+              {dienst}
+            </li>
+          ))}
+        </ul>
+      </Section>
 
-        <InlineCta href="#offerte" text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid." />
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Hulp met streaming en apps
-          </h2>
-          <p className="mt-4 max-w-3xl leading-relaxed text-fg-muted">
-            Doet Netflix, Viaplay of NPO Start het niet, of komt u niet meer
-            ingelogd? We zetten uw streaming-apps weer goed en helpen u met
-            inloggen. Uw wachtwoorden blijven van u — die vullen we alleen samen
-            met u in.
-          </p>
-          <ul className="mt-6 flex flex-wrap gap-2.5">
-            {streaming.map((dienst) => (
-              <li
-                key={dienst}
-                className="rounded-full bg-white px-4 py-2 text-sm font-medium border border-hairline"
-              >
-                {dienst}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
-        <Stappen
+      <Section tone="surface" labelledBy="stappen">
+        <SectionHeading
+          id="stappen"
+          eyebrow="Zo werkt het"
           title="Zo werkt tv hulp aan huis"
-          steps={[
-            {
-              title: "Offerte aanvragen",
-              text: "Plan online een moment dat u uitkomt. Vertel kort wat er niet lukt, dan komt de monteur voorbereid.",
-            },
-            {
-              title: "Monteur komt langs",
-              text: "Hij bekijkt uw tv en opstelling en luistert naar wat u wilt of wat er misgaat.",
-            },
-            {
-              title: "Oplossen & instellen",
-              text: "Zenders, wifi, apps en de afstandsbediening — alles wordt opgelost en netjes ingesteld.",
-            },
-            {
-              title: "Rustige uitleg",
-              text: "We leggen alles stap voor stap uit, in gewone taal en op uw tempo.",
-            },
-          ]}
+          lead="Van aanvraag tot werkende tv in vier stappen, en de uitleg hoort erbij."
         />
+        {/* Genummerd, want de volgorde is het punt. `HowItWorks` uit de
+            sectiebibliotheek beschrijft de stappen van het ophangen; hulp aan
+            huis eindigt met uitleggen en niet met opruimen. */}
+        <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {stappen.map((stap, i) => (
+            <li key={stap.title} className="card relative p-6 pt-8">
+              <span className="absolute -top-4 left-6 grid size-9 place-items-center rounded-full bg-ink-950 font-display font-bold text-white">
+                {i + 1}
+              </span>
+              <h3 className="text-h3">{stap.title}</h3>
+              <p className="mt-2 text-ink-600">{stap.text}</p>
+            </li>
+          ))}
+        </ol>
+        <InlineCta
+          href="#offerte"
+          text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid."
+        />
+      </Section>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Geduldig en in gewone taal — ook voor senioren
-          </h2>
-          <div className="mt-4 max-w-3xl space-y-4 leading-relaxed text-fg-muted">
-            <p>
-              Onze monteurs zijn er niet alleen om het óp te lossen, maar ook om
-              het úít te leggen. Veel van onze klanten zijn senioren die gewoon
-              fijn tv willen kijken zonder gedoe. We nemen de tijd, herhalen de
-              stappen zo vaak als nodig en laten desgewenst een handig
-              stappenbriefje achter. Zo bent u ook na ons bezoek zelfredzaam.
-            </p>
-            <p>
-              Geen ingewikkelde termen, geen haast. U bepaalt het tempo, en we
-              gaan pas weg als u zich er zeker bij voelt.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Tv hulp in elke situatie
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Waar u ook op vastloopt, onze monteur helpt u snel verder.
+      <Section labelledBy="senioren">
+        <SectionHeading
+          id="senioren"
+          eyebrow="Uitleg hoort erbij"
+          title="Geduldig en in gewone taal — ook voor senioren"
+          lead="Onze monteurs zijn er niet alleen om het óp te lossen, maar ook om het úít te leggen."
+        />
+        <div className="prose-tv mt-8 max-w-3xl">
+          <p>
+            Veel van onze klanten zijn senioren die gewoon fijn tv willen kijken
+            zonder gedoe. We nemen de tijd, herhalen de stappen zo vaak als
+            nodig en laten desgewenst een handig stappenbriefje achter. Zo bent
+            u ook na ons bezoek zelfredzaam.
           </p>
-        </Reveal>
-        <IconCardGrid items={situaties} columns={2} hover />
-
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Tv hulp aan huis in ons werkgebied
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-fg-muted">
-            Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht
-            en Noord-Brabant:
+          <p>
+            Geen ingewikkelde termen, geen haast. U bepaalt het tempo, en we
+            gaan pas weg als u zich er zeker bij voelt.
           </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <ProvincieChips prefix="Tv hulp" withOverview />
-        </Reveal>
+        </div>
+      </Section>
 
-        <Reveal>
-          <h2 className="mt-block font-display text-h2 font-semibold">
-            Veelgestelde vragen over tv hulp
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <div className="mt-8 max-w-3xl">
-            <Faq items={faqItems} />
-          </div>
-        </Reveal>
+      <Section tone="surface" labelledBy="situaties">
+        <SectionHeading
+          id="situaties"
+          eyebrow="Uw situatie"
+          title="Tv hulp in elke situatie"
+          lead="Waar u ook op vastloopt, onze monteur helpt u snel verder."
+        />
+        <IconCardGrid items={situaties} columns={2} className="mt-12" />
+      </Section>
 
+      <Section labelledBy="faq">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <SectionHeading
+            id="faq"
+            eyebrow="Veelgestelde vragen"
+            title="Veelgestelde vragen over tv hulp"
+            lead={
+              <>
+                Staat uw vraag er niet bij? Zet hem in het{" "}
+                <Link href="#offerte" className="link">
+                  offerteformulier
+                </Link>{" "}
+                — u krijgt er antwoord op bij uw offerte.
+              </>
+            }
+          />
+          <Faq items={faqItems} />
+        </div>
+      </Section>
+
+      <Section tone="surface" labelledBy="werkgebied">
+        <SectionHeading
+          id="werkgebied"
+          eyebrow="Werkgebied"
+          title="Tv hulp aan huis in ons werkgebied"
+          lead="Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Per provincie vindt u hieronder de plaatsen waar wij rijden."
+        />
+        {/* Ankertekst volgt de titel van de doelpagina ("Tv ophangen in
+            <provincie>"); de href verandert niet. */}
+        <ProvincieChips prefix="Tv ophangen in" withOverview />
         <RelatedLinks
           items={[
             ["/diensten/tv-installatie", "Complete tv installatie"],
@@ -316,13 +385,28 @@ export default function TvInstellenPage() {
             ["/prijzen", "Alle prijzen"],
           ]}
         />
-      </section>
+      </Section>
 
-
-      <CtaSection href="#offerte"
-        title="Vandaag nog hulp bij uw tv?"
-        text="Plan online een afspraak — vaak kunnen we binnen 24 uur bij u langskomen."
-      />
-    </main>
+      <Section id="offerte" labelledBy="offerte-kop">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <SectionHeading
+              id="offerte-kop"
+              eyebrow="Offerte aanvragen"
+              title="Vraag uw offerte aan voor tv-hulp"
+              lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt. U krijgt binnen enkele uren bericht.`}
+            />
+            <CheckList items={aanvraagBelofte} className="mt-8" />
+          </div>
+          {/* `variant` is het label waarop in GA4 wordt gemeten. Het blijft
+              staan zoals het was, anders breekt de reeks van deze pagina. */}
+          <ContactForm
+            variant="tv-instellen"
+            berichtLabel="Wat lukt er niet?"
+            berichtPlaceholder="Bijvoorbeeld: na de storing zijn alle zenders weg en Netflix start niet meer."
+          />
+        </div>
+      </Section>
+    </>
   );
 }

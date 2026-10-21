@@ -228,7 +228,7 @@ export default function Header() {
             <Link
               href={href}
               inert={open || undefined}
-              className="btn-primary whitespace-nowrap px-4 sm:px-6"
+              className="btn-primary whitespace-nowrap px-3 sm:px-6"
             >
               <span className="hidden sm:inline">Offerte aanvragen</span>
               <span className="sm:hidden">Offerte</span>
@@ -241,7 +241,7 @@ export default function Header() {
               aria-controls="mobiel-menu"
               aria-haspopup="dialog"
               onClick={() => setOpen(!open)}
-              className="grid size-12 cursor-pointer place-items-center rounded-xl text-ink-900 ring-1 ring-ink-300 hover:bg-ink-50 lg:hidden"
+              className="grid size-11 cursor-pointer place-items-center rounded-xl text-ink-900 ring-1 ring-ink-300 hover:bg-ink-50 sm:size-12 lg:hidden"
             >
               <span className="flex flex-col gap-1.5" aria-hidden="true">
                 <span className="block h-0.5 w-5 rounded-full bg-current" />

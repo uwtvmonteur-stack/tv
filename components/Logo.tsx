@@ -81,17 +81,17 @@ export default function LogoMark({ className = "size-10" }: { className?: string
  */
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
-    <span className="flex min-w-0 items-center gap-2.5">
+    <span className="flex min-w-0 items-center gap-1.5 sm:gap-2.5">
       {dark ? (
-        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-white/10 text-accent-300">
-          <LogoGlyph className="size-7" />
+        <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-white/10 text-accent-300 sm:size-10">
+          <LogoGlyph className="size-6 sm:size-7" />
         </span>
       ) : (
-        <LogoMark className="size-10 shrink-0" />
+        <LogoMark className="size-8 shrink-0 sm:size-10" />
       )}
       <span className="min-w-0 leading-none">
         <span
-          className={`block truncate font-display text-lg font-bold ${
+          className={`block truncate font-display text-base font-bold tracking-tight sm:text-lg sm:tracking-normal ${
             dark ? "text-white" : "text-ink-950"
           }`}
         >

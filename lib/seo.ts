@@ -120,7 +120,7 @@ export function serviceJsonLd({
       areaServed ?? provincies.map((p) => ({ "@type": "State", name: p.naam })),
     ...(offers
       ? {
-          // Door dezelfde `prijsSpec` als de aanbodcatalogus: "vanaf €89"
+          // Door dezelfde `prijsSpec` als de aanbodcatalogus: "vanaf €99"
           // wordt `minPrice` en niet `price`. Een hard bedrag in een rich
           // result dat afwijkt van de offerte is een reden voor afkeuring,
           // en bovendien een belofte die we niet doen.
@@ -138,7 +138,7 @@ export function serviceJsonLd({
 }
 
 /**
- * Prijsnotaties uit `content.ts` ("vanaf €89", "op offerte") omgezet naar
+ * Prijsnotaties uit `content.ts` ("vanaf €99", "op offerte") omgezet naar
  * een schema.org PriceSpecification.
  *
  * Een "vanaf"-prijs wordt `minPrice` en niet `price`: een platte `price` zou
@@ -148,7 +148,7 @@ export function serviceJsonLd({
  * géén prijsveld — liever geen prijs dan een verzonnen prijs.
  */
 function prijsSpec(prijs: string) {
-  // Zowel "vanaf €89" en "€49" als een kaal "39" uit een dienstpagina.
+  // Zowel "vanaf €99" en "€49" als een kaal "39" uit een dienstpagina.
   const bedrag = (prijs.match(/€\s*([\d.,]+)/) ?? prijs.match(/^\s*([\d.,]+)\s*$/))?.[1]?.replace(",", ".");
   if (!bedrag) return {};
   return {

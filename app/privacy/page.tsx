@@ -16,10 +16,12 @@ const secties: { h2: string; p: string[] }[] = [
   {
     h2: "Welke gegevens wij verwerken",
     p: [
-      // Dit moet kloppen met wat het formulier werkelijk vraagt. Hier stond
-      // "postcode en huisnummer" en "WhatsApp": het formulier vraagt sinds de
-      // omzetting naar offertes om een volledig adres, en WhatsApp staat uit.
-      "Wanneer u een offerte aanvraagt via het formulier, per telefoon of per e-mail, verwerken wij de gegevens die u zelf opgeeft: uw naam, telefoonnummer, eventueel uw e-mailadres, uw straat en huisnummer, postcode en plaats, en de omschrijving van het werk.",
+      // Dit moet kloppen met wat het formulier werkelijk vraagt — en dat zijn
+      // sinds de inkorting vijf velden: naam, telefoon, postcode, eventueel
+      // e-mail en de omschrijving. Straat, huisnummer en woonplaats staan er
+      // niet meer in; die vragen wij pas bij het inplannen van de afspraak.
+      // Wie dit bijwerkt moet components/ContactForm.tsx ernaast leggen.
+      "Wanneer u een offerte aanvraagt via het formulier, per telefoon of per e-mail, verwerken wij de gegevens die u zelf opgeeft: uw naam, telefoonnummer, uw postcode, eventueel uw e-mailadres, en de omschrijving van het werk. Uw straat en huisnummer vragen wij pas wanneer u akkoord gaat met de offerte en wij een afspraak inplannen.",
     ],
   },
   {

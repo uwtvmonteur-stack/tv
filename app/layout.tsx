@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     template: "%s | Uw TV Monteur",
   },
   description:
-    "Tv laten ophangen door de monteur die zelf komt. Elke tv, elke wand, vanaf €89 met offerte vooraf — ook 's avonds en in het weekend zonder toeslag.",
+    "Tv ophangen, installeren, soundbar aansluiten, kabels wegwerken en tv instellen — aan huis door onze eigen monteurs. Tv ophangen vanaf €99, vaste prijs per formaat, ook 's avonds en in het weekend zonder toeslag.",
   openGraph: {
     siteName: SITE.name,
     locale: "nl_NL",

@@ -51,15 +51,20 @@ export async function POST(request: Request) {
   const plaats = clean(body.plaats, 80);
   const omschrijving = clean(body.omschrijving, 4000);
 
-  // E-mail is optioneel: wij bellen terug, dus naam en telefoon zijn wat we
-  // nodig hebben. Staat er wél een adres, dan moet het bruikbaar zijn — anders
-  // komt de bevestiging nooit aan en merkt niemand dat.
+  // Naam, telefoon, postcode en de omschrijving zijn het minimum: daarmee kan
+  // er een offerte gemaakt worden. E-mail is optioneel, want wij bellen terug;
+  // staat er wél een adres, dan moet het bruikbaar zijn — anders komt de
+  // bevestiging nooit aan en merkt niemand dat.
+  //
+  // `straat` en `plaats` worden nog wél gelezen, maar niet meer geëist. Het
+  // formulier vraagt ze niet meer (zie components/ContactForm.tsx), terwijl
+  // een bezoeker met een gecachte oude pagina ze nog meestuurt. Die aanvraag
+  // mag niet afketsen op een veld dat de nieuwe pagina niet eens heeft, en wat
+  // hij meestuurt gooien we niet weg.
   if (
     !naam ||
     !telefoon ||
-    !straat ||
     !postcode ||
-    !plaats ||
     !omschrijving ||
     (email && !EMAIL_RE.test(email))
   ) {
@@ -94,7 +99,10 @@ export async function POST(request: Request) {
     ["Naam", naam],
     ["Telefoon", telefoon],
     ["E-mail", email || "– (klant wordt gebeld)"],
-    ["Adres", adres || "–"],
+    // Zonder straatnaam is dit geen adres maar een postcode, en dan hoort er
+    // ook "Postcode" boven te staan: wie de aanvraag leest moet niet gaan
+    // zoeken naar een adres dat nooit is gevraagd.
+    [straat ? "Adres" : "Postcode", adres || "–"],
     ["Wat er moet gebeuren", omschrijving || "–"],
   ];
 
@@ -117,7 +125,9 @@ ${regels
       // Zonder e-mailadres is er niets om op te antwoorden; een leeg `replyTo`
       // laat sommige servers de mail juist weigeren.
       ...(email ? { replyTo: `"${naam.replace(/"/g, "")}" <${email}>` } : {}),
-      subject: `Offerteaanvraag — ${naam}${plaats ? ` (${plaats})` : ""}`,
+      // De woonplaats staat niet meer in het formulier; dan is de postcode wat
+      // de mailbox nodig heeft om twee aanvragen uit elkaar te houden.
+      subject: `Offerteaanvraag — ${naam} (${plaats || postcode})`,
       text,
       html,
     });

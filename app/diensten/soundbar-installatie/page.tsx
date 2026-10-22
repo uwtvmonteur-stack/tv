@@ -221,7 +221,7 @@ export default function SoundbarPage() {
           lead="Vaste prijzen, inclusief montage, aansluiten en afstellen — altijd inclusief voorrijkosten en btw."
         />
 
-        {/* Een vast bedrag, en daarom géén `PrijsBlok`: dat blok hoort bij het
+        {/* Een vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij het
             ophangen, waar de prijs uit een offerte komt. Hier is het bedrag
             zelf het argument, dus staat het groot en alleen op de kaart. */}
         <div className="mt-12 grid gap-5 lg:grid-cols-5">

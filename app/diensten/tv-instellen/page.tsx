@@ -214,7 +214,7 @@ export default function TvInstellenPage() {
           lead="De meeste hulpvragen lost onze monteur op voor één vast bedrag, inclusief voorrijkosten en btw. Vooraf afgesproken, geen verrassingen achteraf."
         />
 
-        {/* Een vast bedrag, en daarom géén `PrijsBlok`: dat blok hoort bij het
+        {/* Een vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij het
             ophangen, waar de prijs uit een offerte komt. Hier is het bedrag
             zelf het argument, dus staat het groot en alleen op de kaart. */}
         <div className="mt-12 grid gap-5 lg:grid-cols-5">

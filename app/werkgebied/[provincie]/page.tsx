@@ -13,13 +13,13 @@ import {
   HeroActions,
   HowItWorks,
   PageHero,
-  PrijsBlok,
+  Prijsklassen,
   Section,
   SectionHeading,
   ServiceCards,
   TrustBar,
 } from "@/components/sections";
-import { VANAF_PRIJS, type FaqItem } from "@/lib/content";
+import { PRIJZEN_KORT, VANAF_PRIJS, type FaqItem } from "@/lib/content";
 import { provincies, provincieBySlug, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
@@ -39,7 +39,7 @@ export async function generateMetadata({
   if (!provincie) return {};
   return {
     ...pageMeta({
-      title: `Tv ophangen in ${provincie.naam} — vanaf €89, offerte vooraf`,
+      title: `Tv ophangen in ${provincie.naam} — vaste prijs vanaf €99`,
       description: `Tv laten ophangen in ${provincie.naam}? Vaste prijs vooraf, inclusief voorrijkosten en btw. Elke tv, elke wand, ook 's avonds en in het weekend zonder toeslag.`,
       path: `/werkgebied/${provincie.slug}`,
     }),
@@ -217,10 +217,10 @@ export default async function ProvinciePage({
           id="prijs"
           eyebrow="Wat het kost"
           title={`Wat kost tv ophangen in ${provincie.naam}?`}
-          lead={`Overal in ${provincie.naam} hetzelfde: vanaf ${VANAF_PRIJS}, inclusief voorrijkosten en btw. Wij noemen geen tarief per tv-formaat, want het formaat is niet wat de klus duur maakt — uw wand, uw beugel en uw kabels bepalen het werk.`}
+          lead={`Overal in ${provincie.naam} hetzelfde: ${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en inclusief voorrijkosten en btw. Het soort muur verandert dat bedrag niet.`}
         />
         <div className="mt-12">
-          <PrijsBlok />
+          <Prijsklassen />
         </div>
         <p className="mt-8">
           <Link href="/prijzen" className="link inline-flex min-h-11 items-center">

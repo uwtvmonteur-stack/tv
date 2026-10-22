@@ -19,21 +19,26 @@ import { SITE, TRACKING } from "@/lib/site";
 const ENDPOINT = "/api/afspraak";
 
 /**
- * Een offerteaanvraag vraagt om drie dingen en niet meer: wie u bent, waar u
- * woont en wat er moet gebeuren.
+ * Een offerteaanvraag vraagt om vier dingen en niet meer: uw naam, uw
+ * telefoonnummer, uw postcode en wat er moet gebeuren.
  *
  * Hiervoor stond hier een configurator met het tv-formaat, de beugelvraag,
  * extra's, een datumkiezer en een meelopende prijs. Die hoorde bij vaste
  * tarieven per formaat. Nu de prijs uit een offerte komt, is elke vraag die
  * niet nodig is om die offerte te maken puur een reden om af te haken.
+ *
+ * Om diezelfde reden staan hier geen straatnaam, huisnummer en woonplaats
+ * meer. Voor een offerte is de postcode genoeg: die bepaalt de rit en of de
+ * plaats in het werkgebied valt. Het volledige adres is pas nodig om de
+ * afspraak in te plannen, en dat gebeurt nadat iemand akkoord is. Zo vraagt
+ * het formulier niet om een huisadres op het moment dat er nog geen bedrag
+ * tegenover staat — twee velden minder, en twee verplichte vragen minder.
  */
 const VELDEN = [
   "naam",
   "telefoon",
   "email",
-  "straat",
   "postcode",
-  "plaats",
   "omschrijving",
   "ref_check_2",
 ] as const;
@@ -56,11 +61,8 @@ function valideer(p: Record<Veld, string>): FieldErrors {
   if (p.email && !EMAIL_RE.test(p.email))
     fouten.email =
       "Dit e-mailadres lijkt niet compleet. U mag het ook leeglaten; dan bellen we u.";
-  if (!p.straat.trim())
-    fouten.straat = "Vul uw straat en huisnummer in.";
   if (!POSTCODE_RE.test(p.postcode.trim()))
     fouten.postcode = "Vul een geldige postcode in, bijvoorbeeld 3511 AB.";
-  if (!p.plaats.trim()) fouten.plaats = "Vul uw woonplaats in.";
   if (p.omschrijving.trim().length < 10)
     fouten.omschrijving =
       "Vertel kort wat er moet gebeuren; daarmee kunnen wij een offerte maken.";
@@ -88,12 +90,20 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 function Veldje({
   id,
   label,
+  uitleg,
   children,
   fout,
   className = "",
 }: {
   id: string;
   label: ReactNode;
+  /**
+   * Korte uitleg onder het veld. Alleen daar waar een veld een vraag oproept:
+   * "waarom wilt u dit weten?" is bij een offerteaanvraag een reden om te
+   * stoppen, en dat antwoord hoort naast het veld te staan en niet in de
+   * privacyverklaring.
+   */
+  uitleg?: ReactNode;
   children: ReactNode;
   fout?: string;
   className?: string;
@@ -104,6 +114,11 @@ function Veldje({
         {label}
       </label>
       {children}
+      {uitleg && (
+        <p id={`${id}-uitleg`} className="mt-1.5 text-sm text-ink-500">
+          {uitleg}
+        </p>
+      )}
       <FieldError id={`${id}-fout`} message={fout} />
     </div>
   );
@@ -134,6 +149,13 @@ function Paneel({
 
 export default function ContactForm({
   variant,
+  /**
+   * Hier stond even "Vraag mijn offerte aan": eerste persoon leest beter op de
+   * knop die daadwerkelijk verstuurt. Gemeten op 360px loopt dat label over
+   * twee regels — de knop houdt binnen `px-6` 224px over en de tekst vraagt
+   * met de pijl ongeveer 237px. Een omgevouwen hoofdknop op elke telefoon
+   * kost meer dan de formulering oplevert, dus het blijft dit.
+   */
   submitLabel = "Offerte aanvragen",
   berichtLabel = "Wat moet er gebeuren?",
   berichtPlaceholder = "Bijvoorbeeld: 55 inch Samsung ophangen in de woonkamer, de wand is gipsplaat en ik heb nog geen beugel.",
@@ -171,8 +193,13 @@ export default function ContactForm({
     trackEvent("formulier_start", { variant });
   };
 
-  const beschrijf = (veld: Veld) =>
-    fieldErrors[veld] ? `${veld}-fout` : undefined;
+  // Een veld kan zowel een uitleg als een foutmelding onder zich hebben. Een
+  // schermlezer moet ze beide horen en in die volgorde, dus worden de id's
+  // samengevoegd in plaats van dat de fout de uitleg verdringt.
+  const beschrijf = (veld: Veld, heeftUitleg = false) =>
+    [heeftUitleg ? `${veld}-uitleg` : "", fieldErrors[veld] ? `${veld}-fout` : ""]
+      .filter(Boolean)
+      .join(" ") || undefined;
 
   // Het foute veld krijgt een rode ring boven op `input`. Een foutmelding die
   // alleen onder het veld staat, wordt op een volle telefoonschermhoogte
@@ -220,7 +247,7 @@ export default function ContactForm({
         `Naam: ${payload.naam}`,
         `Telefoon: ${payload.telefoon}`,
         `E-mail: ${payload.email || "– (klant wordt gebeld)"}`,
-        `Adres: ${payload.straat}, ${payload.postcode} ${payload.plaats}`,
+        `Postcode: ${payload.postcode}`,
         "",
         payload.omschrijving,
       ].join("\n");
@@ -323,14 +350,13 @@ export default function ContactForm({
       onFocusCapture={meldStart}
       className="card flex flex-col gap-6 p-6 sm:p-8"
     >
-      <div>
-        <h3 className="text-h3">Uw offerteaanvraag</h3>
-        <p className="mt-2 text-ink-600">
-          Drie dingen: uw gegevens, uw adres en wat er moet gebeuren. U krijgt
-          binnen enkele uren een vrijblijvende offerte met het bedrag erbij —
-          pas als u akkoord gaat, plannen wij een afspraak.
-        </p>
-      </div>
+      {/* Alleen de kop. Hier stond daaronder dezelfde alinea die de sectie
+          erboven al voert ("uw gegevens, uw adres en wat er moet gebeuren,
+          binnen enkele uren het bedrag") — twee keer dezelfde zin, precies op
+          de plek waar de bezoeker wil beginnen met invullen. Het eerste veld
+          stond daardoor een alinea lager dan nodig, op een telefoon bijna een
+          half scherm. */}
+      <h3 className="text-h3">Uw offerteaanvraag</h3>
 
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         <Veldje
@@ -376,6 +402,33 @@ export default function ContactForm({
         </Veldje>
 
         <Veldje
+          id="postcode"
+          label={
+            <>
+              Postcode <Verplicht />
+            </>
+          }
+          // Eén zin, en wel deze. Hier stonden er twee ("hiermee weten wij of
+          // wij bij u komen en wat de rit is" ervoor), samen vier regels grijze
+          // tekst midden in het formulier op 360px. Waarvoor een postcode
+          // dient weet iedereen; dat het huisadres níet gevraagd wordt is het
+          // onverwachte deel, en dat is de regel die een bezoeker over de
+          // streep helpt.
+          uitleg="Uw straat en huisnummer vragen wij pas als u akkoord gaat met de offerte."
+          fout={fieldErrors.postcode}
+        >
+          <input
+            id="postcode"
+            name="postcode"
+            autoComplete="postal-code"
+            placeholder="3511 AB"
+            aria-invalid={!!fieldErrors.postcode}
+            aria-describedby={beschrijf("postcode", true)}
+            className={veldKlasse("postcode")}
+          />
+        </Veldje>
+
+        <Veldje
           id="email"
           label={
             <>
@@ -384,7 +437,6 @@ export default function ContactForm({
             </>
           }
           fout={fieldErrors.email}
-          className="sm:col-span-2"
         >
           <input
             id="email"
@@ -396,67 +448,6 @@ export default function ContactForm({
             aria-invalid={!!fieldErrors.email}
             aria-describedby={beschrijf("email")}
             className={veldKlasse("email")}
-          />
-        </Veldje>
-
-        <Veldje
-          id="straat"
-          label={
-            <>
-              Straat en huisnummer <Verplicht />
-            </>
-          }
-          fout={fieldErrors.straat}
-          className="sm:col-span-2"
-        >
-          <input
-            id="straat"
-            name="straat"
-            autoComplete="street-address"
-            placeholder="Dorpsstraat 12"
-            aria-invalid={!!fieldErrors.straat}
-            aria-describedby={beschrijf("straat")}
-            className={veldKlasse("straat")}
-          />
-        </Veldje>
-
-        <Veldje
-          id="postcode"
-          label={
-            <>
-              Postcode <Verplicht />
-            </>
-          }
-          fout={fieldErrors.postcode}
-        >
-          <input
-            id="postcode"
-            name="postcode"
-            autoComplete="postal-code"
-            placeholder="3511 AB"
-            aria-invalid={!!fieldErrors.postcode}
-            aria-describedby={beschrijf("postcode")}
-            className={veldKlasse("postcode")}
-          />
-        </Veldje>
-
-        <Veldje
-          id="plaats"
-          label={
-            <>
-              Plaats <Verplicht />
-            </>
-          }
-          fout={fieldErrors.plaats}
-        >
-          <input
-            id="plaats"
-            name="plaats"
-            autoComplete="address-level2"
-            placeholder="Utrecht"
-            aria-invalid={!!fieldErrors.plaats}
-            aria-describedby={beschrijf("plaats")}
-            className={veldKlasse("plaats")}
           />
         </Veldje>
 

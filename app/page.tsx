@@ -11,21 +11,21 @@ import {
   HeroActions,
   HowItWorks,
   PageHero,
-  PrijsBlok,
+  Prijsklassen,
   Section,
   SectionHeading,
   ServiceCards,
   TrustBar,
 } from "@/components/sections";
-import { VANAF_PRIJS, bezwaren, faqAlgemeen } from "@/lib/content";
+import { PRIJZEN_KORT, bezwaren, faqAlgemeen } from "@/lib/content";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 
 const meta = pageMeta({
-  title: "Tv ophangen aan huis — vanaf €89, offerte vooraf",
+  title: "Tv ophangen aan huis — vaste prijs vanaf €99",
   description:
-    "Tv laten ophangen aan huis? Wij hangen uw tv op, sluiten alles aan en werken de kabels weg. Vrijblijvende offerte, vanaf €89 inclusief voorrijkosten en btw — ook 's avonds en in het weekend zonder toeslag.",
+    "Tv laten ophangen aan huis? Wij hangen uw tv op, sluiten soundbar en apparatuur aan, werken de kabels weg en stellen alles in. Vaste prijs per formaat: €99, €129 of €159, inclusief voorrijkosten en btw — ook 's avonds en in het weekend zonder toeslag.",
   path: "/",
 });
 
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     // Console liet zien. De oplossing was hier "tv monteur", maar dat is in
     // het Nederlands vooral een reparatieterm. Daarom nu de merknaam voorop:
     // die is uniek van ons, en de exacte zoekterm blijft van /tv-ophangen.
-    absolute: "Uw TV Monteur — tv aan de muur, vanaf €89",
+    absolute: "Uw TV Monteur — tv aan de muur, aangesloten en ingesteld",
   },
 };
 
@@ -46,22 +46,34 @@ export const metadata: Metadata = {
  * De herkenningspunten. Geformuleerd als de situatie van de bezoeker en niet
  * als ons aanbod: wie zichzelf terugleest in de lijst, leest daarna ook de
  * rest van de pagina.
+ *
+ * Vier en niet zes. Hier stond ook "u kunt alleen 's avonds of in het
+ * weekend", en dat punt komt op deze pagina al drie keer voor (bewijsbalk,
+ * bezwaren, FAQ), plus "u gaat niet zelf boren naast een tv die een
+ * maandsalaris kostte", wat hetzelfde zegt als de vraag of de wand het houdt.
+ * Een lijst waarin iemand zichzelf moet herkennen werkt tegen zichzelf zodra
+ * hij langer is dan één blik.
  */
 const herkenning = [
   "De tv staat nog in de doos en u weet niet welke beugel u nodig heeft",
   "U weet niet of uw wand het gewicht van uw tv houdt",
   "U wilt de kabels niet langs de muur zien hangen",
   "Elke site noemt een ander bedrag, dus u weet niet wat redelijk is",
-  "U kunt alleen 's avonds of in het weekend",
-  "U gaat niet zelf boren naast een tv die een maandsalaris kostte",
 ];
 
-/** Wat de offerteaanvraag wél en niet van iemand vraagt. */
+/**
+ * Wat de offerteaanvraag wél en niet van iemand vraagt.
+ *
+ * De laatste regel ging over avond en weekend; dat staat op deze pagina al in
+ * de bewijsbalk, bij de bezwaren en in de FAQ. Wie hier staat heeft die vraag
+ * dus gehad en heeft er één over: wanneer kan het? Daarom staat daar nu de
+ * beschikbaarheid, dezelfde als op de stadpagina's.
+ */
 const offerteBelofte = [
   "Vrijblijvend: u zit aan niets vast tot u ja zegt",
   "Het bedrag is inclusief voorrijkosten en btw",
   "Geen aanbetaling — u betaalt pas na afloop",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  "Vaak al binnen 24 uur een afspraak mogelijk",
 ];
 
 /**
@@ -98,9 +110,13 @@ function HeroBewijs() {
         <Icon name="shield" className="size-5 text-accent-300" />
         Volledig verzekerd
       </li>
+      {/* Beschikbaarheid, en niet voor de tweede keer avond en weekend: die
+          staat in de bewijsbalk direct hieronder. "Wanneer kan het?" is de
+          vraag die een bezoeker met een tv in de doos als eerste heeft, en op
+          de 32 stadpagina's staat dit antwoord al in de hero. */}
       <li className="flex items-center gap-2">
         <Icon name="clock" className="size-5 text-accent-300" />
-        Ook &apos;s avonds en in het weekend
+        Vaak binnen 24 uur een afspraak
       </li>
     </ul>
   );
@@ -129,13 +145,23 @@ export default function Page() {
           Monteur; de koppen volgen de zoekterm. */}
       <PageHero
         eyebrow="Tv ophangen aan huis"
-        title="Uw tv laten ophangen door de monteur die zelf komt."
+        // De kop noemt de diensten en niet het soort bedrijf dat wij zijn.
+        // Hier stond "door de monteur die zelf komt": dat is een verschil met
+        // de bemiddelingsplatforms, maar wie net een tv heeft gekocht weet
+        // nog niet dat die platforms bestaan. "Laten ophangen" blijft erin
+        // staan, want dat is de zoekterm waarmee men hier komt.
+        title="Uw tv laten ophangen, aansluiten en instellen"
+        // Eerst wát wij doen, dan wat het kost. Hier stond een zin over de
+        // prijs en over het soort bedrijf dat wij zijn, maar niet wat er bij u
+        // thuis gebeurt — terwijl dat de vraag is waarmee iemand op deze
+        // pagina komt. De vier diensten staan er nu in de volgorde waarin ze
+        // in één bezoek gebeuren, met het tarief erachter.
         lead={
           <>
-            Elke tv, elke wand, ook de beugel die u al had. Vanaf {VANAF_PRIJS}{" "}
-            inclusief voorrijkosten en btw, en het bedrag uit uw offerte blijft
-            staan — ook &apos;s avonds, in het weekend, en ook als uw wand van
-            gipsplaat blijkt.
+            Wij hangen uw tv op aan elke wand, sluiten uw soundbar en
+            apparatuur aan, werken de kabels weg en stellen zenders, wifi en
+            apps voor u in. Vaste prijs per tv-formaat: {PRIJZEN_KORT},
+            inclusief voorrijkosten en btw.
           </>
         }
         image="/images/hero-woonkamer.jpg"
@@ -211,11 +237,11 @@ export default function Page() {
         <SectionHeading
           id="prijs"
           eyebrow="Wat het kost"
-          title={`Tv ophangen vanaf ${VANAF_PRIJS}, met een offerte vooraf`}
-          lead="Wij noemen geen vast tarief per tv-formaat, want het formaat is niet wat de klus duur maakt. Uw wand, uw beugel en uw kabels bepalen het werk — en dat zetten wij vrijblijvend op papier."
+          title={`Tv ophangen: ${PRIJZEN_KORT}`}
+          lead="Het formaat van uw tv bepaalt het tarief, en verder niets. Elke muur, waterpas gemonteerd, aangesloten en belast getest — inclusief voorrijkosten en btw."
         />
         <div className="mt-12">
-          <PrijsBlok />
+          <Prijsklassen />
         </div>
         <p className="mt-8">
           <Link href="/prijzen" className="link inline-flex min-h-11 items-center">
@@ -233,8 +259,11 @@ export default function Page() {
           dark
           id="bezwaren"
           eyebrow="Uw twijfels"
-          title="Vier punten waarop u elders een voorbehoud krijgt"
-          lead="Dit zijn de dingen die bezoekers tegenhouden. Bij ons leveren ze geen toeslag en geen nee op."
+          // "Een voorbehoud krijgen" is geen taal die een bezoeker gebruikt en
+          // laat ook niet zien wat het hem kost. Een toeslag en een nee zijn
+          // concreet, en dat is precies wat deze vier punten elders opleveren.
+          title="Vier dingen die elders een toeslag of een nee opleveren"
+          lead="Dit is waar bezoekers afhaken. Hieronder staat per punt wat er bij ons gebeurt."
         />
         <ul className="mt-12 grid gap-4 sm:grid-cols-2">
           {bezwaren.map((bezwaar) => (
@@ -334,7 +363,7 @@ export default function Page() {
               id="offerte-kop"
               eyebrow="Offerte aanvragen"
               title="Vertel kort wat er moet gebeuren"
-              lead="Uw gegevens, uw adres en wat er moet gebeuren. U krijgt binnen enkele uren het bedrag, vrijblijvend."
+              lead="Vier velden en u bent klaar: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. Het bedrag krijgt u binnen enkele uren, vrijblijvend."
             />
             <CheckList items={offerteBelofte} className="mt-8" />
           </div>

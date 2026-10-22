@@ -18,7 +18,12 @@ import {
   Section,
   SectionHeading,
 } from "@/components/sections";
-import { VANAF_PRIJS, reviewsPerDienst, type FaqItem } from "@/lib/content";
+import {
+  PRIJZEN_KORT,
+  VANAF_PRIJS,
+  reviewsPerDienst,
+  type FaqItem,
+} from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -125,7 +130,7 @@ const situaties: IconCard[] = [
 const faqItems: FaqItem[] = [
   {
     q: "Kunnen jullie mijn tv ook ophangen?",
-    a: "Ja. Het ophangen van uw tv aan de muur kan als extra optie tijdens dezelfde afspraak worden uitgevoerd, vanaf €89.",
+    a: "Ja. Het ophangen van uw tv aan de muur kan tijdens dezelfde afspraak: €99 tot 43 inch, €129 van 44 t/m 64 inch en €159 vanaf 65 inch, inclusief voorrijkosten en btw.",
   },
   {
     q: "Installeren jullie ook Netflix en andere apps?",
@@ -226,7 +231,7 @@ export default function TvInstallatiePage() {
           lead="Eén vast bedrag voor de complete installatie, inclusief voorrijkosten en btw. Wat we vooraf afspreken, is wat u betaalt — geen verrassingen achteraf."
         />
 
-        {/* Een vast bedrag, en daarom géén `PrijsBlok`: dat blok hoort bij het
+        {/* Een vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij het
             ophangen, waar de prijs uit een offerte komt. Hier is het bedrag
             zelf het argument, dus staat het groot en alleen op de kaart. */}
         <div className="mt-12 grid gap-5 lg:grid-cols-5">
@@ -261,12 +266,11 @@ export default function TvInstallatiePage() {
             <CheckList items={prijsDekking} className="mt-5" />
             <p className="mt-6 text-ink-600">
               Wilt u de tv ook aan de muur? Het ophangen is apart werk met een
-              eigen offerte,{" "}
+              eigen tarief per formaat,{" "}
               <Link href="/tv-ophangen" className="link">
-                vanaf {VANAF_PRIJS}
+                {PRIJZEN_KORT}
               </Link>
-              . Zet het in uw aanvraag, dan rekenen wij het in één keer voor u
-              uit.
+              . Zet het in uw aanvraag, dan doen wij het in dezelfde afspraak.
             </p>
           </div>
         </div>
@@ -296,7 +300,7 @@ export default function TvInstallatiePage() {
               <Link href="/tv-ophangen" className="link">
                 tv ophangservice
               </Link>{" "}
-              vanaf {VANAF_PRIJS}.
+              vanaf {VANAF_PRIJS}, met een vaste prijs per tv-formaat.
             </p>
           </div>
           <div className="card h-full p-7 md:p-8">

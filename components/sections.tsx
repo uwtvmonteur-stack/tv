@@ -2,7 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { DienstIcon, Icon, type IconName } from "./Icon";
-import { VANAF_PRIJS, diensten, dienstHref, prijsFactoren } from "@/lib/content";
+import {
+  PRIJZEN_KORT,
+  diensten,
+  dienstHref,
+  prijsExtras,
+  prijsklassen,
+} from "@/lib/content";
 
 /* =========================================================================
    Sectiebibliotheek
@@ -192,8 +198,8 @@ export function HeroActions({
 export const USPS: { icon: IconName; title: string; text: string }[] = [
   {
     icon: "euro",
-    title: `Vanaf ${VANAF_PRIJS}, offerte vooraf`,
-    text: "U krijgt het bedrag vooraf zwart-op-wit, inclusief voorrijkosten en btw. Vrijblijvend.",
+    title: "Vaste prijs per tv-formaat",
+    text: `${PRIJZEN_KORT}, inclusief voorrijkosten en btw. U weet het bedrag voordat wij komen.`,
   },
   {
     icon: "level",
@@ -283,7 +289,7 @@ export function HowItWorks() {
     {
       icon: "chat",
       title: "U vraagt een offerte aan",
-      text: "Drie dingen: uw gegevens, uw adres en wat er moet gebeuren. Geen formaatkeuzes of vinkjes waar u over moet nadenken.",
+      text: "Uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. Geen formaatkeuzes en geen vinkjes waar u over moet nadenken — en uw straat en huisnummer vragen wij pas als u akkoord gaat.",
     },
     {
       icon: "euro",
@@ -389,41 +395,112 @@ export function ServiceCards({
  * "offerte" als "ze willen niet zeggen wat het kost" — en dat is duurder dan
  * welk tarief ook.
  */
-export function PrijsBlok({ href = "#offerte" }: { href?: string }) {
+/**
+ * De drie montagetarieven per tv-formaat, met daaronder wat er bij kan komen.
+ *
+ * Staat op de homepage, /prijzen, /tv-ophangen, de 32 stadpagina's en de vier
+ * provinciepagina's — dus op elke pagina waar iemand de koopvraag stelt. Eén
+ * blok en niet vijf varianten: een bedrag dat per pagina anders staat, kost
+ * precies het vertrouwen dat een vaste prijs moet opbouwen.
+ *
+ * De middelste klasse krijgt het donkere vlak. Dat is het formaat waar de
+ * meeste aanvragen in vallen, en een rij van drie identieke kaarten dwingt de
+ * bezoeker zelf te kiezen waar hij hoort.
+ */
+export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
   return (
-    <div className="grid gap-5 lg:grid-cols-5">
-      <div className="lg:col-span-2">
-        <div className="relative h-full overflow-hidden rounded-3xl bg-ink-950 p-8 text-white">
-          <div className="bg-grid absolute inset-0" aria-hidden="true" />
-          <div
-            className="absolute -right-16 -top-16 size-64 rounded-full bg-accent-500/25 blur-3xl"
-            aria-hidden="true"
-          />
-          <div className="relative flex h-full flex-col justify-between">
-            <div>
-              <p className="eyebrow-dark">Tv ophangen</p>
-              <p className="mt-5 flex items-baseline gap-2 font-display">
-                <span className="text-lead text-ink-300">vanaf</span>
-                <span className="text-stat font-bold tabular">{VANAF_PRIJS}</span>
-              </p>
-              <p className="mt-3 text-ink-300">
-                Inclusief voorrijkosten en btw. Wat het bij u precies wordt,
-                staat binnen enkele uren zwart-op-wit in uw offerte —
-                vrijblijvend.
-              </p>
-            </div>
-            <Link href={href} className="btn-primary btn-lg mt-8 w-full">
-              Offerte aanvragen
-              <Icon name="arrow-right" className="size-5" />
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div>
+      <ul className="grid gap-5 lg:grid-cols-3">
+        {prijsklassen.map((klasse) => (
+          <li key={klasse.naam}>
+            <div
+              className={`relative flex h-full flex-col overflow-hidden rounded-3xl p-8 ${
+                klasse.populair
+                  ? "bg-ink-950 text-white shadow-lift"
+                  : "card"
+              }`}
+            >
+              {klasse.populair && (
+                <>
+                  <div className="bg-grid absolute inset-0" aria-hidden="true" />
+                  <div
+                    className="absolute -right-16 -top-16 size-64 rounded-full bg-accent-500/25 blur-3xl"
+                    aria-hidden="true"
+                  />
+                </>
+              )}
+              <div className="relative flex h-full flex-col">
+                <div className="flex items-start justify-between gap-3">
+                  <p className={klasse.populair ? "eyebrow-dark" : "eyebrow"}>
+                    {klasse.naam}
+                  </p>
+                  {/* `whitespace-nowrap` op de badge: zonder dat valt "Meest
+                      gekozen" op een 360px-telefoon over twee regels naast de
+                      klassenaam. */}
+                  {klasse.populair && (
+                    <span className="whitespace-nowrap rounded-full bg-accent-400 px-3 py-1 text-2xs font-bold uppercase tracking-wide text-ink-950">
+                      Meest gekozen
+                    </span>
+                  )}
+                </div>
 
-      <div className="lg:col-span-3">
-        <h3 className="text-h3">Waar uw prijs van afhangt</h3>
+                <p
+                  className={`mt-2 text-sm ${klasse.populair ? "text-ink-300" : "text-ink-600"}`}
+                >
+                  {klasse.maat}
+                </p>
+
+                <p className="mt-5 font-display text-stat font-bold tabular">
+                  {klasse.prijs}
+                </p>
+
+                {/* `mb-8` hier en `mt-auto` op de knop: de middelste klasse
+                    heeft een regel meer dan de andere twee, en zonder dit
+                    staan de drie knoppen niet op één lijn. */}
+                <ul className="mb-8 mt-6 flex flex-col gap-3">
+                  {klasse.inbegrepen.map((punt) => (
+                    <li key={punt} className="flex items-start gap-2.5">
+                      <Icon
+                        name="check"
+                        className={`mt-0.5 size-5 shrink-0 ${klasse.populair ? "text-accent-300" : "text-accent-700"}`}
+                      />
+                      <span
+                        className={
+                          klasse.populair ? "text-ink-200" : "text-ink-700"
+                        }
+                      >
+                        {punt}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href={href}
+                  className={`${klasse.populair ? "btn-primary" : "btn-ghost"} mt-auto w-full`}
+                >
+                  {/* Drie knoppen met dezelfde tekst naar hetzelfde doel zijn
+                      voor een schermlezer niet uit elkaar te houden. De
+                      toevoeging staat er alleen voor hem. */}
+                  <span>
+                    Offerte aanvragen
+                    <span className="sr-only">
+                      {" "}
+                      — {klasse.naam}, {klasse.maat.toLowerCase()}
+                    </span>
+                  </span>
+                  <Icon name="arrow-right" className="size-4" />
+                </Link>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-12">
+        <h3 className="text-h3">Wat er bij kan komen</h3>
         <ul className="mt-5 grid gap-4 sm:grid-cols-2">
-          {prijsFactoren.map((f) => (
+          {prijsExtras.map((f) => (
             <li key={f.kop} className="card h-full p-5">
               <h4 className="font-display font-bold text-ink-950">{f.kop}</h4>
               <p className="mt-1.5 text-sm text-ink-600">{f.tekst}</p>
@@ -502,7 +579,12 @@ export function StatRow({
             >
               {s.value}
             </span>
+            {/* De `dt` hierboven draagt dit label al voor een schermlezer.
+                Zonder `aria-hidden` wordt elk cijfer twee keer voorgelezen:
+                "tv's vakkundig opgehangen, 12.000+ tv's vakkundig
+                opgehangen". */}
             <span
+              aria-hidden="true"
               className={`mt-2 block text-sm ${dark ? "text-ink-300" : "text-ink-600"}`}
             >
               {s.label}

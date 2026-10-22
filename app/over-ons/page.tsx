@@ -38,7 +38,11 @@ export default function OverOnsPage() {
           />
         }
         eyebrow="Over ons"
-        title="De monteurs die Nederland laten kijken"
+        // Niet "Nederland": wij rijden in vier provincies, en dat staat zo in
+        // het schema, in de voettekst en op het werkgebied. Eén kop die het
+        // land belooft maakt de rest van de site ongeloofwaardig in plaats van
+        // groter.
+        title="De monteurs die uw tv ophangen en aansluiten"
         lead="Uw TV Monteur begon met één busje en één overtuiging: een tv hoort gewoon perfect opgehangen te worden — half werk bestaat niet. Inmiddels rijdt er een heel team op uit, met bij elke klus diezelfde standaard."
         image="/images/monteur-aan-het-werk.jpg"
         imageAlt="Monteur van Uw TV Monteur monteert een tv perfect waterpas"

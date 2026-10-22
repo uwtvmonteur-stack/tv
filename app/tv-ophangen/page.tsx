@@ -13,23 +13,24 @@ import {
   HeroActions,
   HowItWorks,
   PageHero,
-  PrijsBlok,
+  Prijsklassen,
   Section,
   SectionHeading,
   TrustBar,
 } from "@/components/sections";
 import {
-  VANAF_PRIJS,
+  PRIJZEN_KORT,
   bezwaren,
+  prijsklassen,
   reviewsPerDienst,
   type FaqItem,
 } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Tv laten ophangen — vanaf €89, offerte vooraf",
+  title: "Tv laten ophangen — vaste prijs vanaf €99",
   description:
-    "Tv laten ophangen door een ervaren monteur: waterpas, getest en kabels weggewerkt. Vanaf €89 incl. voorrijkosten en btw, met een vrijblijvende offerte vooraf. Ook 's avonds en in het weekend.",
+    "Tv laten ophangen door een ervaren monteur: beugel monteren, tv waterpas ophangen, apparatuur aansluiten en kabels wegwerken. Vaste prijs per formaat — €99, €129 of €159 incl. voorrijkosten en btw. Ook 's avonds en in het weekend.",
   path: "/tv-ophangen",
 });
 
@@ -160,7 +161,7 @@ const offerteBelofte = [
 const faqItems: FaqItem[] = [
   {
     q: "Wat kost een tv ophangen?",
-    a: "Tv ophangen begint bij €89, altijd inclusief voorrijkosten en btw. Wat het bij u wordt hangt af van uw tv, uw wand en wat er verder moet gebeuren; dat zetten wij vooraf vrijblijvend in een offerte — waar uw prijs van afhangt, staat hierboven. Het wegwerken van kabels kan er tegen meerprijs bij, altijd vooraf afgesproken.",
+    a: "Dat hangt alleen van het formaat van uw tv af: €99 tot 43 inch, €129 van 44 t/m 64 inch en €159 vanaf 65 inch, altijd inclusief voorrijkosten en btw. Het soort muur maakt voor dat bedrag niets uit. Een beugel die u nog niet heeft, kabels die weggewerkt moeten worden of een plek boven de haard komen er apart bij — altijd vooraf afgesproken.",
   },
   {
     q: "Hoe snel kunnen jullie de tv ophangen?",
@@ -195,13 +196,18 @@ export default function TvOphangenPage() {
         data={serviceJsonLd({
           name: "Tv ophangen",
           description:
-            "Tv ophangen aan huis door een ervaren monteur: elke beugel, elke muur, waterpas gemonteerd, kabels weggewerkt en alles aangesloten. Vanaf €89, met vooraf een vrijblijvende offerte.",
+            "Tv ophangen aan huis door een ervaren monteur: elke beugel, elke muur, waterpas gemonteerd, kabels weggewerkt en alles aangesloten. Vaste prijs per tv-formaat, vanaf €99.",
           path: "/tv-ophangen",
-          // Eén vanafprijs, uit dezelfde bron als de pagina. Hier stonden drie
-          // vaste bedragen per schermformaat (99/129/159); die tarieven bestaan
-          // niet meer, en een hard bedrag in een rich result dat afwijkt van de
-          // offerte is een reden voor afkeuring.
-          offers: [{ name: "Tv ophangen", price: `vanaf ${VANAF_PRIJS}` }],
+          // Drie aanbiedingen met een hard bedrag, uit dezelfde bron als de
+          // kaarten op de pagina. Dat mag nu weer: het tarief per formaat
+          // staat vast, dus een bezoeker die via een rich result binnenkomt
+          // ziet hetzelfde bedrag als op de pagina. Eén samengevoegde
+          // vanafprijs zou juist misleiden — wie een 75 inch heeft betaalt
+          // €159 en niet €99.
+          offers: prijsklassen.map((klasse) => ({
+            name: `Tv ophangen, ${klasse.maat.replace(/^Voor tv's /, "")}`,
+            price: klasse.prijs,
+          })),
         })}
       />
       {/* Inclusief de vier bezwaren die verderop op deze pagina staan. */}
@@ -296,13 +302,13 @@ export default function TvOphangenPage() {
           id="prijs"
           eyebrow="Wat het kost"
           title="Wat kost een tv ophangen?"
-          lead={`Tv ophangen begint bij ${VANAF_PRIJS}, inclusief voorrijkosten en btw. Wij noemen geen vast tarief per tv-formaat, want het formaat is niet wat de klus duur maakt: uw wand, uw beugel en uw kabels bepalen het werk. Dat zetten wij vrijblijvend voor u op papier.`}
+          lead={`${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en altijd inclusief voorrijkosten en btw. Het soort muur verandert dat bedrag niet — steen, beton, gipsplaat of een holle voorzetwand, het tarief blijft hetzelfde.`}
         />
         {/* Het prijsblok draagt zelf de offerteknop. Daarom staat er geen
             tweede oproep onder: dit is het moment waarop iemand beslist, en
             twee knoppen naast elkaar maken van die beslissing een keuze. */}
         <div className="mt-12">
-          <PrijsBlok />
+          <Prijsklassen />
         </div>
         <p className="mt-10 max-w-3xl text-ink-600">
           Heeft u nog geen beugel, of wilt u de kabels weggewerkt? Geef het door

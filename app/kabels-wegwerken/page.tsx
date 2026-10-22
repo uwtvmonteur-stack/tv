@@ -166,7 +166,10 @@ export default function KabelsWegwerkenPage() {
           />
         }
         eyebrow="Kabels wegwerken"
-        title="Een tv aan de muur, en geen kabel te zien"
+        // De kop noemt nu de dienst. "Een tv aan de muur, en geen kabel te
+        // zien" beschreef het resultaat maar niet wat u bij ons bestelt, en
+        // deze pagina moet vindbaar zijn op precies die woorden.
+        title="Tv-kabels wegwerken, tot u er niets meer van ziet"
         lead="Een strak opgehangen tv met drie kabels eronder is geen strak opgehangen tv. Wij werken ze weg: in een goot in uw eigen muurkleur, of volledig uit het zicht in de wand."
         image="/images/dienst-kabels-wegwerken.jpg"
         imageAlt="Kabels van een wandgemonteerde tv weggewerkt in een goot in muurkleur"

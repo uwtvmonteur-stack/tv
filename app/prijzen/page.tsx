@@ -8,17 +8,17 @@ import {
   CheckList,
   HeroActions,
   PageHero,
-  PrijsBlok,
+  Prijsklassen,
   Section,
   SectionHeading,
 } from "@/components/sections";
-import { VANAF_PRIJS, prijsGaranties, tarieven, type FaqItem } from "@/lib/content";
+import { PRIJZEN_KORT, prijsGaranties, tarieven, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "Wat kost een tv laten ophangen? Prijzen 2026",
   description:
-    "Tv ophangen vanaf €89, inclusief voorrijkosten en btw. Vraag een vrijblijvende offerte aan; u weet het exacte bedrag voordat wij langskomen.",
+    "Tv ophangen kost €99, €129 of €159, afhankelijk van het formaat van uw tv — altijd inclusief voorrijkosten en btw. Ook de tarieven voor kabels wegwerken, soundbar aansluiten, tv installeren en tv hulp aan huis.",
   path: "/prijzen",
 });
 
@@ -58,7 +58,7 @@ export default function PrijzenPage() {
         data={serviceJsonLd({
           name: "Tv montage en installatie",
           description:
-            "Tv ophangen en installeren vanaf €89, inclusief voorrijkosten en btw. Het exacte bedrag staat in een vrijblijvende offerte.",
+            "Tv ophangen en installeren vanaf €99, inclusief voorrijkosten en btw. Een vaste prijs per tv-formaat.",
           path: "/prijzen",
           // Bewust alleen vanafbedragen, afgeleid van dezelfde bron als de
           // tabel op de pagina. Een hard bedrag in een rich result dat
@@ -82,7 +82,7 @@ export default function PrijzenPage() {
         }
         eyebrow="Tarieven 2026"
         title="Wat kost een tv laten ophangen?"
-        lead={`Tv ophangen begint bij ${VANAF_PRIJS}, inclusief voorrijkosten en btw. Wat het bij u precies wordt hangt af van uw tv, uw wand en wat er verder moet gebeuren — dat zetten wij vrijblijvend voor u op papier.`}
+        lead={`Tv ophangen kost ${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en altijd inclusief voorrijkosten en btw. Hieronder staat per dienst wat het kost en wat er altijd bij zit.`}
       >
         <HeroActions tweedeHref="#tarieven" tweedeLabel="Alle tarieven" />
       </PageHero>
@@ -91,11 +91,11 @@ export default function PrijzenPage() {
         <SectionHeading
           id="vanafprijs"
           eyebrow="Wat het kost"
-          title={`Tv ophangen vanaf ${VANAF_PRIJS}, met een offerte vooraf`}
-          lead="Wij werken niet met een vast tarief per tv-formaat, want het formaat is niet wat de klus duur maakt. Daarom krijgt u eerst een vrijblijvende offerte en pas daarna een afspraak."
+          title={`Tv ophangen: ${PRIJZEN_KORT}`}
+          lead="Drie formaten, drie bedragen. Het tarief dat bij uw tv hoort is wat u betaalt — ongeacht het soort muur, en zonder avond- of weekendtoeslag."
         />
         <div className="mt-12">
-          <PrijsBlok />
+          <Prijsklassen />
         </div>
       </Section>
 
@@ -104,7 +104,7 @@ export default function PrijzenPage() {
           id="tarieven-kop"
           eyebrow="Alle tarieven"
           title="Wat elke dienst kost"
-          lead="Drie diensten hebben een vast bedrag: een complete tv-installatie zonder ophangen, een soundbar aansluiten en tv-hulp aan huis. Het ophangen zelf krijgt altijd een offerte, omdat uw wand, uw beugel en uw kabels het werk bepalen."
+          lead="Het ophangen zelf staat hierboven, per tv-formaat. Dit zijn de losse diensten en wat er bij een montage bij kan komen — met de bedragen erbij."
         />
         <div className="mt-10">
           {/* De bedragen staan alleen in de tabel en nergens in de lopende

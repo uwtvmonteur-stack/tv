@@ -14,15 +14,16 @@ import {
   HeroActions,
   HowItWorks,
   PageHero,
-  PrijsBlok,
+  Prijsklassen,
   Section,
   SectionHeading,
   TrustBar,
 } from "@/components/sections";
 import {
-  VANAF_PRIJS,
+  PRIJZEN_KORT,
   diensten,
   dienstHref,
+  prijsklassen,
   reviews,
   reviewsPerDienst,
   type FaqItem,
@@ -56,8 +57,8 @@ export async function generateMetadata({
       // {stad}" of "tv laten ophangen {stad}". Ook de hoofdletters zijn eruit:
       // Engelse Title Case leest in een Nederlandse zoekresultatenlijst als
       // machinaal gemaakt en kost doorklikken.
-      title: `Tv ophangen in ${stad.naam} — vanaf €89, offerte vooraf`,
-      description: `Tv laten ophangen in ${stad.naam}? Vaste prijs vooraf, inclusief voorrijkosten en btw. Elke tv, elke wand, ook 's avonds en in het weekend zonder toeslag.`,
+      title: `Tv ophangen in ${stad.naam} — vaste prijs vanaf €99`,
+      description: `Tv laten ophangen in ${stad.naam}? Beugel monteren, tv waterpas ophangen, apparatuur aansluiten en kabels wegwerken. Vaste prijs per formaat: €99, €129 of €159, inclusief voorrijkosten en btw. Ook 's avonds en in het weekend zonder toeslag.`,
       path: `/tv-ophangen/${stad.slug}`,
     }),
     other: {
@@ -187,11 +188,9 @@ export default async function StadPage({
         `Wat betaal ik voor tv ophangen in ${stad.naam}?`,
         `Hoeveel kost tv-montage in ${stad.naam}?`,
       ][qv],
-      // Dit antwoord verwees naar "de tarieven hierboven" en naar een prijs
-      // per schermformaat. Die tabel staat niet op deze pagina en die
-      // tarieven bestaan niet meer: het formaat is niet wat de klus duur
-      // maakt. Het antwoord noemt nu dezelfde drie dingen als het prijsblok.
-      a: `Tv ophangen in ${stad.naam} begint bij ${VANAF_PRIJS}, altijd inclusief voorrijkosten en btw. Wat het bij u wordt, bepalen uw wand, uw beugel en de kabels die weg moeten — dat staat vrijblijvend in uw offerte voordat wij langskomen. Voor ${stad.naam} rekenen we geen voorrijtoeslag, in welke wijk u ook woont. Kabels wegwerken kan vanaf €39 extra.`,
+      // De drie bedragen voluit en niet "zie hierboven": dit antwoord gaat
+      // ook naar het FAQPage-schema, en daar staat geen pagina omheen.
+      a: `${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv — €99 tot 43 inch, €129 van 44 t/m 64 inch en €159 vanaf 65 inch, altijd inclusief voorrijkosten en btw. Voor ${stad.naam} rekenen we geen voorrijtoeslag, in welke wijk u ook woont, en het soort muur verandert het tarief niet. Kabels wegwerken kan vanaf €39 extra.`,
     },
     {
       q: [
@@ -227,12 +226,14 @@ export default async function StadPage({
               longitude: stad.lng,
             },
           },
-          // Hier stonden de drie oude vaste tarieven per schermformaat (99 /
-          // 129 / 159). Die prijzen bestaan niet meer, en ze stonden als hard
-          // `price` in het schema van 32 pagina's die zelf "vanaf €89, offerte
-          // vooraf" zeggen. Eén vanafbedrag uit `VANAF_PRIJS` wordt `minPrice`
-          // en spreekt de pagina dus niet tegen.
-          offers: [{ name: "Tv ophangen", price: `vanaf ${VANAF_PRIJS}` }],
+          // De drie tarieven per schermformaat, uit dezelfde bron als de
+          // kaarten op de pagina. Harde `price`-bedragen mogen hier omdat ze
+          // vaststaan: wat een bezoeker in een rich result ziet is wat er op
+          // de pagina staat en wat hij betaalt.
+          offers: prijsklassen.map((klasse) => ({
+            name: `Tv ophangen, ${klasse.maat.replace(/^Voor tv's /, "")}`,
+            price: klasse.prijs,
+          })),
         })}
       />
       <JsonLd data={faqJsonLd(faqItems)} />
@@ -332,10 +333,10 @@ export default async function StadPage({
           id="prijs"
           eyebrow="Wat het kost"
           title={`Wat kost tv ophangen in ${stad.naam}?`}
-          lead={`Tv ophangen begint bij ${VANAF_PRIJS}, inclusief voorrijkosten in ${stad.naam} en btw. Wij noemen geen tarief per tv-formaat, want het formaat is niet wat de klus duur maakt — uw wand, uw beugel en uw kabels bepalen het werk.`}
+          lead={`${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv — inclusief voorrijkosten in ${stad.naam} en btw. Het soort muur verandert dat bedrag niet, in welke wijk u ook woont.`}
         />
         <div className="mt-12">
-          <PrijsBlok />
+          <Prijsklassen />
         </div>
         <p className="mt-8">
           <Link href="/prijzen" className="link inline-flex min-h-11 items-center">

@@ -36,23 +36,91 @@ export const diensten: Dienst[] = [
 ];
 
 /**
- * De vanafprijs, sitebreed op één plek.
+ * De drie montagetarieven per tv-formaat — op verzoek van de eigenaar terug
+ * (22-10-2026). Tussentijds stond hier één vanafprijs van €89 met een offerte
+ * erachter; dat is teruggedraaid naar de prijzen zoals ze waren.
  *
- * Hiervoor stonden hier drie vaste tarieven per tv-formaat (€99 / €129 /
- * €159). Die zijn vervangen door één vanafprijs met een offerte erachter:
- * het formaat van de tv is namelijk niet wat de klus duur maakt. Een wand
- * die anders blijkt, kabels die weg moeten, een beugel die er nog niet is of
- * een plek boven een haard bepalen het werk veel sterker — en dat valt
- * vooraf niet in drie hokjes te vangen.
+ * Dit is de enige bron voor die bedragen. De prijspagina, de homepage, de
+ * dienstpagina, de 32 stadpagina's en de vier provinciepagina's lezen
+ * allemaal hiervandaan, en `VANAF_PRIJS` hieronder wordt afgeleid van de
+ * laagste klasse in plaats van los ingetikt — zodat een prijswijziging nooit
+ * half doorkomt.
  *
- * Wijzig je dit bedrag, dan verandert het overal mee: koppen, metadata,
- * schema.org en llms.txt lezen allemaal deze constante of verwijzen ernaar.
+ * `populair` zet de middelste klasse visueel voorop: dat is het formaat
+ * waar de meeste aanvragen in vallen.
  */
-export const VANAF_PRIJS = "€89";
+export type Prijsklasse = {
+  naam: string;
+  maat: string;
+  prijs: string;
+  inbegrepen: string[];
+  populair: boolean;
+};
+
+export const prijsklassen: Prijsklasse[] = [
+  {
+    naam: "Compact",
+    maat: "Voor tv's tot 43 inch",
+    prijs: "€99",
+    inbegrepen: [
+      "Montage op elke muur",
+      "Waterpas gemonteerd én getest",
+      "Aansluiten en instellen",
+      "Incl. voorrijkosten en btw",
+    ],
+    populair: false,
+  },
+  {
+    naam: "Standaard",
+    maat: "Voor tv's van 44 t/m 64 inch",
+    prijs: "€129",
+    inbegrepen: [
+      "Montage op elke muur",
+      "Waterpas gemonteerd én getest",
+      "Aansluiten en instellen",
+      "Kabelcheck en persoonlijk advies",
+      "Incl. voorrijkosten en btw",
+    ],
+    populair: true,
+  },
+  {
+    naam: "Groot",
+    maat: "Voor tv's vanaf 65 inch",
+    prijs: "€159",
+    inbegrepen: [
+      "Montage op elke muur",
+      "Met twee monteurs indien nodig",
+      "Aansluiten en instellen",
+      "Incl. voorrijkosten en btw",
+    ],
+    populair: false,
+  },
+];
+
+/**
+ * Het laagste montagetarief, voor koppen, metadata en schema.org. Afgeleid en
+ * niet ingetikt: één plek wijzigen moet genoeg zijn.
+ */
+export const VANAF_PRIJS = prijsklassen[0].prijs;
+
+/**
+ * "€99, €129 of €159" — de drie tarieven in lopende tekst, voor koppen en
+ * inleidingen. Afgeleid, zodat een bedrag dat hierboven wijzigt niet ergens
+ * in een zin blijft staan.
+ */
+export const PRIJZEN_KORT = prijsklassen
+  .map((klasse) => klasse.prijs)
+  .reduce((zin, prijs, i, alle) =>
+    i === 0 ? prijs : i === alle.length - 1 ? `${zin} of ${prijs}` : `${zin}, ${prijs}`,
+  );
 
 export type Tarief = {
   naam: string;
-  /** "vanaf €89" of "op offerte" — altijd tekst, nooit een hard bedrag. */
+  /**
+   * "€129", "vanaf €39" of "op offerte" — altijd tekst. lib/seo.ts leest het
+   * woord "vanaf" en maakt er dan een `minPrice` van in plaats van een harde
+   * `price`, dus de notatie bepaalt wat er in het zoekresultaat komt.
+   */
   prijs: string;
   toelichting: string;
 };
@@ -66,12 +134,21 @@ export type Tarief = {
 export const tarieven: Tarief[] = [
   {
     naam: "Tv ophangen",
+    // `vanaf` en niet "€99 – €159": lib/seo.ts maakt van een vanafprijs een
+    // `minPrice` en van een kaal bedrag een harde `price`. Een harde €99 in
+    // een zoekresultaat terwijl een 75 inch €159 kost, is precies het soort
+    // afwijking waar Google een rich result op afkeurt. De drie bedragen
+    // staan in de toelichting en volledig uitgesplitst in `prijsklassen`.
     prijs: `vanaf ${VANAF_PRIJS}`,
-    toelichting:
-      "Elke tv, elke wand. Waterpas gemonteerd, aangesloten en belast getest.",
+    toelichting: `${prijsklassen
+      .map((klasse) => `${klasse.prijs} ${klasse.maat.replace(/^Voor tv's /, "")}`)
+      .join(", ")}. Elke wand, waterpas gemonteerd en belast getest.`,
   },
   {
-    naam: "Complete tv installatie zonder ophangen",
+    // Leest als de dienst en niet als een uitzondering op een andere dienst:
+    // "complete installatie zonder ophangen" laat een bezoeker eerst uitzoeken
+    // wat er dan níet bij zit. Het bedrag blijft ongewijzigd.
+    naam: "Tv plaatsen en aansluiten (zonder ophangen)",
     prijs: "€70",
     toelichting:
       "Tv op een meubel plaatsen, alles aansluiten en gebruiksklaar maken.",
@@ -117,38 +194,35 @@ export const tarieven: Tarief[] = [
 ];
 
 /**
- * Waarom een offerte en geen vast tarief per formaat.
+ * Wat er naast het montagetarief bij kan komen — en wat juist niet.
  *
- * Dit blok vervangt de drie prijskaarten. Een bezoeker die geen bedrag ziet
- * wil weten wáár het dan van afhangt; krijgt hij dat niet te horen, dan leest
- * "offerte" als "ze willen niet zeggen wat het kost". Deze vijf punten zijn
- * precies de dingen die de monteur ter plekke beoordeelt.
+ * Hoort onder de drie prijsklassen. Een vast bedrag per formaat roept direct
+ * de vervolgvraag op: waar loopt het dan alsnog op? Dat hier noemen zijn geen
+ * kleine lettertjes maar het tegenovergestelde — wie het pas bij de monteur
+ * aan de deur hoort voelt zich overvallen, en dat is precies wat een vaste
+ * prijs moet voorkomen. De laatste staat er bewust tussen: de wand is de
+ * meestverwachte meerprijs en die rekenen wij niet.
  */
-export const prijsFactoren = [
+export const prijsExtras = [
   {
-    kop: "Uw tv",
+    kop: "De tv-beugel zelf",
     tekst:
-      "Formaat en gewicht bepalen de beugel en of er twee monteurs nodig zijn.",
+      "Heeft u er al een, dan hangen wij die op — ook als u hem elders kocht. Zo niet, dan regelen wij er een die past en hoort u het bedrag vóór de afspraak.",
   },
   {
-    kop: "Uw wand",
+    kop: "Kabels wegwerken",
     tekst:
-      "Steen, beton, gipsplaat of een holle voorzetwand vraagt elk een andere bevestiging.",
+      "In een goot in uw eigen muurkleur vanaf €39 als we het in dezelfde rit meenemen. Volledig in de wand is maatwerk.",
   },
   {
-    kop: "De beugel",
+    kop: "Een tv boven de haard",
     tekst:
-      "Heeft u er al een? Dan hangen wij die op. Zo niet, dan regelen wij er een die past.",
+      "Alleen na meting van de temperatuur en het draagvermogen ter plekke. Daarna hoort u het bedrag, en pas dan beslist u.",
   },
   {
-    kop: "De kabels",
+    kop: "Uw wand kost niets extra",
     tekst:
-      "Zichtbaar laten, in een goot in muurkleur, of volledig weg in de wand.",
-  },
-  {
-    kop: "De plek",
-    tekst:
-      "Een gewone woonkamerwand is iets anders dan boven een haard of op een trapportaal.",
+      "Steen, beton, gipsplaat of een holle voorzetwand: de juiste bevestiging zit in het tarief, wat de monteur ook aantreft.",
   },
 ];
 
@@ -164,7 +238,7 @@ export const stats = [
  * Gebruikt op de diensten-, tv-ophangen- en stad-pagina's.
  */
 export const usps = [
-  "Vrijblijvende offerte, vanaf €89 inclusief voorrijkosten en btw",
+  "Vaste prijs per tv-formaat, vanaf €99 inclusief voorrijkosten en btw",
   "Vaak binnen 24 uur een afspraak",
   "Volledig verzekerde monteurs",
   "Ook 's avonds en in het weekend, zonder toeslag",
@@ -390,7 +464,12 @@ export const faqAlgemeen: FaqItem[] = [
   },
   {
     q: "Zijn jullie monteurs verzekerd?",
-    a: "Ja. Al onze monteurs zijn volledig verzekerd en werken zorgvuldig, zodat u bij ons altijd zorgeloos bent.",
+    // "Zodat u altijd zorgeloos bent" stond hier eerst, en dat is precies het
+    // woord waar iemand met een tv van duizend euro niets aan heeft. De vraag
+    // onder de vraag is: wie draait ervoor op als mijn tv of mijn muur
+    // beschadigd raakt? Dat antwoord staat er nu, en het is hetzelfde antwoord
+    // als bij het vierde bezwaar hieronder.
+    a: "Ja, volledig. Raakt er bij de montage iets beschadigd aan uw tv of uw muur, dan is dat verzekerd en lossen wij het op. U heeft daarvoor te maken met ons, niet met een onderaannemer die u niet kent.",
   },
 ];
 
@@ -434,9 +513,9 @@ export const bezwaren = [
 export const prijsGaranties = [
   {
     icon: "shield",
-    kop: "Het bedrag uit uw offerte is het bedrag",
+    kop: "De prijs die u ziet is de prijs die u betaalt",
     tekst:
-      "Gipsplaat, een holle wand of beton achter het stucwerk: wij gebruiken de bevestiging die erbij hoort en uw offerte verandert daar niet van.",
+      "Gipsplaat, een holle wand of beton achter het stucwerk: wij gebruiken de bevestiging die erbij hoort en het tarief verandert daar niet van.",
   },
   {
     icon: "clock",

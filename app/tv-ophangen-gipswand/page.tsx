@@ -16,7 +16,7 @@ import {
   Section,
   SectionHeading,
 } from "@/components/sections";
-import { VANAF_PRIJS, reviewsPerDienst, type FaqItem } from "@/lib/content";
+import { PRIJZEN_KORT, reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 /**
@@ -252,7 +252,7 @@ export default function TvOphangenGipswandPage() {
           id="prijs"
           eyebrow="Wat het kost"
           title="Wat kost tv ophangen aan een gipswand?"
-          lead={`Hetzelfde als elke andere montage: uw wandtype verandert het bedrag niet. Tv ophangen begint bij ${VANAF_PRIJS}, inclusief voorrijkosten, montagemateriaal en btw. Wat het bij u wordt, staat vooraf in uw vrijblijvende offerte.`}
+          lead={`Hetzelfde als elke andere montage: uw wandtype verandert het bedrag niet. Tv ophangen kost ${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en inclusief voorrijkosten, montagemateriaal en btw — ook als er hollewandpluggen of een draagframe aan te pas komen.`}
         />
         <p className="mt-8 max-w-3xl text-ink-600">
           Wij rekenen geen toeslag voor een wand die anders blijkt dan u dacht.

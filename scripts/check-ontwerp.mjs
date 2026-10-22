@@ -175,8 +175,13 @@ if (process.argv.includes("--html")) {
     if (belKnop)
       fouten.push(`${naam}: telefoonnummer staat als knop op de pagina`);
 
-    if (/€\s?(?:99|129|159)\b/.test(html))
-      fouten.push(`${naam}: oud tarief (99/129/159) staat nog in de pagina`);
+    // Op 22-10-2026 zijn de vaste tarieven per tv-formaat (99/129/159) op
+    // verzoek van de eigenaar teruggezet. Deze regel keurde juist díe bedragen
+    // af; nu is €89 het bedrag dat niet meer mag blijven staan. De controle
+    // blijft nodig: een pagina die een vervallen tarief noemt, belooft een
+    // prijs die niet geleverd wordt.
+    if (/€\s?89\b/.test(html))
+      fouten.push(`${naam}: vervallen vanafprijs (€89) staat nog in de pagina`);
 
     const h1 = (html.match(/<h1\b/g) ?? []).length;
     if (!vrijgesteld && h1 !== 1)

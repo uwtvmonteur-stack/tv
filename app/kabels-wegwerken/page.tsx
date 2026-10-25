@@ -214,7 +214,7 @@ export default function KabelsWegwerkenPage() {
           id="prijs"
           eyebrow="Wat het kost"
           title="Wat kost het wegwerken van uw kabels?"
-          lead="Een kabelgoot in uw eigen muurkleur begint bij €39 als we hem in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk: dat bedrag staat vooraf in uw offerte, zodat u het kent voordat er gehakt wordt."
+          lead="Een kabelgoot in uw eigen muurkleur begint bij €39 als we hem in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk: dat bedrag staat vooraf vooraf, zodat u het kent voordat er gehakt wordt."
         />
         {/* Pal onder de bedragen: "vaste prijs" is pas een argument als erbij
             staat waar hij tegen vast is. */}
@@ -279,9 +279,9 @@ export default function KabelsWegwerkenPage() {
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -298,11 +298,11 @@ export default function KabelsWegwerkenPage() {
       </Section>
 
       <Section id="offerte" tone="surface" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
+              eyebrow="Afspraak aanvragen"
               title="Geen kabel meer in het zicht?"
               lead="Vertel kort wat er moet gebeuren en waar u woont. Vraagt u het aan bij uw montage, dan doen we het in dezelfde rit — u hoeft ons dus geen tweede keer thuis te laten komen."
             />

@@ -30,6 +30,8 @@ const extraPaginas = [
   { href: "/kabels-wegwerken", label: "Kabels wegwerken" },
   { href: "/tv-boven-open-haard", label: "Tv boven de open haard" },
   { href: "/tv-ophangen-gipswand", label: "Ophangen aan een gipswand" },
+  { href: "/tv-geen-geluid", label: "Geen geluid op de tv" },
+  { href: "/tv-geen-wifi", label: "Tv zonder wifi of internet" },
   { href: "/prijzen", label: "Prijzen" },
 ];
 
@@ -132,7 +134,7 @@ export default function Footer() {
               <li>
                 <Link href="/contact" className={rij}>
                   <Icon name="chat" className="size-4 text-accent-300" />
-                  Offerte aanvragen
+                  Afspraak aanvragen
                 </Link>
               </li>
             </ul>
@@ -175,20 +177,9 @@ export default function Footer() {
             linken door naar de steden, zodat elke stadpagina bereikbaar
             blijft zonder dat elke pagina 32 keer hetzelfde signaal afgeeft. */}
         <div className="mt-12 grid gap-8 border-t border-white/10 pt-8 sm:grid-cols-2">
-          <nav aria-labelledby="voet-provincies">
-            <h2 id="voet-provincies" className={kop}>
-              Ons werkgebied
-            </h2>
-            <ul className="mt-2 flex flex-wrap gap-x-5">
-              {provincies.map((p) => (
-                <li key={p.slug}>
-                  <Link href={`/werkgebied/${p.slug}`} className={rij}>
-                    Tv monteur {p.naam}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {/* Het tweede provincieblok is weg: dezelfde vier links met
+              dezelfde ankertekst stonden twee keer in dezelfde voettekst,
+              in twee aparte navigatielandmarks. */}
 
           <nav aria-labelledby="voet-kennisbank">
             <h2 id="voet-kennisbank" className={kop}>

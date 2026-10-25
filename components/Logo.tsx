@@ -105,7 +105,12 @@ export function Logo({ dark = false }: { dark?: boolean }) {
             dark ? "text-ink-400" : "text-ink-500"
           }`}
         >
-          Tv ophangen aan huis
+          {/* De slogan noemde alleen het ophangen, terwijl de monteur ook
+              aansluit, installeert, een soundbar koppelt en storingen in
+              beeld, geluid en verbinding verhelpt. Hij staat in de koptekst
+              en de voettekst van elke pagina en zette de hele site dus neer
+              als ophangbedrijf. */}
+          Ophangen, aansluiten en instellen
         </span>
       </span>
     </span>

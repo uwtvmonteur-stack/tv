@@ -235,7 +235,7 @@ export default function TvBovenOpenHaardPage() {
           Wij maken vooraf een vaste prijsafspraak op basis van wat we bij u
           zien. Daarna verandert dat bedrag niet meer, ook niet als het werk
           tegenvalt. Een kantel- of neerklapbeugel kost meer dan een vlakke
-          beugel; wat die bij u wordt, staat erbij in uw offerte. De overige
+          beugel; wat die bij u wordt, staat erbij vooraf. De overige
           tarieven vindt u op de{" "}
           <Link href="/prijzen" className="link">
             prijzenpagina
@@ -256,9 +256,9 @@ export default function TvBovenOpenHaardPage() {
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -278,11 +278,11 @@ export default function TvBovenOpenHaardPage() {
       </Section>
 
       <Section id="offerte" tone="surface" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
+              eyebrow="Afspraak aanvragen"
               title="Zal ik komen kijken of het kan?"
               lead="Zet in het bericht wat voor haard u heeft — hout, gas of elektrisch — en hoe hoog de schouw zit. Dan weet de monteur vooraf wat hij moet meenemen. U hoort binnen enkele uren van ons."
             />

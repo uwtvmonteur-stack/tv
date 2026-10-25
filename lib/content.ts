@@ -30,8 +30,12 @@ export const diensten: Dienst[] = [
   },
   {
     slug: "tv-instellen",
-    naam: "Tv instellen & hulp",
-    kort: "Zenders, wifi, apps en streaming: tv hulp aan huis, in begrijpelijke taal.",
+    // De slug blijft "tv-instellen" omdat de URL in Google en in de
+    // advertenties staat; de naam volgt wél de zoekterm die converteert.
+    // "Tv hulp aan huis" gaf in 90 dagen drie klikken en een conversie op elf
+    // vertoningen, "tv instellen" één klik op vijfentwintig.
+    naam: "Tv hulp aan huis",
+    kort: "Geen zenders, geen geluid of geen wifi? Wij verhelpen het en leggen rustig uit wat er mis was.",
   },
 ];
 
@@ -89,6 +93,7 @@ export const prijsklassen: Prijsklasse[] = [
     prijs: "€159",
     inbegrepen: [
       "Montage op elke muur",
+      "Waterpas gemonteerd én getest",
       "Met twee monteurs indien nodig",
       "Aansluiten en instellen",
       "Incl. voorrijkosten en btw",
@@ -108,6 +113,15 @@ export const VANAF_PRIJS = prijsklassen[0].prijs;
  * inleidingen. Afgeleid, zodat een bedrag dat hierboven wijzigt niet ergens
  * in een zin blijft staan.
  */
+/**
+ * Het vaste tarief voor tv hulp aan huis — storingen, instellingen, zenders,
+ * geluid en verbinding. Stond als losse `const PRIJS = "€60"` in
+ * /diensten/tv-instellen; sinds er ook pagina's voor "geen geluid" en "geen
+ * verbinding" zijn, komt hetzelfde bedrag op drie plaatsen voor en hoort het
+ * hier.
+ */
+export const TV_HULP_PRIJS = "€60";
+
 export const PRIJZEN_KORT = prijsklassen
   .map((klasse) => klasse.prijs)
   .reduce((zin, prijs, i, alle) =>
@@ -170,15 +184,23 @@ export const tarieven: Tarief[] = [
     toelichting: "Via HDMI ARC of eARC, afgesteld op uw ruimte.",
   },
   {
-    naam: "Surround- of home-cinema-set aansluiten",
+    naam: "Surround-set aansluiten",
     prijs: "vanaf €79",
     toelichting: "Inclusief subwoofer en achterspeakers.",
+  },
+  {
+    // Stond samen met de surround-set op één regel "vanaf €79", terwijl de
+    // soundbarpagina voor home-cinema "op offerte" zegt. Twee prijzen voor
+    // één woord; nu twee regels met elk hun eigen bedrag.
+    naam: "Home-cinema met losse versterker en bekabeling",
+    prijs: "op offerte",
+    toelichting: "Eerst kijken wat er ligt en wat er bij moet, dan een bedrag.",
   },
   {
     naam: "Tv-beugel die bij uw tv en wand past",
     prijs: "op offerte",
     toelichting:
-      "Heeft u er al een, dan monteren wij die — ook als u hem elders kocht.",
+      "Alleen nodig als u er nog geen heeft. Het bedrag hangt af van uw tv en uw wand.",
   },
   {
     naam: "Tv boven een open haard",
@@ -444,11 +466,11 @@ export type FaqItem = { q: string; a: string };
 export const faqAlgemeen: FaqItem[] = [
   {
     q: "Heb ik zelf een beugel nodig?",
-    a: "Wij verkopen zelf geen beugels, maar we kunnen er op aanvraag een voor u regelen. Geef bij het maken van de afspraak door welke tv u heeft, dan zorgen we dat de juiste beugel klaarligt. Heeft u er al een? Dan monteren we die natuurlijk gewoon.",
+    a: "Heeft u al een beugel, dan monteren wij die — ook als u hem ergens anders kocht. Heeft u er geen, dan regelen wij er een die bij uw tv en uw wand past; u hoort het bedrag van de beugel vóór de afspraak, zodat u dan pas beslist.",
   },
   {
     q: "Kan een tv op elke muur worden opgehangen?",
-    a: "Vrijwel altijd. Steen, beton en hout zijn nooit een probleem. Bij gipsplaat of holle wanden gebruiken we speciale bevestigingen en controleren we vooraf het draagvermogen, zodat uw tv gegarandeerd veilig hangt.",
+    a: "Vrijwel altijd. Steen, beton en hout zijn zelden een probleem. Bij gipsplaat of holle wanden gebruiken we speciale bevestigingen en rekenen we vooraf het draagvermogen na. Kan het niet veilig, dan zeggen we dat vóórdat we boren.",
   },
   {
     q: "Hoe lang duurt de montage?",
@@ -460,7 +482,7 @@ export const faqAlgemeen: FaqItem[] = [
   },
   {
     q: "Wat kost het wegwerken van kabels?",
-    a: "Kabels wegwerken in een kabelgoot, gespoten in de kleur van uw muur, kan al vanaf €39 als we het in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk; dat bedrag staat in uw offerte, zodat u het kent voordat er gehakt wordt.",
+    a: "Kabels wegwerken in een kabelgoot, gespoten in de kleur van uw muur, kan al vanaf €39 als we het in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk; dat bedrag hoort u vooraf, zodat u het kent voordat er gehakt wordt.",
   },
   {
     q: "Zijn jullie monteurs verzekerd?",
@@ -470,36 +492,6 @@ export const faqAlgemeen: FaqItem[] = [
     // beschadigd raakt? Dat antwoord staat er nu, en het is hetzelfde antwoord
     // als bij het vierde bezwaar hieronder.
     a: "Ja, volledig. Raakt er bij de montage iets beschadigd aan uw tv of uw muur, dan is dat verzekerd en lossen wij het op. U heeft daarvoor te maken met ons, niet met een onderaannemer die u niet kent.",
-  },
-];
-
-/**
- * De vier dingen die een bezoeker tegenhouden, met het antwoord erbij. Niet
- * bedacht maar gevonden: op elk van deze vier punten heeft de concurrentie een
- * nee, een toeslag of een voorbehoud, en wij niet. Daarom staan ze op de twee
- * pagina's waar de beslissing valt, vlak voor de prijs — en niet pas onderaan
- * in de FAQ, waar niemand meer komt die al is afgehaakt.
- */
-export const bezwaren = [
-  {
-    vraag: "Ik heb mijn tv niet bij u gekocht",
-    antwoord:
-      "Dat hoeft ook niet. Wij hangen elke tv op: elk merk, uit elke winkel, en ook een tv die u al jaren heeft. Bij de grote webwinkels kunt u montage alleen meebestellen bij een nieuwe tv.",
-  },
-  {
-    vraag: "Mijn wand is van gipsplaat of hol",
-    antwoord:
-      "Dat kost bij ons niets extra. Wij controleren het draagvermogen en gebruiken de bevestiging die bij uw wand hoort. Het bedrag uit uw offerte blijft staan, ook als de wand anders blijkt dan u dacht.",
-  },
-  {
-    vraag: "Bij mij kan het alleen 's avonds of in het weekend",
-    antwoord:
-      "Dan komen we 's avonds of in het weekend, zonder toeslag. Doordeweeks plannen we tot 21:00 uur, zaterdag en zondag van 09:00 tot 17:00 uur. Hetzelfde tarief als op een dinsdagmiddag.",
-  },
-  {
-    vraag: "Wie is verantwoordelijk als er iets misgaat?",
-    antwoord:
-      "Wij, en niemand anders. U heeft te maken met het bedrijf dat de klus zelf uitvoert, niet met een platform dat hem doorgeeft aan een partij die u niet kent. Onze monteurs zijn verzekerd en wij zijn aanspreekbaar op het resultaat.",
   },
 ];
 

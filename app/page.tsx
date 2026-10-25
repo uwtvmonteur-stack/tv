@@ -4,6 +4,7 @@ import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
+import Prijstabel from "@/components/Prijstabel";
 import Reviews from "@/components/Reviews";
 import { Icon, Stars } from "@/components/Icon";
 import {
@@ -11,68 +12,116 @@ import {
   HeroActions,
   HowItWorks,
   PageHero,
-  Prijsklassen,
   Section,
   SectionHeading,
   ServiceCards,
   TrustBar,
+  USPS_BREED,
 } from "@/components/sections";
-import { PRIJZEN_KORT, bezwaren, faqAlgemeen } from "@/lib/content";
+import { faqAlgemeen, type FaqItem } from "@/lib/content";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 
 const meta = pageMeta({
-  title: "Tv ophangen aan huis — vaste prijs vanaf €99",
+  title: "Tv monteur aan huis",
   description:
-    "Tv laten ophangen aan huis? Wij hangen uw tv op, sluiten soundbar en apparatuur aan, werken de kabels weg en stellen alles in. Vaste prijs per formaat: €99, €129 of €159, inclusief voorrijkosten en btw — ook 's avonds en in het weekend zonder toeslag.",
+    "Tv monteur aan huis? Ophangen vanaf €99, aansluiten en instellen, of een storing verhelpen vanaf €60. Vaste prijs, incl. voorrijkosten en btw.",
   path: "/",
 });
 
 export const metadata: Metadata = {
   ...meta,
   title: {
-    // De homepage mag niet op dezelfde woorden staan als /tv-ophangen:
-    // stonden beide titels daarop, dan koos Google de homepage (meer interne
-    // links) en kreeg de dienstpagina nul vertoningen -- precies wat Search
-    // Console liet zien. De oplossing was hier "tv monteur", maar dat is in
-    // het Nederlands vooral een reparatieterm. Daarom nu de merknaam voorop:
-    // die is uniek van ons, en de exacte zoekterm blijft van /tv-ophangen.
-    absolute: "Uw TV Monteur — tv aan de muur, aangesloten en ingesteld",
+    /**
+     * De homepage staat op "tv monteur (aan huis)", /tv-ophangen op "tv
+     * (laten) ophangen". Twee verschillende kopzoekwoorden, dus geen
+     * kannibalisatie meer — eerder stonden beide titels op "tv ophangen" en
+     * koos Google de homepage, waarna de dienstpagina nul vertoningen kreeg.
+     *
+     * Hier stond het commentaar dat "tv monteur" in het Nederlands vooral een
+     * reparatieterm zou zijn. **Het eigen zoektermenrapport weerlegt dat.**
+     * Over 90 dagen: "tv monteur aan huis" 140 vertoningen / 34 klikken /
+     * 2,5 conversies, "tv monteur" 61 / 6 / 0,5, plus "tv installateur",
+     * "tv montage service" en "tv installation service". Reparatiezoekers
+     * lekten er drie vertoningen in. Het cluster is koopintentie en het
+     * converteert — vandaar deze titel.
+     */
+    absolute: "Tv monteur aan huis voor ophangen, aansluiten en hulp",
   },
 };
 
 /**
- * De herkenningspunten. Geformuleerd als de situatie van de bezoeker en niet
- * als ons aanbod: wie zichzelf terugleest in de lijst, leest daarna ook de
- * rest van de pagina.
+ * Wat een tv monteur bij u thuis doet.
  *
- * Vier en niet zes. Hier stond ook "u kunt alleen 's avonds of in het
- * weekend", en dat punt komt op deze pagina al drie keer voor (bewijsbalk,
- * bezwaren, FAQ), plus "u gaat niet zelf boren naast een tv die een
- * maandsalaris kostte", wat hetzelfde zegt als de vraag of de wand het houdt.
- * Een lijst waarin iemand zichzelf moet herkennen werkt tegen zichzelf zodra
- * hij langer is dan één blik.
+ * Dit blok verving de lijst met herkenningspunten ("de tv staat nog in de
+ * doos…"). Die ging alleen over ophangen, terwijl deze pagina op "tv monteur
+ * aan huis" staat en vier diensten dekt — en het verhaal stond al sterker op
+ * /tv-ophangen zelf. Wie "tv monteur" zoekt, zoekt een vakman en weet vaak
+ * niet wat die precies komt doen; dat antwoord hoort boven in de pagina te
+ * staan en niet verstopt in de FAQ.
+ *
+ * De volgorde is niet willekeurig: het ophangen staat er wel in, maar niet
+ * als eerste én tweede punt. Dat maakte de lijst alsnog een ophanglijst,
+ * terwijl de helft van de aanvragen over aansluiten, instellen en storingen
+ * gaat.
  */
-const herkenning = [
-  "De tv staat nog in de doos en u weet niet welke beugel u nodig heeft",
-  "U weet niet of uw wand het gewicht van uw tv houdt",
-  "U wilt de kabels niet langs de muur zien hangen",
-  "Elke site noemt een ander bedrag, dus u weet niet wat redelijk is",
+const watEenMonteurDoet = [
+  "Een nieuwe tv uitpakken, plaatsen of ophangen en gebruiksklaar maken",
+  "De juiste beugel bepalen en waterpas monteren, op het muurtype dat u heeft",
+  "Soundbar, mediabox, spelcomputer en ontvanger aansluiten en testen",
+  "Zenders, wifi, apps en beeld- en geluidsinstellingen goed zetten",
+  "Storingen verhelpen: geen geluid, geen zenders of geen wifi-verbinding",
+  "Kabels wegwerken, langs de muur of volledig uit het zicht",
+];
+
+/**
+ * De veelgestelde vragen van de homepage: eerst de twee die bij het
+ * kopzoekwoord van deze pagina horen, daarna de algemene set.
+ *
+ * "Wat doet een tv monteur precies?" is wat iemand intikt die het woord wel
+ * kent maar niet weet wat hij ervoor terugkrijgt. "Repareren jullie ook
+ * kapotte tv's?" houdt de verkeerde aanvraag tegen vóór het formulier in
+ * plaats van erna — het zoektermenrapport laat zien dat er reparatiezoekers
+ * op deze woorden binnenkomen, en een eerlijk nee is goedkoper dan een
+ * aanvraag die toch afvalt.
+ *
+ * Beide staan zichtbaar in het FAQ-blok onderaan, want ze gaan ook het
+ * FAQPage-schema in; een schema met vragen die de bezoeker niet ziet is een
+ * reden voor afkeuring van het rich result.
+ */
+const faqHome: FaqItem[] = [
+  {
+    q: "Wat doet een tv monteur precies?",
+    a: "Onze tv monteur komt bij u thuis en maakt het geheel af: hij bepaalt welke beugel bij uw tv en uw muurtype past, monteert die waterpas, hangt de tv op de kijkhoogte van uw bank, sluit uw soundbar en randapparatuur aan, werkt de kabels weg en stelt zenders, wifi en apps in. Daarna test hij alles, ruimt hij op en neemt hij het boorafval mee.",
+  },
+  {
+    q: "Repareren jullie ook kapotte tv's?",
+    a: "Nee. Een kapot scherm of defecte elektronica repareren wij niet; daarvoor moet u bij de fabrikant of een reparateur zijn. Gaat het om geen beeld, geen geluid, geen zenders of geen wifi-verbinding, dan is dat meestal een instelling, een kabel of een aansluiting — en dat verhelpen wij wél bij u thuis.",
+  },
+  {
+    // Deze vraag mist op de site terwijl de helft van het zoekverkeer hem
+    // stelt: "monteur tv aansluiten", "tv aansluiten", "hulp bij installeren
+    // tv", "televisie monteur aan huis". Die mensen hebben hun tv al.
+    q: "Mijn tv hangt er al — komen jullie ook voor alleen aansluiten of instellen?",
+    a: "Ja. Een montage is niet nodig om ons te laten komen. Wij sluiten een bestaande tv aan op uw apparatuur, koppelen een soundbar, stemmen de zenders opnieuw af, zetten wifi en apps goed of verhelpen een storing in beeld, geluid of verbinding. Dat is tv hulp aan huis en kost €60, inclusief voorrijkosten en btw.",
+  },
+  ...faqAlgemeen,
 ];
 
 /**
  * Wat de offerteaanvraag wél en niet van iemand vraagt.
  *
  * De laatste regel ging over avond en weekend; dat staat op deze pagina al in
- * de bewijsbalk, bij de bezwaren en in de FAQ. Wie hier staat heeft die vraag
- * dus gehad en heeft er één over: wanneer kan het? Daarom staat daar nu de
+ * de bewijsbalk en in de FAQ. Wie hier staat heeft die vraag dus gehad en
+ * heeft er één over: wanneer kan het? Daarom staat daar nu de
  * beschikbaarheid, dezelfde als op de stadpagina's.
  */
 const offerteBelofte = [
   "Vrijblijvend: u zit aan niets vast tot u ja zegt",
   "Het bedrag is inclusief voorrijkosten en btw",
   "Geen aanbetaling — u betaalt pas na afloop",
+  "Schade door ons werk is verzekerd — wij lossen het op",
   "Vaak al binnen 24 uur een afspraak mogelijk",
 ];
 
@@ -125,66 +174,76 @@ function HeroBewijs() {
 export default function Page() {
   return (
     <>
-      {/* De vier bezwaren staan zichtbaar op deze pagina als vraag met
-          antwoord, dus horen ze ook in het FAQPage-schema: dit is wat
-          zoekmachines en AI-antwoordmachines uitlezen, en het zijn precies de
-          vier vragen waarop wij een ander antwoord geven dan de markt. */}
-      <JsonLd
-        data={faqJsonLd([
-          ...bezwaren.map((bezwaar) => ({
-            q: bezwaar.vraag,
-            a: bezwaar.antwoord,
-          })),
-          ...faqAlgemeen,
-        ])}
-      />
+      {/* Het FAQPage-schema volgt exact de vragen die zichtbaar op deze
+          pagina staan. De vier bezwaren zijn eruit omdat dat blok van de
+          homepage af is — een schema dat vragen meldt die de bezoeker niet
+          ziet, is een afkeuringsgrond voor het rich result. */}
+      <JsonLd data={faqJsonLd(faqHome)} />
 
-      {/* "Tv monteur" is in het Nederlands vooral een reparatieterm: wie dat
-          zoekt heeft een kapot scherm, niet een lege muur. De commerciële
-          zoekopdracht is "tv (laten) ophangen". De bedrijfsnaam blijft Uw TV
-          Monteur; de koppen volgen de zoekterm. */}
+      {/* Deze pagina is niet de ophangpagina. Wie "tv monteur" zoekt, zoekt
+          lang niet altijd een montage: in het zoektermenrapport zitten naast
+          "tv monteur aan huis" ook "monteur tv aansluiten", "tv installateur"
+          en een hele reeks storingen (geen geluid, geen wifi, geen zenders).
+          De kop en de inleiding noemen daarom de volle breedte en openen niet
+          met het ophangen. Het montagetarief hoort hier niet in de inleiding:
+          dat is één van de vier diensten en staat verderop bij de prijzen. */}
       <PageHero
-        eyebrow="Tv ophangen aan huis"
-        // De kop noemt de diensten en niet het soort bedrijf dat wij zijn.
-        // Hier stond "door de monteur die zelf komt": dat is een verschil met
-        // de bemiddelingsplatforms, maar wie net een tv heeft gekocht weet
-        // nog niet dat die platforms bestaan. "Laten ophangen" blijft erin
-        // staan, want dat is de zoekterm waarmee men hier komt.
-        title="Uw tv laten ophangen, aansluiten en instellen"
-        // Eerst wát wij doen, dan wat het kost. Hier stond een zin over de
-        // prijs en over het soort bedrijf dat wij zijn, maar niet wat er bij u
-        // thuis gebeurt — terwijl dat de vraag is waarmee iemand op deze
-        // pagina komt. De vier diensten staan er nu in de volgorde waarin ze
-        // in één bezoek gebeuren, met het tarief erachter.
+        eyebrow="Tv monteur aan huis"
+        title="Tv monteur aan huis voor ophangen, aansluiten en problemen oplossen"
         lead={
           <>
-            Wij hangen uw tv op aan elke wand, sluiten uw soundbar en
-            apparatuur aan, werken de kabels weg en stellen zenders, wifi en
-            apps voor u in. Vaste prijs per tv-formaat: {PRIJZEN_KORT},
-            inclusief voorrijkosten en btw.
+            Eén monteur voor alles rond uw televisie: ophangen aan elke wand,
+            een nieuwe tv aansluiten en instellen, een soundbar koppelen,
+            kabels wegwerken en storingen verhelpen — van geen geluid tot geen
+            wifi-verbinding. Vaste prijs per klus, inclusief voorrijkosten en
+            btw.
           </>
         }
         image="/images/hero-woonkamer.jpg"
         imageAlt="Wandgemonteerde tv in een sfeervolle moderne woonkamer bij schemering"
       >
-        <HeroActions />
+        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
         <HeroBewijs />
       </PageHero>
 
       <Section tone="surface">
-        <TrustBar />
+        {/* De brede set: de standaardbalk gaat over waterpas hangen en het
+            tarief per tv-formaat, en dat zegt niets tegen iemand die hier
+            komt voor een storing of een soundbar. */}
+        <TrustBar items={USPS_BREED} />
       </Section>
 
-      <Section labelledBy="herkenning">
+      <Section labelledBy="wat-doet-een-monteur">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <SectionHeading
-              id="herkenning"
-              eyebrow="Herkent u dit?"
-              title="Een tv ophangen is één middag uitzoeken en één keer goed boren"
-              lead="Het uitzoeken hoeft u niet te doen en het boren niet zelf. Wij komen langs, hangen hem waterpas op en laten het schoon achter."
+              id="wat-doet-een-monteur"
+              eyebrow="Wat doet een tv monteur?"
+              title="Een tv monteur doet meer dan vier gaten boren"
+              lead="Onze monteur komt bij u thuis en maakt het geheel af: van de beugel aan de muur tot de zenders op het scherm. U hoeft niets voor te bereiden en niets op te ruimen."
             />
-            <CheckList items={herkenning} className="mt-8 text-lg" />
+            <CheckList items={watEenMonteurDoet} className="mt-8 text-lg" />
+            {/* Dit hoort hier en niet alleen in de FAQ: "tv monteur" trekt
+                ook zoekers met een kapot scherm. Wie dat hier leest, haakt af
+                vóór het formulier in plaats van erna — dat scheelt een
+                aanvraag die toch nee wordt. */}
+            <p className="mt-6 text-ink-600">
+              Wat wij niet doen: een kapot scherm of defecte elektronica
+              repareren. Gaat het om een storing in beeld, geluid of verbinding,
+              dan lossen we dat wél op —{" "}
+              <Link href="/diensten/tv-instellen" className="link">
+                bekijk onze tv hulp aan huis
+              </Link>
+              . Veelvoorkomend:{" "}
+              <Link href="/tv-geen-geluid" className="link">
+                geen geluid op de tv
+              </Link>{" "}
+              of{" "}
+              <Link href="/tv-geen-wifi" className="link">
+                geen wifi-verbinding
+              </Link>
+              .
+            </p>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-lift">
             {/* Niet tv-beugel-detail.jpg: die foto toont een beugel die fysiek
@@ -207,8 +266,12 @@ export default function Page() {
           <SectionHeading
             id="diensten"
             eyebrow="Onze diensten"
-            title="Ophangen, aansluiten, instellen — in één bezoek"
-            lead="Eén monteur, één afspraak. Of het nu om de tv, de soundbar of de kabels gaat."
+            // Niet nóg een keer "ophangen, aansluiten, instellen": die
+            // opsomming staat al in de H1, in de heroinleiding en in de
+            // sectie hierboven. Deze kop gaat over kiezen, niet over
+            // opsommen.
+            title="Waarvoor u onze monteur kunt inschakelen"
+            lead="Eén monteur, één afspraak — of het nu om de tv, de soundbar, de kabels of de instellingen gaat."
           />
           <Link href="/diensten" className="btn-ghost shrink-0">
             Alle diensten
@@ -225,23 +288,32 @@ export default function Page() {
           id="werkwijze"
           center
           eyebrow="Zo werkt het"
-          title="Van aanvraag tot waterpas in drie stappen"
-          lead="U vraagt aan, u krijgt het bedrag, wij hangen hem op. Daartussen hoeft u niets uit te zoeken."
+          // "Tot waterpas" dekt alleen het ophangen; deze pagina draagt vier
+          // diensten. Op /tv-ophangen mag die kop wél, daar gaat het er
+          // letterlijk om.
+          title="Van aanvraag tot werkende tv in drie stappen"
+          lead="U vraagt aan, u krijgt het bedrag, wij doen het werk. Daartussen hoeft u niets uit te zoeken."
         />
         <div className="mt-14">
           <HowItWorks />
         </div>
       </Section>
 
-      <Section tone="surface" labelledBy="prijs">
+      <Section labelledBy="prijs">
         <SectionHeading
           id="prijs"
           eyebrow="Wat het kost"
-          title={`Tv ophangen: ${PRIJZEN_KORT}`}
-          lead="Het formaat van uw tv bepaalt het tarief, en verder niets. Elke muur, waterpas gemonteerd, aangesloten en belast getest — inclusief voorrijkosten en btw."
+          title="Wat kost een tv monteur aan huis?"
+          lead="Elke dienst heeft een vast bedrag, inclusief voorrijkosten en btw. Alleen het ophangen hangt af van het formaat van uw tv — uw muurtype verandert er niets aan."
         />
         <div className="mt-12">
-          <Prijsklassen />
+          {/* De volledige prijslijst en niet de drie montagekaarten. Die
+              kaarten gaan alleen over het ophangen, en dat is één van de vier
+              diensten: wie hier komt voor een storing, een soundbar of een
+              installatie moet zijn eigen bedrag kunnen vinden. De drie
+              formaten staan volledig uitgesplitst op /tv-ophangen en
+              /prijzen, waar de bezoeker die keuze al gemaakt heeft. */}
+          <Prijstabel />
         </div>
         <p className="mt-8">
           <Link href="/prijzen" className="link inline-flex min-h-11 items-center">
@@ -250,38 +322,9 @@ export default function Page() {
         </p>
       </Section>
 
-      {/* Eigen sectie met eigen achtergrond; staat hier tussen het prijsblok
-          (surface) en de bezwaren (donker). */}
+      {/* Eigen sectie met eigen achtergrond; staat hier tussen de prijslijst
+          (surface) en het werkgebied (wit). */}
       <Reviews />
-
-      <Section tone="dark" labelledBy="bezwaren">
-        <SectionHeading
-          dark
-          id="bezwaren"
-          eyebrow="Uw twijfels"
-          // "Een voorbehoud krijgen" is geen taal die een bezoeker gebruikt en
-          // laat ook niet zien wat het hem kost. Een toeslag en een nee zijn
-          // concreet, en dat is precies wat deze vier punten elders opleveren.
-          title="Vier dingen die elders een toeslag of een nee opleveren"
-          lead="Dit is waar bezoekers afhaken. Hieronder staat per punt wat er bij ons gebeurt."
-        />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-          {bezwaren.map((bezwaar) => (
-            <li
-              key={bezwaar.vraag}
-              className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10"
-            >
-              <h3 className="flex items-start gap-3 text-h3 text-white">
-                <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl bg-accent-400/15 text-accent-300">
-                  <Icon name="check-circle" className="size-5" />
-                </span>
-                {bezwaar.vraag}
-              </h3>
-              <p className="mt-3 text-ink-300">{bezwaar.antwoord}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
 
       <Section labelledBy="werkgebied">
         <SectionHeading
@@ -338,18 +381,18 @@ export default function Page() {
           <SectionHeading
             id="faq"
             eyebrow="Veelgestelde vragen"
-            title="Goed om te weten"
+            title="Goed om te weten voordat de monteur komt"
             lead={
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
-          <Faq items={faqAlgemeen} />
+          <Faq items={faqHome} />
         </div>
       </Section>
 
@@ -357,11 +400,11 @@ export default function Page() {
           /contact: dat was een paginawissel op het moment dat iemand besloten
           heeft, en dat is de stap waar verkeer het makkelijkst verdwijnt. */}
       <Section id="offerte" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
+              eyebrow="Afspraak aanvragen"
               title="Vertel kort wat er moet gebeuren"
               lead="Vier velden en u bent klaar: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. Het bedrag krijgt u binnen enkele uren, vrijblijvend."
             />
@@ -369,8 +412,12 @@ export default function Page() {
           </div>
           <ContactForm
             variant="home"
-            berichtLabel="Uw tv en uw muur"
-            berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
+            // Niet "uw tv en uw muur": dat vraagt om een montage terwijl deze
+            // pagina ook de aanvragen voor aansluiten, instellen en storingen
+            // moet opvangen. De voorbeeldtekst noemt daarom allebei de
+            // soorten klus, zodat de bezoeker ziet dat zijn vraag hier hoort.
+            berichtLabel="Wat moet er gebeuren?"
+            berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung ophangen op een gipswand. Of: sinds gisteren geen geluid meer op mijn tv."
           />
         </div>
       </Section>

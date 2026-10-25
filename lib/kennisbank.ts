@@ -45,7 +45,7 @@ export type Artikel = {
 export const artikelen: Artikel[] = [
   {
     slug: "hoe-hoog-tv-ophangen",
-    titel: "Hoe hoog moet je een tv ophangen?",
+    titel: "Hoe hoog hangt u een tv op?",
     metaTitel: "Hoe hoog moet een tv hangen? Zo rekent u het uit",
     beschrijving:
       "Hoe hoog hang je een tv op? Het midden van het scherm hoort op ooghoogte als u zit. Met deze rekenregel en tabel per formaat weet u de juiste hoogte.",
@@ -268,7 +268,7 @@ export const artikelen: Artikel[] = [
   },
   {
     slug: "tv-ophangen-gipswand-plug",
-    titel: "Welke plug gebruik je in een gipswand?",
+    titel: "Welke plug hoort in een gipswand?",
     metaTitel: "Tv ophangen aan gipswand: welke plug gebruikt u?",
     beschrijving:
       "Een tv ophangen aan een gipswand vraagt andere bevestiging dan baksteen. Welke plug waar hoort, wat zo’n wand draagt en wanneer u in de staanders schroeft.",
@@ -380,7 +380,7 @@ export const artikelen: Artikel[] = [
           "De muur is massief baksteen, beton of kalkzandsteen: hij klinkt dof als u erop klopt.",
           "De televisie weegt niet meer dan ongeveer vijftien kilo, wat ruwweg neerkomt op 43 inch of kleiner.",
           "U gebruikt een platte of licht kantelbare beugel, geen uitklapbare arm.",
-          "U heeft een klopbore of boorhamer, nylonpluggen van de juiste maat en een waterpas van minimaal zestig centimeter.",
+          "U heeft een klopboor of boorhamer, nylonpluggen van de juiste maat en een waterpas van minimaal zestig centimeter.",
           "De kabels mogen zichtbaar blijven of in een opbouwkabelgoot, en er is al een stopcontact in de buurt.",
           "U kunt het met twee personen doen: één houdt, één schroeft.",
         ],
@@ -402,7 +402,7 @@ export const artikelen: Artikel[] = [
         kop: "De rekensom, zonder reclame",
         alineas: [
           "Zelf doen kost u een beugel, pluggen en schroeven, en eventueel een kabelgoot. Heeft u geen boorhamer of leidingzoeker, dan komt daar huur of aanschaf bij. Reken daarnaast op een uur of twee werk, en op het natrekken van de bouten na een week.",
-          "Laten doen kost bij ons €99 tot 43 inch, €129 van 44 t/m 64 inch en €159 vanaf 65 inch, inclusief voorrijkosten, montagemateriaal en btw. Het verschil is niet enorm bij een kleine televisie aan een makkelijke muur: daar is zelf doen gewoon verstandig.",
+          "Laten doen kost bij ons €99 tot 43 inch, €129 van 44 t/m 64 inch en €159 vanaf 65 inch, inclusief voorrijkosten en btw. Het verschil is niet enorm bij een kleine televisie aan een makkelijke muur: daar is zelf doen gewoon verstandig.",
           "Het verschil wordt groot zodra er iets bijzonders aan de hand is. Een scheur in de gipsplaat repareren, een geraakte leiding, of een televisie van duizend euro die van de muur komt: dan is de montage ineens het goedkoopste deel van het verhaal.",
         ],
       },
@@ -429,7 +429,7 @@ export const artikelen: Artikel[] = [
       },
       {
         q: "Hoeveel kost het om een tv te laten ophangen?",
-        a: "Dat hangt alleen van het formaat van uw tv af: €99 tot 43 inch, €129 van 44 t/m 64 inch en €159 vanaf 65 inch, altijd inclusief voorrijkosten, montagemateriaal en btw. Het soort muur verandert dat bedrag niet. Op de prijzenpagina staan ook de tarieven voor kabels wegwerken, een soundbar en tv hulp aan huis.",
+        a: "Dat hangt alleen van het formaat van uw tv af: €99 tot 43 inch, €129 van 44 t/m 64 inch en €159 vanaf 65 inch, altijd inclusief voorrijkosten en btw. Het soort muur verandert dat bedrag niet. Op de prijzenpagina staan ook de tarieven voor kabels wegwerken, een soundbar en tv hulp aan huis.",
       },
       {
         q: "Wat als ik al begonnen ben en het lukt niet?",

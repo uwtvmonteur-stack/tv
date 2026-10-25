@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Bezwaren from "@/components/Bezwaren";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
@@ -69,7 +68,7 @@ const aanvraagBelofte = [
 
 const stappen = [
   {
-    title: "Offerte aanvragen",
+    title: "Afspraak aanvragen",
     text: "Vul het formulier in met uw gegevens en wat er moet gebeuren. Wij nemen binnen enkele uren contact met u op om een geschikt moment af te spreken.",
   },
   {
@@ -221,7 +220,6 @@ export default function TvInstallatiePage() {
       />
 
       {/* Brengt zijn eigen witte sectie mee, vlak vóór de prijs. */}
-      <Bezwaren />
 
       <Section id="prijs" tone="surface" labelledBy="prijs-kop">
         <SectionHeading
@@ -254,7 +252,7 @@ export default function TvInstallatiePage() {
                   </p>
                 </div>
                 <Link href="#offerte" className="btn-primary btn-lg mt-8 w-full">
-                  Offerte aanvragen
+                  Afspraak aanvragen
                   <Icon name="arrow-right" className="size-5" />
                 </Link>
               </div>
@@ -379,9 +377,9 @@ export default function TvInstallatiePage() {
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -403,19 +401,19 @@ export default function TvInstallatiePage() {
           items={[
             ["/tv-ophangen", "Tv ophangen"],
             ["/diensten/soundbar-installatie", "Soundbar installeren"],
-            ["/diensten/tv-instellen", "Tv instellen & hulp"],
+            ["/diensten/tv-instellen", "Tv hulp aan huis"],
             ["/prijzen", "Bekijk onze prijzen"],
           ]}
         />
       </Section>
 
       <Section id="offerte" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
-              title="Vraag uw offerte aan voor de installatie"
+              eyebrow="Afspraak aanvragen"
+              title="Vraag een afspraak aan voor de installatie"
               lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Wilt u de tv ook opgehangen hebben? Zet het erbij, dan rekenen wij dat vooraf voor u uit. U krijgt binnen enkele uren bericht.`}
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />

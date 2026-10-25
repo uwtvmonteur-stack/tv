@@ -48,7 +48,7 @@ const inbegrepen = [
   "Berekening van het draagvermogen op basis van gewicht en beugeltype",
   "Bevestiging die bij úw wand past: frameschroeven, tuimelankers of kantelpluggen",
   "De beugel waterpas en stevig monteren, daarna belast testen",
-  "Tv ophangen, aansluiten en de kabels netjes wegwerken",
+  "Tv ophangen, aansluiten en de kabels gebundeld wegleggen",
   "Een eerlijk oordeel vooraf als het níet veilig kan",
 ];
 
@@ -189,7 +189,7 @@ export default function TvOphangenGipswandPage() {
         <p className="mt-10 max-w-3xl text-ink-600">
           Twijfelt u welke u heeft?{" "}
           <Link href="#offerte" className="link">
-            Vraag vrijblijvend uw offerte aan
+            Vraag vrijblijvend een afspraak aan
           </Link>{" "}
           en zet erbij wat voor wand u denkt te hebben — dan weet de monteur
           vooraf wat hij moet meenemen.
@@ -213,7 +213,7 @@ export default function TvOphangenGipswandPage() {
         <SectionHeading
           id="inbegrepen"
           eyebrow="Wat u krijgt"
-          title="Wat er is inbegrepen"
+          title="Wat er inbegrepen is"
           lead="Hetzelfde bedrag als bij een gewone montage. Een moeilijke wand kost bij ons niets extra."
         />
         <CheckList
@@ -252,7 +252,7 @@ export default function TvOphangenGipswandPage() {
           id="prijs"
           eyebrow="Wat het kost"
           title="Wat kost tv ophangen aan een gipswand?"
-          lead={`Hetzelfde als elke andere montage: uw wandtype verandert het bedrag niet. Tv ophangen kost ${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en inclusief voorrijkosten, montagemateriaal en btw — ook als er hollewandpluggen of een draagframe aan te pas komen.`}
+          lead={`Hetzelfde als elke andere montage: uw wandtype verandert het bedrag niet. Tv ophangen kost ${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en inclusief voorrijkosten en btw — ook als er hollewandpluggen of een draagframe aan te pas komen.`}
         />
         <p className="mt-8 max-w-3xl text-ink-600">
           Wij rekenen geen toeslag voor een wand die anders blijkt dan u dacht.
@@ -297,9 +297,9 @@ export default function TvOphangenGipswandPage() {
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -308,13 +308,13 @@ export default function TvOphangenGipswandPage() {
       </Section>
 
       <Section id="offerte" tone="surface" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
+              eyebrow="Afspraak aanvragen"
               title="Twijfelt u over uw wand?"
-              lead="Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij."
+              lead="Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich. U krijgt binnen enkele uren binnen enkele uren bericht met het bedrag erbij."
             />
             <CheckList items={offerteBelofte} className="mt-8" />
           </div>

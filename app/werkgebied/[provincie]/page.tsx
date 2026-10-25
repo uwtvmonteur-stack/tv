@@ -20,6 +20,16 @@ import {
   TrustBar,
 } from "@/components/sections";
 import { PRIJZEN_KORT, VANAF_PRIJS, type FaqItem } from "@/lib/content";
+
+/**
+ * "Utrecht" is zowel een stad als een provincie, en /tv-ophangen/utrecht en
+ * /werkgebied/utrecht-provincie hadden daardoor letterlijk dezelfde titel én
+ * dezelfde H1. Google kiest er dan één en laat de andere vallen — uitgerekend
+ * op de zoekopdracht met het meeste volume in dit werkgebied. De provincie
+ * schrijft het er nu bij; de stadpagina houdt de kale plaatsnaam.
+ */
+const provincieLabel = (naam: string) =>
+  naam === "Utrecht" ? "de provincie Utrecht" : naam;
 import { provincies, provincieBySlug, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
@@ -39,8 +49,8 @@ export async function generateMetadata({
   if (!provincie) return {};
   return {
     ...pageMeta({
-      title: `Tv ophangen in ${provincie.naam} — vaste prijs vanaf €99`,
-      description: `Tv laten ophangen in ${provincie.naam}? Vaste prijs vooraf, inclusief voorrijkosten en btw. Elke tv, elke wand, ook 's avonds en in het weekend zonder toeslag.`,
+      title: `Tv monteur in ${provincieLabel(provincie.naam)} — vanaf €99`,
+      description: `Tv monteur in ${provincieLabel(provincie.naam)}? Ophangen, aansluiten en tv hulp aan huis. Vaste prijs, incl. voorrijkosten en btw.`,
       path: `/werkgebied/${provincie.slug}`,
     }),
     other: { "geo.region": `NL-${provincie.iso}` },
@@ -107,7 +117,7 @@ export default async function ProvinciePage({
         `Wanneer kan er een tv monteur in ${provincie.naam} langskomen?`,
         `Hoe snel bent u in ${provincie.naam} aan de beurt?`,
       ][qv],
-      a: `${provincie.naam} behoort tot ons kerngebied: vaak kunnen we u al binnen 24 uur helpen, uiterlijk binnen 48 uur, ook 's avonds en in het weekend. Vraag online een afspraak aan, dan laten we u binnen enkele uren de eerstvolgende beschikbaarheid bij u in de buurt weten.`,
+      a: `${provincie.naam} behoort tot ons kerngebied: vaak kunnen we u al binnen 24 uur helpen, ook 's avonds en in het weekend. Vraag online een afspraak aan, dan laten we u binnen enkele uren de eerstvolgende beschikbaarheid bij u in de buurt weten.`,
     },
     {
       q: [
@@ -153,14 +163,14 @@ export default async function ProvinciePage({
           />
         }
         eyebrow="Werkgebied"
-        title={`Tv laten ophangen in ${provincie.naam}`}
+        title={`Tv monteur aan huis in ${provincieLabel(provincie.naam)}`}
         // `provincie.intro` beschrijft deze provincie en verschilt dus per
         // pagina; een generieke intro zou vier keer hetzelfde zijn.
         lead={provincie.intro}
         image="/images/monteur-aan-het-werk.jpg"
         imageAlt="Monteur van Uw TV Monteur hangt een televisie waterpas aan de wand"
       >
-        <HeroActions />
+        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
         <HeroFeiten gebied={provincie.naam} />
       </PageHero>
 
@@ -204,7 +214,7 @@ export default async function ProvinciePage({
           id="werkwijze"
           center
           eyebrow="Zo werkt het"
-          title="Van aanvraag tot waterpas in drie stappen"
+          title="Van aanvraag tot werkende tv in drie stappen"
           lead="U vraagt aan, u krijgt het bedrag, wij hangen hem op. Daartussen hoeft u niets uit te zoeken."
         />
         <div className="mt-14">
@@ -216,7 +226,7 @@ export default async function ProvinciePage({
         <SectionHeading
           id="prijs"
           eyebrow="Wat het kost"
-          title={`Wat kost tv ophangen in ${provincie.naam}?`}
+          title={`Wat kost een tv monteur in ${provincieLabel(provincie.naam)}?`}
           lead={`Overal in ${provincie.naam} hetzelfde: ${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en inclusief voorrijkosten en btw. Het soort muur verandert dat bedrag niet.`}
         />
         <div className="mt-12">
@@ -255,9 +265,9 @@ export default async function ProvinciePage({
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -266,12 +276,12 @@ export default async function ProvinciePage({
       </Section>
 
       <Section id="offerte" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
-              title={`Vraag uw offerte aan in ${provincie.naam}`}
+              eyebrow="Afspraak aanvragen"
+              title={`Vraag een afspraak aan in ${provincie.naam}`}
               lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend."
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />

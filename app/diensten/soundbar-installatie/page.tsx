@@ -1,12 +1,10 @@
 import Link from "next/link";
-import Bezwaren from "@/components/Bezwaren";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
-import PrijsGarantie from "@/components/PrijsGarantie";
 import ProvincieChips from "@/components/ProvincieChips";
 import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
@@ -50,7 +48,7 @@ const audioItems = [
 const prijsDekking = [
   "Soundbar gemonteerd en uitgelijnd onder uw tv",
   "Aangesloten via HDMI ARC of eARC",
-  "Kabels netjes weggewerkt",
+  "Kabels gebundeld en uit het zicht gelegd",
   "Geluid afgesteld op uw kamer, voorrijkosten en btw inbegrepen",
 ];
 
@@ -64,7 +62,7 @@ const aanvraagBelofte = [
 
 const stappen = [
   {
-    title: "Offerte aanvragen",
+    title: "Afspraak aanvragen",
     text: "Geef door welke soundbar of set u heeft en waar u woont, dan komt de monteur voorbereid en weet u het bedrag vooraf.",
   },
   {
@@ -152,7 +150,7 @@ export default function SoundbarPage() {
           path: "/diensten/soundbar-installatie",
           offers: [
             { name: "Soundbar installeren", price: "49" },
-            { name: "Surround-set aansluiten", price: "79" },
+            { name: "Surround-set aansluiten", price: "vanaf €79" },
           ],
         })}
       />
@@ -211,7 +209,6 @@ export default function SoundbarPage() {
       />
 
       {/* Brengt zijn eigen witte sectie mee, vlak vóór de prijs. */}
-      <Bezwaren />
 
       <Section id="prijs" tone="surface" labelledBy="prijs-kop">
         <SectionHeading
@@ -245,7 +242,7 @@ export default function SoundbarPage() {
                   </p>
                 </div>
                 <Link href="#offerte" className="btn-primary btn-lg mt-8 w-full">
-                  Offerte aanvragen
+                  Afspraak aanvragen
                   <Icon name="arrow-right" className="size-5" />
                 </Link>
               </div>
@@ -297,8 +294,7 @@ export default function SoundbarPage() {
           Een vaste prijs is pas een argument als erbij staat waar hij tegen
           vast is. Dit zijn de drie dingen die uw bedrag niet veranderen.
         </p>
-        <PrijsGarantie className="mt-8" />
-      </Section>
+              </Section>
 
       <Section labelledBy="keuze">
         <SectionHeading
@@ -399,9 +395,9 @@ export default function SoundbarPage() {
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -423,19 +419,19 @@ export default function SoundbarPage() {
           items={[
             ["/tv-ophangen", "Tv ophangen"],
             ["/diensten/tv-installatie", "Complete tv installatie"],
-            ["/diensten/tv-instellen", "Tv instellen & hulp"],
+            ["/diensten/tv-instellen", "Tv hulp aan huis"],
             ["/prijzen", "Bekijk onze prijzen"],
           ]}
         />
       </Section>
 
       <Section id="offerte" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
-              title="Vraag uw offerte aan voor uw geluid"
+              eyebrow="Afspraak aanvragen"
+              title="Vraag een afspraak aan voor uw geluid"
               lead={`Soundbar aansluiten en afstellen kost ${PRIJS}, een complete surroundset vanaf ${SURROUND}. Vast, inclusief voorrijkosten en btw. U krijgt binnen enkele uren bericht.`}
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />

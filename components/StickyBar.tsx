@@ -65,7 +65,7 @@ export default function StickyBar() {
         tabIndex={zichtbaar ? undefined : -1}
         className="btn-primary w-full"
       >
-        Offerte aanvragen
+        Afspraak aanvragen
         <Icon name="arrow-right" className="size-5" />
       </Link>
     </div>

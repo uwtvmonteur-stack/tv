@@ -39,7 +39,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "Uw TV Monteur — tv ophangen en installeren aan huis",
+    default: "Uw TV Monteur — tv monteur aan huis",
     template: "%s | Uw TV Monteur",
   },
   description:

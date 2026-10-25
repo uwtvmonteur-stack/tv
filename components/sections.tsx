@@ -171,7 +171,7 @@ export function PageHero({
  */
 export function HeroActions({
   href = "#offerte",
-  label = "Offerte aanvragen",
+  label = "Afspraak aanvragen",
   tweedeHref = "/prijzen",
   tweedeLabel = "Bekijk de prijzen",
 }: {
@@ -218,10 +218,48 @@ export const USPS: { icon: IconName; title: string; text: string }[] = [
   },
 ];
 
-export function TrustBar({ dark = false }: { dark?: boolean }) {
+/**
+ * De bewijsbalk voor pagina's die níet over één dienst gaan.
+ *
+ * De standaardset hierboven is montagetaal: "vaste prijs per tv-formaat" en
+ * "waterpas en belast getest" zeggen niets tegen iemand die geen geluid op
+ * zijn tv heeft. Op /tv-ophangen en de stadpagina's klopt die set juist wel,
+ * dus hij blijft daar staan.
+ */
+export const USPS_BREED: { icon: IconName; title: string; text: string }[] = [
+  {
+    icon: "euro",
+    title: "Vaste prijs per klus",
+    text: "U weet het bedrag voordat wij langskomen, inclusief voorrijkosten en btw.",
+  },
+  {
+    icon: "tool",
+    title: "Eén monteur voor alles",
+    text: "Ophangen, aansluiten, instellen en storingen verhelpen — in één bezoek.",
+  },
+  {
+    icon: "shield",
+    title: "Eigen verzekerde monteurs",
+    text: "In loondienst en opgeleid door ons. Geen wisselende onderaannemers in huis.",
+  },
+  {
+    icon: "clock",
+    title: "Ook 's avonds en in het weekend",
+    text: "Zonder toeslag, zeven dagen per week bereikbaar.",
+  },
+];
+
+export function TrustBar({
+  dark = false,
+  items = USPS,
+}: {
+  dark?: boolean;
+  /** Eigen set, bijvoorbeeld `USPS_BREED` op een pagina met meer diensten. */
+  items?: { icon: IconName; title: string; text: string }[];
+}) {
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {USPS.map((u) => (
+      {items.map((u) => (
         <li
           key={u.title}
           className={`flex items-start gap-3 rounded-2xl p-5 ${
@@ -288,17 +326,20 @@ export function HowItWorks() {
   const stappen: { icon: IconName; title: string; text: string }[] = [
     {
       icon: "chat",
-      title: "U vraagt een offerte aan",
+      title: "U vraagt een afspraak aan",
       text: "Uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. Geen formaatkeuzes en geen vinkjes waar u over moet nadenken — en uw straat en huisnummer vragen wij pas als u akkoord gaat.",
     },
     {
       icon: "euro",
-      title: "U krijgt het bedrag, vrijblijvend",
-      text: "Binnen enkele uren, met de prijs erbij en zonder voorwaarden eronder. U beslist daarna pas.",
+      title: "Wij bevestigen het tarief en het moment",
+      text: "Binnen enkele uren bellen wij u, vaak met een afspraak al binnen 24 uur. U beslist daarna pas.",
     },
     {
       icon: "level",
-      title: "De monteur hangt hem op",
+      // Niet "hangt hem op": dit blok staat ook op de homepage, en die gaat
+      // sinds de omzetting naar "tv monteur aan huis" over vier diensten.
+      // Een soundbar of een wifi-probleem wordt niet opgehangen.
+      title: "De monteur doet het werk",
       text: "Waterpas, kabels weggewerkt, alles aangesloten en getest. Wij ruimen op en nemen het verpakkingsmateriaal mee.",
     },
   ];
@@ -483,7 +524,7 @@ export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
                       voor een schermlezer niet uit elkaar te houden. De
                       toevoeging staat er alleen voor hem. */}
                   <span>
-                    Offerte aanvragen
+                    Afspraak aanvragen
                     <span className="sr-only">
                       {" "}
                       — {klasse.naam}, {klasse.maat.toLowerCase()}
@@ -515,7 +556,7 @@ export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
 /* ---- Afsluitende oproep ------------------------------------------------ */
 
 export function CtaBand({
-  title = "Vraag uw offerte aan",
+  title = "Vraag een afspraak aan",
   text = "Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend.",
   href = "/contact",
   tone = "surface",
@@ -549,7 +590,7 @@ export function CtaBand({
               </p>
             </div>
             <Link href={href} className="btn-primary btn-lg w-full">
-              Offerte aanvragen
+              Afspraak aanvragen
               <Icon name="arrow-right" className="size-5" />
             </Link>
           </div>

@@ -19,9 +19,14 @@ export default function Prijstabel() {
   return (
     <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-ink-200">
       <table className="w-full border-collapse text-left">
+        {/* Beschreef de tabel nog als "vanafprijzen" met het exacte bedrag in
+            een offerte. Sinds de vaste tarieven terug zijn, klopt dat voor de
+            meeste regels niet: alleen de regels met "vanaf" of "op offerte"
+            hangen nog van de situatie af. */}
         <caption className="sr-only">
-          Vanafprijzen van Uw TV Monteur, inclusief voorrijkosten en btw. Het
-          exacte bedrag staat in uw offerte.
+          Tarieven van Uw TV Monteur, inclusief voorrijkosten en btw. Een
+          bedrag met &quot;vanaf&quot; of &quot;op offerte&quot; hangt af van
+          uw situatie; de rest staat vast.
         </caption>
         <thead>
           <tr className="border-b border-ink-200 bg-surface">

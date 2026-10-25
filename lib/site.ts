@@ -44,7 +44,7 @@ export const SITE = {
    * daadwerkelijk waarmaakt.
    */
   reactie:
-    "Wij sturen u binnen enkele uren een vrijblijvende offerte en nemen contact met u op.",
+    "Wij bellen u binnen enkele uren om het tarief te bevestigen en een moment af te spreken.",
 } as const;
 
 /**

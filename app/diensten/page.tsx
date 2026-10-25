@@ -19,7 +19,7 @@ import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "Onze diensten aan huis",
   description:
-    "Alle diensten van uw tv monteur aan huis: tv ophangen, complete tv installatie, soundbar en home-cinema aansluiten, kabels wegwerken en tv instellen. Tv ophangen vanaf €99, vaste prijs per formaat, vaak binnen 24 uur.",
+    "Ophangen, tv installatie, soundbar aansluiten, kabels wegwerken en tv hulp aan huis. Vaste prijs per klus, vaak al binnen 24 uur een afspraak.",
   path: "/diensten",
 });
 
@@ -49,7 +49,7 @@ export default function DienstenPage() {
         }
         eyebrow="Onze diensten"
         title="Onze diensten aan huis"
-        lead="Van tv ophangen en complete installatie tot soundbar aansluiten en tv instellen — kies hieronder de dienst die bij u past. U krijgt vooraf een vrijblijvende offerte, altijd inclusief voorrijkosten en btw."
+        lead="Van tv ophangen en complete installatie tot soundbar aansluiten en tv instellen — kies hieronder de dienst die bij u past. U kent het tarief vooraf, altijd inclusief voorrijkosten en btw."
       >
         <HeroActions href="/contact" />
       </PageHero>
@@ -60,7 +60,7 @@ export default function DienstenPage() {
             id="diensten-kop"
             eyebrow="Alle diensten"
             title="Kies de dienst die bij u past"
-            lead="Vier diensten, één monteur en één afspraak. Drie ervan hebben een vast bedrag; het ophangen krijgt altijd een offerte, omdat uw wand en uw kabels het werk bepalen."
+            lead="Vier diensten, één monteur en één afspraak. Elke dienst heeft een vast bedrag; bij het ophangen hangt het alleen van het formaat van uw tv af."
           />
           <Link href="/prijzen" className="btn-ghost shrink-0">
             Alle tarieven

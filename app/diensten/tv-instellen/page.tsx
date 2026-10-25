@@ -1,12 +1,10 @@
 import Link from "next/link";
-import Bezwaren from "@/components/Bezwaren";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
-import PrijsGarantie from "@/components/PrijsGarantie";
 import ProvincieChips from "@/components/ProvincieChips";
 import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
@@ -18,25 +16,48 @@ import {
   Section,
   SectionHeading,
 } from "@/components/sections";
-import { reviewsPerDienst, type FaqItem } from "@/lib/content";
+import {
+  TV_HULP_PRIJS,
+  reviewsPerDienst,
+  type FaqItem,
+} from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
+/**
+ * Deze pagina staat op "tv hulp aan huis" en niet meer op "tv instellen".
+ *
+ * Het eigen zoektermenrapport over 90 dagen wijst dat aan: "tv instellen"
+ * leverde 25 vertoningen en één klik, terwijl "tv hulp aan huis" op elf
+ * vertoningen drie klikken en een conversie gaf, en "televisie monteur aan
+ * huis" 27 vertoningen met zeven klikken. "Instellen" is bovendien niet het
+ * woord dat iemand met een probleem intikt — die tikt het probleem in.
+ *
+ * Die probleemwoorden waren het grootste gat in de site: ruim 70 vertoningen
+ * op varianten van "geen geluid op tv" en bijna 40 op "tv maakt geen
+ * verbinding met wifi", vrijwel zonder klikken omdat ze hier uitkwamen.
+ * Daarvoor bestaan nu /tv-geen-geluid en /tv-geen-wifi. Deze pagina is het
+ * overzicht dat ernaar doorverwijst; hij hoort dus níet op diezelfde woorden
+ * te mikken, anders concurreren ze met elkaar.
+ *
+ * De URL blijft /diensten/tv-instellen: die staat in de sitemap, in Google en
+ * in de advertenties, en een verhuizing kost meer dan hij oplevert.
+ */
 export const metadata = pageMeta({
-  title: "Tv instellen en hulp aan huis — vaste prijs €60",
+  title: "Tv hulp aan huis — vaste prijs €60",
   description:
-    "Werkt uw tv niet meer, geen zenders of geen wifi-verbinding? Onze monteur verhelpt het bij u thuis en legt het rustig uit. Vaste prijs van €60.",
+    "Tv hulp aan huis: zenders kwijt, een app die niet start of een afstandsbediening die niet werkt? Onze monteur lost het thuis op. Vaste prijs €60.",
   path: "/diensten/tv-instellen",
 });
 
 /**
- * Het vaste bedrag van deze dienst, gelijk aan de regel "Tv hulp aan huis" in
- * `tarieven`. Eén plek op de pagina, zodat kop, prijsblok en offerteblok niet
- * uit elkaar kunnen lopen.
+ * Het vaste bedrag van deze dienst. Stond hier als losse constante; sinds de
+ * probleempagina's hetzelfde tarief noemen, komt het uit `lib/content.ts`.
  */
-const PRIJS = "€60";
+const PRIJS = TV_HULP_PRIJS;
 
 const hulpItems = [
   "Geen of verkeerde zenders? Opnieuw afstemmen en sorteren",
+  "Geen geluid, of wel beeld en geen geluid? De uitgang en de kabels nalopen",
   "Geen wifi of internet? De verbinding herstellen",
   "Netflix, Viaplay of NPO die niet werkt? Opnieuw instellen en inloggen",
   "Afstandsbediening die niet reageert — of een universele instellen",
@@ -73,7 +94,7 @@ const streaming = [
 
 const stappen = [
   {
-    title: "Offerte aanvragen",
+    title: "Afspraak aanvragen",
     text: "Vertel kort wat er niet lukt en waar u woont, dan komt de monteur voorbereid en weet u het bedrag vooraf.",
   },
   {
@@ -132,7 +153,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Hoe snel kunnen jullie langskomen?",
-    a: "Vaak al binnen 24 uur, uiterlijk binnen 48 uur. Vraag online een afspraak aan, dan laten we u binnen enkele uren weten wat de eerstvolgende mogelijkheid bij u in de buurt is.",
+    a: "Vaak al binnen 24 uur. Vraag online een afspraak aan, dan laten we u binnen enkele uren weten wat de eerstvolgende mogelijkheid bij u in de buurt is.",
   },
   {
     q: "Kan de afspraak ook 's avonds of in het weekend?",
@@ -160,7 +181,7 @@ export default function TvInstellenPage() {
             items={[
               { name: "Home", href: "/" },
               { name: "Diensten", href: "/diensten" },
-              { name: "Tv instellen & hulp", href: "/diensten/tv-instellen" },
+              { name: "Tv hulp aan huis", href: "/diensten/tv-instellen" },
             ]}
           />
         }
@@ -204,7 +225,6 @@ export default function TvInstellenPage() {
       />
 
       {/* Brengt zijn eigen witte sectie mee, vlak vóór de prijs. */}
-      <Bezwaren />
 
       <Section id="prijs" tone="surface" labelledBy="prijs-kop">
         <SectionHeading
@@ -237,7 +257,7 @@ export default function TvInstellenPage() {
                   </p>
                 </div>
                 <Link href="#offerte" className="btn-primary btn-lg mt-8 w-full">
-                  Offerte aanvragen
+                  Afspraak aanvragen
                   <Icon name="arrow-right" className="size-5" />
                 </Link>
               </div>
@@ -267,8 +287,7 @@ export default function TvInstellenPage() {
           Een vaste prijs is pas een argument als erbij staat waar hij tegen
           vast is. Dit zijn de drie dingen die uw bedrag niet veranderen.
         </p>
-        <PrijsGarantie className="mt-8" />
-      </Section>
+              </Section>
 
       <Section labelledBy="streaming">
         <SectionHeading
@@ -357,9 +376,9 @@ export default function TvInstellenPage() {
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -377,23 +396,27 @@ export default function TvInstellenPage() {
         {/* Ankertekst volgt de titel van de doelpagina ("Tv ophangen in
             <provincie>"); de href verandert niet. */}
         <ProvincieChips prefix="Tv ophangen in" withOverview />
+        {/* De twee probleempagina's staan vooraan: dit overzicht trekt de
+            zoeker binnen op "tv hulp aan huis", maar wie met een concreet
+            probleem komt hoort op de pagina te landen die dát probleem
+            behandelt. */}
         <RelatedLinks
           items={[
+            ["/tv-geen-geluid", "Geen geluid op de tv"],
+            ["/tv-geen-wifi", "Tv maakt geen verbinding met wifi"],
             ["/diensten/tv-installatie", "Complete tv installatie"],
-            ["/tv-ophangen", "Tv ophangen"],
             ["/diensten/soundbar-installatie", "Soundbar installeren"],
-            ["/prijzen", "Alle prijzen"],
           ]}
         />
       </Section>
 
       <Section id="offerte" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
-              title="Vraag uw offerte aan voor tv-hulp"
+              eyebrow="Afspraak aanvragen"
+              title="Vraag een afspraak aan voor tv-hulp"
               lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt. U krijgt binnen enkele uren bericht.`}
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />

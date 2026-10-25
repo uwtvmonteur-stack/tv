@@ -8,14 +8,14 @@ import { SITE } from "@/lib/site";
 import { absUrl, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Offerte aanvragen of contact opnemen",
+  title: "Afspraak aanvragen of contact opnemen",
   description:
-    "Vraag een vrijblijvende offerte aan voor tv ophangen aan huis. Vul het formulier in — wij nemen binnen enkele uren contact met u op.",
+    "Vraag vrijblijvend een afspraak aan voor tv ophangen aan huis. Vul het formulier in — wij nemen binnen enkele uren contact met u op.",
   path: "/contact",
 });
 
 const vervolgstappen = [
-  "U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij.",
+  "U krijgt binnen enkele uren binnen enkele uren bericht met het bedrag erbij.",
   "Gaat u akkoord? Dan kiezen we samen een dag en tijd die u schikt — ook 's avonds of in het weekend, zonder toeslag.",
   "De monteur belt een half uur voor aankomst, en u weet de prijs al voordat hij de deur binnenkomt.",
 ];
@@ -42,8 +42,8 @@ export default function ContactPage() {
           />
         }
         eyebrow="Contact"
-        title="Vraag uw offerte aan"
-        lead="Drie dingen zijn genoeg: wie u bent, waar u woont en wat er moet gebeuren. De prijs krijgt u daarna, vrijblijvend."
+        title="Vraag een afspraak aan"
+        lead="Vier velden zijn genoeg: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. De prijs krijgt u daarna, vrijblijvend."
       />
 
       <Section id="offerte" labelledBy="offerte-kop">

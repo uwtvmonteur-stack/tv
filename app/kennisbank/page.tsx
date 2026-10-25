@@ -69,7 +69,7 @@ export default function KennisbankPage() {
 
       <CtaBand
         title="Liever gewoon laten doen?"
-        text="Onze monteur bepaalt het wandtype, rekent het draagvermogen na en hangt uw tv waterpas op. U krijgt het bedrag vooraf in een vrijblijvende offerte."
+        text="Onze monteur bepaalt het wandtype, rekent het draagvermogen na en hangt uw tv waterpas op. U hoort het bedrag vooraf en zit nergens aan vast."
       />
     </>
   );

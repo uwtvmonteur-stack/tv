@@ -57,8 +57,8 @@ export async function generateMetadata({
       // {stad}" of "tv laten ophangen {stad}". Ook de hoofdletters zijn eruit:
       // Engelse Title Case leest in een Nederlandse zoekresultatenlijst als
       // machinaal gemaakt en kost doorklikken.
-      title: `Tv ophangen in ${stad.naam} — vaste prijs vanaf €99`,
-      description: `Tv laten ophangen in ${stad.naam}? Beugel monteren, tv waterpas ophangen, apparatuur aansluiten en kabels wegwerken. Vaste prijs per formaat: €99, €129 of €159, inclusief voorrijkosten en btw. Ook 's avonds en in het weekend zonder toeslag.`,
+      title: `Tv ophangen in ${stad.naam} — vanaf €99`,
+      description: `Tv ophangen in ${stad.naam}? Vaste prijs €99, €129 of €159 incl. voorrijkosten en btw. Ook 's avonds en in het weekend, zonder toeslag.`,
       path: `/tv-ophangen/${stad.slug}`,
     }),
     other: {
@@ -75,6 +75,7 @@ const offerteBelofte = [
   "Vrijblijvend: u zit aan niets vast tot u ja zegt",
   "Het bedrag is inclusief voorrijkosten en btw",
   "Geen aanbetaling — u betaalt pas na afloop",
+  "Schade door ons werk is verzekerd — wij lossen het op",
   "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
@@ -180,7 +181,7 @@ export default async function StadPage({
         `Wanneer kan er een tv monteur in ${stad.naam} langskomen?`,
         `Hoe snel bent u in ${stad.naam} aan de beurt?`,
       ][qv],
-      a: `In ${stad.naam} kunnen we u vaak al binnen 24 uur helpen, uiterlijk binnen 48 uur — ook 's avonds en in het weekend, zonder toeslag. Onze monteurs rijden dagelijks tussen ${stad.naam} en ${opsomming(nabijeSteden.map((s) => s.naam))}, dus er is bijna altijd iemand in de buurt. Vraag online een afspraak aan, dan laten we u binnen enkele uren de eerstvolgende mogelijkheid weten.`,
+      a: `In ${stad.naam} kunnen we u vaak al binnen 24 uur helpen — ook 's avonds en in het weekend, zonder toeslag. Onze monteurs rijden dagelijks tussen ${stad.naam} en ${opsomming(nabijeSteden.map((s) => s.naam))}, dus er is bijna altijd iemand in de buurt. Vraag online een afspraak aan, dan laten we u binnen enkele uren de eerstvolgende mogelijkheid weten.`,
     },
     {
       q: [
@@ -261,7 +262,7 @@ export default async function StadPage({
         // foto, en dan is "aan het werk in Helmond" eenendertig keer onwaar.
         imageAlt="Monteur van Uw TV Monteur hangt een televisie waterpas aan de wand"
       >
-        <HeroActions />
+        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
         <HeroFeiten plaats={stad.naam} />
       </PageHero>
 
@@ -390,9 +391,9 @@ export default async function StadPage({
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -448,12 +449,12 @@ export default async function StadPage({
           /contact: dat was een paginawissel op het moment dat iemand besloten
           heeft, en dat is de stap waar verkeer het makkelijkst verdwijnt. */}
       <Section id="offerte" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
-              title={`Vraag uw offerte aan in ${stad.naam}`}
+              eyebrow="Afspraak aanvragen"
+              title={`Vraag een afspraak aan in ${stad.naam}`}
               lead={`Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend — ook in ${stad.naam}.`}
             />
             <CheckList items={offerteBelofte} className="mt-8" />

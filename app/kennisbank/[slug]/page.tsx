@@ -150,7 +150,7 @@ export default async function ArtikelPage({
 
           <InlineCta
             title="Liever niet zelf boren?"
-            text="Onze monteur bepaalt het wandtype, rekent het draagvermogen na en hangt uw tv waterpas op. U krijgt het bedrag vooraf in een vrijblijvende offerte, inclusief voorrijkosten en btw."
+            text="Onze monteur bepaalt het wandtype, rekent het draagvermogen na en hangt uw tv waterpas op. U hoort het bedrag vooraf, inclusief voorrijkosten en btw, en zit nergens aan vast."
             label={artikel.dienst.label}
           />
 
@@ -184,7 +184,7 @@ export default async function ArtikelPage({
         </div>
       </Section>
 
-      <CtaBand title="Tv ophangen? Vraag uw offerte aan" />
+      <CtaBand title="Tv ophangen? Vraag een afspraak aan" />
     </>
   );
 }

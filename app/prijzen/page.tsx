@@ -3,6 +3,7 @@ import ContactForm from "@/components/ContactForm";
 import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import Prijstabel from "@/components/Prijstabel";
+import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
   CheckList,
@@ -11,14 +12,15 @@ import {
   Prijsklassen,
   Section,
   SectionHeading,
+  TrustBar,
 } from "@/components/sections";
 import { PRIJZEN_KORT, prijsGaranties, tarieven, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Wat kost een tv laten ophangen? Prijzen 2026",
+  title: "Wat kost tv ophangen? Alle tarieven 2026",
   description:
-    "Tv ophangen kost €99, €129 of €159, afhankelijk van het formaat van uw tv — altijd inclusief voorrijkosten en btw. Ook de tarieven voor kabels wegwerken, soundbar aansluiten, tv installeren en tv hulp aan huis.",
+    "Tv ophangen kost €99, €129 of €159, afhankelijk van het formaat. Ook de tarieven voor kabels, soundbar, installatie en tv hulp aan huis (€60).",
   path: "/prijzen",
 });
 
@@ -38,8 +40,8 @@ const aanvraagBelofte = [
 
 const faqItems: FaqItem[] = [
   {
-    q: "Zijn er ooit extra kosten bovenop de offerte?",
-    a: "Nee — het bedrag uit uw offerte is definitief. Alleen als u ter plekke extra werk laat uitvoeren (bijvoorbeeld alsnog de kabels laten wegwerken) komt dat er transparant bij, altijd eerst in overleg.",
+    q: "Komen er nog kosten bij?",
+    a: "Nee — het tarief dat bij uw tv-formaat hoort is definitief. Alleen als u ter plekke extra werk laat uitvoeren (bijvoorbeeld alsnog de kabels laten wegwerken) komt dat er transparant bij, altijd eerst in overleg.",
   },
   {
     q: "Hoe kan ik betalen?",
@@ -47,7 +49,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Ik heb een bijzondere situatie — wat kost dat?",
-    a: "Elke klus krijgt een offerte op maat, dus ook een bijzondere situatie. Bij een tv boven een open haard, extra grote schermen of kabels volledig in de muur komen we eerst kijken of meten voordat we een bedrag noemen. Daarna staat dat bedrag vast, ook als het werk tegenvalt.",
+    a: "De drie montagetarieven gelden voor elk formaat, ook voor een 75 of 85 inch. Alleen bij een tv boven een open haard of kabels volledig in de muur komen we eerst meten voordat we een bedrag noemen. Daarna staat dat bedrag vast, ook als het werk tegenvalt.",
   },
 ];
 
@@ -86,6 +88,14 @@ export default function PrijzenPage() {
       >
         <HeroActions tweedeHref="#tarieven" tweedeLabel="Alle tarieven" />
       </PageHero>
+
+      {/* De prijspagina droeg alleen bedragen en kleine letters: geen
+          reviewscore, geen verzekerde monteurs, geen enkele klantstem tussen
+          het bedrag en het formulier. Een bedrag zonder bewijs leest als een
+          bedrag van een onbekende. */}
+      <Section tone="surface">
+        <TrustBar />
+      </Section>
 
       <Section tone="surface" labelledBy="vanafprijs">
         <SectionHeading
@@ -135,7 +145,7 @@ export default function PrijzenPage() {
           id="garanties"
           eyebrow="Waar uw prijs tegen vast is"
           title="Wat uw bedrag niet verandert"
-          lead="Een vaste prijs is pas een argument als erbij staat waar hij tegen vast is. Dit zijn de drie dingen die het bedrag uit uw offerte niet raken."
+          lead="Een vaste prijs is pas een argument als erbij staat waar hij tegen vast is. Dit zijn de drie dingen die het bedrag uit uw aanvraag niet raken."
         />
         <ul className="mt-12 grid gap-4 lg:grid-cols-3">
           {prijsGaranties.map((garantie) => (
@@ -168,14 +178,16 @@ export default function PrijzenPage() {
       {/* Het formulier staat op deze pagina zelf. Deze pagina houdt bezoekers
           het langst vast van de hele site en leverde nul aanvragen op, simpelweg
           omdat er niets te versturen viel. */}
-      <Section id="offerte" tone="surface" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+      <Reviews />
+
+      <Section id="offerte" labelledBy="offerte-kop">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
+              eyebrow="Afspraak aanvragen"
               title="Weten wat het bij u wordt?"
-              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij."
+              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren binnen enkele uren bericht met het bedrag erbij."
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />
           </div>

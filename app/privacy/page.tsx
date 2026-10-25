@@ -6,7 +6,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata = {
   ...pageMeta({
     title: "Privacyverklaring",
-    description: `Hoe ${SITE.name} omgaat met de gegevens die u via het offerteformulier, telefoon of e-mail met ons deelt.`,
+    description: `Hoe ${SITE.name} omgaat met de gegevens die u via het aanvraagformulier, telefoon of e-mail met ons deelt.`,
     path: "/privacy",
   }),
   robots: { index: false, follow: true },
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
         }
         eyebrow="Privacy"
         title="Privacyverklaring"
-        lead="Kort en duidelijk: wij gebruiken uw gegevens alleen om uw offerte te maken en het werk uit te voeren."
+        lead="Kort en duidelijk: wij gebruiken uw gegevens alleen om uw aanvraag te maken en het werk uit te voeren."
       />
 
       <Section>

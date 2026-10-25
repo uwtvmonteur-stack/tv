@@ -20,7 +20,6 @@ import {
 } from "@/components/sections";
 import {
   PRIJZEN_KORT,
-  bezwaren,
   prijsklassen,
   reviewsPerDienst,
   type FaqItem,
@@ -28,9 +27,9 @@ import {
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Tv laten ophangen — vaste prijs vanaf €99",
+  title: "Tv laten ophangen aan huis — vanaf €99",
   description:
-    "Tv laten ophangen door een ervaren monteur: beugel monteren, tv waterpas ophangen, apparatuur aansluiten en kabels wegwerken. Vaste prijs per formaat — €99, €129 of €159 incl. voorrijkosten en btw. Ook 's avonds en in het weekend.",
+    "Tv laten ophangen door een ervaren monteur: elke muur, waterpas, alles aangesloten. Vaste prijs €99, €129 of €159 incl. voorrijkosten en btw.",
   path: "/tv-ophangen",
 });
 
@@ -44,7 +43,7 @@ export const metadata = pageMeta({
  */
 const heroPunten = [
   "Kaarsrecht opgehangen, op de hoogte die bij uw bank past",
-  "Kabels netjes weggewerkt — u ziet er niets meer van",
+  "Kabels gebundeld en uit het zicht gelegd — volledig wegwerken kan erbij, vanaf €39",
   "Elke muur: steen, beton, gipswand of holle wand",
   "Vaste prijs vooraf — u betaalt pas als hij hangt en werkt",
 ];
@@ -155,6 +154,7 @@ const offerteBelofte = [
   "Vrijblijvend: u zit aan niets vast tot u ja zegt",
   "Het bedrag is inclusief voorrijkosten en btw",
   "Geen aanbetaling — u betaalt pas na afloop",
+  "Schade door ons werk is verzekerd — wij lossen het op",
   "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
@@ -173,15 +173,19 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Moet ik zelf een tv-beugel hebben?",
-    a: "Heeft u er al een? Die monteren we gewoon. Heeft u er geen, dan regelen wij de juiste beugel voor uw tv — geef bij uw aanvraag het merk en het formaat door, dan krijgt u de prijs van de beugel er direct bij in uw offerte. U weet dus vóór de afspraak wat het totaal wordt.",
+    a: "Heeft u er al een? Die monteren we gewoon. Heeft u er geen, dan regelen wij de juiste beugel voor uw tv — geef bij uw aanvraag het merk en het formaat door, dan krijgt u de prijs van de beugel er direct bij vooraf. U weet dus vóór de afspraak wat het totaal wordt.",
   },
   {
     q: "Kan een zware of grote tv aan de muur?",
-    a: "In vrijwel alle gevallen wel. Bij grote of zware schermen kiezen we een zwaardere beugel, de juiste bevestiging voor uw muurtype en werken we indien nodig met twee monteurs. Zo hangt uw tv gegarandeerd veilig.",
+    a: "In vrijwel alle gevallen wel. Bij grote of zware schermen kiezen we een zwaardere beugel, de juiste bevestiging voor uw muurtype en werken we indien nodig met twee monteurs. Wij testen de beugel belast voordat uw tv erop gaat.",
   },
   {
     q: "Kunnen jullie de tv ook aansluiten?",
     a: "Ja. We sluiten uw randapparatuur aan — denk aan een soundbar, mediaspeler, spelcomputer of tv-ontvanger — en controleren of alles werkt voordat we vertrekken.",
+  },
+  {
+    q: "Wie draait ervoor op als er iets beschadigd raakt?",
+    a: "Wij. Onze monteurs zijn volledig verzekerd: raakt er bij de montage iets beschadigd aan uw tv of uw muur, dan lossen wij dat op. U heeft te maken met het bedrijf dat de klus zelf uitvoert, niet met een platform dat hem doorgeeft aan een partij die u niet kent.",
   },
   {
     q: "Hoe lang duurt het ophangen van een tv?",
@@ -210,16 +214,10 @@ export default function TvOphangenPage() {
           })),
         })}
       />
-      {/* Inclusief de vier bezwaren die verderop op deze pagina staan. */}
-      <JsonLd
-        data={faqJsonLd([
-          ...bezwaren.map((bezwaar) => ({
-            q: bezwaar.vraag,
-            a: bezwaar.antwoord,
-          })),
-          ...faqItems,
-        ])}
-      />
+      {/* Alleen de vragen die zichtbaar op deze pagina staan. De vier
+          bezwaren zijn eruit omdat dat blok van de site af is; een schema met
+          vragen die de bezoeker niet ziet, is een afkeuringsgrond. */}
+      <JsonLd data={faqJsonLd(faqItems)} />
 
       <PageHero
         breadcrumbs={
@@ -242,7 +240,7 @@ export default function TvOphangenPage() {
           dark
           className="mt-8 grid gap-3 sm:grid-cols-2"
         />
-        <HeroActions />
+        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
       </PageHero>
 
       <Section tone="surface">
@@ -266,7 +264,7 @@ export default function TvOphangenPage() {
           elke situatie de beste oplossing. Hieronder leest u wat een tv ophangen
           kost, hoe wij werken en waar u op moet letten. Liever meteen geregeld?{" "}
           <Link href="#offerte" className="link">
-            Vraag vrijblijvend uw offerte aan
+            Vraag vrijblijvend een afspraak aan
           </Link>{" "}
           — u hoort binnen enkele uren van ons.
         </p>
@@ -312,7 +310,7 @@ export default function TvOphangenPage() {
         </div>
         <p className="mt-10 max-w-3xl text-ink-600">
           Heeft u nog geen beugel, of wilt u de kabels weggewerkt? Geef het door
-          bij uw aanvraag, dan staat het totaalbedrag in uw offerte — u weet het
+          bij uw aanvraag, dan staat het totaalbedrag vooraf — u weet het
           dus vóór de afspraak. Komen we ter plekke iets tegen dat extra werk
           kost, dan hoort u eerst wat dat kost; u betaalt pas na afloop, als hij
           hangt en werkt. Bekijk alle tarieven en wat er altijd bij zit op de{" "}
@@ -413,7 +411,7 @@ export default function TvOphangenPage() {
             formaat van de tv. Als vuistregel houdt u het midden van het scherm
             ongeveer op ooghoogte wanneer u ontspannen op de bank zit. Voor de
             meeste woonkamers komt dat neer op het midden van het scherm op
-            ongeveer 100 tot 120 cm boven de vloer — maar de juiste hoogte is
+            ongeveer 100 tot 110 cm boven de vloer — maar de juiste hoogte is
             altijd persoonlijk.
           </p>
           <p>
@@ -444,32 +442,9 @@ export default function TvOphangenPage() {
         <IconCardGrid items={situaties} columns={3} className="mt-10" />
       </Section>
 
-      <Section tone="dark" labelledBy="bezwaren">
-        <SectionHeading
-          dark
-          id="bezwaren"
-          eyebrow="Uw twijfels"
-          title="Vier punten waarop u elders een voorbehoud krijgt"
-          lead="Dit zijn de dingen die bezoekers tegenhouden. Bij ons leveren ze geen toeslag en geen nee op."
-        />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-          {bezwaren.map((bezwaar) => (
-            <li
-              key={bezwaar.vraag}
-              className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10"
-            >
-              <h3 className="flex items-start gap-3 text-h3 text-white">
-                <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl bg-accent-400/15 text-accent-300">
-                  <Icon name="check-circle" className="size-5" />
-                </span>
-                {bezwaar.vraag}
-              </h3>
-              <p className="mt-3 text-ink-300">{bezwaar.antwoord}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
+      {/* Hier stond het donkere bezwarenblok. Op verzoek van de eigenaar van
+          de hele site verwijderd, net als de "Voordat u aanvraagt"-variant op
+          de dienstpagina's. */}
       <Section labelledBy="werkgebied">
         <SectionHeading
           id="werkgebied"
@@ -490,9 +465,9 @@ export default function TvOphangenPage() {
               <>
                 Staat uw vraag er niet bij? Zet hem in het{" "}
                 <Link href="#offerte" className="link">
-                  offerteformulier
+                  aanvraagformulier
                 </Link>{" "}
-                — u krijgt er antwoord op bij uw offerte.
+                — dan belt de monteur u erover.
               </>
             }
           />
@@ -518,13 +493,13 @@ export default function TvOphangenPage() {
           nul tot een aanvraag, terwijl de dienstpagina's mét formulier 9 tot
           25% halen. */}
       <Section id="offerte" labelledBy="offerte-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <SectionHeading
               id="offerte-kop"
-              eyebrow="Offerte aanvragen"
-              title="Vraag uw offerte aan voor het ophangen"
-              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren een vrijblijvende offerte met het bedrag erbij. Daarna plannen we pas een afspraak, en alleen als u akkoord gaat."
+              eyebrow="Afspraak aanvragen"
+              title="Vraag een afspraak aan voor het ophangen"
+              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren binnen enkele uren bericht met het bedrag erbij. Daarna plannen we pas een afspraak, en alleen als u akkoord gaat."
             />
             <CheckList items={offerteBelofte} className="mt-8" />
           </div>

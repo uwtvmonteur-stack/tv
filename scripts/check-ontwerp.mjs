@@ -170,10 +170,25 @@ if (process.argv.includes("--html")) {
     if (!vrijgesteld && !html.includes('id="offerte"'))
       fouten.push(`${naam}: commerciële pagina zonder offerteformulier`);
 
-    // Een belknop zou hier opduiken als een <a href="tel: met een btn-klasse.
-    const belKnop = /<a[^>]+href="tel:[^"]*"[^>]*class="[^"]*btn/.test(html);
+    // Een belknop zou hier opduiken als een <a> met zowel een tel:-href als
+    // een btn-klasse. Bewust twee losse tests op dezelfde tag en niet één
+    // regex die `href` vóór `class` eist: React rendert attributen in de
+    // volgorde van de props, dus `<a className="btn-primary" href="tel:…">`
+    // glipte door de oude controle heen.
+    const belKnop = (html.match(/<a\b[^>]*>/g) ?? []).some(
+      (tag) => /href="tel:/.test(tag) && /class="[^"]*\bbtn/.test(tag),
+    );
     if (belKnop)
       fouten.push(`${naam}: telefoonnummer staat als knop op de pagina`);
+
+    /* -- Een knop naar #offerte moet dat anker ook hebben -----------------
+       Dit is een echte fout geweest: `afspraakHref()` gaf standaard
+       "#offerte" terug, waardoor op de 404-pagina — die geen formulier
+       draagt — zowel de knop in de koptekst als de zwevende balk naar een
+       anker wees dat daar niet bestond. De bezoeker klikte op de enige
+       gekleurde knop van het scherm en er gebeurde niets. */
+    if (html.includes('href="#offerte"') && !html.includes('id="offerte"'))
+      fouten.push(`${naam}: verwijst naar #offerte maar heeft dat anker niet`);
 
     // Op 22-10-2026 zijn de vaste tarieven per tv-formaat (99/129/159) op
     // verzoek van de eigenaar teruggezet. Deze regel keurde juist díe bedragen

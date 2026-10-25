@@ -157,11 +157,27 @@
 
   /* Eén focusring die op wit en op bijna-zwart zichtbaar is: amber met een
      donkere halo erom. Zonder die halo haalt amber op wit de 3:1 niet. */
+  /* De focusring was amber (accent-400) met een donkere halo erachter.
+     Nagerekend haalt amber op wit 1,98:1, terwijl WCAG 1.4.11 voor een
+     focusindicator 3:1 vraagt — en de halo die dat moest opvangen is een
+     `box-shadow`, dus elke knop of kaart met een eigen `shadow-` of `ring-`
+     klasse wiste hem weg. Op witte vlakken zag een toetsenbordgebruiker dus
+     nauwelijks waar hij stond.
+
+     Nu een ink-950-omlijning (19,45:1 op wit) met een witte tussenruimte via
+     `outline-offset`, zodat hij ook op een amber knop loskomt. Alles zit in
+     `outline`, dus geen enkele Tailwind-utility kan het nog overschrijven.
+     In donkere secties keert het om: daar is amber juist het zichtbaarst
+     (accent-300 op ink-950 is 12,23:1). */
   :focus-visible {
-    outline: 3px solid var(--color-accent-400);
+    outline: 3px solid var(--color-ink-950);
     outline-offset: 2px;
-    box-shadow: 0 0 0 5px rgb(11 13 17 / 0.22);
     border-radius: 4px;
+  }
+
+  .bg-ink-950 :focus-visible,
+  .bg-ink-950:focus-visible {
+    outline-color: var(--color-accent-300);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -254,7 +270,12 @@
 
   /* ---- Formulier ---- */
   .input {
-    @apply block min-h-12 w-full rounded-xl border-0 bg-white px-4 py-3 text-base text-ink-950 ring-1 ring-ink-400 placeholder:text-ink-400 focus:ring-2 focus:ring-ink-950 focus:outline-none;
+    /* `placeholder:text-ink-500` en niet ink-400: die laatste haalt 3,67:1 op
+       wit en blijft daarmee onder de 4,5:1 die WCAG 1.4.3 voor tekst vraagt.
+       Het gaat hier niet om sier — in de placeholders staan de voorbeelden
+       die iemand nodig heeft om het omschrijvingsveld bruikbaar in te vullen.
+       ink-500 geeft 5,96:1. */
+    @apply block min-h-12 w-full rounded-xl border-0 bg-white px-4 py-3 text-base text-ink-950 ring-1 ring-ink-400 placeholder:text-ink-500 focus:ring-2 focus:ring-ink-950 focus:outline-none;
   }
   .label {
     @apply mb-1.5 block text-base font-semibold text-ink-900;

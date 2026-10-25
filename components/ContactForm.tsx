@@ -65,7 +65,7 @@ function valideer(p: Record<Veld, string>): FieldErrors {
     fouten.postcode = "Vul een geldige postcode in, bijvoorbeeld 3511 AB.";
   if (p.omschrijving.trim().length < 10)
     fouten.omschrijving =
-      "Vertel kort wat er moet gebeuren; daarmee kunnen wij een offerte maken.";
+      "Vertel kort wat er moet gebeuren, dan komt de monteur voorbereid.";
   return fouten;
 }
 
@@ -156,7 +156,7 @@ export default function ContactForm({
    * met de pijl ongeveer 237px. Een omgevouwen hoofdknop op elke telefoon
    * kost meer dan de formulering oplevert, dus het blijft dit.
    */
-  submitLabel = "Offerte aanvragen",
+  submitLabel = "Afspraak aanvragen",
   berichtLabel = "Wat moet er gebeuren?",
   berichtPlaceholder = "Bijvoorbeeld: 55 inch Samsung ophangen in de woonkamer, de wand is gipsplaat en ik heb nog geen beugel.",
 }: {
@@ -230,8 +230,20 @@ export default function ContactForm({
     const fouten = valideer(payload);
     setFieldErrors(fouten);
     if (Object.keys(fouten).length > 0) {
-      const eerste = Object.keys(fouten)[0];
-      form.querySelector<HTMLInputElement>(`#${eerste}`)?.focus();
+      // In schermvolgorde en niet in de volgorde waarin `valideer()` toevallig
+      // controleert. Die laatste loopt naam, telefoon, e-mail, postcode,
+      // terwijl de velden op het scherm staan als naam, telefoon, postcode,
+      // e-mail: waren postcode én e-mail fout, dan sprong de focus naar het
+      // e-mailveld en scrolde de bezoeker langs de fout erboven heen.
+      const opScherm: Veld[] = [
+        "naam",
+        "telefoon",
+        "postcode",
+        "email",
+        "omschrijving",
+      ];
+      const eerste = opScherm.find((veld) => fouten[veld]);
+      if (eerste) form.querySelector<HTMLInputElement>(`#${eerste}`)?.focus();
       return;
     }
 
@@ -319,8 +331,8 @@ export default function ContactForm({
         icoon="check-circle"
         titel="Uw aanvraag staat bij ons"
       >
-        {SITE.reactie} U krijgt een vrijblijvende offerte met het bedrag erbij;
-        pas als u daarmee akkoord gaat, plannen we de afspraak in.
+        {SITE.reactie} Het tarief dat op deze pagina staat is het bedrag dat u
+        betaalt; u zit tot dat gesprek nergens aan vast.
       </Paneel>
     );
   }
@@ -356,7 +368,7 @@ export default function ContactForm({
           de plek waar de bezoeker wil beginnen met invullen. Het eerste veld
           stond daardoor een alinea lager dan nodig, op een telefoon bijna een
           half scherm. */}
-      <h3 className="text-h3">Uw offerteaanvraag</h3>
+      <h3 className="text-h3">Uw aanvraag</h3>
 
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         <Veldje
@@ -521,8 +533,8 @@ export default function ContactForm({
         <p className="mt-4 flex items-start gap-2 text-sm text-ink-500">
           <Icon name="lock" className="mt-0.5 size-4 shrink-0" />
           <span>
-            Velden met * zijn verplicht. Wij gebruiken uw gegevens alleen om u
-            deze offerte te sturen — geen nieuwsbrief, geen spam.
+            Velden met * zijn verplicht. Wij gebruiken uw gegevens alleen voor
+            deze aanvraag — geen nieuwsbrief, geen spam.
           </span>
         </p>
       </div>

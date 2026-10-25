@@ -49,7 +49,13 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
                 ) : (
                   <Link
                     href={crumb.href}
-                    className="underline-offset-4 transition-colors duration-200 hover:text-white hover:underline"
+                    // `min-h-11`: de kruimels waren de enige aanraakdoelen op
+                    // de site onder 44px (regelhoogte ongeveer 25px), en ze
+                    // staan bovenin de hero waar op een telefoon veel wordt
+                    // getikt. Een misklik stuurt de bezoeker naar
+                    // /werkgebied of /diensten — de twee pagina's zonder
+                    // formulier.
+                    className="inline-flex min-h-11 items-center underline-offset-4 transition-colors duration-200 hover:text-white hover:underline"
                   >
                     {crumb.name}
                   </Link>

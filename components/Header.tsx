@@ -28,12 +28,22 @@ import { provincies } from "@/lib/steden";
  * geldpagina hoort te krijgen. Diensten is nu het megamenu (vanaf `xl`);
  * daaronder blijven ze bereikbaar via het mobiele menu en de voettekst.
  */
-const links = [
+/**
+ * `pasVanafXl` houdt een link onder 1280px uit de balk.
+ *
+ * Nodig sinds het dienstenmenu al vanaf `lg` meedoet: de hamburger verdwijnt
+ * op 1024px en het megamenu verscheen pas op 1280px, waardoor er tussen die
+ * twee breedtes — iPad liggend, smalle laptops — geen enkele weg naar de
+ * dienstpagina's was behalve de voettekst. Nu verschijnt het menu precies
+ * waar de hamburger stopt, en wijken de twee minst dringende links daar even
+ * uit zodat de balk niet breder wordt dan hij nu is.
+ */
+const links: { href: string; label: string; pasVanafXl?: boolean }[] = [
   { href: "/tv-ophangen", label: "Tv ophangen" },
   { href: "/prijzen", label: "Prijzen" },
   { href: "/werkgebied", label: "Werkgebied" },
-  { href: "/kennisbank", label: "Kennisbank" },
-  { href: "/over-ons", label: "Over ons" },
+  { href: "/kennisbank", label: "Kennisbank", pasVanafXl: true },
+  { href: "/over-ons", label: "Over ons", pasVanafXl: true },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -57,19 +67,23 @@ const feiten: { icon: IconName; tekst: string; className?: string }[] = [
 ];
 
 /**
- * Staat er een offerteformulier op deze pagina? Dan moet de knop in de balk
+ * Staat er een aanvraagformulier op deze pagina? Dan moet de knop in de balk
  * ernaartoe scrollen in plaats van de bezoeker te verhuizen naar /contact.
  *
  * Dat was de duurste fout in de oude balk: op /prijzen — de pagina waar
  * bezoekers het langst blijven — stuurde de meest opvallende knop van het
  * scherm ze wég van het formulier dat 300 pixels lager stond.
  */
-const ZONDER_FORMULIER = new Set([
-  "/diensten",
-  "/over-ons",
-  "/werkgebied",
-  "/kennisbank",
-  "/privacy",
+const MET_FORMULIER = new Set([
+  "/",
+  "/contact",
+  "/prijzen",
+  "/tv-ophangen",
+  "/tv-ophangen-gipswand",
+  "/tv-boven-open-haard",
+  "/kabels-wegwerken",
+  "/tv-geen-geluid",
+  "/tv-geen-wifi",
 ]);
 
 /**
@@ -78,17 +92,35 @@ const ZONDER_FORMULIER = new Set([
  * tekening, zodat iemand die meteen klikt alsnog naar /contact vertrekt. Zo
  * klopt de link al in de HTML die van de server komt.
  *
- * Alle commerciële pagina's dragen sinds deze herbouw zelf een formulier;
- * alleen de overzichts- en informatiepagina's hierboven niet. Komt er een
- * pagina bij zonder formulier, zet hem dan in deze lijst. StickyBar leest
- * dezelfde functie, zodat balk en knop nooit naar verschillende plekken
- * wijzen.
+ * De lijst noemt de pagina's die een formulier dragen, en niet andersom.
+ * Dat is bewust omgekeerd: hiervoor stond hier een lijst pagina's *zonder*
+ * formulier, en alles wat daar niet in stond kreeg `#offerte`. Daardoor wees
+ * op de 404-pagina — die geen formulier heeft en in geen enkele lijst stond —
+ * zowel de knop in de koptekst als de zwevende balk naar een anker dat daar
+ * niet bestaat. Wie uit een oude advertentie of bladwijzer kwam, klikte op de
+ * enige gekleurde knop van het scherm en er gebeurde niets.
+ *
+ * Met een lijst van pagina's mét formulier valt elk onbekend pad vanzelf
+ * terug op /contact. Een nieuwe pagina die vergeten wordt, verliest dan
+ * hooguit het soepele scrollen — hij wordt nooit een doodlopende knop.
+ * `scripts/check-ontwerp.mjs` controleert na een build dat elke pagina die
+ * naar `#offerte` wijst dat anker ook werkelijk heeft.
+ *
+ * Bewust een vaste regel op basis van het pad en geen zoekopdracht in de DOM
+ * binnen een effect: dat laatste zet de knop pas goed ná de eerste tekening.
+ * StickyBar leest dezelfde functie, zodat balk en knop nooit naar
+ * verschillende plekken wijzen.
  */
 export function afspraakHref(pathname: string) {
-  if (ZONDER_FORMULIER.has(pathname) || pathname.startsWith("/kennisbank/")) {
-    return "/contact";
-  }
-  return "#offerte";
+  const heeftFormulier =
+    MET_FORMULIER.has(pathname) ||
+    // De drie dienstpagina's, de 32 stadpagina's en de vier
+    // provinciepagina's dragen het formulier allemaal; de overzichten
+    // /diensten en /werkgebied niet, en /kennisbank-artikelen evenmin.
+    /^\/diensten\/[^/]+$/.test(pathname) ||
+    /^\/tv-ophangen\/[^/]+$/.test(pathname) ||
+    /^\/werkgebied\/[^/]+$/.test(pathname);
+  return heeftFormulier ? "#offerte" : "/contact";
 }
 
 export default function Header() {
@@ -120,12 +152,25 @@ export default function Header() {
     }
     if (open) document.addEventListener("keydown", onKeyDown);
 
+    // Sluit het menu zodra het scherm breed genoeg wordt voor de gewone
+    // navigatie. Zonder dit bleef `open` waar staan als iemand het menu op
+    // een tablet opende en die daarna kantelde: het menu zelf is `lg:hidden`
+    // en verdween dus uit beeld, terwijl main, footer en de onderbalk `inert`
+    // bleven en de pagina niet meer scrolde. De bezoeker zag een normale
+    // pagina die nergens meer op reageerde.
+    const breed = window.matchMedia("(min-width: 64rem)");
+    function onBreedte(e: MediaQueryListEvent) {
+      if (e.matches) setOpen(false);
+    }
+    if (open) breed.addEventListener("change", onBreedte);
+
     return () => {
       document.body.style.overflow = "";
       main?.removeAttribute("inert");
       footer?.removeAttribute("inert");
       balk?.removeAttribute("inert");
       document.removeEventListener("keydown", onKeyDown);
+      breed.removeEventListener("change", onBreedte);
     };
   }, [open]);
 
@@ -159,9 +204,12 @@ export default function Header() {
           <nav aria-label="Hoofdnavigatie" className="hidden lg:block">
             <ul className="flex items-center gap-0.5">
               {/* Megamenu zonder JavaScript: `group-hover` voor de muis,
-                  `group-focus-within` voor het toetsenbord. Pas vanaf `xl`,
-                  omdat er daaronder geen ruimte is naast de zes links. */}
-              <li className="group relative hidden xl:block">
+                  `group-focus-within` voor het toetsenbord. Vanaf `lg`, dus
+                  precies waar de hamburger verdwijnt — daaronder stond het op
+                  `xl` en was er tussen 1024 en 1280px geen enkele link naar
+                  de dienstpagina's. De ruimte komt van `pasVanafXl`
+                  hierboven. */}
+              <li className="group relative hidden lg:block">
                 <Link
                   href="/diensten"
                   className="flex items-center gap-1 rounded-lg px-2.5 py-2 text-sm font-semibold text-ink-700 hover:bg-ink-50 hover:text-ink-950 2xl:px-3 2xl:text-base"
@@ -208,7 +256,10 @@ export default function Header() {
                 const actief =
                   pathname === link.href || pathname.startsWith(`${link.href}/`);
                 return (
-                  <li key={link.href}>
+                  <li
+                    key={link.href}
+                    className={link.pasVanafXl ? "hidden xl:block" : undefined}
+                  >
                     <Link
                       href={link.href}
                       aria-current={actief ? "page" : undefined}
@@ -230,8 +281,8 @@ export default function Header() {
               inert={open || undefined}
               className="btn-primary whitespace-nowrap px-3 sm:px-6"
             >
-              <span className="hidden sm:inline">Offerte aanvragen</span>
-              <span className="sm:hidden">Offerte</span>
+              <span className="hidden sm:inline">Afspraak aanvragen</span>
+              <span className="sm:hidden">Afspraak</span>
             </Link>
             <button
               ref={hamburgerRef}
@@ -328,7 +379,7 @@ export default function Header() {
             onClick={() => setOpen(false)}
             className="btn-primary btn-lg w-full"
           >
-            Offerte aanvragen
+            Afspraak aanvragen
             <Icon name="arrow-right" className="size-5" />
           </Link>
         </div>

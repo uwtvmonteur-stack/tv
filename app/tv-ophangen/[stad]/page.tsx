@@ -20,6 +20,7 @@ import {
   TrustBar,
 } from "@/components/sections";
 import {
+  HERO_PRIJZEN,
   PRIJZEN_KORT,
   diensten,
   dienstHref,
@@ -240,6 +241,7 @@ export default async function StadPage({
       <JsonLd data={faqJsonLd(faqItems)} />
 
       <PageHero
+        prijsregel={HERO_PRIJZEN}
         breadcrumbs={
           <Breadcrumbs
             items={[
@@ -455,7 +457,7 @@ export default async function StadPage({
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title={`Vraag een afspraak aan in ${stad.naam}`}
-              lead={`Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend — ook in ${stad.naam}.`}
+              lead={`Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — ook in ${stad.naam}.`}
             />
             <CheckList items={offerteBelofte} className="mt-8" />
           </div>

@@ -37,15 +37,28 @@ const secties: { h2: string; p: string[] }[] = [
     ],
   },
   {
-    h2: "Statistieken",
+    // Hier stond dat wij "geen advertentie- of trackingcookies zonder uw
+    // toestemming" plaatsen. Dat klopte niet: Google Analytics laadt direct bij
+    // het openen van de site, zonder dat er iets gevraagd wordt. Een
+    // privacyverklaring die iets anders belooft dan de site doet, is erger dan
+    // geen verklaring. Dit beschrijft wat er werkelijk gebeurt.
+    h2: "Statistieken en advertenties",
     p: [
-      "Om te begrijpen hoe bezoekers onze website gebruiken kunnen wij geanonimiseerde bezoekstatistieken bijhouden. Wij plaatsen geen advertentie- of trackingcookies zonder uw toestemming.",
+      "Wij gebruiken Google Analytics om te zien hoe bezoekers onze website gebruiken. Daarbij worden cookies geplaatst en gegevens over uw bezoek naar Google gestuurd, waaronder uw IP-adres in verkorte vorm. Wij koppelen die gegevens niet aan uw naam of telefoonnummer.",
+      "Wij adverteren in Google. Wanneer u via een advertentie op onze site komt en daarna een aanvraag doet, wordt dat als conversie geteld. Wij zien daarin geen persoonsgegevens, alleen aantallen.",
+    ],
+  },
+  {
+    h2: "Wie uw gegevens verwerken",
+    p: [
+      "Wij schakelen een aantal partijen in die uw gegevens namens ons verwerken: Vercel (hosting van de website en de logbestanden), Google (Analytics en Advertenties) en onze e-mailprovider, die de aanvraag van het formulier bij ons aflevert. Met deze partijen zijn de gebruikelijke afspraken over verwerking van gegevens van toepassing.",
     ],
   },
   {
     h2: "Uw rechten",
     p: [
       `U heeft het recht om uw gegevens in te zien, te laten corrigeren of te laten verwijderen. Stuur daarvoor een e-mail naar ${SITE.email} of bel ${SITE.phoneDisplay}. Wij reageren binnen vijf werkdagen.`,
+      "Bent u het niet eens met hoe wij met uw gegevens omgaan, dan kunt u een klacht indienen bij de Autoriteit Persoonsgegevens.",
     ],
   },
 ];

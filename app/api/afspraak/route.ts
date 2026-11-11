@@ -25,9 +25,67 @@ const escapeHtml = (s: string) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/**
+ * Eén adres, en niets wat een mailserver als een tweede ontvanger of als
+ * koptekst kan lezen.
+ *
+ * De vorige vorm, `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`, liet komma's, puntkomma's,
+ * punthaken en aanhalingstekens door. Getest: twee volledige adressen kwamen
+ * er niet doorheen (er mag maar één `@` in), maar `a,b@c.nl` en
+ * `klant@voorbeeld.nl,` wel, en nodemailer leest zo'n komma als een scheiding
+ * tussen ontvangers. De staart `[a-z]{2,}` eist bovendien een echt
+ * topniveaudomein, zodat `iemand@localhost` of `x@y.1` niet meer telt.
+ */
+const EMAIL_RE = /^[^\s@,;:<>"'()[\]]+@[^\s@,;:<>"'()[\]]+\.[a-zA-Z]{2,}$/;
+
+/**
+ * Ruwe snelheidsbegrenzing per IP.
+ *
+ * Dit is geen sluitende beveiliging en doet niet alsof: op Vercel draait elke
+ * aanroep mogelijk in een andere instantie, en dit geheugen gaat bij elke
+ * koude start verloren. Wat het wél tegenhoudt is het geval dat hier telt —
+ * één bron die het formulier honderden keren achter elkaar afvuurt. Zonder
+ * iets als dit is het dagquotum van de mailprovider op, en krijgt daarna
+ * iedere echte klant een foutmelding.
+ *
+ * Elke aanvraag mét e-mailadres kost twee mails (de aanvraag en de
+ * bevestiging), dus het quotum gaat twee keer zo snel op als je zou denken.
+ * Wie dit hard wil dichtzetten, zet een regel in de Vercel-firewall op
+ * POST /api/afspraak; dit blijft de goedkope tweede linie.
+ */
+const VENSTER_MS = 10 * 60 * 1000;
+const MAX_PER_VENSTER = 5;
+const recent = new Map<string, number[]>();
+
+function teVaak(ip: string) {
+  const nu = Date.now();
+  const eerder = (recent.get(ip) ?? []).filter((t) => nu - t < VENSTER_MS);
+  eerder.push(nu);
+  recent.set(ip, eerder);
+
+  // De map mag niet eindeloos groeien in een langlevende instantie.
+  if (recent.size > 5000) {
+    for (const [sleutel, tijden] of recent) {
+      if (tijden.every((t) => nu - t >= VENSTER_MS)) recent.delete(sleutel);
+    }
+  }
+  return eerder.length > MAX_PER_VENSTER;
+}
 
 export async function POST(request: Request) {
+  // `x-forwarded-for` kan door de client worden meegestuurd en is dus niet te
+  // vertrouwen als identiteit. Voor het doel hier — een enkele bron afremmen —
+  // is het de beste die er is zonder extra dienst. Valt hij weg, dan belanden
+  // alle aanvragen in één emmer; dat is streng maar niet kapot, want de limiet
+  // ligt op vijf per tien minuten en een echt formulier haalt dat nooit.
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    "onbekend";
+  if (teVaak(ip)) {
+    return Response.json({ error: "te_veel_aanvragen" }, { status: 429 });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = (await request.json()) as Record<string, unknown>;

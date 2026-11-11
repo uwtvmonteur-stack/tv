@@ -282,7 +282,7 @@ export default async function ProvinciePage({
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title={`Vraag een afspraak aan in ${provincie.naam}`}
-              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend."
+              lead="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast."
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />
           </div>

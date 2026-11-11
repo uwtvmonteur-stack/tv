@@ -14,7 +14,7 @@ import {
   SectionHeading,
   TrustBar,
 } from "@/components/sections";
-import { PRIJZEN_KORT, prijsGaranties, tarieven, type FaqItem } from "@/lib/content";
+import { HERO_PRIJZEN, PRIJZEN_KORT, prijsGaranties, tarieven, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -74,6 +74,7 @@ export default function PrijzenPage() {
       <JsonLd data={faqJsonLd(faqItems)} />
 
       <PageHero
+        prijsregel={HERO_PRIJZEN}
         breadcrumbs={
           <Breadcrumbs
             items={[
@@ -187,7 +188,7 @@ export default function PrijzenPage() {
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title="Weten wat het bij u wordt?"
-              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren binnen enkele uren bericht met het bedrag erbij."
+              lead="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen."
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />
           </div>

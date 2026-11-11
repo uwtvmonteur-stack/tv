@@ -31,7 +31,7 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
     <>
       <JsonLd data={jsonLd} />
       <nav aria-label="Kruimelpad" className="text-sm">
-        <ol className="flex flex-wrap items-center gap-1.5 text-ink-300">
+        <ol className="flex flex-wrap items-center gap-1.5 text-ink-100">
           {items.map((crumb, i) => {
             const laatste = i === items.length - 1;
             return (
@@ -39,7 +39,7 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
                 {i > 0 && (
                   <Icon
                     name="chevron-down"
-                    className="size-3.5 -rotate-90 text-ink-400"
+                    className="size-3.5 -rotate-90 text-ink-300"
                   />
                 )}
                 {laatste ? (

@@ -46,7 +46,7 @@ export const artikelen: Artikel[] = [
   {
     slug: "hoe-hoog-tv-ophangen",
     titel: "Hoe hoog hangt u een tv op?",
-    metaTitel: "Hoe hoog moet een tv hangen? Zo rekent u het uit",
+    metaTitel: "Hoe hoog moet een tv hangen?",
     beschrijving:
       "Hoe hoog hang je een tv op? Het midden van het scherm hoort op ooghoogte als u zit. Met deze rekenregel en tabel per formaat weet u de juiste hoogte.",
     eyebrow: "Kennisbank · Tv ophangen",
@@ -269,7 +269,7 @@ export const artikelen: Artikel[] = [
   {
     slug: "tv-ophangen-gipswand-plug",
     titel: "Welke plug hoort in een gipswand?",
-    metaTitel: "Tv ophangen aan gipswand: welke plug gebruikt u?",
+    metaTitel: "Gipswand: welke plug gebruikt u?",
     beschrijving:
       "Een tv ophangen aan een gipswand vraagt andere bevestiging dan baksteen. Welke plug waar hoort, wat zo’n wand draagt en wanneer u in de staanders schroeft.",
     eyebrow: "Kennisbank · Wanden",
@@ -364,7 +364,7 @@ export const artikelen: Artikel[] = [
   {
     slug: "tv-zelf-ophangen-of-laten-doen",
     titel: "Tv zelf ophangen of laten doen?",
-    metaTitel: "Tv zelf ophangen of laten doen? Een checklist",
+    metaTitel: "Tv zelf ophangen of laten doen?",
     beschrijving:
       "Kunt u uw tv zelf ophangen of is een monteur verstandiger? Een eerlijke checklist op basis van wandtype, schermformaat, kabels en gereedschap.",
     eyebrow: "Kennisbank · Keuzehulp",

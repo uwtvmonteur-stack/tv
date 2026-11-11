@@ -15,7 +15,7 @@ export const metadata = pageMeta({
 });
 
 const vervolgstappen = [
-  "U krijgt binnen enkele uren binnen enkele uren bericht met het bedrag erbij.",
+  "Wij bellen u binnen enkele uren om het tarief te bevestigen.",
   "Gaat u akkoord? Dan kiezen we samen een dag en tijd die u schikt — ook 's avonds of in het weekend, zonder toeslag.",
   "De monteur belt een half uur voor aankomst, en u weet de prijs al voordat hij de deur binnenkomt.",
 ];

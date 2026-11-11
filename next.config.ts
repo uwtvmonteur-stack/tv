@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     qualities: [75, 90],
+    // AVIF voor wie het kan, webp als terugval. Gemeten op de hero: de
+    // webp van 1200px is 36,8 kB; AVIF zit daar volgens de Next-documentatie
+    // circa 20% onder. Op een trage 4G-verbinding is dat tientallen
+    // milliseconden LCP, en LCP is onderdeel van de kwaliteitsscore in Ads.
+    // De eerste aanvraag per variant duurt wel langer, want AVIF-encoding
+    // kost meer rekentijd; daarna komt alles uit de cache.
+    formats: ["image/avif", "image/webp"],
   },
   async redirects() {
     return [
@@ -36,6 +43,14 @@ const nextConfig: NextConfig = {
       {
         source: "/tv-monteur",
         destination: "/werkgebied",
+        statusCode: 301,
+      },
+      // De provincie heet in de data `utrecht-provincie`, omdat de stad Utrecht
+      // de slug `utrecht` al bezet. Wie /werkgebied/utrecht intypt of uit een
+      // oude link komt, kreeg daardoor een 404 op een adres dat logisch lijkt.
+      {
+        source: "/werkgebied/utrecht",
+        destination: "/werkgebied/utrecht-provincie",
         statusCode: 301,
       },
       {

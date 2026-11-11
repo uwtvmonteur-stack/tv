@@ -27,7 +27,7 @@ export default function IconCardGrid({
   return (
     <ul className={`grid gap-4 ${cols} ${className}`}>
       {items.map((item) => (
-        <li key={item.h3} className="h-full">
+        <li key={item.h3} className="rise-in h-full">
           <div className={`card h-full p-6 ${hover ? "card-hover" : ""}`}>
             {item.icon && (
               <span className="grid size-11 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">

@@ -16,7 +16,7 @@ import {
   Section,
   SectionHeading,
 } from "@/components/sections";
-import { PRIJZEN_KORT, reviewsPerDienst, type FaqItem } from "@/lib/content";
+import { HERO_PRIJZEN, PRIJZEN_KORT, reviewsPerDienst, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 /**
@@ -152,6 +152,7 @@ export default function TvOphangenGipswandPage() {
       <JsonLd data={faqJsonLd(faqItems)} />
 
       <PageHero
+        prijsregel={HERO_PRIJZEN}
         breadcrumbs={
           <Breadcrumbs
             items={[
@@ -314,7 +315,7 @@ export default function TvOphangenGipswandPage() {
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title="Twijfelt u over uw wand?"
-              lead="Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich. U krijgt binnen enkele uren binnen enkele uren bericht met het bedrag erbij."
+              lead="Zet het in uw aanvraag — dan weet de monteur het vooraf en heeft hij het juiste materiaal bij zich. Wij bellen u binnen enkele uren om het tarief te bevestigen."
             />
             <CheckList items={offerteBelofte} className="mt-8" />
           </div>

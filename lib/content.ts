@@ -128,6 +128,42 @@ export const PRIJZEN_KORT = prijsklassen
     i === 0 ? prijs : i === alle.length - 1 ? `${zin} of ${prijs}` : `${zin}, ${prijs}`,
   );
 
+/**
+ * De drie tarieven als korte pillen voor de hero: formaat boven, bedrag
+ * onder. Afgeleid van `prijsklassen`, dus er staat nooit een bedrag in een
+ * hero dat de prijskaarten tegenspreekt.
+ *
+ * `maat` is hier te lang ("Voor tv's tot 43 inch"); in een pil naast twee
+ * andere pillen moet het "tot 43 inch" zijn, anders breekt de rij op een
+ * telefoon van 360px over drie regels.
+ */
+/**
+ * De zin die onder de prijspillen in de hero hoort. Stond als staart aan de
+ * lead van de homepage, waar hij na de pillen dubbelop werd.
+ */
+export const PRIJS_NOOT =
+  "Vaste prijs per klus, inclusief voorrijkosten en btw.";
+
+/**
+ * De lopende band onder de hero. Korte uitspraken die elders op de site al
+ * woordelijk worden waargemaakt — er staat hier niets wat een pagina niet
+ * ook uitlegt. Een band met beloften die nergens worden onderbouwd is
+ * precies het soort versiering dat een site goedkoop maakt.
+ */
+export const BAND_UITSPRAKEN = [
+  "Eigen monteurs in loondienst",
+  "Vaste prijs per tv-formaat",
+  "Avond en weekend zonder toeslag",
+  "Waterpas en belast getest",
+  "Schade door ons werk verzekerd",
+  "Vaak al binnen 24 uur",
+] as const;
+
+export const HERO_PRIJZEN = prijsklassen.map((klasse) => ({
+  label: klasse.maat.replace(/^Voor tv's\s*/, ""),
+  prijs: klasse.prijs,
+}));
+
 export type Tarief = {
   naam: string;
   /**

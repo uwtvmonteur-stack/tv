@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import HeroVideo from "./HeroVideo";
 import { DienstIcon, Icon, type IconName } from "./Icon";
 import {
+  PRIJS_NOOT,
   PRIJZEN_KORT,
   diensten,
   dienstHref,
@@ -71,7 +73,9 @@ export function SectionHeading({
   id?: string;
 }) {
   return (
-    <div className={center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+    <div
+      className={`rise ${center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}`}
+    >
       {eyebrow && <p className={dark ? "eyebrow-dark" : "eyebrow"}>{eyebrow}</p>}
       <h2 id={id} className={`h-section mt-4 ${dark ? "text-white" : ""}`}>
         {title}
@@ -84,12 +88,22 @@ export function SectionHeading({
 /* ---- Hero -------------------------------------------------------------- */
 
 /**
- * De hero van elke binnenpagina, en de basis van de homepage-hero.
+ * De hero van elke pagina.
  *
- * Donker, met een rasterpatroon en één warme gloed. Dat is niet decoratie:
- * een foto van een woonkamer is altijd rommelig, en witte tekst op een
- * donkere laag is het enige wat daarop leesbaar blijft zonder de foto plat
- * te maken.
+ * Herontworpen: niet langer tekst naast een kaartje, maar beeld over de volle
+ * breedte met de tekst erop. Twee redenen, en de tweede is de belangrijkste.
+ *
+ * Esthetisch: een foto in een afgerond kadertje naast een kolom tekst is de
+ * opzet van elke zakelijke website; beeld dat doorloopt tot de rand en tekst
+ * die erop ligt, is wat een merk groot maakt.
+ *
+ * Praktisch: die naast-elkaar-opzet bestond op een telefoon helemaal niet.
+ * Daar viel hij terug op tekst bóven beeld, waardoor de foto pas ná de lead
+ * kwam en vaak helemaal buiten het eerste scherm viel. 85% van het betaalde
+ * verkeer op deze site is mobiel. Nu draagt het beeld de hero op élk scherm.
+ *
+ * De leesbaarheid komt van `hero-scrim`: een verloop dat onderin dichtloopt
+ * waar de tekst staat en bovenin open blijft waar het beeld mag ademen.
  */
 export function PageHero({
   eyebrow,
@@ -98,9 +112,12 @@ export function PageHero({
   children,
   image,
   imageAlt,
+  video,
+  videoStaand,
   breadcrumbs,
-  priority = true,
+  preload = true,
   groot = false,
+  prijsregel,
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -108,55 +125,117 @@ export function PageHero({
   children?: ReactNode;
   image?: string;
   imageAlt?: string;
+  /**
+   * Alleen de homepage. Een stille, doorlopende video achter de scrim; de
+   * posterafbeelding blijft staan als de video niet mag of niet laadt.
+   */
+  video?: string;
+  /** De staande uitsnede voor telefoons; zie HeroVideo. */
+  videoStaand?: string;
   breadcrumbs?: ReactNode;
-  priority?: boolean;
+  /**
+   * Zet de preload-hint op de heroafbeelding. Heette tot Next 16 `priority`;
+   * die prop is daar vervangen door `preload` en doet sindsdien niets meer.
+   */
+  preload?: boolean;
   /**
    * Alleen de homepage. Zonder dit onderscheid opent elke pagina even zwaar
-   * en zegt de typografie dus niets over waar je bent; de grootste maat uit
-   * het systeem (`text-hero`) bleef daardoor ongebruikt.
+   * en zegt de typografie dus niets over waar je bent.
    */
   groot?: boolean;
+  /**
+   * Tarieven direct in de hero, als glazen chips.
+   *
+   * Uit de Ads-cijfers over 90 dagen: "tv laten ophangen kosten" gaf 16
+   * klikken en nul conversies, "tv bevestigen aan muur" 25 klikken en nul
+   * conversies. Beide landden op een pagina waar het eerste bedrag pas na
+   * zes tot acht schermen stond, terwijl de meta-title "vanaf €99" belooft.
+   */
+  prijsregel?: { label: string; prijs: string }[];
 }) {
+  const heeftBeeld = Boolean(video ?? image);
+
   return (
-    <section className="relative overflow-hidden bg-ink-950 text-white">
-      <div className="bg-grid absolute inset-0" aria-hidden="true" />
+    <section className="relative isolate overflow-hidden bg-ink-950 text-white">
+      {/* Laag 1 — het beeld. De <Image> staat hier en niet in HeroVideo:
+          alleen vanuit een servercomponent plaatst Next de preload-hint in
+          de head, en dat is precies het element dat de LCP bepaalt. */}
+      {image ? (
+        <>
+          <Image
+            src={image}
+            alt={imageAlt ?? ""}
+            fill
+            preload={preload}
+            sizes="100vw"
+            // `brightness-50` op foto-heroes, niet op de videohero. Gemeten op
+            // de acht heroafbeeldingen: zes haalden met witte tekst erop zelfs
+            // de 3:1 voor grote koppen niet, met 1,4:1 als dieptepunt op de
+            // foto die op 37 pagina's staat. Een zwaardere scrim lost dat niet
+            // op — daarvoor zou hij 82% moeten dekken en dan zie je de foto
+            // niet meer. De foto temperen wel: de lichtste plek zakt van 0,965
+            // naar 0,207 luminantie, en daarmee haalt de tekst 4,9:1 bovenin.
+            // De videoposter is al donker genoeg (4,6:1) en blijft ongemoeid.
+            className={`object-cover ${video ? "" : "brightness-50"}`}
+          />
+          {video && <HeroVideo src={video} srcStaand={videoStaand} />}
+        </>
+      ) : (
+        <div className="mesh-dark absolute inset-0" aria-hidden="true" />
+      )}
+
+      {/* Laag 2 — leesbaarheid. Zonder beeld is er niets om te dempen, dan
+          zou de scrim de mesh alleen maar grijs maken. */}
+      {heeftBeeld && (
+        <div className="hero-scrim absolute inset-0" aria-hidden="true" />
+      )}
+      <div className="bg-grid absolute inset-0 opacity-40" aria-hidden="true" />
+      <div className="grain absolute inset-0" aria-hidden="true" />
+
+      {/* Laag 3 — de inhoud. `min-h` alleen bij video: daar moet het beeld
+          ruimte krijgen om te bewegen. `svh` en niet `vh`, anders springt de
+          hero op een telefoon zodra de adresbalk wegschuift. */}
       <div
-        className="absolute -left-32 top-0 size-[32rem] rounded-full bg-accent-500/20 blur-3xl"
-        aria-hidden="true"
-      />
-      <div
-        // Geen compensatie voor de koptekstbalk: die loopt mee in de stroom
-        // (`sticky`), dus de hero begint er automatisch onder. Zette een
-        // pagina hier zelf nog padding bovenop, dan ontstond er een gat.
-        className={`container-x relative grid gap-10 py-14 sm:py-16 ${
-          image ? "lg:grid-cols-[1.1fr_1fr] lg:items-center lg:py-20" : "lg:py-20"
+        className={`container-x relative flex flex-col justify-end py-16 sm:py-20 lg:py-28 ${
+          video
+            ? "min-h-[78svh] lg:min-h-[86svh]"
+            : image
+              ? "min-h-[52svh] lg:min-h-[58svh]"
+              : ""
         }`}
       >
-        <div className="min-w-0">
-          {breadcrumbs}
-          {eyebrow && <p className="eyebrow-dark mt-6">{eyebrow}</p>}
-          <h1
-            className={`mt-4 font-display text-white ${groot ? "text-hero" : "text-h1"}`}
-          >
-            {title}
-          </h1>
-          {lead && <p className="mt-5 max-w-2xl text-lead text-ink-200">{lead}</p>}
-          {children}
-        </div>
-        {image && (
-          <div className="relative">
-            <div className="relative aspect-[3/2] overflow-hidden rounded-3xl ring-1 ring-white/15">
-              <Image
-                src={image}
-                alt={imageAlt ?? ""}
-                fill
-                priority={priority}
-                sizes="(min-width: 1024px) 560px, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
+        {breadcrumbs}
+        {eyebrow && (
+          <p className={`num text-accent-200 ${breadcrumbs ? "mt-6" : ""}`}>
+            {eyebrow}
+          </p>
         )}
+        <h1
+          className={`mt-5 max-w-4xl font-display text-white ${
+            groot ? "text-display" : "text-hero"
+          }`}
+        >
+          {title}
+        </h1>
+        {prijsregel && prijsregel.length > 0 && (
+          <>
+            <dl className="mt-8 flex flex-wrap gap-2.5">
+              {prijsregel.map((rij) => (
+                <div key={rij.label} className="glas rounded-2xl px-4 py-2.5">
+                  <dt className="text-2xs font-semibold uppercase tracking-widest text-accent-200">
+                    {rij.label}
+                  </dt>
+                  <dd className="tabular text-lg font-bold text-white">
+                    {rij.prijs}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-3 text-sm text-ink-200">{PRIJS_NOOT}</p>
+          </>
+        )}
+        {lead && <p className="mt-6 max-w-2xl text-lead text-ink-200">{lead}</p>}
+        {children}
       </div>
     </section>
   );
@@ -258,38 +337,80 @@ export function TrustBar({
   items?: { icon: IconName; title: string; text: string }[];
 }) {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    // Geen vier kaartjes meer maar vier kolommen onder een haarlijn. Een
+    // kaartje zegt "dit is een los blokje"; een kolom onder een lijn zegt
+    // "dit hoort bij elkaar". Het scheelt bovendien vier randen, vier
+    // schaduwen en vier achtergronden op een scherm waar het om de tekst gaat.
+    <ul className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((u) => (
         <li
           key={u.title}
-          className={`flex items-start gap-3 rounded-2xl p-5 ${
-            dark ? "bg-white/5 ring-1 ring-white/10" : "card"
+          className={`rise-in border-t pt-5 ${
+            dark ? "border-white/20" : "border-ink-300"
           }`}
         >
           <span
-            className={`grid size-11 shrink-0 place-items-center rounded-xl ${
-              dark
-                ? "bg-accent-400/15 text-accent-300"
-                : "bg-accent-50 text-accent-700 ring-1 ring-accent-200"
+            className={`inline-grid size-10 place-items-center rounded-xl ${
+              dark ? "bg-white/10 text-accent-300" : "bg-ink-950 text-accent-300"
             }`}
           >
-            <Icon name={u.icon} className="size-6" />
+            <Icon name={u.icon} className="size-5" />
           </span>
-          <span>
-            <span
-              className={`block font-display font-bold ${dark ? "text-white" : "text-ink-950"}`}
-            >
-              {u.title}
-            </span>
-            <span
-              className={`mt-1 block text-sm ${dark ? "text-ink-300" : "text-ink-600"}`}
-            >
-              {u.text}
-            </span>
+          <span
+            className={`mt-4 block font-display text-h3 ${
+              dark ? "text-white" : "text-ink-950"
+            }`}
+          >
+            {u.title}
+          </span>
+          <span
+            className={`mt-2 block text-sm ${dark ? "text-ink-300" : "text-ink-600"}`}
+          >
+            {u.text}
           </span>
         </li>
       ))}
     </ul>
+  );
+}
+
+/* ---- Vertrouwensrij ----------------------------------------------------
+   Dit was een lopende band. Die is vervangen door een rij die omslaat, en
+   dat loste drie dingen tegelijk op:
+
+   1. WCAG 2.2.2 (niveau A): bewegende inhoud die vanzelf start en langer dan
+      vijf seconden duurt, moet te pauzeren zijn. De band liep oneindig en had
+      geen knop. Een rij die stilstaat heeft die knop niet nodig.
+   2. Bij `prefers-reduced-motion` stond de band stil op de plek waar hij
+      toevallig was. Van de zes uitspraken bleven er op een telefoon vijf
+      buiten beeld, afgeknipt door `overflow: hidden` en niet scrollbaar.
+   3. De inhoud stond twee keer in de DOM om de naad onzichtbaar te maken.
+      Dat is nu niet meer nodig.
+
+   Lopende tekst is op een telefoon bovendien slecht te lezen: de band liep
+   met ongeveer 60 pixels per seconde.                                     */
+
+export function Vertrouwensrij({ items }: { items: readonly string[] }) {
+  return (
+    <div className="border-y border-white/10 bg-ink-950">
+      <div className="container-x">
+        <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 py-5">
+          {items.map((tekst) => (
+            <li
+              key={tekst}
+              className="flex items-center gap-2.5 font-display text-sm font-bold uppercase tracking-[0.14em] text-ink-200"
+            >
+              <Icon
+                name="check"
+                className="size-4 shrink-0 text-accent-300"
+                strokeWidth={2.5}
+              />
+              {tekst}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
 
@@ -348,16 +469,26 @@ export function HowItWorks() {
     // echt ruimte is. Een mediaquery zou hier naar het venster kijken en niet
     // naar de kolom waarin het blok staat.
     <div className="@container">
-      <ol className="grid gap-6 @3xl:grid-cols-3">
+      <ol className="grid gap-10 @3xl:grid-cols-3 @3xl:gap-8">
         {stappen.map((s, i) => (
-          <li key={s.title} className="card relative p-6 pt-7">
-            <span className="absolute -top-4 left-6 grid size-9 place-items-center rounded-full bg-ink-950 font-display font-bold text-white">
-              {i + 1}
-            </span>
-            <span className="grid size-12 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
-              <Icon name={s.icon} className="size-6" />
-            </span>
-            <h3 className="mt-4 text-h3">{s.title}</h3>
+          <li key={s.title} className="rise-in">
+            {/* Het cijfer is groot en grijs, niet amber: amber is in dit
+                systeem uitsluitend de actiekleur, en drie amberkleurige
+                cijfers op een pagina maken de offerteknop onvindbaar. De
+                volgorde zit al in de ol, dus het cijfer is decoratie. */}
+            <div className="flex items-center gap-5">
+              <span
+                aria-hidden="true"
+                className="tabular font-display text-stat font-bold leading-none text-ink-200"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="h-px flex-1 bg-ink-200" />
+              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-ink-950 text-accent-300">
+                <Icon name={s.icon} className="size-5" />
+              </span>
+            </div>
+            <h3 className="mt-6 text-h3">{s.title}</h3>
             <p className="mt-2 text-ink-600">{s.text}</p>
           </li>
         ))}
@@ -386,42 +517,79 @@ export function ServiceCards({
 }) {
   const lijst = slugs ? diensten.filter((d) => slugs.includes(d.slug)) : diensten;
   const H = headingLevel === 2 ? "h2" : "h3";
+  // Bento in plaats van vier even grote kaarten: de eerste dienst krijgt het
+  // dubbele oppervlak. Vier identieke vakjes laten de bezoeker kiezen zonder
+  // enige hint; een groot vlak zegt waar wij voor bekendstaan en laat de rest
+  // gewoon bereikbaar. Alleen bij precies vier diensten, want bij een andere
+  // telling valt het raster uit elkaar.
+  const bento = lijst.length === 4;
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {lijst.map((d) => (
-        <li key={d.slug}>
-          <Link
-            href={dienstHref(d)}
-            className="card card-hover group flex h-full flex-col overflow-hidden"
+      {lijst.map((d, i) => {
+        const groot = bento && i === 0;
+        const breed = bento && i === 3;
+        return (
+          <li
+            key={d.slug}
+            className={
+              groot ? "sm:col-span-2 lg:row-span-2" : breed ? "lg:col-span-2" : ""
+            }
           >
-            <div className="relative aspect-[3/2] overflow-hidden bg-ink-100">
-              {dienstAfbeelding[d.slug] && (
-                <Image
-                  src={dienstAfbeelding[d.slug]}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition duration-500 group-hover:scale-[1.03]"
+            <Link
+              href={dienstHref(d)}
+              className="rise-in card card-hover group relative flex h-full flex-col overflow-hidden"
+            >
+              <div
+                className={`relative overflow-hidden bg-ink-100 ${
+                  groot ? "aspect-[4/3] lg:flex-1" : "aspect-[3/2]"
+                }`}
+              >
+                {dienstAfbeelding[d.slug] && (
+                  <Image
+                    src={dienstAfbeelding[d.slug]}
+                    alt=""
+                    fill
+                    // De brede kaart (i === 3) beslaat op lg twee kolommen en
+                    // rendert dus op 50vw, niet op 25vw. Met de oude waarde
+                    // haalde de browser daar een afbeelding van halve breedte
+                    // op en rekte die uit.
+                    sizes={
+                      groot || breed
+                        ? "(min-width: 1024px) 50vw, 100vw"
+                        : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    }
+                    className="object-cover transition duration-700 group-hover:scale-[1.04]"
+                  />
+                )}
+                {/* Verloop onderlangs het beeld, zodat de foto in de tekst
+                    overloopt in plaats van er met een harde rand op te stoten. */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent"
                 />
-              )}
-              <span className="absolute left-4 top-4 grid size-11 place-items-center rounded-xl bg-white/95 text-accent-700 shadow-sm">
-                <DienstIcon slug={d.slug} />
-              </span>
-            </div>
-            <div className="flex flex-1 flex-col p-5">
-              <H className="text-h3">{d.naam}</H>
-              <p className="mt-2 text-sm text-ink-600">{d.kort}</p>
-              <span className="mt-auto flex items-center gap-1.5 pt-4 font-semibold text-accent-700">
-                Meer informatie
-                <Icon
-                  name="arrow-right"
-                  className="size-4 transition group-hover:translate-x-1"
-                />
-              </span>
-            </div>
-          </Link>
-        </li>
-      ))}
+                <span className="absolute left-4 top-4 grid size-11 place-items-center rounded-xl bg-ink-950 text-accent-300 shadow-sm">
+                  <DienstIcon slug={d.slug} />
+                </span>
+              </div>
+              <div className={`flex flex-col ${groot ? "p-6 sm:p-7" : "p-5"}`}>
+                <H className={groot ? "text-h2" : "text-h3"}>{d.naam}</H>
+                <p className={`mt-2 text-ink-600 ${groot ? "max-w-prose" : "text-sm"}`}>
+                  {d.kort}
+                </p>
+                {/* Niet "Meer informatie": dat is op vier kaarten vier keer
+                    dezelfde ankertekst, voor een bezoeker en voor Google. */}
+                <span className="mt-4 flex items-center gap-1.5 font-semibold text-accent-700">
+                  Bekijk {d.naam.toLowerCase()}
+                  <Icon
+                    name="arrow-right"
+                    className="size-4 transition group-hover:translate-x-1"
+                  />
+                </span>
+              </div>
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -455,7 +623,7 @@ export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
         {prijsklassen.map((klasse) => (
           <li key={klasse.naam}>
             <div
-              className={`relative flex h-full flex-col overflow-hidden rounded-3xl p-8 ${
+              className={`rise-in relative flex h-full flex-col overflow-hidden rounded-3xl p-8 ${
                 klasse.populair
                   ? "bg-ink-950 text-white shadow-lift"
                   : "card"
@@ -542,7 +710,7 @@ export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
         <h3 className="text-h3">Wat er bij kan komen</h3>
         <ul className="mt-5 grid gap-4 sm:grid-cols-2">
           {prijsExtras.map((f) => (
-            <li key={f.kop} className="card h-full p-5">
+            <li key={f.kop} className="rise-in card h-full p-5">
               <h4 className="font-display font-bold text-ink-950">{f.kop}</h4>
               <p className="mt-1.5 text-sm text-ink-600">{f.tekst}</p>
             </li>
@@ -557,7 +725,7 @@ export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
 
 export function CtaBand({
   title = "Vraag een afspraak aan",
-  text = "Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend.",
+  text = "Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast.",
   href = "/contact",
   tone = "surface",
 }: {

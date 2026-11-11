@@ -27,7 +27,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
  * gebruikt.
  */
 export const metadata = pageMeta({
-  title: "Tv-kabels wegwerken — vier manieren en wat ze kosten",
+  title: "Tv-kabels wegwerken — wat het kost",
   description:
     "Kabels van uw tv netjes wegwerken: in een kabelgoot in muurkleur vanaf €39, of volledig in de muur. Wij leggen uit wat in uw situatie mag en wat het kost.",
   path: "/kabels-wegwerken",
@@ -214,7 +214,7 @@ export default function KabelsWegwerkenPage() {
           id="prijs"
           eyebrow="Wat het kost"
           title="Wat kost het wegwerken van uw kabels?"
-          lead="Een kabelgoot in uw eigen muurkleur begint bij €39 als we hem in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk: dat bedrag staat vooraf vooraf, zodat u het kent voordat er gehakt wordt."
+          lead="Een kabelgoot in uw eigen muurkleur begint bij €39 als we hem in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk: dat bedrag staat vooraf vast, zodat u het kent voordat er gehakt wordt."
         />
         {/* Pal onder de bedragen: "vaste prijs" is pas een argument als erbij
             staat waar hij tegen vast is. */}

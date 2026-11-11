@@ -8,6 +8,7 @@ import Prijstabel from "@/components/Prijstabel";
 import Reviews from "@/components/Reviews";
 import { Icon, Stars } from "@/components/Icon";
 import {
+  Vertrouwensrij,
   CheckList,
   HeroActions,
   HowItWorks,
@@ -18,7 +19,7 @@ import {
   TrustBar,
   USPS_BREED,
 } from "@/components/sections";
-import { faqAlgemeen, type FaqItem } from "@/lib/content";
+import { BAND_UITSPRAKEN, HERO_PRIJZEN, faqAlgemeen, type FaqItem } from "@/lib/content";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { faqJsonLd, pageMeta } from "@/lib/seo";
 import { SITE } from "@/lib/site";
@@ -188,6 +189,8 @@ export default function Page() {
           met het ophangen. Het montagetarief hoort hier niet in de inleiding:
           dat is één van de vier diensten en staat verderop bij de prijzen. */}
       <PageHero
+        groot
+        prijsregel={HERO_PRIJZEN}
         eyebrow="Tv monteur aan huis"
         title="Tv monteur aan huis voor ophangen, aansluiten en problemen oplossen"
         lead={
@@ -195,16 +198,22 @@ export default function Page() {
             Eén monteur voor alles rond uw televisie: ophangen aan elke wand,
             een nieuwe tv aansluiten en instellen, een soundbar koppelen,
             kabels wegwerken en storingen verhelpen — van geen geluid tot geen
-            wifi-verbinding. Vaste prijs per klus, inclusief voorrijkosten en
-            btw.
+            wifi-verbinding.
           </>
         }
-        image="/images/hero-woonkamer.jpg"
-        imageAlt="Wandgemonteerde tv in een sfeervolle moderne woonkamer bij schemering"
+        video="/video/hero.mp4"
+        videoStaand="/video/hero-staand.mp4"
+        image="/images/hero-poster.jpg"
+        imageAlt="Wandgemonteerde tv in een moderne woonkamer bij schemering"
       >
         <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
         <HeroBewijs />
       </PageHero>
+
+      {/* Direct onder de hero, nog op donker: de band loopt door waar de hero
+          ophoudt, zodat de overgang naar de lichte inhoud één moment is in
+          plaats van twee. */}
+      <Vertrouwensrij items={BAND_UITSPRAKEN} />
 
       <Section tone="surface">
         {/* De brede set: de standaardbalk gaat over waterpas hangen en het
@@ -406,7 +415,7 @@ export default function Page() {
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title="Vertel kort wat er moet gebeuren"
-              lead="Vier velden en u bent klaar: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. Het bedrag krijgt u binnen enkele uren, vrijblijvend."
+              lead="Vier velden en u bent klaar: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. Wij bellen u binnen enkele uren om het tarief te bevestigen."
             />
             <CheckList items={offerteBelofte} className="mt-8" />
           </div>

@@ -5,6 +5,7 @@ import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
+import PrijsGarantie from "@/components/PrijsGarantie";
 import ProvincieChips from "@/components/ProvincieChips";
 import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
@@ -287,7 +288,8 @@ export default function TvInstellenPage() {
           Een vaste prijs is pas een argument als erbij staat waar hij tegen
           vast is. Dit zijn de drie dingen die uw bedrag niet veranderen.
         </p>
-              </Section>
+        <PrijsGarantie className="mt-8" />
+      </Section>
 
       <Section labelledBy="streaming">
         <SectionHeading
@@ -331,7 +333,7 @@ export default function TvInstellenPage() {
         </ol>
         <InlineCta
           href="#offerte"
-          text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid."
+          text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
       </Section>
 
@@ -417,7 +419,7 @@ export default function TvInstellenPage() {
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title="Vraag een afspraak aan voor tv-hulp"
-              lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt. U krijgt binnen enkele uren bericht.`}
+              lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />
           </div>

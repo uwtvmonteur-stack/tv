@@ -19,6 +19,7 @@ import {
   TrustBar,
 } from "@/components/sections";
 import {
+  HERO_PRIJZEN,
   PRIJZEN_KORT,
   prijsklassen,
   reviewsPerDienst,
@@ -220,6 +221,7 @@ export default function TvOphangenPage() {
       <JsonLd data={faqJsonLd(faqItems)} />
 
       <PageHero
+        prijsregel={HERO_PRIJZEN}
         breadcrumbs={
           <Breadcrumbs
             items={[
@@ -499,7 +501,7 @@ export default function TvOphangenPage() {
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title="Vraag een afspraak aan voor het ophangen"
-              lead="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren binnen enkele uren bericht met het bedrag erbij. Daarna plannen we pas een afspraak, en alleen als u akkoord gaat."
+              lead="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen. Pas daarna plannen we een afspraak, en alleen als u akkoord gaat."
             />
             <CheckList items={offerteBelofte} className="mt-8" />
           </div>

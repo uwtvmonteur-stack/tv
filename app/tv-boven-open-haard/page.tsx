@@ -29,7 +29,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
  * doorgeeft.
  */
 export const metadata = pageMeta({
-  title: "Tv ophangen boven een open haard — kan dat veilig?",
+  title: "Tv boven open haard — kan dat veilig?",
   description:
     "Tv boven de haard ophangen: wij meten de temperatuur en de kijkhoogte vóór we boren, en zeggen het eerlijk als het niet veilig kan. Vaste prijsafspraak vooraf.",
   path: "/tv-boven-open-haard",

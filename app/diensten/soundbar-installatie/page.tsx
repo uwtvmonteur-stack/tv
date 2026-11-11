@@ -5,6 +5,7 @@ import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
+import PrijsGarantie from "@/components/PrijsGarantie";
 import ProvincieChips from "@/components/ProvincieChips";
 import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
@@ -294,7 +295,8 @@ export default function SoundbarPage() {
           Een vaste prijs is pas een argument als erbij staat waar hij tegen
           vast is. Dit zijn de drie dingen die uw bedrag niet veranderen.
         </p>
-              </Section>
+        <PrijsGarantie className="mt-8" />
+      </Section>
 
       <Section labelledBy="keuze">
         <SectionHeading
@@ -348,7 +350,7 @@ export default function SoundbarPage() {
         </div>
         <InlineCta
           href="#offerte"
-          text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. U krijgt binnen enkele uren bericht over de eerstvolgende mogelijkheid."
+          text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
       </Section>
 
@@ -432,7 +434,7 @@ export default function SoundbarPage() {
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title="Vraag een afspraak aan voor uw geluid"
-              lead={`Soundbar aansluiten en afstellen kost ${PRIJS}, een complete surroundset vanaf ${SURROUND}. Vast, inclusief voorrijkosten en btw. U krijgt binnen enkele uren bericht.`}
+              lead={`Soundbar aansluiten en afstellen kost ${PRIJS}, een complete surroundset vanaf ${SURROUND}. Vast, inclusief voorrijkosten en btw. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />
           </div>

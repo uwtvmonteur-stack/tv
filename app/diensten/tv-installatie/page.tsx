@@ -26,7 +26,7 @@ import {
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Tv laten installeren aan huis — vaste prijs €70",
+  title: "Tv laten installeren — vaste prijs €70",
   description:
     "Nieuwe tv gekocht? Wij maken hem gebruiksklaar aan huis: aansluiten, zenders, wifi en apps instellen en uitleg. Vaste prijs €70. Ophangen kan als optie.",
   path: "/diensten/tv-installatie",
@@ -158,10 +158,13 @@ export default function TvInstallatiePage() {
           description:
             "Tv installatie aan huis: uw tv gebruiksklaar maken — apparatuur aansluiten, zenders, wifi en apps instellen, met uitleg. Ophangen mogelijk als optie.",
           path: "/diensten/tv-installatie",
+          // Alleen de dienst die deze pagina zichtbaar aanbiedt. De soundbar
+          // (€49) en de kabelgoot stonden hier ook, terwijl geen van die twee
+          // bedragen op deze pagina voorkomt — en de kabelgoot is een
+          // vanafprijs, die hier als hard bedrag werd vastgelegd. Google
+          // vergelijkt schema met de zichtbare pagina.
           offers: [
             { name: "Tv installeren & gebruiksklaar maken", price: "70" },
-            { name: "Soundbar installeren", price: "49" },
-            { name: "Kabels wegwerken in kabelgoot", price: "39" },
           ],
         })}
       />
@@ -363,7 +366,7 @@ export default function TvInstallatiePage() {
         <IconCardGrid items={situaties} columns={3} className="mt-12" />
         <InlineCta
           href="#offerte"
-          text="Vaste prijs vooraf. Wij gaan pas weg als uw tv staat of hangt, alle apparatuur is aangesloten en de zenders en apps werken. U krijgt binnen enkele uren bericht."
+          text="Vaste prijs vooraf. Wij gaan pas weg als uw tv staat of hangt, alle apparatuur is aangesloten en de zenders en apps werken. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
       </Section>
 
@@ -414,7 +417,7 @@ export default function TvInstallatiePage() {
               id="offerte-kop"
               eyebrow="Afspraak aanvragen"
               title="Vraag een afspraak aan voor de installatie"
-              lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Wilt u de tv ook opgehangen hebben? Zet het erbij, dan rekenen wij dat vooraf voor u uit. U krijgt binnen enkele uren bericht.`}
+              lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Wilt u de tv ook opgehangen hebben? Zet het erbij, dan rekenen wij dat vooraf voor u uit. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
             />
             <CheckList items={aanvraagBelofte} className="mt-8" />
           </div>

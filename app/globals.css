@@ -76,7 +76,7 @@
   --text-h1: clamp(2.125rem, 1.6rem + 2.6vw, 3.25rem);
   --text-h1--line-height: 1.08;
   --text-h1--letter-spacing: -0.024em;
-  --text-hero: clamp(2.5rem, 1.75rem + 3.7vw, 4rem);
+  --text-hero: clamp(2.125rem, 1.35rem + 3.9vw, 4rem);
   --text-hero--line-height: 1.04;
   --text-hero--letter-spacing: -0.028em;
   --text-stat: clamp(2.25rem, 1.8rem + 2.2vw, 3.25rem);
@@ -320,6 +320,238 @@
 
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Beginstand van de voortgangsbalk: onzichtbaar. Dit staat bewust bij de
+     bouwstenen en niet bij de beweging. Zat het in de media-query voor
+     `prefers-reduced-motion: no-preference`, dan kreeg iemand die beweging
+     heeft uitgezet helemaal geen transform — en bleef er een amberen balk van
+     volle breedte boven aan elke pagina staan. Nagemeten in de browser. */
+  .voortgang {
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+
+  /* ---- Diepte: warm licht in een donkere kamer -------------------------
+     Drie radiale vlekken over ink-950 in plaats van één blurcirkel. Een
+     enkele `blur-3xl` bol kost op goedkope Android een echte GPU-pas over
+     een vlak van 32rem; deze verlopen zijn gewoon een achtergrondafbeelding
+     en kosten niets. Ze staan bovendien op drie plekken, waardoor het licht
+     van linksboven komt en rechtsonder uitdooft — dat leest als een ruimte
+     in plaats van als een gradiënt.                                       */
+  .mesh-dark {
+    background-image:
+      radial-gradient(
+        58rem 30rem at 6% -12%,
+        rgb(255 164 38 / 0.2),
+        transparent 62%
+      ),
+      radial-gradient(
+        42rem 26rem at 94% 6%,
+        rgb(240 138 6 / 0.12),
+        transparent 64%
+      ),
+      radial-gradient(
+        36rem 36rem at 48% 118%,
+        rgb(255 194 112 / 0.08),
+        transparent 60%
+      );
+  }
+
+  /* Fijne ruis over het verloop. Zonder dit bandeert een donker verloop op
+     een 8-bits scherm in zichtbare strepen. `mix-blend-mode: overlay` houdt
+     de ruis donker waar het donker is en licht waar het licht is, dus hij
+     vervuilt de tekst niet. Het is één SVG van circa 300 bytes, geen
+     bestand en geen extra verzoek.                                        */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  }
+
+
+}
+
+/* =========================================================================
+   Editorial nocturne — de laag van de herontwerpronde
+   =========================================================================
+   De vorige ronde was een opgepoetste versie van hetzelfde: witte kaarten met
+   een randje, overal dezelfde maat. Dit is een andere opzet.
+
+   Drie principes:
+   1. Donker waar het mag imponeren (hero, sfeer, oproep), licht waar het moet
+      werken (prijzen, formulier, FAQ). De klant is tussen de veertig en
+      zeventig; de basisletter staat niet voor niets op 17px. Een bedrag lees
+      je niet in wit-op-zwart.
+   2. Typografie is de hoofdrol, niet de kaders. Grote maten, strak gespatieerd,
+      met een nummer ernaast zoals in een tijdschrift.
+   3. Glas in plaats van omlijnde witte vakken op donker: een vlak dat de
+      achtergrond doorlaat hoort bij een videohero, een dichte witte kaart
+      snijdt er een gat in.
+   ========================================================================= */
+
+@theme {
+  /* Eén maat groter dan text-hero, alleen voor een hero met video erachter:
+     daar moet de kop het opnemen tegen bewegend beeld. */
+  --text-display: clamp(2.375rem, 1.3rem + 5.2vw, 5.25rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.035em;
+
+  /* Editorial nummer naast een sectiekop. */
+  --text-num: clamp(0.8125rem, 0.78rem + 0.2vw, 0.9375rem);
+}
+
+@layer components {
+  /* ---- Glas -------------------------------------------------------------
+     Een vlak dat de video of de mesh erachter doorlaat, met een lichtlijn
+     bovenlangs zoals echt glas die heeft. `backdrop-blur` valt terug op een
+     gewone doorzichtige laag als de browser het niet kan — dan is het nog
+     steeds leesbaar, alleen minder mooi.                                   */
+  .glas {
+    background-color: rgb(255 255 255 / 0.08);
+    backdrop-filter: blur(14px) saturate(140%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.14),
+      0 1px 2px rgb(0 0 0 / 0.3),
+      0 24px 48px -28px rgb(0 0 0 / 0.7);
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+
+  /* ---- Videohero --------------------------------------------------------
+     De scrim is geen egale laag maar een verloop dat onderin dichtloopt:
+     daar staat de tekst, en daar moet het beeld wijken. Bovenin blijft de
+     video zichtbaar. Zonder het tweede, horizontale verloop blijft witte
+     tekst op een lichte lamp in beeld onleesbaar.                          */
+  .hero-scrim {
+    background-image:
+      linear-gradient(
+        to top,
+        rgb(11 13 17 / 0.97) 0%,
+        rgb(11 13 17 / 0.88) 34%,
+        rgb(11 13 17 / 0.62) 66%,
+        rgb(11 13 17 / 0.42) 100%
+      ),
+      linear-gradient(
+        to right,
+        rgb(11 13 17 / 0.85) 0%,
+        rgb(11 13 17 / 0.55) 50%,
+        rgb(11 13 17 / 0.3) 100%
+      );
+  }
+
+  /* Op een telefoon staat de tekst niet links maar over de volle breedte, en
+     dan dempt het horizontale verloop het hele beeld in plaats van alleen de
+     tekstkant: samen met het verticale verloop bleef er bovenin nog 9% beeld
+     over. Daar is dus alleen het verticale verloop nodig. */
+  @media (width < 40rem) {
+    .hero-scrim {
+      background-image: linear-gradient(
+        to top,
+        rgb(11 13 17 / 0.96) 0%,
+        rgb(11 13 17 / 0.85) 38%,
+        rgb(11 13 17 / 0.5) 70%,
+        rgb(11 13 17 / 0.22) 100%
+      );
+    }
+  }
+
+  /* ---- Editorial kopregel ----------------------------------------------- */
+  .num {
+    @apply inline-flex items-center gap-3 font-display text-num font-bold uppercase tracking-[0.18em];
+  }
+  .num::before {
+    content: "";
+    width: 2.25rem;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0.45;
+  }
+
+}
+
+/* =========================================================================
+   Beweging
+   =========================================================================
+   Aan het eind van dit bestand staat waarom het oude `reveal`-systeem eruit
+   is gegaan: het zette blokken op `opacity: 0` tot JavaScript ze vrijgaf, en
+   één haperend script maakte de halve pagina onzichtbaar.
+
+   Dit systeem kan dat per definitie niet. Drie redenen:
+   1. Er is geen JavaScript. De beweging komt uit CSS-scrolltijdlijnen
+      (`animation-timeline`), die de browser zelf aandrijft.
+   2. Er wordt alleen `transform` geanimeerd, nooit `opacity`. Het beginbeeld
+      van elke animatie is zichtbare inhoud die een paar pixels verschoven
+      staat — niet onzichtbare inhoud.
+   3. Het staat achter `@supports`. Een browser zonder scrolltijdlijnen
+      (Safari tot 26, Firefox zonder vlag) krijgt helemaal niets en toont de
+      pagina stil en op zijn plek.
+
+   `prefers-reduced-motion` staat erbuiten: de regel in @layer base zet
+   `animation-duration` op 0,01ms, maar een scrolltijdlijn heeft geen duur en
+   zou daar dus dwars door heen bewegen. Daarom zet deze media-query het hele
+   blok uit in plaats van alleen de duur.
+   ========================================================================= */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  @supports (animation-timeline: scroll()) {
+    /* Voortgangsbalk bovenlangs. Decoratief, dus de beginstand is
+       `scaleX(0)`: kan de browser geen scrolltijdlijn, dan is de balk
+       onzichtbaar in plaats van vol. */
+    .voortgang {
+      animation: voortgang-x linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    @keyframes voortgang-x {
+      to {
+        transform: scaleX(1);
+      }
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    /* Komt vanaf 20px onder zijn plek omhoog terwijl het in beeld schuift.
+       `entry 8% entry 64%` betekent: begin zodra de bovenrand 8% in beeld is
+       en wees klaar op 64%, dus de beweging is voorbij voordat de bezoeker
+       het blok leest. */
+    .rise {
+      animation: rise-y linear both;
+      animation-timeline: view();
+      animation-range: entry 8% entry 64%;
+    }
+
+    @keyframes rise-y {
+      from {
+        transform: translateY(20px);
+      }
+      to {
+        transform: none;
+      }
+    }
+
+    /* Hetzelfde, maar met een vleugje schaal: voor kaarten die als groep
+       binnenkomen. Twee varianten zijn genoeg; meer wordt onrustig. */
+    .rise-in {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 8% entry 68%;
+    }
+
+    @keyframes rise-in {
+      from {
+        transform: translateY(26px) scale(0.985);
+      }
+      to {
+        transform: none;
+      }
+    }
+
   }
 }
 

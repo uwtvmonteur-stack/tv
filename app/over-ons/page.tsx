@@ -14,7 +14,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "Over ons — eigen, verzekerde monteurs",
   description:
-    "Maak kennis met Uw TV Monteur: eigen, ervaren en verzekerde monteurs die in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant tv's ophangen, installeren en instellen.",
+    "Eigen, verzekerde monteurs in loondienst die in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant tv's ophangen, aansluiten en instellen.",
   path: "/over-ons",
 });
 
@@ -92,7 +92,7 @@ export default function OverOnsPage() {
 
       <CtaBand
         title="Ervaar het zelf"
-        text="Vertel kort wat er moet gebeuren en waar u woont. U krijgt binnen enkele uren het bedrag, vrijblijvend."
+        text="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast."
         tone="white"
       />
     </>

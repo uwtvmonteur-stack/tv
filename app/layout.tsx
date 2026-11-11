@@ -90,11 +90,12 @@ const graph = {
       },
       description:
         "Tv monteur aan huis: tv ophangen, tv installatie, kabels wegwerken, soundbar-installatie en tv hulp in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant.",
-      // Concreet in plaats van "€€": de laagste losse dienst (kabelgoot, vanaf
-      // €39) tot een gemiddelde complete klus. Google toont dit
-      // in het bedrijfspaneel, en een bereik dat de prijslijst volgt is
-      // controleerbaar — "€€" zegt een bezoeker niets.
-      priceRange: "€39–€250",
+      // Concreet in plaats van "€€": van de laagste losse dienst (kabelgoot,
+      // vanaf €39) tot het hoogste vaste tarief (€159 vanaf 65 inch). Hier
+      // stond €250. Dat bedrag komt nergens op de site voor, en een bereik dat
+      // de prijslijst niet volgt is niet controleerbaar — precies wat dit veld
+      // moest oplossen.
+      priceRange: "€39–€159",
       // Bewust alleen de vier provincies waar we daadwerkelijk rijden. De
       // eerdere `Country: Nederland` sprak dat tegen: twee tegenstrijdige
       // gebieden in één schema laten Google geen servicegebied bepalen, en het
@@ -168,6 +169,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Direct naar de inhoud
         </a>
         <JsonLd data={graph} />
+        {/* Voortgangsbalk: schaalt mee met hoever de pagina gescrold is, via
+            een CSS-scrolltijdlijn. Puur decoratief en daarom `aria-hidden`;
+            kan de browser geen scrolltijdlijn, dan blijft hij op schaal 0 en
+            is hij simpelweg onzichtbaar. */}
+        <div
+          aria-hidden="true"
+          className="voortgang fixed inset-x-0 top-0 z-[60] h-1 bg-gradient-to-r from-accent-500 via-accent-400 to-accent-300"
+        />
         <Header />
         <main id="hoofdinhoud" tabIndex={-1} className="flex-1">
           {children}

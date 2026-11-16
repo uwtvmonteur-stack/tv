@@ -45,7 +45,7 @@ export default function ContactPage() {
         }
         bovenkop="Contact"
         titel="Vraag een afspraak aan"
-        inleiding="Vier velden zijn genoeg: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. De prijs krijgt u daarna, vrijblijvend."
+        inleiding="Uw naam, uw telefoonnummer, uw adres en wat er moet gebeuren. De prijs krijgt u daarna, vrijblijvend."
       />
 
       <Vlak toon="wit" id="afspraak" labelledBy="afspraak-kop">

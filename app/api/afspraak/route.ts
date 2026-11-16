@@ -105,6 +105,7 @@ export async function POST(request: Request) {
   const telefoon = clean(body.telefoon, 40);
   const email = clean(body.email, 160);
   const straat = clean(body.straat, 160);
+  const huisnummer = clean(body.huisnummer, 20);
   const postcode = clean(body.postcode, 12);
   const plaats = clean(body.plaats, 80);
   const omschrijving = clean(body.omschrijving, 4000);
@@ -114,11 +115,12 @@ export async function POST(request: Request) {
   // staat er wél een adres, dan moet het bruikbaar zijn — anders komt de
   // bevestiging nooit aan en merkt niemand dat.
   //
-  // `straat` en `plaats` worden nog wél gelezen, maar niet meer geëist. Het
-  // formulier vraagt ze niet meer (zie components/ContactForm.tsx), terwijl
-  // een bezoeker met een gecachte oude pagina ze nog meestuurt. Die aanvraag
-  // mag niet afketsen op een veld dat de nieuwe pagina niet eens heeft, en wat
-  // hij meestuurt gooien we niet weg.
+  // `straat`, `huisnummer` en `plaats` vraagt het formulier sinds 16-11-2026
+  // wél, en verplicht (zie components/ContactForm.tsx). Hier blijven ze
+  // bewust optioneel. Een bezoeker met een gecachte oude pagina stuurt ze niet
+  // mee, en die aanvraag mag niet afketsen op een veld dat zijn pagina niet
+  // had: een verloren aanvraag is duurder dan een adres dat de monteur
+  // alsnog navraagt. De e-mail laat hieronder zien wat er wél is gestuurd.
   if (
     !naam ||
     !telefoon ||
@@ -149,7 +151,10 @@ export async function POST(request: Request) {
   const from = MAIL_FROM || SMTP_USER;
   // Eén adresregel, zoals je hem op een envelop zou schrijven: de monteur
   // moet er een route mee kunnen plannen zonder velden samen te rapen.
-  const adres = [straat, [postcode, plaats].filter(Boolean).join(" ")]
+  const adres = [
+    [straat, huisnummer].filter(Boolean).join(" "),
+    [postcode, plaats].filter(Boolean).join(" "),
+  ]
     .filter(Boolean)
     .join(", ");
 
@@ -183,8 +188,8 @@ ${regels
       // Zonder e-mailadres is er niets om op te antwoorden; een leeg `replyTo`
       // laat sommige servers de mail juist weigeren.
       ...(email ? { replyTo: `"${naam.replace(/"/g, "")}" <${email}>` } : {}),
-      // De woonplaats staat niet meer in het formulier; dan is de postcode wat
-      // de mailbox nodig heeft om twee aanvragen uit elkaar te houden.
+      // Woonplaats als die er is, anders de postcode: de mailbox moet twee
+      // aanvragen van dezelfde naam uit elkaar kunnen houden.
       subject: `Afspraakaanvraag — ${naam} (${plaats || postcode})`,
       text,
       html,

@@ -474,7 +474,7 @@ export default function Page() {
           heeft, en dat is de stap waar verkeer het makkelijkst verdwijnt. */}
       <Aanvraagsectie
         titel="Vertel kort wat er moet gebeuren"
-        tekst="Vier velden en u bent klaar: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. Wij bellen u binnen enkele uren om het tarief te bevestigen."
+        tekst="Uw naam, uw telefoonnummer, uw adres en wat er moet gebeuren. Wij bellen u binnen enkele uren om het tarief te bevestigen en de afspraak in te plannen."
         beloftes={aanvraagBelofte}
       >
         <ContactForm

@@ -145,7 +145,7 @@ export default function WerkgebiedPage() {
       <Aanvraagsectie
         toon="oppervlak"
         titel="Een monteur uit uw eigen regio"
-        tekst="Vertel kort wat er moet gebeuren en geef uw postcode op. Wij bellen u binnen enkele uren om de afspraak te bevestigen."
+        tekst="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om de afspraak te bevestigen."
         beloftes={aanvraagBelofte}
       >
         <ContactForm

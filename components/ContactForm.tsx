@@ -19,25 +19,33 @@ import { SITE, TRACKING } from "@/lib/site";
 const ENDPOINT = "/api/afspraak";
 
 /**
- * Een afspraakaanvraag vraagt om vier dingen en niet meer: uw naam, uw
- * telefoonnummer, uw postcode en wat er moet gebeuren.
+ * Een afspraakaanvraag vraagt om wat er nodig is om die afspraak te maken:
+ * uw naam, uw telefoonnummer, uw adres en wat er moet gebeuren.
  *
  * Er stond hier eens een configurator met het tv-formaat, de beugelvraag,
  * extra's, een datumkiezer en een meelopende prijs. Elke vraag die niet nodig
  * is om de afspraak te maken, is een reden om af te haken.
  *
- * Om diezelfde reden staan hier geen straatnaam, huisnummer en woonplaats.
- * Voor een afspraak is de postcode genoeg: die bepaalt de rit en of de plaats
- * in het werkgebied valt. Het volledige adres is pas nodig om de afspraak in
- * te plannen, en dat gebeurt nadat iemand akkoord is. Zo vraagt het
- * formulier niet om een huisadres op het moment dat er nog geen bedrag
- * tegenover staat — twee velden minder, en twee verplichte vragen minder.
+ * Het volledige adres stond hier bewust NIET, en die reden gold: elk extra
+ * veld kost aanvragen. Op 16-11-2026 heeft de eigenaar straatnaam,
+ * huisnummer en woonplaats er alsnog in laten zetten, met een eigen goede
+ * reden: met een compleet adres kan de afspraak in een keer ingepland worden
+ * in plaats van dat er eerst teruggebeld moet worden om de straat te vragen.
+ *
+ * Wie dat ooit omdraait: haal `<Verplicht />` uit de drie labels en de drie
+ * regels uit `valideer()`. De velden mogen dan blijven staan, alleen niet
+ * meer verplicht. De server eist ze overigens niet (zie
+ * app/api/afspraak/route.ts): een bezoeker met een gecachte oude pagina mag
+ * nooit een aanvraag verliezen op een veld dat zijn pagina niet had.
  */
 const VELDEN = [
   "naam",
   "telefoon",
   "email",
+  "straat",
+  "huisnummer",
   "postcode",
+  "plaats",
   "omschrijving",
   "ref_check_2",
 ] as const;
@@ -60,8 +68,12 @@ function valideer(p: Record<Veld, string>): FieldErrors {
   if (p.email && !EMAIL_RE.test(p.email))
     fouten.email =
       "Dit e-mailadres lijkt niet compleet. U mag het ook leeglaten; dan bellen we u.";
+  if (!p.straat.trim())
+    fouten.straat = "Vul uw straatnaam in, dan weet de monteur waar hij moet zijn.";
+  if (!p.huisnummer.trim()) fouten.huisnummer = "Vul uw huisnummer in.";
   if (!POSTCODE_RE.test(p.postcode.trim()))
     fouten.postcode = "Vul een geldige postcode in, bijvoorbeeld 3511 AB.";
+  if (!p.plaats.trim()) fouten.plaats = "Vul uw woonplaats in.";
   if (p.omschrijving.trim().length < 10)
     fouten.omschrijving =
       "Vertel kort wat er moet gebeuren, dan komt de monteur voorbereid.";
@@ -241,7 +253,10 @@ export default function ContactForm({
       const opScherm: Veld[] = [
         "naam",
         "telefoon",
+        "straat",
+        "huisnummer",
         "postcode",
+        "plaats",
         "email",
         "omschrijving",
       ];
@@ -262,7 +277,8 @@ export default function ContactForm({
         `Naam: ${payload.naam}`,
         `Telefoon: ${payload.telefoon}`,
         `E-mail: ${payload.email || "– (klant wordt gebeld)"}`,
-        `Postcode: ${payload.postcode}`,
+        `Adres: ${payload.straat} ${payload.huisnummer}`,
+        `Postcode en plaats: ${payload.postcode} ${payload.plaats}`,
         "",
         payload.omschrijving,
       ].join("\n");
@@ -419,6 +435,53 @@ export default function ContactForm({
           />
         </Veldje>
 
+        {/* Het volledige adres, op twee regels in de volgorde die iedereen
+            kent: straat en nummer, dan postcode en plaats. Voorheen stond
+            hier alleen de postcode; sinds 16-11-2026 vraagt het formulier het
+            hele adres, zodat de monteur de afspraak in een keer kan inplannen
+            in plaats van eerst terug te bellen. */}
+        <Veldje
+          id="straat"
+          label={
+            <>
+              Straatnaam <Verplicht />
+            </>
+          }
+          fout={fieldErrors.straat}
+        >
+          <input
+            id="straat"
+            name="straat"
+            autoComplete="address-line1"
+            placeholder="Dorpsstraat"
+            aria-invalid={!!fieldErrors.straat}
+            aria-describedby={beschrijf("straat")}
+            className={veldKlasse("straat")}
+          />
+        </Veldje>
+
+        <Veldje
+          id="huisnummer"
+          label={
+            <>
+              Huisnummer <Verplicht />
+            </>
+          }
+          fout={fieldErrors.huisnummer}
+        >
+          {/* Geen inputMode="numeric": een huisnummer is vaak "12 B" of
+              "7-bis", en een cijfertoetsenbord maakt dat juist moeilijker. */}
+          <input
+            id="huisnummer"
+            name="huisnummer"
+            autoComplete="address-line2"
+            placeholder="12 B"
+            aria-invalid={!!fieldErrors.huisnummer}
+            aria-describedby={beschrijf("huisnummer")}
+            className={veldKlasse("huisnummer")}
+          />
+        </Veldje>
+
         <Veldje
           id="postcode"
           label={
@@ -426,23 +489,38 @@ export default function ContactForm({
               Postcode <Verplicht />
             </>
           }
-          // Eén zin, en wel deze. Hier stonden er twee ("hiermee weten wij of
-          // wij bij u komen en wat de rit is" ervoor), samen vier regels grijze
-          // tekst midden in het formulier op 360px. Waarvoor een postcode
-          // dient weet iedereen; dat het huisadres níet gevraagd wordt is het
-          // onverwachte deel, en dat is de regel die een bezoeker over de
-          // streep helpt.
-          uitleg="Uw straat en huisnummer vragen wij pas als de afspraak vaststaat."
           fout={fieldErrors.postcode}
         >
+          {/* De placeholder draagt het formaat. Die staat daarom op ink-500
+              (4,83:1) en niet lichter: hij is hier geen versiering. */}
           <input
             id="postcode"
             name="postcode"
             autoComplete="postal-code"
             placeholder="3511 AB"
             aria-invalid={!!fieldErrors.postcode}
-            aria-describedby={beschrijf("postcode", true)}
+            aria-describedby={beschrijf("postcode")}
             className={veldKlasse("postcode")}
+          />
+        </Veldje>
+
+        <Veldje
+          id="plaats"
+          label={
+            <>
+              Woonplaats <Verplicht />
+            </>
+          }
+          fout={fieldErrors.plaats}
+        >
+          <input
+            id="plaats"
+            name="plaats"
+            autoComplete="address-level2"
+            placeholder="Utrecht"
+            aria-invalid={!!fieldErrors.plaats}
+            aria-describedby={beschrijf("plaats")}
+            className={veldKlasse("plaats")}
           />
         </Veldje>
 
@@ -455,6 +533,7 @@ export default function ContactForm({
             </>
           }
           fout={fieldErrors.email}
+          className="sm:col-span-2"
         >
           <input
             id="email"

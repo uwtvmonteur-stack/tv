@@ -16,12 +16,13 @@ const secties: { h2: string; p: string[] }[] = [
   {
     h2: "Welke gegevens wij verwerken",
     p: [
-      // Dit moet kloppen met wat het formulier werkelijk vraagt — en dat zijn
-      // sinds de inkorting vijf velden: naam, telefoon, postcode, eventueel
-      // e-mail en de omschrijving. Straat, huisnummer en woonplaats staan er
-      // niet meer in; die vragen wij pas bij het inplannen van de afspraak.
+      // Dit moet kloppen met wat het formulier werkelijk vraagt. Sinds
+      // 16-11-2026 is dat het volledige adres: naam, telefoon, straatnaam,
+      // huisnummer, postcode, woonplaats, eventueel e-mail en de omschrijving.
+      // Wijzigt het formulier, dan wijzigt deze alinea mee — anders staat er
+      // een verklaring die niet klopt met wat er feitelijk wordt verwerkt.
       // Wie dit bijwerkt moet components/ContactForm.tsx ernaast leggen.
-      "Wanneer u een afspraak aanvraagt via het formulier, per telefoon of per e-mail, verwerken wij de gegevens die u zelf opgeeft: uw naam, telefoonnummer, uw postcode, eventueel uw e-mailadres, en de omschrijving van het werk. Uw straat en huisnummer vragen wij pas wanneer de afspraak vaststaat en wij die inplannen.",
+      "Wanneer u een afspraak aanvraagt via het formulier, per telefoon of per e-mail, verwerken wij de gegevens die u zelf opgeeft: uw naam, telefoonnummer, uw adres (straatnaam, huisnummer, postcode en woonplaats), eventueel uw e-mailadres, en de omschrijving van het werk. Uw adres gebruiken wij om de afspraak in te plannen en om bij u langs te komen.",
     ],
   },
   {

@@ -565,7 +565,7 @@ export function Werkwijze() {
     {
       icon: "chat",
       title: "U vraagt een afspraak aan",
-      text: "Uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. Geen formaatkeuzes en geen vinkjes waar u over moet nadenken — en uw straat en huisnummer vragen wij pas als u akkoord gaat.",
+      text: "Uw naam, uw telefoonnummer, uw adres en wat er moet gebeuren. Geen formaatkeuzes en geen vinkjes waar u over moet nadenken — en met uw adres erbij plannen wij de afspraak in één keer in.",
     },
     {
       icon: "euro",

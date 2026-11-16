@@ -55,7 +55,7 @@ function meld(lijst, pad, nr, tekst) {
 }
 
 /* -- 1. Het telefoonnummer mag alleen in de voettekst staan ---------------
-   Harde eis van de eigenaar: één actie per scherm, de offerteaanvraag. Een
+   Harde eis van de eigenaar: één actie per scherm, de afspraakaanvraag. Een
    belknop ernaast haalt de aanvraag weg en levert een gesprek op dat niet
    meetbaar is en niet inplanbaar. */
 for (const pad of bron) {
@@ -333,8 +333,8 @@ if (process.argv.includes("--html")) {
     const vrijgesteld =
       ZONDER_FORMULIER.has(basis) || naam.startsWith("kennisbank/");
 
-    if (!vrijgesteld && !html.includes('id="offerte"'))
-      fouten.push(`${naam}: commerciële pagina zonder offerteformulier`);
+    if (!vrijgesteld && !html.includes('id="afspraak"'))
+      fouten.push(`${naam}: commerciële pagina zonder afspraakformulier`);
 
     // Een belknop zou hier opduiken als een <a> met zowel een tel:-href als
     // een knopklasse. Bewust twee losse tests op dezelfde tag en niet één
@@ -351,14 +351,14 @@ if (process.argv.includes("--html")) {
     if (belKnop)
       fouten.push(`${naam}: telefoonnummer staat als knop op de pagina`);
 
-    /* -- Een knop naar #offerte moet dat anker ook hebben -----------------
+    /* -- Een knop naar #afspraak moet dat anker ook hebben -----------------
        Dit is een echte fout geweest: `afspraakHref()` gaf standaard
-       "#offerte" terug, waardoor op de 404-pagina — die geen formulier
+       "#afspraak" terug, waardoor op de 404-pagina — die geen formulier
        draagt — zowel de knop in de koptekst als de zwevende balk naar een
        anker wees dat daar niet bestond. De bezoeker klikte op de enige
        gekleurde knop van het scherm en er gebeurde niets. */
-    if (html.includes('href="#offerte"') && !html.includes('id="offerte"'))
-      fouten.push(`${naam}: verwijst naar #offerte maar heeft dat anker niet`);
+    if (html.includes('href="#afspraak"') && !html.includes('id="afspraak"'))
+      fouten.push(`${naam}: verwijst naar #afspraak maar heeft dat anker niet`);
 
     // Op 22-10-2026 zijn de vaste tarieven per tv-formaat (99/129/159) op
     // verzoek van de eigenaar teruggezet. Deze regel keurde juist díe bedragen

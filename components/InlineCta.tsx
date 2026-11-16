@@ -19,10 +19,10 @@ import { Icon } from "./Icon";
 export default function InlineCta({
   title = "Klaar om het bedrag te weten?",
   text = "U kent uw prijs vooraf, ook aan een gipswand of holle wand. Binnen enkele uren bericht.",
-  label = "Afspraak aanvragen",
+  label = "Afspraak maken",
   /**
    * Standaard naar /contact. Pagina's die zélf een formulier dragen geven
-   * `#offerte` mee, zodat deze knop naar dat formulier springt in plaats van
+   * `#afspraak` mee, zodat deze knop naar dat formulier springt in plaats van
    * de bezoeker van de pagina te halen — precies op het moment dat hij zijn
    * prijs heeft gezien. Bewust een prop en geen detectie in de browser: zo
    * blijft dit een servercomponent zonder JavaScript.

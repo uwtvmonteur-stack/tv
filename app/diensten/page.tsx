@@ -37,7 +37,7 @@ export default function DienstenPage() {
 
       {/* Een overzichtspagina draagt geen formulier: wie hier is heeft nog niet
           gekozen wát hij wil aanvragen. De primaire knop gaat daarom naar
-          /contact en niet naar een #offerte dat op deze pagina niet bestaat. */}
+          /contact en niet naar een #afspraak dat op deze pagina niet bestaat. */}
       <Hero
         beeld="/images/hero-woonkamer.webp"
         beeldAlt="Woonkamer met een wandgemonteerde televisie, soundbar en weggewerkte kabels"

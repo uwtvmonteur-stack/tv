@@ -43,7 +43,7 @@ const voordelen = [
 ];
 
 /**
- * De vier manieren, met de duurste onderaan. "Op offerte" is geen ontwijking
+ * De vier manieren, met de duurste onderaan. "Na meting" is geen ontwijking
  * maar de enige eerlijke vermelding: hakwerk hangt af van de wand en de
  * afstand, en een bedrag noemen dat later anders uitvalt kost precies het
  * vertrouwen dat de offerte moet opbouwen.
@@ -58,21 +58,21 @@ const manieren = [
   },
   {
     kop: "Achter de plint en onder de vloer",
-    prijs: "op offerte",
+    prijs: "na meting",
     wanneer: "Bij een zwevende vloer of losse plint",
     tekst:
       "Loopt de kabel van de tv naar een kast of versterker aan de andere kant van de kamer, dan gaat hij achter de plint langs in plaats van dwars door de kamer. Werkt alleen als de plint eraf kan en er ruimte achter zit; dat beoordeelt de monteur ter plekke.",
   },
   {
     kop: "Volledig in de muur",
-    prijs: "op offerte",
+    prijs: "na meting",
     wanneer: "Als u echt niets wilt zien",
     tekst:
       "De kabels gaan in een sleuf in de wand, die daarna wordt dichtgezet en afgewerkt. Het mooiste resultaat en meteen het meeste werk: hakken, stoffen, dichtzetten en laten drogen. Daarom maken we hiervoor vooraf een vaste prijsafspraak, gebaseerd op uw wand en de afstand — u weet het bedrag dus voordat er iets gebeurt.",
   },
   {
     kop: "Achter een voorzetwand",
-    prijs: "op offerte",
+    prijs: "na meting",
     wanneer: "Bij een complete tv-wand",
     tekst:
       "Wordt er toch een voorzetwand of tv-wand gebouwd, dan verdwijnt alles daarachter: stroom, HDMI, netwerk en de speakerkabels. Dit vraagt om vooraf nadenken over wat er later nog bij moet kunnen, want achteraf een kabel bijtrekken kan dan niet meer.",
@@ -240,7 +240,7 @@ export default function KabelsWegwerkenPage() {
         </p>
 
         <InlineCta
-          href="#offerte"
+          href="#afspraak"
           title="Zal ik het meteen meenemen?"
           text="Kabels wegwerken tijdens het ophangen scheelt u een tweede afspraak en een tweede keer thuisblijven."
         />

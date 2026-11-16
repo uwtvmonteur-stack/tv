@@ -279,7 +279,7 @@ export default function TvOphangenPage() {
           in de slaapkamer tot een 85 inch boven de open haard — en kennen voor
           elke situatie de beste oplossing. Hieronder leest u wat een tv ophangen
           kost, hoe wij werken en waar u op moet letten. Liever meteen geregeld?{" "}
-          <Link href="#offerte" className="verwijzing">
+          <Link href="#afspraak" className="verwijzing">
             Vraag vrijblijvend een afspraak aan
           </Link>{" "}
           — u hoort binnen enkele uren van ons.
@@ -315,7 +315,7 @@ export default function TvOphangenPage() {
         titel="Wat kost een tv ophangen?"
         tekst={`${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en altijd inclusief voorrijkosten en btw. Het soort muur verandert dat bedrag niet — steen, beton, gipsplaat of een holle voorzetwand, het tarief blijft hetzelfde.`}
         />
-        {/* Het prijsblok draagt zelf de offerteknop. Daarom staat er geen
+        {/* Het prijsblok draagt zelf de afspraakknop. Daarom staat er geen
             tweede oproep onder: dit is het moment waarop iemand beslist, en
             twee knoppen naast elkaar maken van die beslissing een keuze. */}
         <div className="mt-12">

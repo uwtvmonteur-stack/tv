@@ -113,7 +113,7 @@ const faqHome: FaqItem[] = [
 ];
 
 /**
- * Wat de offerteaanvraag wél en niet van iemand vraagt.
+ * Wat de afspraakaanvraag wél en niet van iemand vraagt.
  *
  * De laatste regel ging over avond en weekend; dat staat op deze pagina al in
  * de bewijsrij en in de FAQ. Wie hier staat heeft die vraag dus gehad en

@@ -32,12 +32,12 @@ export const metadata = pageMeta({
 /**
  * De twee bedragen van deze dienst, gelijk aan de regels "Soundbar aansluiten
  * en afstellen" (€49 vast) en "Surround-set aansluiten" (vanaf €79) in
- * `tarieven`. Eén plek op de pagina, zodat kop, prijsblok en offerteblok niet
+ * `tarieven`. Eén plek op de pagina, zodat kop, prijsblok en afspraakblok niet
  * uit elkaar kunnen lopen.
  *
  * `SURROUND` is een vanafprijs en hoort dus overal met "vanaf" ervoor — de
  * derde variant, home-cinema met losse versterker, staat in `tarieven` als
- * "op offerte" en heeft hier geen bedrag. De meta-description beloofde
+ * "na meting" en heeft hier geen bedrag. De meta-description beloofde
  * surround en home-cinema "vanaf €49"; dat was het bedrag van de soundbar.
  */
 const PRIJS = "€49";
@@ -63,14 +63,14 @@ const prijsDekking = [
 /** Wat de aanvraag zelf wel en niet van u vraagt — niet wat er in de prijs zit. */
 const aanvraagBelofte = [
   `Soundbar aansluiten en afstellen: vaste prijs ${PRIJS}`,
-  `Surroundset: vanaf ${SURROUND}; home-cinema op offerte`,
+  `Surroundset: vanaf ${SURROUND}; home-cinema krijgt een prijs na meting`,
   BELOFTE.vrijblijvend,
   BELOFTE.avondWeekend,
 ];
 
 const stappen = [
   {
-    title: "Afspraak aanvragen",
+    title: "Afspraak maken",
     text: "Geef door welke soundbar of set u heeft en waar u woont, dan komt de monteur voorbereid en weet u het bedrag vooraf.",
   },
   {
@@ -223,7 +223,7 @@ export default function SoundbarPage() {
         {/* Eén vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij
             het ophangen, met drie formaten. Hier is het bedrag zelf het
             argument, dus staat het in een paneel met dezelfde amberen streep
-            als het aanvraagformulier. */}
+            als het afspraakformulier. */}
         <div className="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
           <div className="lg:col-span-2">
             <div className="paneel flex h-full flex-col justify-between border-t-4 border-t-amber-400 p-7">
@@ -238,8 +238,8 @@ export default function SoundbarPage() {
                   bedrag.
                 </p>
               </div>
-              <Link href="#offerte" className="knop-vol knop-groot mt-8 w-full">
-                Afspraak aanvragen
+              <Link href="#afspraak" className="knop-vol knop-groot mt-8 w-full">
+                Afspraak maken
                 <Icon name="arrow-right" className="size-5" />
               </Link>
             </div>
@@ -270,7 +270,7 @@ export default function SoundbarPage() {
                 <dt className="bovenkop">Home-cinema</dt>
                 <dd>
                   <p className="mt-3 font-display text-h2 font-semibold text-ink-950">
-                    Op offerte
+                    Na meting
                   </p>
                   <p className="mt-2 text-sm text-ink-600">
                     Versterker, meerdere speakers en bekabeling: eerst kijken,
@@ -349,7 +349,7 @@ export default function SoundbarPage() {
           </p>
         </div>
         <InlineCta
-          href="#offerte"
+          href="#afspraak"
           text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
       </Vlak>

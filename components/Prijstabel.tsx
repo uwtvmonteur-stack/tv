@@ -24,11 +24,11 @@ export default function Prijstabel() {
       <table className="w-full border-collapse text-left">
         {/* Beschreef de tabel eerder als "vanafprijzen" met het exacte bedrag in
             een offerte. Sinds de vaste tarieven terug zijn, klopt dat voor de
-            meeste regels niet: alleen de regels met "vanaf" of "op offerte"
+            meeste regels niet: alleen de regels met "vanaf" of "na meting"
             hangen nog van de situatie af. */}
         <caption className="sr-only">
           Tarieven van Uw TV Monteur, inclusief voorrijkosten en btw. Een bedrag
-          met &quot;vanaf&quot; of &quot;op offerte&quot; hangt af van uw
+          met &quot;vanaf&quot; of &quot;na meting&quot; hangt af van uw
           situatie; de rest staat vast.
         </caption>
         <thead>

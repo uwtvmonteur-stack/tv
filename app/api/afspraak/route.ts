@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import { SITE } from "@/lib/site";
 
 /**
- * Ontvangt de offerteaanvraag en verstuurt die via SMTP.
+ * Ontvangt de afspraakaanvraag en verstuurt die via SMTP.
  *
  * Environment Variables (op Vercel of in .env.local):
  * - SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS  (verplicht)
@@ -110,7 +110,7 @@ export async function POST(request: Request) {
   const omschrijving = clean(body.omschrijving, 4000);
 
   // Naam, telefoon, postcode en de omschrijving zijn het minimum: daarmee kan
-  // er een offerte gemaakt worden. E-mail is optioneel, want wij bellen terug;
+  // er een prijs gegeven worden. E-mail is optioneel, want wij bellen terug;
   // staat er wél een adres, dan moet het bruikbaar zijn — anders komt de
   // bevestiging nooit aan en merkt niemand dat.
   //
@@ -165,7 +165,7 @@ export async function POST(request: Request) {
   ];
 
   const text = regels.map(([k, v]) => `${k}: ${v}`).join("\n");
-  const html = `<h2 style="font-family:sans-serif">Nieuwe offerteaanvraag</h2>
+  const html = `<h2 style="font-family:sans-serif">Nieuwe afspraakaanvraag</h2>
 <table style="font-family:sans-serif;font-size:15px;border-collapse:collapse">
 ${regels
   .map(
@@ -185,7 +185,7 @@ ${regels
       ...(email ? { replyTo: `"${naam.replace(/"/g, "")}" <${email}>` } : {}),
       // De woonplaats staat niet meer in het formulier; dan is de postcode wat
       // de mailbox nodig heeft om twee aanvragen uit elkaar te houden.
-      subject: `Offerteaanvraag — ${naam} (${plaats || postcode})`,
+      subject: `Afspraakaanvraag — ${naam} (${plaats || postcode})`,
       text,
       html,
     });
@@ -211,7 +211,7 @@ ${regels
       from: `"${SITE.name}" <${from}>`,
       to: email,
       replyTo: to,
-      subject: `Uw offerteaanvraag bij ${SITE.name}`,
+      subject: `Uw afspraak bij ${SITE.name}`,
       text: `Beste ${naam},
 
 Bedankt voor uw aanvraag. ${SITE.reactie}

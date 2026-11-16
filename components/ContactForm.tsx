@@ -19,7 +19,7 @@ import { SITE, TRACKING } from "@/lib/site";
 const ENDPOINT = "/api/afspraak";
 
 /**
- * Een offerteaanvraag vraagt om vier dingen en niet meer: uw naam, uw
+ * Een afspraakaanvraag vraagt om vier dingen en niet meer: uw naam, uw
  * telefoonnummer, uw postcode en wat er moet gebeuren.
  *
  * Er stond hier eens een configurator met het tv-formaat, de beugelvraag,
@@ -27,7 +27,7 @@ const ENDPOINT = "/api/afspraak";
  * is om de afspraak te maken, is een reden om af te haken.
  *
  * Om diezelfde reden staan hier geen straatnaam, huisnummer en woonplaats.
- * Voor een offerte is de postcode genoeg: die bepaalt de rit en of de plaats
+ * Voor een afspraak is de postcode genoeg: die bepaalt de rit en of de plaats
  * in het werkgebied valt. Het volledige adres is pas nodig om de afspraak in
  * te plannen, en dat gebeurt nadat iemand akkoord is. Zo vraagt het
  * formulier niet om een huisadres op het moment dat er nog geen bedrag
@@ -98,7 +98,7 @@ function Veldje({
   label: ReactNode;
   /**
    * Korte uitleg onder het veld. Alleen daar waar een veld een vraag oproept:
-   * "waarom wilt u dit weten?" is bij een offerteaanvraag een reden om te
+   * "waarom wilt u dit weten?" is bij een afspraakaanvraag een reden om te
    * stoppen, en dat antwoord hoort naast het veld te staan en niet in de
    * privacyverklaring.
    */
@@ -157,7 +157,7 @@ export default function ContactForm({
    * met de pijl ongeveer 237px. Een omgevouwen hoofdknop op elke telefoon
    * kost meer dan de formulering oplevert, dus het blijft dit.
    */
-  submitLabel = "Afspraak aanvragen",
+  submitLabel = "Afspraak maken",
   berichtLabel = "Wat moet er gebeuren?",
   berichtPlaceholder = "Bijvoorbeeld: 55 inch Samsung ophangen in de woonkamer, de wand is gipsplaat en ik heb nog geen beugel.",
 }: {
@@ -267,7 +267,7 @@ export default function ContactForm({
         payload.omschrijving,
       ].join("\n");
       window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(
-        `Offerteaanvraag — ${payload.naam}`,
+        `Afspraakaanvraag — ${payload.naam}`,
       )}&body=${encodeURIComponent(body)}`;
       trackEvent("offerte_aanvraag_mailto");
       setStatus("mailto");
@@ -304,7 +304,7 @@ export default function ContactForm({
           });
           // De conversie gaat zonder waarde mee. Wilt u Google Ads op omzet
           // laten sturen, dan hoort die waarde uit het geoffreerde bedrag te
-          // komen — dat vraagt om terugkoppeling vanuit de offerte, niet
+          // komen — dat vraagt om terugkoppeling vanuit de afspraak, niet
           // vanaf de site.
           trackAdsConversion(TRACKING.adsFormConversion);
         }
@@ -332,7 +332,7 @@ export default function ContactForm({
       <Paneel
         paneelRef={resultRef}
         icoon="check-circle"
-        titel="Uw aanvraag staat bij ons"
+        titel="Uw afspraak is aangevraagd"
       >
         {SITE.reactie} Het tarief dat op deze pagina staat is het bedrag dat u
         betaalt; u zit tot dat gesprek nergens aan vast.
@@ -344,7 +344,7 @@ export default function ContactForm({
     return (
       <Paneel paneelRef={resultRef} icoon="mail" titel="Bijna verstuurd">
         Wij hebben een e-mail voor u klaargezet met uw gegevens erin. Verstuur
-        die, dan komt uw aanvraag bij ons binnen. Lukt dat niet? Mail ons dan
+        die, dan komt uw afspraak bij ons binnen. Lukt dat niet? Mail ons dan
         rechtstreeks op{" "}
         <a className="verwijzing" href={`mailto:${SITE.email}`}>
           {SITE.email}
@@ -374,7 +374,7 @@ export default function ContactForm({
           de plek waar de bezoeker wil beginnen met invullen. Het eerste veld
           stond daardoor een alinea lager dan nodig, op een telefoon bijna een
           half scherm. */}
-      <h3 className="text-h3">Uw aanvraag</h3>
+      <h3 className="text-h3">Uw afspraak</h3>
 
       <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
         <Veldje
@@ -432,7 +432,7 @@ export default function ContactForm({
           // dient weet iedereen; dat het huisadres níet gevraagd wordt is het
           // onverwachte deel, en dat is de regel die een bezoeker over de
           // streep helpt.
-          uitleg="Uw straat en huisnummer vragen wij pas als u akkoord gaat met de offerte."
+          uitleg="Uw straat en huisnummer vragen wij pas als de afspraak vaststaat."
           fout={fieldErrors.postcode}
         >
           <input
@@ -542,7 +542,7 @@ export default function ContactForm({
           <Icon name="lock" className="mt-0.5 size-4 shrink-0" />
           <span>
             Velden met * zijn verplicht. Wij gebruiken uw gegevens alleen voor
-            deze aanvraag — geen nieuwsbrief, geen spam.
+            deze afspraak — geen nieuwsbrief, geen spam.
           </span>
         </p>
       </div>

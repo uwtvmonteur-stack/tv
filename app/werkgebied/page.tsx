@@ -49,7 +49,7 @@ export default function WerkgebiedPage() {
         beeldAlt="Monteur van Uw TV Monteur wordt begroet aan de voordeur van een Nederlandse rijtjeswoning"
       >
         {/* Deze pagina draagt zelf geen formulier, dus wijst de knop naar
-            /contact en niet naar #offerte. */}
+            /contact en niet naar #afspraak. */}
         <HeroKnoppen href="/contact" />
       </Hero>
 

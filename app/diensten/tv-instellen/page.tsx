@@ -97,7 +97,7 @@ const streaming = [
 
 const stappen = [
   {
-    title: "Afspraak aanvragen",
+    title: "Afspraak maken",
     text: "Vertel kort wat er niet lukt en waar u woont, dan komt de monteur voorbereid en weet u het bedrag vooraf.",
   },
   {
@@ -238,7 +238,7 @@ export default function TvInstellenPage() {
         {/* Eén vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij
             het ophangen, met drie formaten. Hier is het bedrag zelf het
             argument, dus staat het in een paneel met dezelfde amberen streep
-            als het aanvraagformulier. */}
+            als het afspraakformulier. */}
         <div className="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
           <div className="lg:col-span-2">
             <div className="paneel flex h-full flex-col justify-between border-t-4 border-t-amber-400 p-7">
@@ -252,8 +252,8 @@ export default function TvInstellenPage() {
                   uurtarief dat oploopt terwijl wij het uitzoeken.
                 </p>
               </div>
-              <Link href="#offerte" className="knop-vol knop-groot mt-8 w-full">
-                Afspraak aanvragen
+              <Link href="#afspraak" className="knop-vol knop-groot mt-8 w-full">
+                Afspraak maken
                 <Icon name="arrow-right" className="size-5" />
               </Link>
             </div>
@@ -268,8 +268,8 @@ export default function TvInstellenPage() {
                 prijzen
               </Link>{" "}
               of zet uw vraag meteen in het{" "}
-              <Link href="#offerte" className="verwijzing">
-                aanvraagformulier
+              <Link href="#afspraak" className="verwijzing">
+                afspraakformulier
               </Link>
               .
             </p>
@@ -316,7 +316,7 @@ export default function TvInstellenPage() {
           <Stappen items={stappen} kolommen={4} />
         </div>
         <InlineCta
-          href="#offerte"
+          href="#afspraak"
           text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
       </Vlak>

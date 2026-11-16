@@ -216,8 +216,8 @@ export default function Page() {
               </Link>
               .
             </p>
-            <Link href="#offerte" className="knop-vol mt-7 w-full">
-              Afspraak aanvragen
+            <Link href="#afspraak" className="knop-vol mt-7 w-full">
+              Afspraak maken
               <Icon name="arrow-right" className="size-5" />
             </Link>
           </div>

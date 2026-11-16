@@ -35,7 +35,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
  *
  * Het staat hier bóven de metadata, zodat de paginatitel en de
  * meta-description hetzelfde bedrag gebruiken als de kop, het prijsblok, het
- * offerteblok en het schema. Tot 16-11-2026 stond €70 in vijf van die zes
+ * afspraakblok en het schema. Tot 16-11-2026 stond €70 in vijf van die zes
  * plekken los ingetikt, en een prijswijziging kwam dus half door.
  */
 const PRIJS = TV_INSTALLATIE_PRIJS;
@@ -75,7 +75,7 @@ const aanvraagBelofte = [
 
 const stappen = [
   {
-    title: "Afspraak aanvragen",
+    title: "Afspraak maken",
     text: "Vul het formulier in met uw gegevens en wat er moet gebeuren. Wij nemen binnen enkele uren contact met u op om een geschikt moment af te spreken.",
   },
   {
@@ -236,7 +236,7 @@ export default function TvInstallatiePage() {
         {/* Eén vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij
             het ophangen, met drie formaten. Hier is het bedrag zelf het
             argument, dus staat het groot en alleen in een paneel met dezelfde
-            amberen streep als het aanvraagformulier — de twee plekken op deze
+            amberen streep als het afspraakformulier — de twee plekken op deze
             pagina waar iemand iets beslist. */}
         <div className="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
           <div className="lg:col-span-2">
@@ -251,8 +251,8 @@ export default function TvInstallatiePage() {
                   btw. Geen vanafprijs en geen uurtarief: dit is het bedrag.
                 </p>
               </div>
-              <Link href="#offerte" className="knop-vol knop-groot mt-8 w-full">
-                Afspraak aanvragen
+              <Link href="#afspraak" className="knop-vol knop-groot mt-8 w-full">
+                Afspraak maken
                 <Icon name="arrow-right" className="size-5" />
               </Link>
             </div>
@@ -316,8 +316,8 @@ export default function TvInstallatiePage() {
         </div>
         <p className="mt-9 max-w-3xl text-ink-600">
           Twijfelt u welke service bij u past? Zet het kort in het{" "}
-          <Link href="#offerte" className="verwijzing">
-            aanvraagformulier
+          <Link href="#afspraak" className="verwijzing">
+            afspraakformulier
           </Link>{" "}
           — wij denken graag met u mee.
         </p>
@@ -358,7 +358,7 @@ export default function TvInstallatiePage() {
         />
         <IconCardGrid items={situaties} columns={3} className="mt-12" />
         <InlineCta
-          href="#offerte"
+          href="#afspraak"
           text="Vaste prijs vooraf. Wij gaan pas weg als uw tv staat of hangt, alle apparatuur is aangesloten en de zenders en apps werken. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
       </Vlak>

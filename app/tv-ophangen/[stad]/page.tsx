@@ -122,7 +122,7 @@ function opsomming(namen: string[]) {
  * reistijd, geen "monteur om de hoek" en geen wijkclaim. Zulke regels zijn
  * niet te onderbouwen, en ze lezen op 32 pagina's als hetzelfde sjabloon met
  * een andere plaatsnaam erin. Het telefoonnummer staat hier niet: de
- * offerteaanvraag is de enige handeling op dit scherm.
+ * afspraakaanvraag is de enige handeling op dit scherm.
  */
 function HeroFeiten({ plaats }: { plaats: string }) {
   const feiten: { icon: IconName; tekst: string }[] = [

@@ -10,7 +10,7 @@ import { artikelen } from "@/lib/kennisbank";
    Voettekst
    =========================================================================
    De enige plek op de site waar het telefoonnummer staat, en bewust als
-   gewone link: elders zou een belknop concurreren met de offerteaanvraag.
+   gewone link: elders zou een belknop concurreren met de afspraakaanvraag.
 
    Opnieuw opgebouwd. De oude voettekst was één raster van vijf kolommen
    waarin het bedrijf, de diensten, het werkgebied en de contactgegevens
@@ -108,7 +108,7 @@ export default function Footer() {
               <li>
                 <Link href="/contact" className={rij}>
                   <Icon name="chat" className="size-4 text-amber-300" />
-                  Afspraak aanvragen
+                  Afspraak maken
                 </Link>
               </li>
             </ul>

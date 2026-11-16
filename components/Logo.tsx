@@ -78,7 +78,7 @@ export default function LogoMark({ className = "size-10" }: { className?: string
  * Beeldmerk plus naam. `dark` voor een donkere achtergrond.
  *
  * `min-w-0` met `truncate` in plaats van `shrink-0`: op een smalle Android
- * (360 px) stonden logo, offerteknop en hamburger samen net te breed, en
+ * (360 px) stonden logo, afspraakknop en hamburger samen net te breed, en
  * omdat niets mocht krimpen schoof de hele pagina horizontaal. Nu kort de
  * merknaam af en verandert geen enkel scherm daarboven.
  */

@@ -27,7 +27,7 @@ export default function StickyBar() {
 
     const onScroll = () => {
       const voorbijHero = window.scrollY > window.innerHeight * 0.9;
-      const formulier = document.getElementById("offerte");
+      const formulier = document.getElementById("afspraak");
       if (!formulier) {
         setZichtbaar(voorbijHero);
         return;
@@ -49,7 +49,7 @@ export default function StickyBar() {
     <div
       // Het id staat hier voor Header: die zet de balk `inert` zolang het
       // mobiele menu openstaat, zodat hij niet in de tabvolgorde blijft.
-      id="offerte-balk"
+      id="afspraak-balk"
       aria-hidden={!zichtbaar}
       // De enige losse maat op de hele site, en onvermijdelijk: zonder
       // `safe-area-inset-bottom` valt de knop op een iPhone deels achter de
@@ -65,7 +65,7 @@ export default function StickyBar() {
         tabIndex={zichtbaar ? undefined : -1}
         className="knop-vol w-full"
       >
-        Afspraak aanvragen
+        Afspraak maken
         <Icon name="arrow-right" className="size-5" />
       </Link>
     </div>

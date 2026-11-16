@@ -21,7 +21,7 @@ import { provincies } from "@/lib/steden";
    bovendien beter — hij hoort bij de tekst, hij ligt er niet achter.
 
    Het telefoonnummer staat hier bewust niet — niet als knop en niet als
-   link. Eén actie per scherm: de offerteaanvraag. Het nummer staat alleen in
+   link. Eén actie per scherm: de afspraakaanvraag. Het nummer staat alleen in
    de voettekst.
    ========================================================================= */
 
@@ -64,7 +64,7 @@ const feiten: { icon: IconName; tekst: string; className?: string }[] = [
 ];
 
 /**
- * Staat er een aanvraagformulier op deze pagina? Dan moet de knop in de balk
+ * Staat er een afspraakformulier op deze pagina? Dan moet de knop in de balk
  * ernaartoe scrollen in plaats van de bezoeker te verhuizen naar /contact.
  *
  * Dat was de duurste fout in de oude balk: op /prijzen — de pagina waar
@@ -91,7 +91,7 @@ const MET_FORMULIER = new Set([
  *
  * De lijst noemt de pagina's die een formulier dragen, en niet andersom.
  * Dat is bewust omgekeerd: hiervoor stond hier een lijst pagina's *zonder*
- * formulier, en alles wat daar niet in stond kreeg `#offerte`. Daardoor wees
+ * formulier, en alles wat daar niet in stond kreeg `#afspraak`. Daardoor wees
  * op de 404-pagina — die geen formulier heeft en in geen enkele lijst stond —
  * zowel de knop in de koptekst als de zwevende balk naar een anker dat daar
  * niet bestaat. Wie uit een oude advertentie of bladwijzer kwam, klikte op de
@@ -101,7 +101,7 @@ const MET_FORMULIER = new Set([
  * terug op /contact. Een nieuwe pagina die vergeten wordt, verliest dan
  * hooguit het soepele scrollen — hij wordt nooit een doodlopende knop.
  * `scripts/check-ontwerp.mjs` controleert na een build dat elke pagina die
- * naar `#offerte` wijst dat anker ook werkelijk heeft.
+ * naar `#afspraak` wijst dat anker ook werkelijk heeft.
  *
  * StickyBar leest dezelfde functie, zodat balk en knop nooit naar
  * verschillende plekken wijzen.
@@ -115,7 +115,7 @@ export function afspraakHref(pathname: string) {
     /^\/diensten\/[^/]+$/.test(pathname) ||
     /^\/tv-ophangen\/[^/]+$/.test(pathname) ||
     /^\/werkgebied\/[^/]+$/.test(pathname);
-  return heeftFormulier ? "#offerte" : "/contact";
+  return heeftFormulier ? "#afspraak" : "/contact";
 }
 
 export default function Header() {
@@ -135,7 +135,7 @@ export default function Header() {
     // main en footer en zou anders in de tabvolgorde van het menu blijven.
     const main = document.getElementById("hoofdinhoud");
     const footer = document.querySelector("footer");
-    const balk = document.getElementById("offerte-balk");
+    const balk = document.getElementById("afspraak-balk");
     main?.toggleAttribute("inert", open);
     footer?.toggleAttribute("inert", open);
     balk?.toggleAttribute("inert", open);
@@ -312,7 +312,7 @@ export default function Header() {
               inert={open || undefined}
               className="knop-vol whitespace-nowrap px-2.5 sm:px-6"
             >
-              <span className="hidden sm:inline">Afspraak aanvragen</span>
+              <span className="hidden sm:inline">Afspraak maken</span>
               <span className="sm:hidden">Afspraak</span>
             </Link>
             <button
@@ -407,7 +407,7 @@ export default function Header() {
             onClick={() => setOpen(false)}
             className="knop-vol knop-groot w-full"
           >
-            Afspraak aanvragen
+            Afspraak maken
             <Icon name="arrow-right" className="size-5" />
           </Link>
         </div>

@@ -290,8 +290,8 @@ export function Hero({
 }
 
 export function HeroKnoppen({
-  href = "#offerte",
-  label = "Afspraak aanvragen",
+  href = "#afspraak",
+  label = "Afspraak maken",
   tweedeHref = "/prijzen",
   tweedeLabel = "Bekijk alle tarieven",
 }: {
@@ -670,7 +670,7 @@ export function Dienstenlijst({
  * drie knoppen naast elkaar — er valt hier niets te kiezen, de maat van de
  * tv bepaalt het tarief.
  */
-export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
+export function Prijsklassen({ href = "#afspraak" }: { href?: string }) {
   return (
     <div>
       <ul className="grid gap-5 lg:grid-cols-3">
@@ -716,7 +716,7 @@ export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="max-w-xl text-sm text-ink-600">{PRIJS_NOOT}</p>
         <Link href={href} className="knop-vol shrink-0">
-          Afspraak aanvragen
+          Afspraak maken
           <Icon name="arrow-right" className="size-5" />
         </Link>
       </div>
@@ -744,8 +744,8 @@ export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
  * De aanvraag: links de kop met de beloftes, rechts het formulier.
  *
  * Dit blok stond dertien keer in de paginabestanden, elke keer met dezelfde
- * tien regels casco eromheen — hetzelfde raster, dezelfde `id="offerte"`,
- * dezelfde `labelledBy`, dezelfde bovenkop "Afspraak aanvragen" en dezelfde
+ * tien regels casco eromheen — hetzelfde raster, dezelfde `id="afspraak"`,
+ * dezelfde `labelledBy`, dezelfde bovenkop "Afspraak maken" en dezelfde
  * `<Vinkjes className="mt-8">`. Alleen de kop, de tekst, de beloftes en het
  * formulier verschilden, en dat zijn precies de vier dingen die nu nog in de
  * pagina staan.
@@ -800,8 +800,8 @@ export function Faqsectie({
             <>
               {inleiding && <>{inleiding} </>}
               Staat uw vraag er niet bij? Zet hem in het{" "}
-              <Link href="#offerte" className="verwijzing">
-                aanvraagformulier
+              <Link href="#afspraak" className="verwijzing">
+                afspraakformulier
               </Link>{" "}
               — dan belt de monteur u erover.
             </>
@@ -828,12 +828,12 @@ export function Aanvraagsectie({
   toon?: "oppervlak" | "wit";
 }) {
   return (
-    <Vlak toon={toon} id="offerte" labelledBy="offerte-kop">
+    <Vlak toon={toon} id="afspraak" labelledBy="afspraak-kop">
       <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
         <div>
           <Kop
-            id="offerte-kop"
-            bovenkop="Afspraak aanvragen"
+            id="afspraak-kop"
+            bovenkop="Afspraak maken"
             titel={titel}
             tekst={tekst}
           />
@@ -880,7 +880,7 @@ export function Slotoproep({
               </p>
             </div>
             <Link href={href} className="knop-vol knop-groot w-full">
-              Afspraak aanvragen
+              Afspraak maken
               <Icon name="arrow-right" className="size-5" />
             </Link>
           </div>

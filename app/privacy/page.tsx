@@ -6,7 +6,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata = {
   ...pageMeta({
     title: "Privacyverklaring",
-    description: `Hoe ${SITE.name} omgaat met de gegevens die u via het aanvraagformulier, telefoon of e-mail met ons deelt.`,
+    description: `Hoe ${SITE.name} omgaat met de gegevens die u via het afspraakformulier, telefoon of e-mail met ons deelt.`,
     path: "/privacy",
   }),
   robots: { index: false, follow: true },
@@ -21,13 +21,13 @@ const secties: { h2: string; p: string[] }[] = [
       // e-mail en de omschrijving. Straat, huisnummer en woonplaats staan er
       // niet meer in; die vragen wij pas bij het inplannen van de afspraak.
       // Wie dit bijwerkt moet components/ContactForm.tsx ernaast leggen.
-      "Wanneer u een offerte aanvraagt via het formulier, per telefoon of per e-mail, verwerken wij de gegevens die u zelf opgeeft: uw naam, telefoonnummer, uw postcode, eventueel uw e-mailadres, en de omschrijving van het werk. Uw straat en huisnummer vragen wij pas wanneer u akkoord gaat met de offerte en wij een afspraak inplannen.",
+      "Wanneer u een afspraak aanvraagt via het formulier, per telefoon of per e-mail, verwerken wij de gegevens die u zelf opgeeft: uw naam, telefoonnummer, uw postcode, eventueel uw e-mailadres, en de omschrijving van het werk. Uw straat en huisnummer vragen wij pas wanneer de afspraak vaststaat en wij die inplannen.",
     ],
   },
   {
     h2: "Waarvoor wij ze gebruiken",
     p: [
-      "Uitsluitend om u een offerte te sturen, contact met u op te nemen over uw aanvraag, de afspraak in te plannen en de werkzaamheden uit te voeren en te factureren. Wij gebruiken uw gegevens niet voor nieuwsbrieven of andere marketing en verkopen ze nooit aan derden.",
+      "Uitsluitend om contact met u op te nemen over uw aanvraag, de afspraak in te plannen en de werkzaamheden uit te voeren en te factureren. Wij gebruiken uw gegevens niet voor nieuwsbrieven of andere marketing en verkopen ze nooit aan derden.",
     ],
   },
   {

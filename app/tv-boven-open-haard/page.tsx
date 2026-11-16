@@ -203,7 +203,7 @@ export default function TvBovenOpenHaardPage() {
         />
 
         <InlineCta
-          href="#offerte"
+          href="#afspraak"
           title="Liever eerst zekerheid dan een gok"
           text="Wij meten het bij u thuis en zeggen eerlijk wat er kan. Kan het niet veilig, dan boren we niet."
         />

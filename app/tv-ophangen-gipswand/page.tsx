@@ -190,7 +190,7 @@ export default function TvOphangenGipswandPage() {
         <IconCardGrid items={wandtypes} columns={3} className="mt-10" />
         <p className="mt-12 max-w-3xl text-ink-600">
           Twijfelt u welke u heeft?{" "}
-          <Link href="#offerte" className="verwijzing">
+          <Link href="#afspraak" className="verwijzing">
             Vraag vrijblijvend een afspraak aan
           </Link>{" "}
           en zet erbij wat voor wand u denkt te hebben — dan weet de monteur
@@ -255,7 +255,7 @@ export default function TvOphangenGipswandPage() {
           .
         </p>
 
-        <InlineCta href="#offerte" />
+        <InlineCta href="#afspraak" />
       </Vlak>
 
       <Vlak toon="wit" labelledBy="werkgebied">

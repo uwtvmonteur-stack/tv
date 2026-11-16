@@ -8,7 +8,7 @@ import { SITE } from "@/lib/site";
 import { absUrl, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Afspraak aanvragen of contact opnemen",
+  title: "Afspraak maken of contact opnemen",
   description:
     "Vraag vrijblijvend een afspraak aan voor tv ophangen aan huis. Vul het formulier in — wij nemen binnen enkele uren contact met u op.",
   path: "/contact",
@@ -48,11 +48,11 @@ export default function ContactPage() {
         inleiding="Vier velden zijn genoeg: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. De prijs krijgt u daarna, vrijblijvend."
       />
 
-      <Vlak toon="wit" id="offerte" labelledBy="offerte-kop">
+      <Vlak toon="wit" id="afspraak" labelledBy="afspraak-kop">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
             <Kop
-              id="offerte-kop"
+              id="afspraak-kop"
               bovenkop="Na het versturen"
               titel="Wat gebeurt er daarna?"
             />

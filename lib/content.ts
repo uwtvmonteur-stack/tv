@@ -181,7 +181,7 @@ export const HERO_PRIJZEN = prijsklassen.map((klasse) => ({
 }));
 
 /**
- * De regels naast het aanvraagformulier — wat de bezoeker wél en niet van de
+ * De regels naast het afspraakformulier — wat de bezoeker wél en niet van de
  * aanvraag mag verwachten.
  *
  * Eén bron, omdat dit lijstje op dertien paginabestanden stond: acht keer
@@ -203,7 +203,7 @@ export const BELOFTE = {
 export type Tarief = {
   naam: string;
   /**
-   * "€129", "vanaf €39" of "op offerte" — altijd tekst. lib/seo.ts leest het
+   * "€129", "vanaf €39" of "na meting" — altijd tekst. lib/seo.ts leest het
    * woord "vanaf" en maakt er dan een `minPrice` van in plaats van een harde
    * `price`, dus de notatie bepaalt wat er in het zoekresultaat komt.
    */
@@ -216,7 +216,7 @@ export type Tarief = {
  * slordigheid maar een belofte: een vast bedrag (€60 voor een installatie,
  * €49 voor een soundbar, €60 voor hulp aan huis) betaalt de klant exact zo,
  * een vanafprijs (vanaf €99, vanaf €39, vanaf €79) hangt af
- * van formaat of afstand, en "op offerte" kan pas na meting ter plekke.
+ * van formaat of afstand, en "na meting" kan pas na controle ter plekke.
  *
  * Een dienst hoort dus overal op de site met dezelfde soort genoemd te
  * worden. "Vanaf €60" op de homepage terwijl drie andere pagina's "vaste
@@ -243,7 +243,7 @@ export const tarieven: Tarief[] = [
     // 16-11-2026 is het bedrag zelf van €70 naar €60 gegaan.
     naam: "Tv plaatsen en aansluiten (zonder ophangen)",
     // `TV_INSTALLATIE_PRIJS` en niet "€60": hetzelfde bedrag staat op
-    // /diensten/tv-installatie in de kop, het prijsblok, het offerteblok, de
+    // /diensten/tv-installatie in de kop, het prijsblok, het afspraakblok, de
     // paginatitel, de meta-description en het schema.
     prijs: TV_INSTALLATIE_PRIJS,
     toelichting:
@@ -256,7 +256,7 @@ export const tarieven: Tarief[] = [
   },
   {
     naam: "Kabels volledig in de muur wegwerken",
-    prijs: "op offerte",
+    prijs: "na meting",
     toelichting:
       "Hakken, dichtzetten en afwerken. Hangt af van uw wand en de afstand.",
   },
@@ -272,21 +272,21 @@ export const tarieven: Tarief[] = [
   },
   {
     // Stond samen met de surround-set op één regel "vanaf €79", terwijl de
-    // soundbarpagina voor home-cinema "op offerte" zegt. Twee prijzen voor
+    // soundbarpagina voor home-cinema "na meting" zegt. Twee prijzen voor
     // één woord; nu twee regels met elk hun eigen bedrag.
     naam: "Home-cinema met losse versterker en bekabeling",
-    prijs: "op offerte",
+    prijs: "na meting",
     toelichting: "Eerst kijken wat er ligt en wat er bij moet, dan een bedrag.",
   },
   {
     naam: "Tv-beugel die bij uw tv en wand past",
-    prijs: "op offerte",
+    prijs: "na meting",
     toelichting:
       "Alleen nodig als u er nog geen heeft. Het bedrag hangt af van uw tv en uw wand.",
   },
   {
     naam: "Tv boven een open haard",
-    prijs: "op offerte",
+    prijs: "na meting",
     toelichting:
       "Alleen na meting van de temperatuur en het draagvermogen ter plekke.",
   },

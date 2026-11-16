@@ -138,7 +138,7 @@ export function serviceJsonLd({
 }
 
 /**
- * Prijsnotaties uit `content.ts` ("vanaf €99", "op offerte") omgezet naar
+ * Prijsnotaties uit `content.ts` ("vanaf €99", "na meting") omgezet naar
  * een schema.org PriceSpecification.
  *
  * Een "vanaf"-prijs wordt `minPrice` en niet `price`: een platte `price` zou

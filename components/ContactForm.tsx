@@ -54,6 +54,27 @@ type Veld = (typeof VELDEN)[number];
 type FieldErrors = Partial<Record<Veld, string>>;
 type Status = "idle" | "submitting" | "success" | "error" | "mailto";
 
+type AdresStatus =
+  | "leeg"
+  | "zoeken"
+  | "gevonden"
+  | "huisnummerOnbekend"
+  | "nietGevonden";
+
+/**
+ * Wat er onder het straatveld staat. Niets bij "leeg": een uitleg bij een veld
+ * dat nog niets heeft gedaan is ruis.
+ */
+const ADRES_MELDING: Record<AdresStatus, string> = {
+  leeg: "",
+  zoeken: "Even zoeken bij uw postcode…",
+  gevonden: "Straat en woonplaats hebben wij opgezocht bij uw postcode.",
+  huisnummerOnbekend:
+    "De straat hoort bij uw postcode, maar dit huisnummer vinden wij er niet. Kijkt u het nog even na, of laat het staan als het klopt.",
+  nietGevonden:
+    "Dit adres konden wij niet opzoeken. Vult u de straat en de woonplaats zelf in.",
+};
+
 // Bewust ruim: een adres afkeuren dat eigenlijk klopt kost een klant, en de
 // monteur belt toch voordat hij langskomt.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
@@ -197,6 +218,19 @@ export default function ContactForm({
 } = {}) {
   const [status, setStatus] = useState<Status>("idle");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  /**
+   * Straat en woonplaats worden gevuld door /api/adres zodra postcode en
+   * huisnummer er staan. Daarom zijn dit de enige twee bestuurde velden van
+   * het formulier; de rest wordt bij verzenden uit de `FormData` gelezen.
+   *
+   * De bezoeker kan ze altijd overtypen. Een adres dat de dienst niet kent
+   * (nieuwbouw, een splitsing, een woonboot) mag nooit een aanvraag kosten.
+   */
+  const [adres, setAdres] = useState({ straat: "", plaats: "" });
+  const [adresStatus, setAdresStatus] = useState<AdresStatus>("leeg");
+  // Voorkomt dat hetzelfde adres twee keer wordt opgezocht als de bezoeker
+  // tussen de velden heen en weer springt zonder iets te wijzigen.
+  const laatstGezocht = useRef("");
   const resultRef = useRef<HTMLDivElement>(null);
 
   // Na het verzenden verdwijnt het formulier en komt het antwoord ervoor in de
@@ -219,6 +253,63 @@ export default function ContactForm({
   // Een veld kan zowel een uitleg als een foutmelding onder zich hebben. Een
   // schermlezer moet ze beide horen en in die volgorde, dus worden de id's
   // samengevoegd in plaats van dat de fout de uitleg verdringt.
+  /**
+   * Zoekt straat en woonplaats bij postcode + huisnummer. Draait op `blur` van
+   * een van die twee velden, niet op elke toetsaanslag: dat zou bij het typen
+   * van "3511" al vier keer zoeken.
+   */
+  const zoekAdres = async (form: HTMLFormElement) => {
+    const data = new FormData(form);
+    const pc = String(data.get("postcode") ?? "")
+      .replace(/\s+/g, "")
+      .toUpperCase();
+    const hn = String(data.get("huisnummer") ?? "").trim();
+    if (!/^[1-9][0-9]{3}[A-Z]{2}$/.test(pc) || !hn) return;
+    const sleutel = `${pc}|${hn}`;
+    if (laatstGezocht.current === sleutel) return;
+    laatstGezocht.current = sleutel;
+    setAdresStatus("zoeken");
+    // Eerst leegmaken, en dat is geen netheid maar een correctheidseis. Zonder
+    // deze regel bleven straat en woonplaats van het vórige adres staan zodra
+    // een opzoeking niets vond: de melding zei dan "vult u het zelf in" terwijl
+    // er "Oudegracht, Utrecht" bij postcode 9999ZZ stond. Wie die melding niet
+    // leest, verstuurt een adres dat niet bij zijn postcode hoort. Gevonden in
+    // de browsertest van 16-11-2026, niet in de code.
+    //
+    // De wacht hierboven zorgt dat dit alleen gebeurt als het adres werkelijk
+    // is gewijzigd, dus wie langs de velden tabt ziet niets flikkeren.
+    setAdres({ straat: "", plaats: "" });
+    try {
+      const res = await fetch(
+        `/api/adres?postcode=${encodeURIComponent(pc)}&huisnummer=${encodeURIComponent(hn)}`,
+        { signal: AbortSignal.timeout(6000) },
+      );
+      const uit = (await res.json()) as {
+        status?: string;
+        straat?: string;
+        plaats?: string;
+      };
+      if (uit.straat && uit.plaats) {
+        setAdres({ straat: uit.straat, plaats: uit.plaats });
+        setAdresStatus(
+          uit.status === "huisnummerOnbekend" ? "huisnummerOnbekend" : "gevonden",
+        );
+        // Een veld dat net is gevuld hoort geen rode rand meer te hebben.
+        setFieldErrors((vorig) => ({
+          ...vorig,
+          straat: undefined,
+          plaats: undefined,
+        }));
+      } else {
+        setAdresStatus("nietGevonden");
+      }
+    } catch {
+      // Tijdslimiet of geen verbinding: de bezoeker typt het zelf. Dit mag
+      // nooit een reden zijn om de aanvraag te blokkeren.
+      setAdresStatus("nietGevonden");
+    }
+  };
+
   const beschrijf = (veld: Veld, heeftUitleg = false) =>
     [heeftUitleg ? `${veld}-uitleg` : "", fieldErrors[veld] ? `${veld}-fout` : ""]
       .filter(Boolean)
@@ -465,37 +556,43 @@ export default function ContactForm({
           />
         </Veldje>
 
-        {/* Het volledige adres, op twee regels in de volgorde die iedereen
-            kent: straat en nummer, dan postcode en plaats. Voorheen stond
-            hier alleen de postcode; sinds 16-11-2026 vraagt het formulier het
-            hele adres, zodat de monteur de afspraak in een keer kan inplannen
-            in plaats van eerst terug te bellen. */}
+        {/* Postcode en huisnummer eerst, en dan vullen straat en woonplaats
+            zichzelf via /api/adres.
+
+            Tot vandaag typte de bezoeker alle vier de velden met de hand. Dat
+            is vier keer werk voor iets dat in Nederland door twee velden
+            eenduidig wordt bepaald, en het levert een straatnaam op die
+            niemand nakijkt. Nu typt hij er twee en krijgt hij een adres uit de
+            open adressendienst van het Kadaster.
+
+            Straat en woonplaats blijven gewone invoervelden die hij kan
+            overtypen, en ze blijven verplicht. Een adres dat de dienst niet
+            kent (nieuwbouw, een splitsing, een woonboot) of een dienst die
+            eruit ligt mag nooit een aanvraag kosten. */}
         <Veldje
-          id="straat"
+          id="postcode"
           label={
             <>
-              Straatnaam <Verplicht />
+              Postcode <Verplicht />
             </>
           }
-          fout={fieldErrors.straat}
+          fout={fieldErrors.postcode}
         >
-          {/* `autoComplete="off"` en niet `address-line1`. Er bestaat geen
-              HTML-token voor alleen een straatnaam: browsers vullen
-              `address-line1` met straat én huisnummer ("Dorpsstraat 12"). Dan
-              staat het nummer twee keer in de aanvraag, of Huisnummer blijft
-              leeg terwijl de browser denkt dat hij het heeft gevuld — en dan
-              klaagt onze eigen validatie over een veld dat de bezoeker al
-              gevuld dacht te hebben. Postcode en woonplaats hebben wél een
-              eenduidig token en houden hun autofill. */}
+          {/* De placeholder draagt het formaat. Die staat daarom op ink-500
+              (4,83:1) en niet lichter: hij is hier geen versiering. */}
           <input
-            id="straat"
-            name="straat"
-            autoComplete="off"
-            placeholder="Dorpsstraat"
+            id="postcode"
+            name="postcode"
+            autoComplete="postal-code"
+            placeholder="3511 AB"
             aria-required="true"
-            aria-invalid={!!fieldErrors.straat}
-            aria-describedby={beschrijf("straat")}
-            className={veldKlasse("straat")}
+            aria-invalid={!!fieldErrors.postcode}
+            aria-describedby={beschrijf("postcode")}
+            className={veldKlasse("postcode")}
+            onBlur={(e) => {
+              const f = e.currentTarget.form;
+              if (f) void zoekAdres(f);
+            }}
           />
         </Veldje>
 
@@ -519,29 +616,40 @@ export default function ContactForm({
             aria-invalid={!!fieldErrors.huisnummer}
             aria-describedby={beschrijf("huisnummer")}
             className={veldKlasse("huisnummer")}
+            onBlur={(e) => {
+              const f = e.currentTarget.form;
+              if (f) void zoekAdres(f);
+            }}
           />
         </Veldje>
 
         <Veldje
-          id="postcode"
+          id="straat"
           label={
             <>
-              Postcode <Verplicht />
+              Straatnaam <Verplicht />
             </>
           }
-          fout={fieldErrors.postcode}
+          uitleg={ADRES_MELDING[adresStatus] || undefined}
+          fout={fieldErrors.straat}
         >
-          {/* De placeholder draagt het formaat. Die staat daarom op ink-500
-              (4,83:1) en niet lichter: hij is hier geen versiering. */}
+          {/* Bestuurd veld, en `autoComplete="off"`. Twee redenen. Er bestaat
+              geen HTML-token voor alleen een straatnaam — browsers vullen
+              `address-line1` met straat én huisnummer ("Dorpsstraat 12") — en
+              dit veld wordt bovendien door de opzoeking gevuld; een autofill
+              die daar bovenop komt levert een gevecht tussen twee bronnen. De
+              bezoeker kan altijd overtypen. */}
           <input
-            id="postcode"
-            name="postcode"
-            autoComplete="postal-code"
-            placeholder="3511 AB"
+            id="straat"
+            name="straat"
+            autoComplete="off"
+            placeholder="Dorpsstraat"
             aria-required="true"
-            aria-invalid={!!fieldErrors.postcode}
-            aria-describedby={beschrijf("postcode")}
-            className={veldKlasse("postcode")}
+            aria-invalid={!!fieldErrors.straat}
+            value={adres.straat}
+            onChange={(e) => setAdres((v) => ({ ...v, straat: e.target.value }))}
+            aria-describedby={beschrijf("straat", !!ADRES_MELDING[adresStatus])}
+            className={veldKlasse("straat")}
           />
         </Veldje>
 
@@ -557,10 +665,12 @@ export default function ContactForm({
           <input
             id="plaats"
             name="plaats"
-            autoComplete="address-level2"
+            autoComplete="off"
             placeholder="Utrecht"
             aria-required="true"
             aria-invalid={!!fieldErrors.plaats}
+            value={adres.plaats}
+            onChange={(e) => setAdres((v) => ({ ...v, plaats: e.target.value }))}
             aria-describedby={beschrijf("plaats")}
             className={veldKlasse("plaats")}
           />

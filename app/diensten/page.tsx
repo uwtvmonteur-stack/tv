@@ -1,19 +1,20 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
 import JsonLd from "@/components/JsonLd";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
+  Aanvraagsectie,
   Cijferrij,
   Dienstenlijst,
   Hero,
   HeroKnoppen,
   Kop,
-  Slotoproep,
   Vinkjes,
   Vlak,
 } from "@/components/sections";
-import { diensten, dienstHref, stats, usps } from "@/lib/content";
+import { BELOFTE, diensten, dienstHref, stats, usps } from "@/lib/content";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -22,6 +23,17 @@ export const metadata = pageMeta({
     "Ophangen, tv installatie, soundbar aansluiten, kabels wegwerken en tv hulp aan huis. Vaste prijs per klus, vaak al binnen 24 uur een afspraak.",
   path: "/diensten",
 });
+
+/**
+ * De regels naast het formulier. Vier is genoeg: wie hier is aangekomen heeft
+ * de pagina gelezen en hoeft niet nog zes keer overtuigd te worden.
+ */
+const aanvraagBelofte = [
+  BELOFTE.vrijblijvend,
+  BELOFTE.inclusief,
+  BELOFTE.geenAanbetaling,
+  BELOFTE.avondWeekend,
+];
 
 export default function DienstenPage() {
   const itemList = itemListJsonLd(
@@ -95,10 +107,23 @@ export default function DienstenPage() {
       {/* Eigen sectie met eigen achtergrond. */}
       <Reviews toon="wit" />
 
-      <Slotoproep toon="oppervlak"
+      {/* Het formulier staat op de pagina zelf en niet achter een knop naar
+          /contact. Deze pagina stuurde bezoekers weg op het moment dat ze
+          besloten hadden, en dat is de stap waar verkeer het makkelijkst
+          verdwijnt. Twee van deze pagina's kregen betaald verkeer zonder dat
+          er een manier was om een afspraak te maken. */}
+      <Aanvraagsectie
+        toon="oppervlak"
         titel="Weet u niet welke dienst u nodig heeft?"
-        tekst="Beschrijf kort wat er bij u moet gebeuren. Wij kiezen de juiste dienst erbij en zetten het bedrag binnen enkele uren op papier, vrijblijvend."
-      />
+        tekst="Beschrijf kort wat er bij u moet gebeuren. Wij kiezen de juiste dienst erbij en bellen u binnen enkele uren om de afspraak te bevestigen."
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="diensten"
+          berichtLabel="Wat moet er gebeuren?"
+          berichtPlaceholder="Bijvoorbeeld: nieuwe tv ophangen en de soundbar aansluiten."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

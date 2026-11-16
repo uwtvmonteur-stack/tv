@@ -1,14 +1,15 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
 import Reviews from "@/components/Reviews";
 import {
+  Aanvraagsectie,
   Cijferrij,
   Hero,
   Kop,
-  Slotoproep,
   Vinkjes,
   Vlak,
 } from "@/components/sections";
-import { stats } from "@/lib/content";
+import { BELOFTE, stats } from "@/lib/content";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -23,6 +24,17 @@ const waarden = [
   "Volledig verzekerd — ook uw kostbaarste OLED-tv",
   "Afspraak is afspraak: we bellen 30 minuten voor aankomst",
   "Netjes werken: beschermmateriaal neer, afval mee terug",
+];
+
+/**
+ * De regels naast het formulier. Vier is genoeg: wie hier is aangekomen heeft
+ * de pagina gelezen en hoeft niet nog zes keer overtuigd te worden.
+ */
+const aanvraagBelofte = [
+  BELOFTE.vrijblijvend,
+  BELOFTE.inclusief,
+  BELOFTE.geenAanbetaling,
+  BELOFTE.avondWeekend,
 ];
 
 export default function OverOnsPage() {
@@ -93,10 +105,23 @@ export default function OverOnsPage() {
 
       <Reviews toon="wit" />
 
-      <Slotoproep toon="oppervlak"
+      {/* Het formulier staat op de pagina zelf en niet achter een knop naar
+          /contact. Deze pagina stuurde bezoekers weg op het moment dat ze
+          besloten hadden, en dat is de stap waar verkeer het makkelijkst
+          verdwijnt. Twee van deze pagina's kregen betaald verkeer zonder dat
+          er een manier was om een afspraak te maken. */}
+      <Aanvraagsectie
+        toon="oppervlak"
         titel="Ervaar het zelf"
-        tekst="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast."
-      />
+        tekst="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen."
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="over-ons"
+          berichtLabel="Wat moet er gebeuren?"
+          berichtPlaceholder="Bijvoorbeeld: tv ophangen en alles aansluiten."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

@@ -845,50 +845,22 @@ export function Aanvraagsectie({
   );
 }
 
-/* ---- Afsluitende oproep ------------------------------------------------ */
+/* ---- Afsluitende oproep (verwijderd) ----------------------------------
+   Hier stond `Slotoproep`: een bijna-zwart kaartje met een kop en een knop
+   naar /contact, als afsluiting van /diensten, /werkgebied, /kennisbank, de
+   vijf kennisbankartikelen en /over-ons.
 
-export function Slotoproep({
-  titel = "Vraag een afspraak aan",
-  tekst = "Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast.",
-  href = "/contact",
-  toon = "oppervlak",
-}: {
-  titel?: string;
-  tekst?: string;
-  href?: string;
-  /** Dit blok brengt zijn eigen sectie mee; de pagina bepaalt de achtergrond. */
-  toon?: "oppervlak" | "wit";
-}) {
-  return (
-    <section
-      aria-labelledby="slot-kop"
-      className={`vlak ${toon === "wit" ? "bg-white" : "bg-surface"}`}
-    >
-      <div className="kader">
-        <div className="op-donker relative isolate overflow-hidden rounded-3xl bg-ink-950 px-6 py-12 text-ink-200 sm:px-10 lg:px-14 lg:py-16">
-          <div aria-hidden="true" className="raster absolute inset-0 opacity-70" />
-          <div aria-hidden="true" className="gloed -right-24 -top-24 size-[22rem]" />
-          <div className="relative grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
-            <div>
-              <h2 id="slot-kop" className="text-h2 text-white">
-                {titel}
-              </h2>
-              <p className="inleiding-donker mt-4 max-w-xl">{tekst}</p>
-              <p className="mt-5 flex items-center gap-2.5 text-ink-300">
-                <Icon name="clock" className="size-5 shrink-0 text-amber-300" />
-                Ook &apos;s avonds en in het weekend, zonder toeslag
-              </p>
-            </div>
-            <Link href={href} className="knop-vol knop-groot w-full">
-              Afspraak maken
-              <Icon name="arrow-right" className="size-5" />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+   Op 16-11-2026 is hij op alle negen vervangen door `Aanvraagsectie` met het
+   formulier erin. De reden staat in de cijfers: die negen pagina's stuurden
+   de bezoeker weg op het moment dat hij besloten had, en twee ervan kregen
+   betaald verkeer zonder dat er een manier was om een afspraak te maken.
+   Een knop naar een andere pagina is daar een stap te veel.
+
+   Komt er ooit een pagina waar het formulier niet hoort - een blog, een
+   nieuwsbericht - dan hoort hier weer zo'n blok: `Vlak toon` eromheen, een
+   `op-donker` kaart met `raster` en `gloed`, en de knop als `knop-vol
+   knop-groot`. Niet opnieuw met de hand; dan hoort het weer een component te
+   zijn. ------------------------------------------------------------------ */
 
 /* ---- Cijfers ----------------------------------------------------------- */
 

@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Faq from "@/components/Faq";
 import InlineCta from "@/components/InlineCta";
+import ContactForm from "@/components/ContactForm";
 import JsonLd from "@/components/JsonLd";
 import RelatedLinks from "@/components/RelatedLinks";
 import RichText from "@/components/RichText";
-import { Hero, Slotoproep, Vlak } from "@/components/sections";
+import { Aanvraagsectie, Hero, Vlak } from "@/components/sections";
+import { BELOFTE } from "@/lib/content";
 import { artikelBySlug, artikelen, type ArtikelSectie } from "@/lib/kennisbank";
 import { artikelJsonLd, faqJsonLd, pageMeta } from "@/lib/seo";
 
@@ -120,6 +122,17 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
   );
 }
 
+/**
+ * De regels naast het formulier. Vier is genoeg: wie hier is aangekomen heeft
+ * de pagina gelezen en hoeft niet nog zes keer overtuigd te worden.
+ */
+const aanvraagBelofte = [
+  BELOFTE.vrijblijvend,
+  BELOFTE.inclusief,
+  BELOFTE.geenAanbetaling,
+  BELOFTE.avondWeekend,
+];
+
 export default async function ArtikelPage({
   params,
 }: {
@@ -214,7 +227,23 @@ export default async function ArtikelPage({
         </div>
       </Vlak>
 
-      <Slotoproep toon="oppervlak" titel="Tv ophangen? Vraag een afspraak aan" />
+      {/* Het formulier staat op de pagina zelf en niet achter een knop naar
+          /contact. Deze pagina stuurde bezoekers weg op het moment dat ze
+          besloten hadden, en dat is de stap waar verkeer het makkelijkst
+          verdwijnt. Twee van deze pagina's kregen betaald verkeer zonder dat
+          er een manier was om een afspraak te maken. */}
+      <Aanvraagsectie
+        toon="oppervlak"
+        titel="Tv ophangen? Maak een afspraak"
+        tekst="U heeft het gelezen; wij doen het. Vertel kort wat er moet gebeuren en waar u woont, dan bellen wij u binnen enkele uren."
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="kennisbank-artikel"
+          berichtLabel="Wat moet er gebeuren?"
+          berichtPlaceholder="Bijvoorbeeld: 55 inch tv ophangen op een gipswand."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

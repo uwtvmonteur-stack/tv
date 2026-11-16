@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
 import JsonLd from "@/components/JsonLd";
 import { Icon } from "@/components/Icon";
-import { Hero, Slotoproep, Vlak } from "@/components/sections";
+import { Aanvraagsectie, Hero, Vlak } from "@/components/sections";
+import { BELOFTE } from "@/lib/content";
 import { artikelen } from "@/lib/kennisbank";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
@@ -12,6 +14,17 @@ export const metadata = pageMeta({
     "Antwoorden op de vragen die voorafgaan aan het ophangen van een tv: op welke hoogte, welke beugel, welke plug in een gipswand en wanneer u het beter laat doen.",
   path: "/kennisbank",
 });
+
+/**
+ * De regels naast het formulier. Vier is genoeg: wie hier is aangekomen heeft
+ * de pagina gelezen en hoeft niet nog zes keer overtuigd te worden.
+ */
+const aanvraagBelofte = [
+  BELOFTE.vrijblijvend,
+  BELOFTE.inclusief,
+  BELOFTE.geenAanbetaling,
+  BELOFTE.avondWeekend,
+];
 
 export default function KennisbankPage() {
   return (
@@ -75,10 +88,23 @@ export default function KennisbankPage() {
         </ul>
       </Vlak>
 
-      <Slotoproep toon="oppervlak"
+      {/* Het formulier staat op de pagina zelf en niet achter een knop naar
+          /contact. Deze pagina stuurde bezoekers weg op het moment dat ze
+          besloten hadden, en dat is de stap waar verkeer het makkelijkst
+          verdwijnt. Twee van deze pagina's kregen betaald verkeer zonder dat
+          er een manier was om een afspraak te maken. */}
+      <Aanvraagsectie
+        toon="oppervlak"
         titel="Liever gewoon laten doen?"
         tekst="Onze monteur bepaalt het wandtype, rekent het draagvermogen na en hangt uw tv waterpas op. U hoort het bedrag vooraf en zit nergens aan vast."
-      />
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="kennisbank"
+          berichtLabel="Wat moet er gebeuren?"
+          berichtPlaceholder="Bijvoorbeeld: 65 inch tv ophangen, ik weet niet welke beugel ik nodig heb."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

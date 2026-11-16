@@ -1,16 +1,18 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ContactForm from "@/components/ContactForm";
 import JsonLd from "@/components/JsonLd";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
+  Aanvraagsectie,
   Bewijsrij,
   Hero,
   HeroKnoppen,
   Kop,
-  Slotoproep,
   Vlak,
 } from "@/components/sections";
+import { BELOFTE } from "@/lib/content";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
@@ -20,6 +22,17 @@ export const metadata = pageMeta({
     "Onze tv monteurs zijn actief in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Bekijk alle steden waar we aan huis komen.",
   path: "/werkgebied",
 });
+
+/**
+ * De regels naast het formulier. Vier is genoeg: wie hier is aangekomen heeft
+ * de pagina gelezen en hoeft niet nog zes keer overtuigd te worden.
+ */
+const aanvraagBelofte = [
+  BELOFTE.vrijblijvend,
+  BELOFTE.inclusief,
+  BELOFTE.geenAanbetaling,
+  BELOFTE.avondWeekend,
+];
 
 export default function WerkgebiedPage() {
   const itemList = itemListJsonLd(
@@ -124,7 +137,23 @@ export default function WerkgebiedPage() {
       {/* Brengt zijn eigen sectie met achtergrond mee. */}
       <Reviews toon="wit" />
 
-      <Slotoproep toon="oppervlak" href="/contact" />
+      {/* Het formulier staat op de pagina zelf en niet achter een knop naar
+          /contact. Deze pagina stuurde bezoekers weg op het moment dat ze
+          besloten hadden, en dat is de stap waar verkeer het makkelijkst
+          verdwijnt. Twee van deze pagina's kregen betaald verkeer zonder dat
+          er een manier was om een afspraak te maken. */}
+      <Aanvraagsectie
+        toon="oppervlak"
+        titel="Een monteur uit uw eigen regio"
+        tekst="Vertel kort wat er moet gebeuren en geef uw postcode op. Wij bellen u binnen enkele uren om de afspraak te bevestigen."
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="werkgebied"
+          berichtLabel="Wat moet er gebeuren?"
+          berichtPlaceholder="Bijvoorbeeld: 55 inch tv ophangen in de woonkamer."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

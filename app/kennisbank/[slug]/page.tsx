@@ -192,6 +192,11 @@ export default async function ArtikelPage({
           </article>
 
           <InlineCta
+            // Zonder `href` valt `InlineCta` terug op /contact. Dat was juist
+            // zolang deze pagina geen formulier had; sinds 16-11-2026 staat
+            // het er wel, een halve pagina lager. De enige amberen knop van
+            // het artikel stuurde de bezoeker dus van de pagina af.
+            href="#afspraak"
             title="Liever niet zelf boren?"
             text="Onze monteur bepaalt het wandtype, rekent het draagvermogen na en hangt uw tv waterpas op. U hoort het bedrag vooraf, inclusief voorrijkosten en btw, en zit nergens aan vast."
             label={artikel.dienst.label}
@@ -219,10 +224,10 @@ export default async function ArtikelPage({
 
           <p className="mt-10 text-sm text-ink-600">
             Staat uw vraag er niet bij?{" "}
-            <Link href="/contact" className="verwijzing">
-              Stel hem via het contactformulier
+            <Link href="#afspraak" className="verwijzing">
+              Zet hem in het afspraakformulier
             </Link>
-            , dan krijgt u binnen enkele uren antwoord van een monteur.
+            , dan belt de monteur u erover.
           </p>
         </div>
       </Vlak>

@@ -23,6 +23,7 @@ import {
   BELOFTE,
   HERO_PRIJZEN,
   PRIJZEN_KORT,
+  VANAF_PRIJS,
   diensten,
   dienstHref,
   prijsklassen,
@@ -265,7 +266,7 @@ export default async function StadPage({
             ]}
           />
         }
-        bovenkop={`Tv ophangen in ${provincie.naam}`}
+        bovenkop={`Tv ophangen in ${provincie.naam} · vanaf ${VANAF_PRIJS}`}
         titel={`Tv laten ophangen in ${stad.naam}`}
         // Bewust `stad.blurb` als intro: die tekst gaat over de bouwstijlen en
         // woningtypes van déze stad en verschilt dus per pagina. De generieke

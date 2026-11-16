@@ -212,9 +212,37 @@ export function Hero({
             <p className="inleiding-donker mt-4 max-w-xl">{inleiding}</p>
           )}
 
+          {/* De knop staat bóven de prijstegels, en dat is geen smaakkwestie.
+              Gemeten op 375x667 (de telefoonmaat waar dit project op rekent),
+              met het prijsblok ervoor:
+
+                /diensten/tv-installatie   knop eindigt op 569 px   4,8% conversie
+                /diensten/tv-instellen     knop eindigt op 640 px   9,5%
+                /                          knop eindigt op 617 px   4,7%
+                /tv-ophangen               knop eindigt op 761 px   2,3%
+                /prijzen                   knop eindigt op 772 px   2,0%
+                /tv-ophangen/utrecht       knop eindigt op 742 px   -
+                /tv-ophangen-gipswand      knop eindigt op 859 px   -
+
+              Elke pagina waar de knop in het eerste scherm valt doet 4,7% of
+              meer; elke pagina waar hij eronder valt doet 2,3% of minder. De
+              drie tegels plus de notenregel zijn samen ongeveer 196 px, en dat
+              is precies wat de knop eruit duwde.
+
+              Het commentaar op /tv-ophangen zei al dat de knop vóór de vinkjes
+              was gezet omdat hij "net buiten het eerste scherm viel". Die
+              ingreep hielp niet, want het prijsblok dat diezelfde pagina
+              meegeeft stond erboven.
+
+              Dit raakt 35 pagina's: /tv-ophangen, /prijzen,
+              /tv-ophangen-gipswand en de 32 stadpagina's. De prijzen zelf
+              veranderen niet en staan nog in het eerste scherm of net eronder;
+              alleen de volgorde is om. */}
+          {children}
+
           {prijzen && (
             <>
-              <dl className="mt-6 grid max-w-xl grid-cols-3 gap-2 sm:gap-3">
+              <dl className="mt-7 grid max-w-xl grid-cols-3 gap-2 sm:gap-3">
                 {prijzen.map((p) => (
                   <div
                     key={p.label}
@@ -232,8 +260,6 @@ export function Hero({
               <p className="mt-3 text-sm text-ink-400">{PRIJS_NOOT}</p>
             </>
           )}
-
-          {children}
         </div>
 
         {heeftBeeld && (

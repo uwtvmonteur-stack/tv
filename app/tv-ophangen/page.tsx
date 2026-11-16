@@ -24,6 +24,7 @@ import {
   BELOFTE,
   HERO_PRIJZEN,
   PRIJZEN_KORT,
+  VANAF_PRIJS,
   prijsklassen,
   type FaqItem,
 } from "@/lib/content";
@@ -240,7 +241,7 @@ export default function TvOphangenPage() {
             ]}
           />
         }
-        bovenkop="Tv ophangen aan huis · ook ’s avonds en in het weekend"
+        bovenkop={`Tv ophangen aan huis · vanaf ${VANAF_PRIJS}, naar tv-formaat`}
         titel="Tv laten ophangen"
         inleiding="U wijst aan waar hij moet hangen, wij doen de rest: de juiste hoogte voor uw bank, kaarsrecht opgehangen, kabels weggewerkt en alles aangesloten. U hoeft niets voor te bereiden en niets op te ruimen."
         beeld="/images/dienst-tv-ophangen.webp"

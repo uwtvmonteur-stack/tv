@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StickyBar from "@/components/StickyBar";
@@ -14,24 +14,30 @@ import { offerCatalogJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 /**
- * Sora voor koppen, Inter voor alles wat gelezen of ingevuld wordt.
+ * Inter voor de lopende tekst, Plus Jakarta Sans voor de koppen.
  *
- * Beide variabel, zodat één bestand alle gewichten dekt: de koppen staan op
- * 700 en de knoppen op 600 zonder dat er een tweede download bij komt.
- * `display: "swap"` omdat de tekst eerder leesbaar moet zijn dan mooi — een
- * onzichtbare kop kost meer dan een kop die één keer verspringt.
+ * Dezelfde twee letters als op computerhulpzh.nl, icthulpteam.nl, muaz-it en
+ * mahmud. Dat is geen gemakzucht: die sites zijn de maatstaf waar deze site
+ * naast komt te staan, en één letterpaar over alle vijf maakt ze herkenbaar
+ * als werk van dezelfde hand.
  *
- * De namen van de CSS-variabelen zijn vast: app/globals.css leest
- * `--font-sora` als `font-display` en `--font-inter` als `font-sans`.
+ * Beide zijn variabele fonts met alleen de latijnse subset, en `next/font`
+ * host ze zelf — dus geen verbinding naar Google op het kritieke pad en geen
+ * layout shift, want de maten worden met een fallback-metriek gelijkgetrokken.
+ *
+ * Geen `weight`-lijst bij Jakarta: dan haalt Next per gewicht een los
+ * bestand op in plaats van het variabele font, en dat is hier zowel zwaarder
+ * als een bron van buildfouten gebleken ("queries have exactly one entry").
+ * Eén variabel bestand dekt alle gewichten die de koppen gebruiken.
  */
-const sora = Sora({
-  variable: "--font-sora",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
   display: "swap",
 });
@@ -159,24 +165,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="nl"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${sora.variable} ${inter.variable}`}
+      className={`${inter.variable} ${jakarta.variable}`}
     >
       <body className="flex min-h-dvh flex-col">
         <a
           href="#hoofdinhoud"
-          className="sr-only rounded-xl bg-accent-400 px-4 py-3 font-bold text-ink-950 focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50"
+          // Bijna-zwart met witte letters, niet amber met donkere letters:
+          // deze link verschijnt alleen bij toetsenbordfocus, en dan moet hij
+          // in één oogopslag van de pagina te onderscheiden zijn. Op een witte
+          // pagina is een amberen vlakje dat niet; een donker vlak wel.
+          className="sr-only rounded-lg bg-ink-950 px-4 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50"
         >
           Direct naar de inhoud
         </a>
         <JsonLd data={graph} />
-        {/* Voortgangsbalk: schaalt mee met hoever de pagina gescrold is, via
-            een CSS-scrolltijdlijn. Puur decoratief en daarom `aria-hidden`;
-            kan de browser geen scrolltijdlijn, dan blijft hij op schaal 0 en
-            is hij simpelweg onzichtbaar. */}
-        <div
-          aria-hidden="true"
-          className="voortgang fixed inset-x-0 top-0 z-[60] h-1 bg-gradient-to-r from-accent-500 via-accent-400 to-accent-300"
-        />
         <Header />
         <main id="hoofdinhoud" tabIndex={-1} className="flex-1">
           {children}

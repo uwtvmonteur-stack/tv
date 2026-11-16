@@ -2,11 +2,18 @@ import Link from "next/link";
 import { provincies } from "@/lib/steden";
 
 /**
- * Gedeelde rij provincie-links als chips. `prefix` bepaalt het label
- * (bijvoorbeeld "Tv ophangen" wordt "Tv ophangen Zuid-Holland").
+ * Gedeelde rij provincie-links. `prefix` bepaalt het label (bijvoorbeeld
+ * "Tv ophangen" wordt "Tv ophangen Zuid-Holland").
  *
- * `min-h-11` is hier geen detail: dit zijn tien tot twaalf links naast en
- * onder elkaar, en dat is precies de situatie waarin een duim ernaast mikt.
+ * De vorm staat in `pil-klik` en niet hier. Hierboven stond een klassenreeks
+ * met daarbovenop een commentaar dat beweerde dat dit rechthoekig met een
+ * echte rand was — terwijl de code al een afgeronde pil met een ring
+ * tekende. Dat commentaar beschreef de vorige generatie en sprak de regel
+ * eronder tegen.
+ *
+ * `min-h-11` (uit `pil`) is hier geen detail: dit zijn vier tot vijf links
+ * naast en onder elkaar, en dat is precies de situatie waarin een duim
+ * ernaast mikt.
  */
 export default function ProvincieChips({
   prefix,
@@ -15,21 +22,19 @@ export default function ProvincieChips({
   prefix: string;
   withOverview?: boolean;
 }) {
-  const chip =
-    "inline-flex min-h-11 items-center rounded-full bg-white px-4 font-medium ring-1 ring-ink-300 transition hover:bg-accent-50 hover:ring-accent-300";
   return (
-    <div className="mt-6 flex flex-wrap gap-2.5 text-sm">
+    <div className="mt-6 flex flex-wrap gap-2.5">
       {provincies.map((provincie) => (
         <Link
           key={provincie.slug}
           href={`/werkgebied/${provincie.slug}`}
-          className={chip}
+          className="pil-klik"
         >
           {prefix} {provincie.naam}
         </Link>
       ))}
       {withOverview && (
-        <Link href="/werkgebied" className={chip}>
+        <Link href="/werkgebied" className="pil-klik">
           Volledig werkgebied
         </Link>
       )}

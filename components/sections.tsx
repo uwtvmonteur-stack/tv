@@ -1,86 +1,121 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import Faq from "./Faq";
 import HeroVideo from "./HeroVideo";
 import { DienstIcon, Icon, type IconName } from "./Icon";
 import {
+  BAND_UITSPRAKEN,
   PRIJS_NOOT,
   PRIJZEN_KORT,
   diensten,
   dienstHref,
   prijsExtras,
   prijsklassen,
+  type FaqItem,
 } from "@/lib/content";
 
 /* =========================================================================
    Sectiebibliotheek
    =========================================================================
-   Elke pagina van deze site is opgebouwd uit de blokken hieronder. Dat is
-   geen gemak maar een eis: in de vorige opzet bepaalde elke pagina zelf zijn
-   marges, kaartranden en koptypografie, met als uitkomst elf verschillende
-   kaarten en negen hoekmaten voor wat in feite één ding is. Een bezoeker kan
-   dat niet benoemen, maar hij ziet wel dat het niet door één hand is gemaakt.
+   Elke pagina is opgebouwd uit de blokken hieronder. Een pagina levert
+   inhoud, een blok bepaalt vorm. Staat er in een pagina een `rounded-`,
+   `shadow-` of `px-`-klasse, dan hoort die hier.
 
-   De regel: een pagina levert inhoud, een blok bepaalt vorm. Staat er in een
-   pagina een `rounded-`, `shadow-` of `px-`-klasse, dan hoort die hier.
+   De vorm volgt de huisstijl van de andere eigen sites: donkere hero met
+   raster en gloed, foto in een afgeronde kaart ernaast, witte kaarten met
+   haarlijnring op een koel grijs vlak, genummerde stappen, en één donkere
+   vertrouwensband in het midden van de pagina.
    ========================================================================= */
 
 /* ---- Casco ------------------------------------------------------------- */
 
-export function Section({
+export function Vlak({
   children,
   id,
-  tone = "white",
+  toon = "wit",
   labelledBy,
   className = "",
 }: {
   children: ReactNode;
   id?: string;
-  /** `surface` is het lichtgrijze vlak dat afwisseling geeft; `dark` is bijna-zwart. */
-  tone?: "white" | "surface" | "dark";
+  /**
+   * `wit` en `oppervlak` wisselen elkaar af en vormen samen het ritme van de
+   * pagina. `donker` is het bijna-zwarte vlak met raster en gloed —
+   * spaarzaam, voor de vertrouwensband.
+   *
+   * Er stond hier ook `papier`, een tweede naam voor wit uit de vorige
+   * generatie, en dat was de standaardwaarde. Een vlak zonder `toon` kreeg
+   * dus een andere naam maar dezelfde kleur als het vlak ervoor, waarna de
+   * scheiding tussen twee secties verdween zonder dat iets dat meldde. Nu is
+   * er één naam per kleur en is `wit` de standaard.
+   */
+  toon?: "oppervlak" | "wit" | "donker";
   labelledBy?: string;
   className?: string;
 }) {
+  const donker = toon === "donker";
   const tonen = {
-    white: "",
-    surface: "bg-surface",
-    dark: "bg-ink-950 text-ink-100",
+    oppervlak: "bg-surface",
+    wit: "bg-white",
+    donker: "op-donker relative isolate overflow-hidden bg-ink-950 text-ink-200",
   };
+
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={`section ${tonen[tone]} ${className}`}
+      className={`vlak ${tonen[toon]} ${className}`}
     >
-      <div className="container-x">{children}</div>
+      {donker && (
+        <>
+          <div aria-hidden="true" className="raster absolute inset-0" />
+          <div aria-hidden="true" className="gloed -right-32 -top-32 size-[30rem]" />
+        </>
+      )}
+      <div className="kader relative">{children}</div>
     </section>
   );
 }
 
-export function SectionHeading({
-  eyebrow,
-  title,
-  lead,
-  center = false,
-  dark = false,
+/* ---- Sectiekop --------------------------------------------------------- */
+
+export function Kop({
+  bovenkop,
+  titel,
+  tekst,
+  donker = false,
+  midden = false,
   id,
+  className = "",
 }: {
-  eyebrow?: string;
-  title: ReactNode;
-  lead?: ReactNode;
-  center?: boolean;
-  dark?: boolean;
+  bovenkop?: string;
+  titel: ReactNode;
+  tekst?: ReactNode;
+  donker?: boolean;
+  /** Gecentreerd, voor secties die de volle breedte innemen. */
+  midden?: boolean;
   id?: string;
+  className?: string;
 }) {
   return (
     <div
-      className={`rise ${center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}`}
+      className={`komt-op max-w-3xl ${midden ? "mx-auto text-center" : ""} ${className}`}
     >
-      {eyebrow && <p className={dark ? "eyebrow-dark" : "eyebrow"}>{eyebrow}</p>}
-      <h2 id={id} className={`h-section mt-4 ${dark ? "text-white" : ""}`}>
-        {title}
+      {bovenkop && (
+        <p className={donker ? "bovenkop-donker" : "bovenkop"}>{bovenkop}</p>
+      )}
+      <h2
+        id={id}
+        className={`text-h2 ${bovenkop ? "mt-4" : ""} ${donker ? "text-white" : ""}`}
+      >
+        {titel}
       </h2>
-      {lead && <p className={`lead mt-4 ${dark ? "text-ink-300" : ""}`}>{lead}</p>}
+      {tekst && (
+        <p className={`mt-4 ${donker ? "inleiding-donker" : "inleiding"}`}>
+          {tekst}
+        </p>
+      )}
     </div>
   );
 }
@@ -88,171 +123,177 @@ export function SectionHeading({
 /* ---- Hero -------------------------------------------------------------- */
 
 /**
- * De hero van elke pagina.
+ * De opening van elke pagina: bijna-zwart vlak, tekst links, foto rechts.
  *
- * Herontworpen: niet langer tekst naast een kaartje, maar beeld over de volle
- * breedte met de tekst erop. Twee redenen, en de tweede is de belangrijkste.
+ * Dit is de hero van de andere eigen sites, en de reden dat die werkt is
+ * niet de kleur maar de ordening. De tekst staat náást de foto en niet
+ * eróver, dus de kop is wit op #0b0d11 (17:1) in plaats van wit op een
+ * willekeurige foto — waar eerder 1,4:1 werd gemeten. De foto houdt
+ * daardoor zijn eigen kleuren en hoeft niet half weggepoetst te worden.
  *
- * Esthetisch: een foto in een afgerond kadertje naast een kolom tekst is de
- * opzet van elke zakelijke website; beeld dat doorloopt tot de rand en tekst
- * die erop ligt, is wat een merk groot maakt.
- *
- * Praktisch: die naast-elkaar-opzet bestond op een telefoon helemaal niet.
- * Daar viel hij terug op tekst bóven beeld, waardoor de foto pas ná de lead
- * kwam en vaak helemaal buiten het eerste scherm viel. 85% van het betaalde
- * verkeer op deze site is mobiel. Nu draagt het beeld de hero op élk scherm.
- *
- * De leesbaarheid komt van `hero-scrim`: een verloop dat onderin dichtloopt
- * waar de tekst staat en bovenin open blijft waar het beeld mag ademen.
+ * Op een telefoon staat de tekst boven en de foto eronder, zodat het eerste
+ * wat iemand ziet de kop, het tarief en de knop zijn.
  */
-export function PageHero({
-  eyebrow,
-  title,
-  lead,
+export function Hero({
+  bovenkop,
+  titel,
+  inleiding,
   children,
-  image,
-  imageAlt,
+  beeld,
+  beeldAlt,
   video,
-  videoStaand,
-  breadcrumbs,
+  kruimels,
   preload = true,
   groot = false,
-  prijsregel,
+  prijzen,
+  merk,
 }: {
-  eyebrow?: string;
-  title: ReactNode;
-  lead?: ReactNode;
+  bovenkop?: string;
+  titel: ReactNode;
+  inleiding?: ReactNode;
   children?: ReactNode;
-  image?: string;
-  imageAlt?: string;
-  /**
-   * Alleen de homepage. Een stille, doorlopende video achter de scrim; de
-   * posterafbeelding blijft staan als de video niet mag of niet laadt.
-   */
+  beeld?: string;
+  beeldAlt?: string;
+  /** Alleen de homepage. De posterafbeelding blijft eronder staan. */
   video?: string;
-  /** De staande uitsnede voor telefoons; zie HeroVideo. */
-  videoStaand?: string;
-  breadcrumbs?: ReactNode;
+  kruimels?: ReactNode;
   /**
-   * Zet de preload-hint op de heroafbeelding. Heette tot Next 16 `priority`;
-   * die prop is daar vervangen door `preload` en doet sindsdien niets meer.
+   * De preload-hint op het herobeeld. Heette tot Next 16 `priority`; die
+   * prop is daar vervangen door `preload` en doet sindsdien niets meer.
    */
   preload?: boolean;
-  /**
-   * Alleen de homepage. Zonder dit onderscheid opent elke pagina even zwaar
-   * en zegt de typografie dus niets over waar je bent.
-   */
+  /** Alleen de homepage: één maat groter, met het zwevende kaartje erbij. */
   groot?: boolean;
+  /** Tarieven direct onder de kop, waar de koopvraag gesteld wordt. */
+  prijzen?: { label: string; prijs: string }[];
   /**
-   * Tarieven direct in de hero, als glazen chips.
-   *
-   * Uit de Ads-cijfers over 90 dagen: "tv laten ophangen kosten" gaf 16
-   * klikken en nul conversies, "tv bevestigen aan muur" 25 klikken en nul
-   * conversies. Beide landden op een pagina waar het eerste bedrag pas na
-   * zes tot acht schermen stond, terwijl de meta-title "vanaf €99" belooft.
+   * De naamplaat op het beeld. Leeg laten op pagina's waar het beeld al
+   * druk is; het is een accent, geen verplicht onderdeel.
    */
-  prijsregel?: { label: string; prijs: string }[];
+  merk?: string;
 }) {
-  const heeftBeeld = Boolean(video ?? image);
+  const heeftBeeld = Boolean(beeld);
 
   return (
-    <section className="relative isolate overflow-hidden bg-ink-950 text-white">
-      {/* Laag 1 — het beeld. De <Image> staat hier en niet in HeroVideo:
-          alleen vanuit een servercomponent plaatst Next de preload-hint in
-          de head, en dat is precies het element dat de LCP bepaalt. */}
-      {image ? (
-        <>
-          <Image
-            src={image}
-            alt={imageAlt ?? ""}
-            fill
-            preload={preload}
-            sizes="100vw"
-            // `brightness-50` op foto-heroes, niet op de videohero. Gemeten op
-            // de acht heroafbeeldingen: zes haalden met witte tekst erop zelfs
-            // de 3:1 voor grote koppen niet, met 1,4:1 als dieptepunt op de
-            // foto die op 37 pagina's staat. Een zwaardere scrim lost dat niet
-            // op — daarvoor zou hij 82% moeten dekken en dan zie je de foto
-            // niet meer. De foto temperen wel: de lichtste plek zakt van 0,965
-            // naar 0,207 luminantie, en daarmee haalt de tekst 4,9:1 bovenin.
-            // De videoposter is al donker genoeg (4,6:1) en blijft ongemoeid.
-            className={`object-cover ${video ? "" : "brightness-50"}`}
-          />
-          {video && <HeroVideo src={video} srcStaand={videoStaand} />}
-        </>
-      ) : (
-        <div className="mesh-dark absolute inset-0" aria-hidden="true" />
-      )}
-
-      {/* Laag 2 — leesbaarheid. Zonder beeld is er niets om te dempen, dan
-          zou de scrim de mesh alleen maar grijs maken. */}
-      {heeftBeeld && (
-        <div className="hero-scrim absolute inset-0" aria-hidden="true" />
-      )}
-      <div className="bg-grid absolute inset-0 opacity-40" aria-hidden="true" />
-      <div className="grain absolute inset-0" aria-hidden="true" />
-
-      {/* Laag 3 — de inhoud. `min-h` alleen bij video: daar moet het beeld
-          ruimte krijgen om te bewegen. `svh` en niet `vh`, anders springt de
-          hero op een telefoon zodra de adresbalk wegschuift. */}
+    <section className="op-donker relative isolate overflow-hidden bg-ink-950 text-ink-200">
+      <div aria-hidden="true" className="raster absolute inset-0" />
+      {/* Twee gloeden: één achter de kop en één laag rechts, zodat het vlak
+          niet als een plat zwart blok leest. Twee radiale verlopen, nul bytes. */}
+      <div aria-hidden="true" className="gloed -left-40 -top-44 size-[36rem]" />
       <div
-        className={`container-x relative flex flex-col justify-end py-16 sm:py-20 lg:py-28 ${
-          video
-            ? "min-h-[78svh] lg:min-h-[86svh]"
-            : image
-              ? "min-h-[52svh] lg:min-h-[58svh]"
-              : ""
-        }`}
+        aria-hidden="true"
+        className="gloed -right-24 bottom-0 size-[24rem] opacity-60"
+      />
+
+      <div
+        className={`kader relative grid gap-10 ${
+          groot
+            ? "pb-12 pt-10 sm:pb-16 sm:pt-12 lg:pb-20 lg:pt-14"
+            : "pb-10 pt-8 sm:pb-14 sm:pt-10 lg:pb-16 lg:pt-12"
+        } ${heeftBeeld ? "lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14" : ""}`}
       >
-        {breadcrumbs}
-        {eyebrow && (
-          <p className={`num text-accent-200 ${breadcrumbs ? "mt-6" : ""}`}>
-            {eyebrow}
-          </p>
+        <div className="min-w-0">
+          {kruimels}
+          {bovenkop && (
+            <p className={`bovenkop-donker ${kruimels ? "mt-6" : ""}`}>
+              {/* Het knipperende puntje staat op alle vier de andere sites en
+                  zegt hetzelfde als de tekst ernaast: er is nu iemand. */}
+              <span className="relative flex size-2.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-amber-300 opacity-60" />
+                <span className="relative inline-flex size-2.5 rounded-full bg-amber-300" />
+              </span>
+              {bovenkop}
+            </p>
+          )}
+          <h1 className={`${groot ? "text-display" : "text-h1"} mt-4 text-white`}>
+            {titel}
+          </h1>
+          {inleiding && (
+            <p className="inleiding-donker mt-4 max-w-xl">{inleiding}</p>
+          )}
+
+          {prijzen && (
+            <>
+              <dl className="mt-6 grid max-w-xl grid-cols-3 gap-2 sm:gap-3">
+                {prijzen.map((p) => (
+                  <div
+                    key={p.label}
+                    className="paneel-donker px-3 py-3 text-center sm:px-4 sm:py-4"
+                  >
+                    <dt className="text-2xs font-semibold uppercase tracking-[0.1em] text-ink-300 sm:text-xs">
+                      {p.label}
+                    </dt>
+                    <dd className="cijfers mt-1.5 font-display text-xl font-extrabold text-white sm:text-2xl">
+                      {p.prijs}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-3 text-sm text-ink-400">{PRIJS_NOOT}</p>
+            </>
+          )}
+
+          {children}
+        </div>
+
+        {heeftBeeld && (
+          <div className="relative">
+            <div
+              className={`relative overflow-hidden rounded-3xl bg-ink-900 shadow-2xl ring-1 ring-white/15 ${
+                video
+                  ? "aspect-[4/3] md:aspect-[16/10] lg:aspect-[5/4]"
+                  : "aspect-[4/3] lg:aspect-[5/4]"
+              }`}
+            >
+              <Image
+                src={beeld!}
+                alt={beeldAlt ?? ""}
+                fill
+                preload={preload}
+                fetchPriority={preload ? "high" : "auto"}
+                sizes="(min-width: 1024px) 600px, 100vw"
+                className="object-cover"
+              />
+              {video && <HeroVideo src={video} />}
+              {/* Linksboven en niet linksonder: bij `groot` ligt daar het
+                  zwevende kaartje, en die twee liepen over elkaar heen. */}
+              {merk && (
+                <p className="absolute left-4 top-4 rounded-xl bg-white/95 px-3.5 py-2 font-display text-sm font-extrabold text-ink-950 shadow-sm backdrop-blur-sm">
+                  {merk}
+                </p>
+              )}
+            </div>
+
+            {/* Het zwevende kaartje. Op de andere sites staat hier de
+                belbelofte; hier het antwoord op de vraag die iemand met een
+                lege muur echt heeft: wat kost dit en wanneer weet ik dat. */}
+            {groot && (
+              <div className="relative mt-4 flex items-center gap-4 rounded-2xl bg-white p-4 text-ink-900 shadow-lift sm:absolute sm:-bottom-7 sm:right-6 sm:mt-0 sm:w-[21rem]">
+                <span className="icoonvlak">
+                  <Icon name="euro" className="size-6" />
+                </span>
+                <span>
+                  <span className="block font-display font-extrabold text-ink-950">
+                    U weet het bedrag vooraf
+                  </span>
+                  <span className="block text-sm text-ink-600">
+                    Vaste prijs per tv-formaat, inclusief voorrijkosten en btw.
+                  </span>
+                </span>
+              </div>
+            )}
+          </div>
         )}
-        <h1
-          className={`mt-5 max-w-4xl font-display text-white ${
-            groot ? "text-display" : "text-hero"
-          }`}
-        >
-          {title}
-        </h1>
-        {prijsregel && prijsregel.length > 0 && (
-          <>
-            <dl className="mt-8 flex flex-wrap gap-2.5">
-              {prijsregel.map((rij) => (
-                <div key={rij.label} className="glas rounded-2xl px-4 py-2.5">
-                  <dt className="text-2xs font-semibold uppercase tracking-widest text-accent-200">
-                    {rij.label}
-                  </dt>
-                  <dd className="tabular text-lg font-bold text-white">
-                    {rij.prijs}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-3 text-sm text-ink-200">{PRIJS_NOOT}</p>
-          </>
-        )}
-        {lead && <p className="mt-6 max-w-2xl text-lead text-ink-200">{lead}</p>}
-        {children}
       </div>
     </section>
   );
 }
 
-/**
- * De vaste actieknoppen onder een hero.
- *
- * Eén gekleurde knop en niets ernaast dat ermee concurreert. Het
- * telefoonnummer staat bewust nergens als knop — alleen in de voettekst —
- * zodat de offerteaanvraag de enige handeling op het scherm is.
- */
-export function HeroActions({
+export function HeroKnoppen({
   href = "#offerte",
   label = "Afspraak aanvragen",
   tweedeHref = "/prijzen",
-  tweedeLabel = "Bekijk de prijzen",
+  tweedeLabel = "Bekijk alle tarieven",
 }: {
   href?: string;
   label?: string;
@@ -260,181 +301,188 @@ export function HeroActions({
   tweedeLabel?: string;
 }) {
   return (
-    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-      <Link href={href} className="btn-primary btn-lg">
+    <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+      <Link href={href} className="knop-vol knop-groot">
         {label}
         <Icon name="arrow-right" className="size-5" />
       </Link>
-      <Link href={tweedeHref} className="btn-on-dark btn-lg">
+      <Link href={tweedeHref} className="knop-op-donker knop-groot">
         {tweedeLabel}
       </Link>
     </div>
   );
 }
 
-/* ---- Vertrouwen -------------------------------------------------------- */
+/* ---- Lopende band ------------------------------------------------------ */
 
-export const USPS: { icon: IconName; title: string; text: string }[] = [
+/**
+ * De band onder de hero: korte uitspraken die elders op de site woordelijk
+ * worden waargemaakt. Hij sluit het donkere vlak van de hero af.
+ *
+ * Bewust stil, terwijl de andere eigen sites hier een lopende band hebben.
+ * WCAG 2.2.2 (niveau A) vraagt een pauzeknop bij bewegende inhoud die
+ * vanzelf begint, langer dan vijf seconden duurt en naast andere inhoud
+ * staat — en `prefers-reduced-motion` geldt daar niet als zo'n knop. Een
+ * pauzeknopje in een strook van 56 pixels is lelijker dan het probleem
+ * groot is, en beweging vlak onder de hero concurreert bovendien met de
+ * enige knop die daar staat. Stil ziet het er vrijwel hetzelfde uit.
+ *
+ * Op een telefoon kan de bezoeker de rij zelf opzij schuiven; dat is
+ * door de gebruiker gestuurd en valt dus niet onder 2.2.2.
+ */
+export function Band() {
+  return (
+    <div className="border-y border-white/10 bg-ink-950">
+      {/* Op een telefoon één rij die de bezoeker zelf opzij schuift — zes
+          uitspraken onder elkaar maken de band daar 170 pixels hoog, pal
+          onder de hero. Vanaf `sm` breekt hij gewoon af, gecentreerd: met
+          `justify-between` stonden de twee overgebleven uitspraken op de
+          tweede regel ver uit elkaar aan de randen. */}
+      <ul className="kader flex items-center gap-x-8 gap-y-2 overflow-x-auto py-4 [scrollbar-width:none] sm:flex-wrap sm:justify-center sm:overflow-visible [&::-webkit-scrollbar]:hidden">
+        {BAND_UITSPRAKEN.map((t) => (
+          <li
+            key={t}
+            className="flex shrink-0 items-center gap-2.5 text-sm font-semibold text-ink-300"
+          >
+            <Icon name="check" strokeWidth={2.5} className="size-4 shrink-0 text-amber-300" />
+            {t}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ---- Bewijs ------------------------------------------------------------ */
+
+export const BEWIJS: { icon: IconName; titel: string; tekst: string }[] = [
   {
     icon: "euro",
-    title: "Vaste prijs per tv-formaat",
-    text: `${PRIJZEN_KORT}, inclusief voorrijkosten en btw. U weet het bedrag voordat wij komen.`,
+    titel: "Vaste prijs per tv-formaat",
+    tekst: `${PRIJZEN_KORT}, inclusief voorrijkosten en btw. U weet het bedrag voordat wij komen.`,
   },
   {
     icon: "level",
-    title: "Waterpas en belast getest",
-    text: "Wij hangen uw tv recht en hangen er daarna zelf aan, zodat u weet dat hij houdt.",
+    titel: "Waterpas en belast getest",
+    tekst:
+      "Wij hangen uw tv recht en hangen er daarna zelf aan, zodat u weet dat hij houdt.",
   },
   {
     icon: "shield",
-    title: "Eigen verzekerde monteurs",
-    text: "In loondienst en opgeleid door ons. Geen wisselende onderaannemers aan uw muur.",
+    titel: "Eigen verzekerde monteurs",
+    tekst:
+      "In loondienst en opgeleid door ons. Geen wisselende onderaannemers aan uw muur.",
   },
   {
     icon: "clock",
-    title: "Ook 's avonds en in het weekend",
-    text: "Zonder toeslag, zeven dagen per week bereikbaar.",
+    titel: "Ook 's avonds en in het weekend",
+    tekst: "Zonder toeslag, zeven dagen per week bereikbaar.",
   },
 ];
 
 /**
- * De bewijsbalk voor pagina's die níet over één dienst gaan.
+ * Dezelfde rij, maar voor pagina's die niet over ophangen gaan.
  *
- * De standaardset hierboven is montagetaal: "vaste prijs per tv-formaat" en
- * "waterpas en belast getest" zeggen niets tegen iemand die geen geluid op
- * zijn tv heeft. Op /tv-ophangen en de stadpagina's klopt die set juist wel,
- * dus hij blijft daar staan.
+ * "Vaste prijs per tv-formaat" en "waterpas getest" zeggen niets tegen
+ * iemand die geen geluid uit zijn tv krijgt.
  */
-export const USPS_BREED: { icon: IconName; title: string; text: string }[] = [
+export const BEWIJS_BREED: { icon: IconName; titel: string; tekst: string }[] = [
   {
     icon: "euro",
-    title: "Vaste prijs per klus",
-    text: "U weet het bedrag voordat wij langskomen, inclusief voorrijkosten en btw.",
+    titel: "Vaste prijs per klus",
+    tekst:
+      "U weet het bedrag voordat wij langskomen, inclusief voorrijkosten en btw.",
   },
   {
     icon: "tool",
-    title: "Eén monteur voor alles",
-    text: "Ophangen, aansluiten, instellen en storingen verhelpen — in één bezoek.",
+    titel: "Eén monteur voor alles",
+    tekst:
+      "Ophangen, aansluiten, instellen en storingen verhelpen — in één bezoek.",
   },
   {
     icon: "shield",
-    title: "Eigen verzekerde monteurs",
-    text: "In loondienst en opgeleid door ons. Geen wisselende onderaannemers in huis.",
+    titel: "Eigen verzekerde monteurs",
+    tekst:
+      "In loondienst en opgeleid door ons. Geen wisselende onderaannemers in huis.",
   },
   {
     icon: "clock",
-    title: "Ook 's avonds en in het weekend",
-    text: "Zonder toeslag, zeven dagen per week bereikbaar.",
+    titel: "Ook 's avonds en in het weekend",
+    tekst: "Zonder toeslag, zeven dagen per week bereikbaar.",
   },
 ];
 
-export function TrustBar({
-  dark = false,
-  items = USPS,
+/**
+ * De bewijsrij als vier kaarten.
+ *
+ * `kopNiveau` is er niet voor de smaak maar voor de documentstructuur. Op de
+ * vijf pagina's waar dit blok in een eigen sectie zonder `Kop` staat — de 32
+ * stadpagina's, /tv-ophangen, /werkgebied, de vier provincies en /prijzen —
+ * zijn deze vier koppen de eerste koppen ná de h1 van de hero. Met een h3
+ * sloeg de structuur daar h2 over: gemeten op 39 gegenereerde pagina's.
+ * Staat er wél een `Kop` boven (zoals op de homepage), dan blijft het h3.
+ */
+export function Bewijsrij({
+  donker = false,
+  items = BEWIJS,
+  kopNiveau = 3,
+  kolommen = 4,
 }: {
-  dark?: boolean;
-  /** Eigen set, bijvoorbeeld `USPS_BREED` op een pagina met meer diensten. */
-  items?: { icon: IconName; title: string; text: string }[];
+  donker?: boolean;
+  items?: { icon: IconName; titel: string; tekst: string }[];
+  /** 2 als dit blok de eerste kop na de h1 draagt, 3 onder een `Kop`. */
+  kopNiveau?: 2 | 3;
+  /** 2 voor een kolom naast een beeld, 4 over de volle breedte. */
+  kolommen?: 2 | 4;
 }) {
+  const H = kopNiveau === 2 ? "h2" : "h3";
   return (
-    // Geen vier kaartjes meer maar vier kolommen onder een haarlijn. Een
-    // kaartje zegt "dit is een los blokje"; een kolom onder een lijn zegt
-    // "dit hoort bij elkaar". Het scheelt bovendien vier randen, vier
-    // schaduwen en vier achtergronden op een scherm waar het om de tekst gaat.
-    <ul className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((u) => (
+    <ul
+      className={`grid gap-4 sm:grid-cols-2 ${kolommen === 4 ? "lg:grid-cols-4" : ""}`}
+    >
+      {items.map((b) => (
         <li
-          key={u.title}
-          className={`rise-in border-t pt-5 ${
-            dark ? "border-white/20" : "border-ink-300"
-          }`}
+          key={b.titel}
+          className={`komt-op p-5 sm:p-6 ${donker ? "paneel-donker" : "paneel"}`}
         >
-          <span
-            className={`inline-grid size-10 place-items-center rounded-xl ${
-              dark ? "bg-white/10 text-accent-300" : "bg-ink-950 text-accent-300"
-            }`}
-          >
-            <Icon name={u.icon} className="size-5" />
+          <span className={donker ? "icoonvlak-donker" : "icoonvlak"}>
+            <Icon name={b.icon} className="size-6" />
           </span>
-          <span
-            className={`mt-4 block font-display text-h3 ${
-              dark ? "text-white" : "text-ink-950"
-            }`}
+          <H className={`mt-4 text-h3 ${donker ? "text-white" : ""}`}>
+            {b.titel}
+          </H>
+          <p
+            className={`mt-2 text-kaart ${donker ? "text-ink-300" : "text-ink-600"}`}
           >
-            {u.title}
-          </span>
-          <span
-            className={`mt-2 block text-sm ${dark ? "text-ink-300" : "text-ink-600"}`}
-          >
-            {u.text}
-          </span>
+            {b.tekst}
+          </p>
         </li>
       ))}
     </ul>
   );
 }
 
-/* ---- Vertrouwensrij ----------------------------------------------------
-   Dit was een lopende band. Die is vervangen door een rij die omslaat, en
-   dat loste drie dingen tegelijk op:
-
-   1. WCAG 2.2.2 (niveau A): bewegende inhoud die vanzelf start en langer dan
-      vijf seconden duurt, moet te pauzeren zijn. De band liep oneindig en had
-      geen knop. Een rij die stilstaat heeft die knop niet nodig.
-   2. Bij `prefers-reduced-motion` stond de band stil op de plek waar hij
-      toevallig was. Van de zes uitspraken bleven er op een telefoon vijf
-      buiten beeld, afgeknipt door `overflow: hidden` en niet scrollbaar.
-   3. De inhoud stond twee keer in de DOM om de naad onzichtbaar te maken.
-      Dat is nu niet meer nodig.
-
-   Lopende tekst is op een telefoon bovendien slecht te lezen: de band liep
-   met ongeveer 60 pixels per seconde.                                     */
-
-export function Vertrouwensrij({ items }: { items: readonly string[] }) {
-  return (
-    <div className="border-y border-white/10 bg-ink-950">
-      <div className="container-x">
-        <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 py-5">
-          {items.map((tekst) => (
-            <li
-              key={tekst}
-              className="flex items-center gap-2.5 font-display text-sm font-bold uppercase tracking-[0.14em] text-ink-200"
-            >
-              <Icon
-                name="check"
-                className="size-4 shrink-0 text-accent-300"
-                strokeWidth={2.5}
-              />
-              {tekst}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-export function CheckList({
+export function Vinkjes({
   items,
   className = "",
-  dark = false,
+  donker = false,
 }: {
   items: readonly string[];
   className?: string;
-  dark?: boolean;
+  donker?: boolean;
 }) {
   return (
     <ul className={`space-y-3 ${className}`}>
       {items.map((it) => (
         <li key={it} className="flex gap-3">
           <span
-            className={`mt-1 grid size-6 shrink-0 place-items-center rounded-full ${
-              dark ? "bg-accent-400/20 text-accent-300" : "bg-accent-100 text-accent-700"
+            className={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-full ${
+              donker ? "bg-amber-400/20 text-amber-300" : "bg-amber-100 text-amber-700"
             }`}
           >
-            <Icon name="check" className="size-4" strokeWidth={2.5} />
+            <Icon name="check" strokeWidth={3} className="size-3.5" />
           </span>
-          <span className={dark ? "text-ink-200" : ""}>{it}</span>
+          <span className={donker ? "text-ink-200" : ""}>{it}</span>
         </li>
       ))}
     </ul>
@@ -443,8 +491,77 @@ export function CheckList({
 
 /* ---- Werkwijze --------------------------------------------------------- */
 
-export function HowItWorks() {
-  const stappen: { icon: IconName; title: string; text: string }[] = [
+/**
+ * `title`/`text` en niet `titel`/`tekst`: de zeven stappenlijsten in de
+ * paginabestanden gebruiken deze namen al, net als `IconCard`. De
+ * componentnamen en de klassen zijn Nederlands, de sleutels van deze
+ * gegevensvormen waren dat nooit — en ze hier omdopen zou zeven lijsten
+ * wijzigen zonder dat er iets aan de pagina verandert.
+ */
+export type Stap = { title: string; text: string; icon?: IconName };
+
+/**
+ * Genummerde kaarten voor een werkwijze van drie tot zes stappen.
+ *
+ * Dit blok stond zeven keer gekopieerd in de paginabestanden — als een rij
+ * cijfers onder een haarlijn (`border-t border-ink-300`), de vorm van de
+ * vorige generatie. Daardoor had de site twee ontwerpen voor hetzelfde
+ * begrip: kaarten met een zwarte schijf op de homepage en de stadpagina's,
+ * haarlijnen op de zeven dienst- en situatiepagina's. Nu één vorm, één keer
+ * opgeschreven.
+ *
+ * Het cijfer zit in een zwarte schijf die half over de bovenrand hangt —
+ * hetzelfde patroon als op de andere eigen sites, en de reden dat de volgorde
+ * in één blik te zien is.
+ */
+export function Stappen({
+  items,
+  kolommen = 3,
+  kopNiveau = 3,
+}: {
+  items: readonly Stap[];
+  kolommen?: 3 | 4;
+  /** 4 als er een h3 boven dit blok staat in plaats van een sectiekop. */
+  kopNiveau?: 3 | 4;
+}) {
+  const H = kopNiveau === 4 ? "h4" : "h3";
+  return (
+    // Containerquery en niet een mediaquery: dit blok staat soms in een
+    // smalle kolom, en dan moet het naar die kolom kijken en niet naar het
+    // venster.
+    <div className="@container">
+      <ol
+        className={`grid gap-7 @2xl:grid-cols-2 @2xl:gap-6 ${
+          kolommen === 4 ? "@5xl:grid-cols-4" : "@3xl:grid-cols-3"
+        }`}
+      >
+        {items.map((stap, i) => (
+          <li key={stap.title} className="komt-op paneel relative p-6 sm:p-7">
+            <span
+              aria-hidden="true"
+              className="absolute -top-4 left-6 grid size-9 place-items-center rounded-full bg-ink-950 font-display text-sm font-extrabold text-white"
+            >
+              {i + 1}
+            </span>
+            {stap.icon && (
+              <span className="icoonvlak mt-2">
+                <Icon name={stap.icon} className="size-6" />
+              </span>
+            )}
+            <H className={`text-h3 ${stap.icon ? "mt-4" : "mt-3"}`}>
+              {stap.title}
+            </H>
+            <p className="mt-2 text-kaart text-ink-600">{stap.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+/** De drie stappen van een afspraak, in de vorm van `Stappen`. */
+export function Werkwijze() {
+  const stappen: Stap[] = [
     {
       icon: "chat",
       title: "U vraagt een afspraak aan",
@@ -458,306 +575,311 @@ export function HowItWorks() {
     {
       icon: "level",
       // Niet "hangt hem op": dit blok staat ook op de homepage, en die gaat
-      // sinds de omzetting naar "tv monteur aan huis" over vier diensten.
-      // Een soundbar of een wifi-probleem wordt niet opgehangen.
+      // over vier diensten. Een soundbar of een wifiprobleem wordt niet
+      // opgehangen.
       title: "De monteur doet het werk",
       text: "Waterpas, kabels weggewerkt, alles aangesloten en getest. Wij ruimen op en nemen het verpakkingsmateriaal mee.",
     },
   ];
-  return (
-    // Containerquery: in een smalle kolom onder elkaar, naast elkaar zodra er
-    // echt ruimte is. Een mediaquery zou hier naar het venster kijken en niet
-    // naar de kolom waarin het blok staat.
-    <div className="@container">
-      <ol className="grid gap-10 @3xl:grid-cols-3 @3xl:gap-8">
-        {stappen.map((s, i) => (
-          <li key={s.title} className="rise-in">
-            {/* Het cijfer is groot en grijs, niet amber: amber is in dit
-                systeem uitsluitend de actiekleur, en drie amberkleurige
-                cijfers op een pagina maken de offerteknop onvindbaar. De
-                volgorde zit al in de ol, dus het cijfer is decoratie. */}
-            <div className="flex items-center gap-5">
-              <span
-                aria-hidden="true"
-                className="tabular font-display text-stat font-bold leading-none text-ink-200"
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="h-px flex-1 bg-ink-200" />
-              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-ink-950 text-accent-300">
-                <Icon name={s.icon} className="size-5" />
-              </span>
-            </div>
-            <h3 className="mt-6 text-h3">{s.title}</h3>
-            <p className="mt-2 text-ink-600">{s.text}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
+  return <Stappen items={stappen} />;
 }
 
 /* ---- Diensten ---------------------------------------------------------- */
 
-/** De bestandsnamen volgen de slug niet overal, dus staat de koppeling hier. */
-const dienstAfbeelding: Record<string, string> = {
-  "tv-ophangen": "/images/dienst-tv-ophangen.jpg",
-  "tv-installatie": "/images/dienst-tv-installatie.jpg",
-  "soundbar-installatie": "/images/dienst-soundbar.jpg",
-  "tv-instellen": "/images/dienst-tv-instellen.jpg",
-  "kabels-wegwerken": "/images/dienst-kabels-wegwerken.jpg",
+/** De bestandsnamen volgen de slug, maar de koppeling staat expliciet hier. */
+const dienstBeeld: Record<string, string> = {
+  "tv-ophangen": "/images/dienst-tv-ophangen.webp",
+  "tv-installatie": "/images/dienst-tv-installatie.webp",
+  "soundbar-installatie": "/images/dienst-soundbar-installatie.webp",
+  "tv-instellen": "/images/dienst-tv-instellen.webp",
 };
 
-export function ServiceCards({
+/**
+ * De diensten als fotokaarten.
+ *
+ * Een foto van een opgehangen tv zegt in één blik wat vier regels tekst
+ * moeten uitleggen, en het is precies waar deze bezoeker naar zoekt: hoe
+ * het eruit gaat zien. Op een telefoon staat de foto links in een strook
+ * van 112px; vanaf `sm` erboven, over de volle breedte van de kaart.
+ */
+export function Dienstenlijst({
   slugs,
-  headingLevel = 3,
+  kopNiveau = 3,
 }: {
   slugs?: string[];
-  headingLevel?: 2 | 3;
+  kopNiveau?: 2 | 3;
 }) {
   const lijst = slugs ? diensten.filter((d) => slugs.includes(d.slug)) : diensten;
-  const H = headingLevel === 2 ? "h2" : "h3";
-  // Bento in plaats van vier even grote kaarten: de eerste dienst krijgt het
-  // dubbele oppervlak. Vier identieke vakjes laten de bezoeker kiezen zonder
-  // enige hint; een groot vlak zegt waar wij voor bekendstaan en laat de rest
-  // gewoon bereikbaar. Alleen bij precies vier diensten, want bij een andere
-  // telling valt het raster uit elkaar.
-  const bento = lijst.length === 4;
+  const H = kopNiveau === 2 ? "h2" : "h3";
+
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {lijst.map((d, i) => {
-        const groot = bento && i === 0;
-        const breed = bento && i === 3;
-        return (
-          <li
-            key={d.slug}
-            className={
-              groot ? "sm:col-span-2 lg:row-span-2" : breed ? "lg:col-span-2" : ""
-            }
+      {lijst.map((d) => (
+        <li key={d.slug} className="komt-op">
+          <Link
+            href={dienstHref(d)}
+            className="paneel paneel-hover group flex h-full overflow-hidden sm:flex-col"
           >
-            <Link
-              href={dienstHref(d)}
-              className="rise-in card card-hover group relative flex h-full flex-col overflow-hidden"
-            >
-              <div
-                className={`relative overflow-hidden bg-ink-100 ${
-                  groot ? "aspect-[4/3] lg:flex-1" : "aspect-[3/2]"
-                }`}
-              >
-                {dienstAfbeelding[d.slug] && (
-                  <Image
-                    src={dienstAfbeelding[d.slug]}
-                    alt=""
-                    fill
-                    // De brede kaart (i === 3) beslaat op lg twee kolommen en
-                    // rendert dus op 50vw, niet op 25vw. Met de oude waarde
-                    // haalde de browser daar een afbeelding van halve breedte
-                    // op en rekte die uit.
-                    sizes={
-                      groot || breed
-                        ? "(min-width: 1024px) 50vw, 100vw"
-                        : "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    }
-                    className="object-cover transition duration-700 group-hover:scale-[1.04]"
-                  />
-                )}
-                {/* Verloop onderlangs het beeld, zodat de foto in de tekst
-                    overloopt in plaats van er met een harde rand op te stoten. */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent"
+            <div className="relative w-28 shrink-0 overflow-hidden bg-ink-100 sm:aspect-[3/2] sm:w-auto">
+              {dienstBeeld[d.slug] && (
+                <Image
+                  src={dienstBeeld[d.slug]}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 112px"
+                  className="object-cover transition duration-500 group-hover:scale-[1.04]"
                 />
-                <span className="absolute left-4 top-4 grid size-11 place-items-center rounded-xl bg-ink-950 text-accent-300 shadow-sm">
-                  <DienstIcon slug={d.slug} />
-                </span>
-              </div>
-              <div className={`flex flex-col ${groot ? "p-6 sm:p-7" : "p-5"}`}>
-                <H className={groot ? "text-h2" : "text-h3"}>{d.naam}</H>
-                <p className={`mt-2 text-ink-600 ${groot ? "max-w-prose" : "text-sm"}`}>
+              )}
+              <span className="absolute left-3 top-3 hidden size-10 place-items-center rounded-xl bg-white/95 text-amber-700 shadow-sm sm:grid">
+                <DienstIcon slug={d.slug} className="size-5" />
+              </span>
+            </div>
+            <div className="flex min-w-0 flex-1 items-center gap-2 p-4 sm:flex-col sm:items-stretch sm:p-5">
+              <div className="min-w-0 flex-1 sm:flex-none">
+                <H className="text-h3">{d.naam}</H>
+                <p className="mt-1.5 text-kaart leading-snug text-ink-600">
                   {d.kort}
                 </p>
-                {/* Niet "Meer informatie": dat is op vier kaarten vier keer
-                    dezelfde ankertekst, voor een bezoeker en voor Google. */}
-                <span className="mt-4 flex items-center gap-1.5 font-semibold text-accent-700">
-                  Bekijk {d.naam.toLowerCase()}
-                  <Icon
-                    name="arrow-right"
-                    className="size-4 transition group-hover:translate-x-1"
-                  />
-                </span>
               </div>
-            </Link>
-          </li>
-        );
-      })}
+              <Icon
+                name="arrow-right"
+                className="size-5 shrink-0 text-amber-700 sm:hidden"
+              />
+              <span className="mt-auto hidden items-center gap-1.5 pt-4 text-sm font-bold text-amber-700 sm:flex">
+                Meer informatie
+                <Icon
+                  name="arrow-right"
+                  className="size-4 transition group-hover:translate-x-1"
+                />
+              </span>
+            </div>
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 }
 
-/* ---- Prijs ------------------------------------------------------------- */
+/* ---- Prijzen ----------------------------------------------------------- */
 
 /**
- * De vanafprijs, met daarnaast waar het uiteindelijke bedrag van afhangt.
+ * De drie montagetarieven als kaarten.
  *
- * Een bezoeker die geen vast bedrag ziet, wil precies één ding weten: waar
- * hangt het dan van af? Krijgt hij daar geen antwoord op, dan leest
- * "offerte" als "ze willen niet zeggen wat het kost" — en dat is duurder dan
- * welk tarief ook.
- */
-/**
- * De drie montagetarieven per tv-formaat, met daaronder wat er bij kan komen.
- *
- * Staat op de homepage, /prijzen, /tv-ophangen, de 32 stadpagina's en de vier
- * provinciepagina's — dus op elke pagina waar iemand de koopvraag stelt. Eén
- * blok en niet vijf varianten: een bedrag dat per pagina anders staat, kost
- * precies het vertrouwen dat een vaste prijs moet opbouwen.
- *
- * De middelste klasse krijgt het donkere vlak. Dat is het formaat waar de
- * meeste aanvragen in vallen, en een rij van drie identieke kaarten dwingt de
- * bezoeker zelf te kiezen waar hij hoort.
+ * Het middelste formaat krijgt een amberen ring en een label: dat is het
+ * formaat waar de meeste aanvragen in vallen. Eén knop onder de drie en niet
+ * drie knoppen naast elkaar — er valt hier niets te kiezen, de maat van de
+ * tv bepaalt het tarief.
  */
 export function Prijsklassen({ href = "#offerte" }: { href?: string }) {
   return (
     <div>
       <ul className="grid gap-5 lg:grid-cols-3">
         {prijsklassen.map((klasse) => (
-          <li key={klasse.naam}>
-            <div
-              className={`rise-in relative flex h-full flex-col overflow-hidden rounded-3xl p-8 ${
-                klasse.populair
-                  ? "bg-ink-950 text-white shadow-lift"
-                  : "card"
-              }`}
-            >
-              {klasse.populair && (
-                <>
-                  <div className="bg-grid absolute inset-0" aria-hidden="true" />
-                  <div
-                    className="absolute -right-16 -top-16 size-64 rounded-full bg-accent-500/25 blur-3xl"
-                    aria-hidden="true"
+          <li
+            key={klasse.naam}
+            className={`komt-op relative flex flex-col p-6 sm:p-7 ${
+              klasse.populair
+                ? "rounded-2xl bg-white shadow-lift ring-2 ring-amber-400"
+                : "paneel"
+            }`}
+          >
+            {klasse.populair && (
+              <span className="absolute -top-3 left-6 rounded-full bg-amber-400 px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.1em] text-ink-950">
+                Meest gekozen
+              </span>
+            )}
+            <h3 className={`text-h3 ${klasse.populair ? "mt-2" : ""}`}>
+              {klasse.naam}
+            </h3>
+            <p className="mt-1 text-sm text-ink-600">{klasse.maat}</p>
+
+            <p className="cijfers mt-5 font-display text-prijs font-extrabold text-ink-950">
+              {klasse.prijs}
+            </p>
+
+            <ul className="mt-6 flex flex-col gap-3 border-t border-ink-100 pt-6">
+              {klasse.inbegrepen.map((punt) => (
+                <li key={punt} className="flex items-start gap-2.5">
+                  <Icon
+                    name="check"
+                    strokeWidth={3}
+                    className="mt-1 size-4 shrink-0 text-amber-700"
                   />
-                </>
-              )}
-              <div className="relative flex h-full flex-col">
-                <div className="flex items-start justify-between gap-3">
-                  <p className={klasse.populair ? "eyebrow-dark" : "eyebrow"}>
-                    {klasse.naam}
-                  </p>
-                  {/* `whitespace-nowrap` op de badge: zonder dat valt "Meest
-                      gekozen" op een 360px-telefoon over twee regels naast de
-                      klassenaam. */}
-                  {klasse.populair && (
-                    <span className="whitespace-nowrap rounded-full bg-accent-400 px-3 py-1 text-2xs font-bold uppercase tracking-wide text-ink-950">
-                      Meest gekozen
-                    </span>
-                  )}
-                </div>
-
-                <p
-                  className={`mt-2 text-sm ${klasse.populair ? "text-ink-300" : "text-ink-600"}`}
-                >
-                  {klasse.maat}
-                </p>
-
-                <p className="mt-5 font-display text-stat font-bold tabular">
-                  {klasse.prijs}
-                </p>
-
-                {/* `mb-8` hier en `mt-auto` op de knop: de middelste klasse
-                    heeft een regel meer dan de andere twee, en zonder dit
-                    staan de drie knoppen niet op één lijn. */}
-                <ul className="mb-8 mt-6 flex flex-col gap-3">
-                  {klasse.inbegrepen.map((punt) => (
-                    <li key={punt} className="flex items-start gap-2.5">
-                      <Icon
-                        name="check"
-                        className={`mt-0.5 size-5 shrink-0 ${klasse.populair ? "text-accent-300" : "text-accent-700"}`}
-                      />
-                      <span
-                        className={
-                          klasse.populair ? "text-ink-200" : "text-ink-700"
-                        }
-                      >
-                        {punt}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  href={href}
-                  className={`${klasse.populair ? "btn-primary" : "btn-ghost"} mt-auto w-full`}
-                >
-                  {/* Drie knoppen met dezelfde tekst naar hetzelfde doel zijn
-                      voor een schermlezer niet uit elkaar te houden. De
-                      toevoeging staat er alleen voor hem. */}
-                  <span>
-                    Afspraak aanvragen
-                    <span className="sr-only">
-                      {" "}
-                      — {klasse.naam}, {klasse.maat.toLowerCase()}
-                    </span>
-                  </span>
-                  <Icon name="arrow-right" className="size-4" />
-                </Link>
-              </div>
-            </div>
+                  <span className="text-kaart text-ink-700">{punt}</span>
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>
 
-      <div className="mt-12">
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="max-w-xl text-sm text-ink-600">{PRIJS_NOOT}</p>
+        <Link href={href} className="knop-vol shrink-0">
+          Afspraak aanvragen
+          <Icon name="arrow-right" className="size-5" />
+        </Link>
+      </div>
+
+      <div className="mt-14">
         <h3 className="text-h3">Wat er bij kan komen</h3>
-        <ul className="mt-5 grid gap-4 sm:grid-cols-2">
+        <dl className="mt-6 grid gap-4 sm:grid-cols-2">
           {prijsExtras.map((f) => (
-            <li key={f.kop} className="rise-in card h-full p-5">
-              <h4 className="font-display font-bold text-ink-950">{f.kop}</h4>
-              <p className="mt-1.5 text-sm text-ink-600">{f.tekst}</p>
-            </li>
+            <div key={f.kop} className="komt-op paneel-op">
+              <dt className="font-display text-h4 font-extrabold text-ink-950">
+                {f.kop}
+              </dt>
+              <dd className="mt-1.5 text-kaart text-ink-600">{f.tekst}</dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       </div>
     </div>
   );
 }
 
+/* ---- Aanvraagsectie ---------------------------------------------------- */
+
+/**
+ * De aanvraag: links de kop met de beloftes, rechts het formulier.
+ *
+ * Dit blok stond dertien keer in de paginabestanden, elke keer met dezelfde
+ * tien regels casco eromheen — hetzelfde raster, dezelfde `id="offerte"`,
+ * dezelfde `labelledBy`, dezelfde bovenkop "Afspraak aanvragen" en dezelfde
+ * `<Vinkjes className="mt-8">`. Alleen de kop, de tekst, de beloftes en het
+ * formulier verschilden, en dat zijn precies de vier dingen die nu nog in de
+ * pagina staan.
+ *
+ * `flex flex-col-reverse` en niet `flex-col`: op een telefoon hoort het
+ * formulier bóven de beloftes. Wie hier aankomt heeft besloten; de beloftes
+ * zijn er voor wie nog twijfelt, en die scrolt verder.
+ *
+ * Het formulier komt als `children` binnen en niet als een reeks props. Elke
+ * pagina geeft zijn eigen `variant` mee — dat is het meetlabel in GA4 — en
+ * die hoort zichtbaar in de pagina te staan en niet doorgegeven te worden
+ * via een omhulsel.
+ */
+/**
+ * De FAQ-sectie: kop links, uitklapvragen rechts.
+ *
+ * Stond twaalf keer gekopieerd in de paginabestanden — dezelfde `Vlak`,
+ * hetzelfde grid, dezelfde bovenkop en dezelfde verwijzing naar het
+ * formulier. Alleen `toon` en `titel` verschilden, en twee pagina's zeiden de
+ * slotregel in andere woorden. Die regel staat nu één keer: wie een vraag
+ * stelt hoort te weten wat er dan gebeurt, en dat moet overal hetzelfde zijn.
+ *
+ * `children` is de staart binnen dezelfde sectie — op zes pagina's staat daar
+ * een `RelatedLinks` onder de vragen.
+ */
+export function Faqsectie({
+  titel,
+  items,
+  inleiding,
+  toon = "wit",
+  children,
+}: {
+  titel: ReactNode;
+  items: FaqItem[];
+  /**
+   * Een eigen eerste zin, als de vragenlijst op die pagina een aanloop
+   * nodig heeft. De verwijzing naar het formulier komt er altijd achter:
+   * die hoort op elke pagina hetzelfde te zijn.
+   */
+  inleiding?: ReactNode;
+  toon?: "oppervlak" | "wit";
+  children?: ReactNode;
+}) {
+  return (
+    <Vlak toon={toon} labelledBy="faq">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+        <Kop
+          id="faq"
+          bovenkop="Veelgestelde vragen"
+          titel={titel}
+          tekst={
+            <>
+              {inleiding && <>{inleiding} </>}
+              Staat uw vraag er niet bij? Zet hem in het{" "}
+              <Link href="#offerte" className="verwijzing">
+                aanvraagformulier
+              </Link>{" "}
+              — dan belt de monteur u erover.
+            </>
+          }
+        />
+        <Faq items={items} />
+      </div>
+      {children}
+    </Vlak>
+  );
+}
+
+export function Aanvraagsectie({
+  titel,
+  tekst,
+  beloftes,
+  children,
+  toon = "oppervlak",
+}: {
+  titel: ReactNode;
+  tekst?: ReactNode;
+  beloftes: readonly string[];
+  children: ReactNode;
+  toon?: "oppervlak" | "wit";
+}) {
+  return (
+    <Vlak toon={toon} id="offerte" labelledBy="offerte-kop">
+      <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+        <div>
+          <Kop
+            id="offerte-kop"
+            bovenkop="Afspraak aanvragen"
+            titel={titel}
+            tekst={tekst}
+          />
+          <Vinkjes items={beloftes} className="mt-8" />
+        </div>
+        {children}
+      </div>
+    </Vlak>
+  );
+}
+
 /* ---- Afsluitende oproep ------------------------------------------------ */
 
-export function CtaBand({
-  title = "Vraag een afspraak aan",
-  text = "Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast.",
+export function Slotoproep({
+  titel = "Vraag een afspraak aan",
+  tekst = "Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast.",
   href = "/contact",
-  tone = "surface",
+  toon = "oppervlak",
 }: {
-  title?: string;
-  text?: string;
+  titel?: string;
+  tekst?: string;
   href?: string;
-  tone?: "surface" | "white";
+  /** Dit blok brengt zijn eigen sectie mee; de pagina bepaalt de achtergrond. */
+  toon?: "oppervlak" | "wit";
 }) {
   return (
     <section
-      className={`section ${tone === "white" ? "bg-white" : "bg-surface"}`}
-      aria-labelledby="cta-kop"
+      aria-labelledby="slot-kop"
+      className={`vlak ${toon === "wit" ? "bg-white" : "bg-surface"}`}
     >
-      <div className="container-x">
-        <div className="relative overflow-hidden rounded-3xl bg-ink-950 px-6 py-12 text-white sm:px-12 lg:px-16 lg:py-16">
-          <div className="bg-grid absolute inset-0" aria-hidden="true" />
-          <div
-            className="absolute -right-24 -top-24 size-80 rounded-full bg-accent-500/25 blur-3xl"
-            aria-hidden="true"
-          />
-          <div className="relative grid items-center gap-8 lg:grid-cols-[1.5fr_1fr]">
+      <div className="kader">
+        <div className="op-donker relative isolate overflow-hidden rounded-3xl bg-ink-950 px-6 py-12 text-ink-200 sm:px-10 lg:px-14 lg:py-16">
+          <div aria-hidden="true" className="raster absolute inset-0 opacity-70" />
+          <div aria-hidden="true" className="gloed -right-24 -top-24 size-[22rem]" />
+          <div className="relative grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
             <div>
-              <h2 id="cta-kop" className="h-section text-white">
-                {title}
+              <h2 id="slot-kop" className="text-h2 text-white">
+                {titel}
               </h2>
-              <p className="mt-3 max-w-xl text-lead text-ink-200">{text}</p>
-              <p className="mt-4 flex items-center gap-2 text-ink-300">
-                <Icon name="clock" className="size-5 text-accent-300" />
+              <p className="inleiding-donker mt-4 max-w-xl">{tekst}</p>
+              <p className="mt-5 flex items-center gap-2.5 text-ink-300">
+                <Icon name="clock" className="size-5 shrink-0 text-amber-300" />
                 Ook &apos;s avonds en in het weekend, zonder toeslag
               </p>
             </div>
-            <Link href={href} className="btn-primary btn-lg w-full">
+            <Link href={href} className="knop-vol knop-groot w-full">
               Afspraak aanvragen
               <Icon name="arrow-right" className="size-5" />
             </Link>
@@ -770,21 +892,28 @@ export function CtaBand({
 
 /* ---- Cijfers ----------------------------------------------------------- */
 
-export function StatRow({
+export function Cijferrij({
   items,
-  dark = false,
+  donker = false,
 }: {
   items: readonly { value: string; label: string }[];
-  dark?: boolean;
+  donker?: boolean;
 }) {
   return (
-    <dl className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((s) => (
-        <div key={s.label}>
+        <div
+          key={s.label}
+          className={`komt-op p-5 text-center sm:p-6 ${
+            donker ? "paneel-donker" : "paneel"
+          }`}
+        >
           <dt className="sr-only">{s.label}</dt>
           <dd>
             <span
-              className={`block font-display text-stat font-bold tabular ${dark ? "text-white" : "text-ink-950"}`}
+              className={`cijfers block font-display text-prijs font-extrabold ${
+                donker ? "text-white" : "text-ink-950"
+              }`}
             >
               {s.value}
             </span>
@@ -794,7 +923,9 @@ export function StatRow({
                 opgehangen". */}
             <span
               aria-hidden="true"
-              className={`mt-2 block text-sm ${dark ? "text-ink-300" : "text-ink-600"}`}
+              className={`mt-2 block text-sm ${
+                donker ? "text-ink-300" : "text-ink-600"
+              }`}
             >
               {s.label}
             </span>

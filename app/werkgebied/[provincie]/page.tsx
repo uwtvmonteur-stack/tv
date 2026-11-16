@@ -3,23 +3,23 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import ProvincieChips from "@/components/ProvincieChips";
 import Reviews from "@/components/Reviews";
 import { Icon, type IconName } from "@/components/Icon";
 import {
-  CheckList,
-  HeroActions,
-  HowItWorks,
-  PageHero,
+  Aanvraagsectie,
+  Bewijsrij,
+  Dienstenlijst,
+  Faqsectie,
+  Hero,
+  HeroKnoppen,
+  Kop,
   Prijsklassen,
-  Section,
-  SectionHeading,
-  ServiceCards,
-  TrustBar,
+  Vlak,
+  Werkwijze,
 } from "@/components/sections";
-import { PRIJZEN_KORT, VANAF_PRIJS, type FaqItem } from "@/lib/content";
+import { BELOFTE, PRIJZEN_KORT, VANAF_PRIJS, type FaqItem } from "@/lib/content";
 
 /**
  * "Utrecht" is zowel een stad als een provincie, en /tv-ophangen/utrecht en
@@ -59,10 +59,10 @@ export async function generateMetadata({
 
 /** Wat de aanvraag zelf wel en niet van iemand vraagt. */
 const aanvraagBelofte = [
-  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
-  "Het bedrag is inclusief voorrijkosten en btw",
-  "Geen aanbetaling — u betaalt pas na afloop",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  BELOFTE.vrijblijvend,
+  BELOFTE.inclusief,
+  BELOFTE.geenAanbetaling,
+  BELOFTE.avondWeekend,
 ];
 
 /**
@@ -84,10 +84,10 @@ function HeroFeiten({ gebied }: { gebied: string }) {
     },
   ];
   return (
-    <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-ink-200">
+    <ul className="mt-8 flex flex-col gap-2.5 border-t border-white/15 pt-6 text-ink-200">
       {feiten.map((feit) => (
-        <li key={feit.tekst} className="flex items-center gap-2">
-          <Icon name={feit.icon} className="size-5 text-accent-300" />
+        <li key={feit.tekst} className="flex items-center gap-2.5">
+          <Icon name={feit.icon} className="size-5 shrink-0 text-amber-300" />
           {feit.tekst}
         </li>
       ))}
@@ -152,8 +152,8 @@ export default async function ProvinciePage({
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -162,139 +162,125 @@ export default async function ProvinciePage({
             ]}
           />
         }
-        eyebrow="Werkgebied"
-        title={`Tv monteur aan huis in ${provincieLabel(provincie.naam)}`}
+        bovenkop="Werkgebied"
+        titel={`Tv monteur aan huis in ${provincieLabel(provincie.naam)}`}
         // `provincie.intro` beschrijft deze provincie en verschilt dus per
         // pagina; een generieke intro zou vier keer hetzelfde zijn.
-        lead={provincie.intro}
-        image="/images/monteur-aan-het-werk.jpg"
-        imageAlt="Monteur van Uw TV Monteur hangt een televisie waterpas aan de wand"
+        inleiding={provincie.intro}
+        beeld="/images/aan-de-deur.webp"
+        beeldAlt="Monteur van Uw TV Monteur wordt begroet aan de voordeur van een Nederlandse rijtjeswoning"
       >
-        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
         <HeroFeiten gebied={provincie.naam} />
-      </PageHero>
+      </Hero>
 
-      <Section tone="surface">
-        <TrustBar />
-      </Section>
+      {/* `kopNiveau={2}`: deze sectie heeft geen eigen kop, dus zijn de vier
+          kopjes in dit blok de eerste koppen na de h1 van de hero. */}
+      <Vlak toon="wit">
+        <Bewijsrij kopNiveau={2} />
+      </Vlak>
 
-      <Section labelledBy="plaatsen">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="plaatsen">
+        <Kop
           id="plaatsen"
-          eyebrow={`Plaatsen in ${provincie.naam}`}
-          title="Kies uw plaats"
-          lead="Elke plaats heeft een eigen pagina: wat de bebouwing daar betekent voor plug en beugel, in welke wijken wij komen en wat het bij u kost."
+          bovenkop={`Plaatsen in ${provincie.naam}`}
+        titel="Kies uw plaats"
+        tekst="Elke plaats heeft een eigen pagina: wat de bebouwing daar betekent voor plug en beugel, in welke wijken wij komen en wat het bij u kost."
         />
         {/* Ankertekst volgt de titel van de doelpagina ("Tv ophangen in
             <plaats>"). Hier stond alleen de plaatsnaam, en dan weet Google
-            niet waarvoor die plaats staat. De href verandert nooit. */}
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            niet waarvoor die plaats staat. De href verandert nooit.
+
+            Regels onder een haarlijn in plaats van een raster kaarten: dit is
+            één lijst plaatsen, en als lijst is hij op een telefoon in één keer
+            te overzien in plaats van in twaalf blokjes. */}
+        <ul className="mt-12 grid border-t border-ink-200 sm:grid-cols-2 lg:grid-cols-3">
           {provincieSteden.map((stad) => (
-            <li key={stad.slug}>
+            <li key={stad.slug} className="border-b border-ink-200">
               <Link
                 href={`/tv-ophangen/${stad.slug}`}
-                className="card card-hover group flex h-full items-center justify-between gap-3 p-5"
+                className="group flex min-h-14 items-center justify-between gap-3 py-2.5 pr-1 sm:pr-5"
               >
-                <span className="font-display font-bold text-ink-950">
+                <span className="font-display font-semibold text-ink-950 group-hover:text-amber-800">
                   Tv ophangen in {stad.naam}
                 </span>
                 <Icon
                   name="arrow-right"
-                  className="size-5 shrink-0 text-accent-700 transition group-hover:translate-x-1"
+                  className="size-5 shrink-0 text-ink-400 transition group-hover:translate-x-1 group-hover:text-amber-700"
                 />
               </Link>
             </li>
           ))}
         </ul>
         <ProvincieChips prefix="Tv ophangen" withOverview />
-      </Section>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="werkwijze">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="werkwijze">
+        <Kop
           id="werkwijze"
-          center
-          eyebrow="Zo werkt het"
-          title="Van aanvraag tot werkende tv in drie stappen"
-          lead="U vraagt aan, u krijgt het bedrag, wij hangen hem op. Daartussen hoeft u niets uit te zoeken."
+          bovenkop="Zo werkt het"
+        titel="Van aanvraag tot werkende tv in drie stappen"
+        tekst="U vraagt aan, u krijgt het bedrag, wij hangen hem op. Daartussen hoeft u niets uit te zoeken."
         />
         <div className="mt-14">
-          <HowItWorks />
+          <Werkwijze />
         </div>
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="prijs">
-        <SectionHeading
-          id="prijs"
-          eyebrow="Wat het kost"
-          title={`Wat kost een tv monteur in ${provincieLabel(provincie.naam)}?`}
-          lead={`Overal in ${provincie.naam} hetzelfde: ${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en inclusief voorrijkosten en btw. Het soort muur verandert dat bedrag niet.`}
+      <Vlak toon="oppervlak" labelledBy="prijs-kop" id="prijs">
+        <Kop
+          id="prijs-kop"
+          bovenkop="Wat het kost"
+        titel={`Wat kost een tv monteur in ${provincieLabel(provincie.naam)}?`}
+        tekst={`Overal in ${provincie.naam} hetzelfde: ${PRIJZEN_KORT}, afhankelijk van het formaat van uw tv en inclusief voorrijkosten en btw. Het soort muur verandert dat bedrag niet.`}
         />
         <div className="mt-12">
           <Prijsklassen />
         </div>
-        <p className="mt-8">
-          <Link href="/prijzen" className="link inline-flex min-h-11 items-center">
+        <p className="mt-10">
+          <Link
+            href="/prijzen"
+            className="verwijzing inline-flex min-h-11 items-center"
+          >
             Alle tarieven en wat er altijd bij zit
           </Link>
         </p>
-      </Section>
+      </Vlak>
 
-      {/* Brengt zijn eigen surface-sectie mee; de secties ervoor en erna zijn
-          daarom wit. */}
-      <Reviews title={`Wat klanten in ${provincie.naam} zeggen`} />
+      {/* Brengt zijn eigen sectie met achtergrond mee. */}
+      <Reviews toon="wit" />
 
-      <Section labelledBy="diensten">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="diensten">
+        <Kop
           id="diensten"
-          eyebrow={`Diensten in ${provincie.naam}`}
-          title="Ophangen, aansluiten, instellen — in één bezoek"
-          lead="Eén monteur, één afspraak. Of het nu om de tv, de soundbar of de kabels gaat."
+          bovenkop={`Diensten in ${provincie.naam}`}
+        titel="Ophangen, aansluiten, instellen — in één bezoek"
+        tekst="Eén monteur, één afspraak. Of het nu om de tv, de soundbar of de kabels gaat."
         />
         <div className="mt-12">
-          <ServiceCards />
+          <Dienstenlijst />
         </div>
-      </Section>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="faq">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading
-            id="faq"
-            eyebrow="Veelgestelde vragen"
-            title={`Vragen over tv ophangen in ${provincie.naam}`}
-            lead={
-              <>
-                Staat uw vraag er niet bij? Zet hem in het{" "}
-                <Link href="#offerte" className="link">
-                  aanvraagformulier
-                </Link>{" "}
-                — dan belt de monteur u erover.
-              </>
-            }
-          />
-          <Faq items={faqItems} />
-        </div>
-      </Section>
+      <Faqsectie
+        titel={`Vragen over tv ophangen in ${provincie.naam}`}
+        items={faqItems}
+      />
 
-      <Section id="offerte" labelledBy="offerte-kop">
-        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="offerte-kop"
-              eyebrow="Afspraak aanvragen"
-              title={`Vraag een afspraak aan in ${provincie.naam}`}
-              lead="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast."
-            />
-            <CheckList items={aanvraagBelofte} className="mt-8" />
-          </div>
-          {/* `variant` is het meetlabel in GA4, per provincie. Het formulier
-              brengt zijn eigen witte kaart mee, dus staat er geen `card` om. */}
-          <ContactForm
-            variant={`provincie-${provincie.slug}`}
-            berichtLabel="Uw tv en uw muur"
-            berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
-          />
-        </div>
-      </Section>
+      <Aanvraagsectie
+        titel={`Vraag een afspraak aan in ${provincie.naam}`}
+        tekst="Vertel kort wat er moet gebeuren en waar u woont. Wij bellen u binnen enkele uren om het tarief te bevestigen — u zit nergens aan vast."
+        beloftes={aanvraagBelofte}
+      >
+        {/* `variant` is het meetlabel in GA4, per provincie. Het formulier
+            brengt zijn eigen paneel mee, dus staat er geen tweede
+            omlijsting om. */}
+        <ContactForm
+          variant={`provincie-${provincie.slug}`}
+          berichtLabel="Uw tv en uw muur"
+          berichtPlaceholder="Bijvoorbeeld: 55 inch Samsung, en de wand is gipsplaat."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

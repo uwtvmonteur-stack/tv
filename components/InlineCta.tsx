@@ -9,6 +9,10 @@ import { Icon } from "./Icon";
  * bereikt. Deze variant staat direct onder het prijsblok — het moment waarop
  * iemand beslist — en pareert kort de bezwaren die dan spelen.
  *
+ * Licht en met een amberen streep ernaast, niet zwart. Het slotblok onderaan
+ * de pagina is al donker; twee zwarte vlakken op één pagina maken van een
+ * tussenoproep een tweede einde.
+ *
  * De kop is bewust geen h2: dit introduceert geen nieuw onderwerp en hoort
  * dus niet in de documentstructuur die zoekmachines uitlezen.
  */
@@ -31,18 +35,15 @@ export default function InlineCta({
   href?: string;
 }) {
   return (
-    <div className="relative mt-12 overflow-hidden rounded-3xl bg-ink-950 px-7 py-8 text-white md:px-10">
-      <div className="bg-grid absolute inset-0" aria-hidden="true" />
-      <div
-        className="absolute -right-20 -top-20 size-64 rounded-full bg-accent-500/20 blur-3xl"
-        aria-hidden="true"
-      />
-      <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+    <div className="mt-12 rounded-2xl border-l-4 border-amber-400 bg-surface px-6 py-7 ring-1 ring-ink-100 sm:px-8">
+      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div className="max-w-xl">
-          <p className="font-display text-h3 font-bold text-white">{title}</p>
-          <p className="mt-2 text-ink-300">{text}</p>
+          <p className="font-display text-h3 font-extrabold text-ink-950">
+            {title}
+          </p>
+          <p className="mt-2 text-ink-600">{text}</p>
         </div>
-        <Link href={href} className="btn-primary shrink-0">
+        <Link href={href} className="knop-vol shrink-0">
           {label}
           <Icon name="arrow-right" className="size-5" />
         </Link>

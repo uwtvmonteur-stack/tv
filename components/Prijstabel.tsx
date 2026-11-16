@@ -3,66 +3,69 @@ import { tarieven } from "@/lib/content";
 /**
  * Alle tarieven in één echte tabel.
  *
- * Hiervoor stonden de bedragen in losse kaarten en in een lijst met
+ * De bedragen stonden eens in losse kaarten en in een lijst met
  * `<span>`-jes. Dat leest voor een bezoeker als marketing en voor een
  * zoekmachine als niets: de pagina's die ranken op "wat kost tv ophangen"
  * zetten hun prijzen zonder uitzondering in een tabel, met de dienst links
  * en het bedrag rechts. Een `<table>` met koppen is bovendien het enige wat
  * een schermlezer kan voorlezen als "dienst X kost Y".
  *
- * Afgeleid van dezelfde bron als de prijskaarten en het formulier, zodat de
+ * De tabel staat in een witte kaart met een bijna-zwarte kopregel, zoals de
+ * prijskaart op de andere eigen sites. De kopregel is een echt gevulde rij en
+ * geen rand: die blijft ook in de hoog-contrastmodus van Windows staan, waar
+ * een `ring` (een box-shadow) wordt weggelaten.
+ *
+ * Afgeleid van dezelfde bron als de prijsklassen en het formulier, zodat de
  * drie elkaar niet kunnen tegenspreken.
  */
 export default function Prijstabel() {
-  // `bg-white` op de omlijsting, zodat de tabel ook op een grijze sectie als
-  // papier leest en alleen de kopregel grijs is.
   return (
-    <div className="overflow-hidden rounded-2xl bg-white ring-1 ring-ink-200">
+    <div className="paneel overflow-hidden">
       <table className="w-full border-collapse text-left">
-        {/* Beschreef de tabel nog als "vanafprijzen" met het exacte bedrag in
+        {/* Beschreef de tabel eerder als "vanafprijzen" met het exacte bedrag in
             een offerte. Sinds de vaste tarieven terug zijn, klopt dat voor de
             meeste regels niet: alleen de regels met "vanaf" of "op offerte"
             hangen nog van de situatie af. */}
         <caption className="sr-only">
-          Tarieven van Uw TV Monteur, inclusief voorrijkosten en btw. Een
-          bedrag met &quot;vanaf&quot; of &quot;op offerte&quot; hangt af van
-          uw situatie; de rest staat vast.
+          Tarieven van Uw TV Monteur, inclusief voorrijkosten en btw. Een bedrag
+          met &quot;vanaf&quot; of &quot;op offerte&quot; hangt af van uw
+          situatie; de rest staat vast.
         </caption>
         <thead>
-          <tr className="border-b border-ink-200 bg-surface">
+          <tr className="bg-ink-950">
             <th
               scope="col"
-              className="px-4 py-3 text-sm font-semibold text-ink-600 sm:px-6"
+              className="py-3.5 pl-5 pr-4 text-xs font-bold uppercase tracking-[0.14em] text-amber-300 sm:pl-6"
             >
               Dienst
             </th>
             <th
               scope="col"
-              className="px-4 py-3 text-right text-sm font-semibold text-ink-600 sm:px-6"
+              className="py-3.5 pl-4 pr-5 text-right text-xs font-bold uppercase tracking-[0.14em] text-amber-300 sm:pr-6"
             >
               Prijs
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-ink-100">
           {tarieven.map((tarief) => (
-            <tr key={tarief.naam} className="border-b border-ink-100 last:border-0">
-              {/* Smalle opvulling links en rechts, en het bedrag zonder
-                  afbreking: op 360px moeten dienst en bedrag naast elkaar
-                  blijven passen zonder dat de tabel horizontaal gaat schuiven.
-                  De dienstnaam is de enige kolom die mag afbreken. */}
+            <tr key={tarief.naam}>
+              {/* Het bedrag zonder afbreking: op 360px moeten dienst en bedrag
+                  naast elkaar blijven passen zonder dat de tabel horizontaal
+                  gaat schuiven. De dienstnaam is de enige kolom die mag
+                  afbreken. */}
               <th
                 scope="row"
-                className="px-4 py-4 text-left font-normal text-pretty sm:px-6"
+                className="py-4 pl-5 pr-4 text-left font-normal text-pretty sm:pl-6"
               >
-                <span className="block font-display font-bold text-ink-950">
+                <span className="block font-display text-h4 font-extrabold text-ink-950">
                   {tarief.naam}
                 </span>
                 <span className="mt-1 block text-sm text-ink-600">
                   {tarief.toelichting}
                 </span>
               </th>
-              <td className="px-4 py-4 text-right align-top font-display font-bold whitespace-nowrap text-ink-950 tabular sm:px-6">
+              <td className="cijfers py-4 pl-4 pr-5 text-right align-top font-display text-h4 font-extrabold whitespace-nowrap text-ink-950 sm:pr-6">
                 {tarief.prijs}
               </td>
             </tr>

@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { PageHero, Section } from "@/components/sections";
+import { Hero, Vlak } from "@/components/sections";
 import { SITE } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -66,8 +66,8 @@ const secties: { h2: string; p: string[] }[] = [
 export default function PrivacyPage() {
   return (
     <>
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -75,13 +75,13 @@ export default function PrivacyPage() {
             ]}
           />
         }
-        eyebrow="Privacy"
-        title="Privacyverklaring"
-        lead="Kort en duidelijk: wij gebruiken uw gegevens alleen om uw aanvraag te maken en het werk uit te voeren."
+        bovenkop="Privacy"
+        titel="Privacyverklaring"
+        inleiding="Kort en duidelijk: wij gebruiken uw gegevens alleen om uw aanvraag te maken en het werk uit te voeren."
       />
 
-      <Section>
-        <div className="prose-tv max-w-prose">
+      <Vlak toon="wit">
+        <div className="artikel max-w-prose">
           {secties.map((s) => (
             <section key={s.h2}>
               <h2>{s.h2}</h2>
@@ -90,14 +90,14 @@ export default function PrivacyPage() {
               ))}
             </section>
           ))}
-          <p className="text-sm text-ink-500">
+          <p className="mt-12 border-t border-ink-200 pt-6 text-sm text-ink-600">
             {SITE.name}
             {SITE.kvk ? ` · KvK ${SITE.kvk}` : ""}
             {SITE.btw ? ` · BTW ${SITE.btw}` : ""} · {SITE.email} ·{" "}
             {SITE.phoneDisplay}
           </p>
         </div>
-      </Section>
+      </Vlak>
     </>
   );
 }

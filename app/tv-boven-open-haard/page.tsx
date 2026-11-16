@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
@@ -9,12 +8,16 @@ import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
-  CheckList,
-  HeroActions,
-  PageHero,
-  Section,
-  SectionHeading,
+  Aanvraagsectie,
+  Faqsectie,
+  Hero,
+  HeroKnoppen,
+  Kop,
+  Stappen,
+  Vinkjes,
+  Vlak,
 } from "@/components/sections";
+import { BELOFTE } from "@/lib/content";
 import type { FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
@@ -48,22 +51,22 @@ const voordelen = [
  */
 const risicos: IconCard[] = [
   {
-    icon: <Icon name="flame" className="size-6" />,
+    icon: <Icon name="flame" />,
     h3: "De warmte",
     text: "De meeste televisies zijn gemaakt voor een omgeving tot ongeveer 35 graden. Boven een brandende houtkachel loopt de temperatuur tegen het plafond makkelijk hoger op. Het scherm gaat er niet meteen van stuk; het gaat jaren eerder stuk, en dat valt buiten elke garantie. Daarom meten wij het eerst, op de hoogte waar uw tv echt komt te hangen, met de haard aan.",
   },
   {
-    icon: <Icon name="tv" className="size-6" />,
+    icon: <Icon name="tv" />,
     h3: "De kijkhoogte",
     text: "Boven een schouw hangt een tv al snel op anderhalve meter of hoger. U kijkt dan met uw hoofd omhoog, een hele film lang. Dat is de reden dat mensen achteraf zeggen dat hij toch niet lekker hangt. Oplosbaar — maar alleen met een beugel die kantelt of naar beneden klapt, en daar moet de wand tegen kunnen.",
   },
   {
-    icon: <Icon name="home" className="size-6" />,
+    icon: <Icon name="home" />,
     h3: "De wand",
     text: "Een schouw is vaak niet van massief metselwerk, maar een opgebouwde constructie van gips of kalkzandsteen om een kachel heen, soms met een luchtspouw erachter. Een neerklapbeugel trekt daar veel harder aan dan een vlakke beugel. Het draagvermogen moet dus écht nagerekend worden, niet geschat.",
   },
   {
-    icon: <Icon name="cable" className="size-6" />,
+    icon: <Icon name="cable" />,
     h3: "De kabels",
     text: "Kabels mogen niet langs het hete deel van het rookkanaal lopen, en een stekkerkabel hoort sowieso niet weggewerkt te worden in een wand. Meestal wordt het een extra wandcontactdoos naast de schouw, met de signaalkabels apart. Wat uw situatie nodig heeft, hoort u vooraf.",
   },
@@ -97,11 +100,11 @@ const stappen = [
   },
 ];
 
-const offerteBelofte = [
+const aanvraagBelofte = [
   "Wij meten eerst; pas daarna hoort u of het kan",
   "Kan het niet veilig? Dan boren we niet",
   "Vaste prijsafspraak vooraf, u beslist daarna pas",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  BELOFTE.avondWeekend,
 ];
 
 const faqItems: FaqItem[] = [
@@ -118,7 +121,10 @@ const faqItems: FaqItem[] = [
     a: "Boven een schouw wel, als u een vlakke beugel gebruikt. Daarom doen we dit vrijwel altijd met een kantelbeugel of een neerklapbeugel: die laatste brengt het scherm bij gebruik omlaag tot ooghoogte en klapt daarna weer netjes terug omhoog. Dat is duurder dan een vlakke beugel, maar het is het verschil tussen een tv die u gebruikt en een tv waar u naar opkijkt.",
   },
   {
-    q: "Wat kost een tv boven de haard ophangen?",
+    // Niet "Wat kost een tv boven de haard ophangen?": dat is woordelijk de
+    // kop van de prijssectie op deze pagina, en dan staat dezelfde vraag
+    // twee keer op één pagina met twee keer een eigen antwoord.
+    q: "Waarom hoor ik het bedrag pas na de meting?",
     a: "Dit is de enige montage waarvoor we geen standaardtarief noemen, omdat de situatie per woning echt verschilt: het wandtype, het soort haard, de hoogte en het type beugel bepalen samen het werk. We maken vooraf een vaste prijsafspraak op basis van wat we bij u zien. Daarna verandert dat bedrag niet meer, ook niet als het werk tegenvalt.",
   },
   {
@@ -144,8 +150,8 @@ export default function TvBovenOpenHaardPage() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -154,47 +160,46 @@ export default function TvBovenOpenHaardPage() {
             ]}
           />
         }
-        eyebrow="Tv boven de haard"
-        title="Een tv boven de haard — kan dat bij u veilig?"
-        lead="Het mooiste plekje in de kamer is ook het lastigste. Wij meten eerst hoe warm het daar werkelijk wordt en hoe hoog u straks moet kijken, en zeggen het eerlijk als het niet kan."
+        bovenkop="Tv boven de haard"
+        titel="Een tv boven de haard — kan dat bij u veilig?"
+        inleiding="Het mooiste plekje in de kamer is ook het lastigste. Wij meten eerst hoe warm het daar werkelijk wordt en hoe hoog u straks moet kijken, en zeggen het eerlijk als het niet kan."
         // Niet tv-beugel-detail.jpg: die foto toont een beugel die fysiek niet
         // kan bestaan, en juist op de pagina die over zorgvuldig meten gaat is
         // dat het verkeerde beeld. Deze foto laat zien waar het om gaat: een
         // woonkamer met haard en een tv aan de wand.
-        image="/images/familie-kijkt-tv.jpg"
-        imageAlt="Stel kijkt televisie in een warme woonkamer met een haard"
+        beeld="/images/tv-boven-open-haard.webp"
+        beeldAlt="Monteur meet met een infraroodthermometer de temperatuur van de schouw onder een opgehangen televisie"
       >
-        <CheckList
-          items={voordelen}
-          dark
-          className="mt-8 grid gap-3 sm:grid-cols-2"
-        />
-        <HeroActions
+        <HeroKnoppen
           tweedeHref="/tv-ophangen"
           tweedeLabel="Alles over tv ophangen"
         />
-      </PageHero>
+        <Vinkjes donker
+          items={voordelen}
+          className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"
+        />
+      </Hero>
 
-      <Section tone="surface" labelledBy="risicos">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="risicos">
+        <Kop
           id="risicos"
-          eyebrow="Wat hier anders is"
-          title="Vier dingen die hier anders zijn dan bij een gewone muur"
-          lead="Een tv boven een haard is geen zwaardere versie van een normale montage. Het is een andere klus, met vier dingen die eerst uitgezocht moeten worden."
+          bovenkop="Wat hier anders is"
+        titel="Vier dingen die hier anders zijn dan bij een gewone muur"
+        tekst="Een tv boven een haard is geen zwaardere versie van een normale montage. Het is een andere klus, met vier dingen die eerst uitgezocht moeten worden."
         />
         <IconCardGrid items={risicos} columns={2} className="mt-10" />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="meten">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="meten">
+        <Kop
           id="meten"
-          eyebrow="Onze meetregel"
-          title="Wat wij meten voordat we iets beloven"
-          lead="Wij hanteren één harde grens: komt het op de hoogte van uw tv boven de 35 graden terwijl de haard brandt, dan hangen wij hem daar niet op. Dat is de grens die de meeste fabrikanten in hun handleiding noemen — en de reden dat wij meten in plaats van schatten."
+          bovenkop="Onze meetregel"
+        titel="Wat wij meten voordat we iets beloven"
+        tekst="Wij hanteren één harde grens: komt het op de hoogte van uw tv boven de 35 graden terwijl de haard brandt, dan hangen wij hem daar niet op. Dat is de grens die de meeste fabrikanten in hun handleiding noemen — en de reden dat wij meten in plaats van schatten."
         />
-        <CheckList
+        <Vinkjes
           items={meting}
-          className="mt-10 grid max-w-4xl gap-3 sm:grid-cols-2"
+          className="mt-10 grid max-w-4xl gap-3.5 sm:grid-cols-2"
         />
 
         <InlineCta
@@ -202,68 +207,47 @@ export default function TvBovenOpenHaardPage() {
           title="Liever eerst zekerheid dan een gok"
           text="Wij meten het bij u thuis en zeggen eerlijk wat er kan. Kan het niet veilig, dan boren we niet."
         />
-      </Section>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="werkwijze">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="werkwijze">
+        <Kop
           id="werkwijze"
-          eyebrow="Zo werkt het"
-          title="Zo pakken wij het aan"
-          lead="Vier stappen, en de eerste kost u alleen een foto."
+          bovenkop="Zo werkt het"
+        titel="Zo pakken wij het aan"
+        tekst="Vier stappen, en de eerste kost u alleen een foto."
         />
-        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stappen.map((stap, i) => (
-            <li key={stap.title} className="card p-5">
-              <p className="eyebrow">Stap {i + 1}</p>
-              <h3 className="mt-3 font-display font-bold text-ink-950">
-                {stap.title}
-              </h3>
-              <p className="mt-1.5 text-sm text-ink-600">{stap.text}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
+        <div className="mt-12">
+          <Stappen items={stappen} kolommen={4} />
+        </div>
+      </Vlak>
 
-      <Section labelledBy="prijs">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="prijs">
+        <Kop
           id="prijs"
-          eyebrow="Wat het kost"
-          title="Wat kost een tv boven de haard ophangen?"
-          lead="Dit is de enige montage waarvoor wij geen standaardtarief noemen. Het wandtype, het soort haard, de hoogte en het beugeltype bepalen samen het werk, en dat verschilt per woning echt."
+          bovenkop="Wat het kost"
+        titel="Wat kost een tv boven de haard ophangen?"
+        tekst="Dit is de enige montage waarvoor wij geen standaardtarief noemen. Het wandtype, het soort haard, de hoogte en het beugeltype bepalen samen het werk, en dat verschilt per woning echt."
         />
-        <p className="mt-8 max-w-3xl text-ink-600">
+        <p className="mt-9 max-w-3xl text-ink-600">
           Wij maken vooraf een vaste prijsafspraak op basis van wat we bij u
           zien. Daarna verandert dat bedrag niet meer, ook niet als het werk
           tegenvalt. Een kantel- of neerklapbeugel kost meer dan een vlakke
           beugel; wat die bij u wordt, staat erbij vooraf. De overige
           tarieven vindt u op de{" "}
-          <Link href="/prijzen" className="link">
+          <Link href="/prijzen" className="verwijzing">
             prijzenpagina
           </Link>
           .
         </p>
-      </Section>
+      </Vlak>
 
-      <Reviews />
+      <Reviews toon="wit" />
 
-      <Section labelledBy="faq">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading
-            id="faq"
-            eyebrow="Veelgestelde vragen"
-            title="Veelgestelde vragen over tv boven de haard"
-            lead={
-              <>
-                Staat uw vraag er niet bij? Zet hem in het{" "}
-                <Link href="#offerte" className="link">
-                  aanvraagformulier
-                </Link>{" "}
-                — dan belt de monteur u erover.
-              </>
-            }
-          />
-          <Faq items={faqItems} />
-        </div>
+      <Faqsectie
+        titel="Veelgestelde vragen over tv boven de haard"
+        items={faqItems}
+        toon="oppervlak"
+      >
         <RelatedLinks
           items={[
             ["/tv-ophangen", "Tv laten ophangen"],
@@ -275,26 +259,20 @@ export default function TvBovenOpenHaardPage() {
             ],
           ]}
         />
-      </Section>
+      </Faqsectie>
 
-      <Section id="offerte" tone="surface" labelledBy="offerte-kop">
-        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="offerte-kop"
-              eyebrow="Afspraak aanvragen"
-              title="Zal ik komen kijken of het kan?"
-              lead="Zet in het bericht wat voor haard u heeft — hout, gas of elektrisch — en hoe hoog de schouw zit. Dan weet de monteur vooraf wat hij moet meenemen. U hoort binnen enkele uren van ons."
-            />
-            <CheckList items={offerteBelofte} className="mt-8" />
-          </div>
-          <ContactForm
-            variant="open-haard"
-            berichtLabel="Uw haard en uw tv"
-            berichtPlaceholder="Bijvoorbeeld: gashaard met schouw, 55 inch Samsung, schouw op 1,30 m."
-          />
-        </div>
-      </Section>
+      <Aanvraagsectie
+        toon="wit"
+        titel="Zal ik komen kijken of het kan?"
+        tekst="Zet in het bericht wat voor haard u heeft — hout, gas of elektrisch — en hoe hoog de schouw zit. Dan weet de monteur vooraf wat hij moet meenemen. U hoort binnen enkele uren van ons."
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="open-haard"
+          berichtLabel="Uw haard en uw tv"
+          berichtPlaceholder="Bijvoorbeeld: gashaard met schouw, 55 inch Samsung, schouw op 1,30 m."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

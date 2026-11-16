@@ -2,7 +2,7 @@ import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import JsonLd from "@/components/JsonLd";
 import { Icon } from "@/components/Icon";
-import { CtaBand, PageHero, Section } from "@/components/sections";
+import { Hero, Slotoproep, Vlak } from "@/components/sections";
 import { artikelen } from "@/lib/kennisbank";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
 
@@ -25,8 +25,10 @@ export default function KennisbankPage() {
         )}
       />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        beeld="/images/tv-beugel-detail.webp"
+        beeldAlt="Detail van een tv-beugel aan de wand"
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -34,27 +36,33 @@ export default function KennisbankPage() {
             ]}
           />
         }
-        eyebrow="Kennisbank"
-        title="Alles wat u vóór het boren wilt weten"
-        lead="Een tv ophangen begint met een paar vragen: op welke hoogte, welke beugel, en houdt deze muur het eigenlijk wel? Hier staan de antwoorden, met de maten en rekenregels die onze monteurs zelf gebruiken — ook als de uitkomst is dat u het prima zelf kunt."
+        bovenkop="Kennisbank"
+        titel="Alles wat u vóór het boren wilt weten"
+        inleiding="Een tv ophangen begint met een paar vragen: op welke hoogte, welke beugel, en houdt deze muur het eigenlijk wel? Hier staan de antwoorden, met de maten en rekenregels die onze monteurs zelf gebruiken — ook als de uitkomst is dat u het prima zelf kunt."
       />
 
-      <Section>
+      <Vlak toon="wit">
         {/* De kop van elk artikel is hier een h2: dit is een overzichtspagina,
-            dus elke kaart introduceert een eigen onderwerp. */}
-        <ul className="grid gap-5 md:grid-cols-2">
+            dus elk item introduceert een eigen onderwerp.
+
+            Als lijst onder haarlijnen in plaats van een raster kaarten. Het
+            antwoord staat al in de aanhef, dus is dit een inhoudsopgave die
+            je leest — niet een rij blokjes waaruit je kiest. */}
+        <ul className="border-t border-ink-200">
           {artikelen.map((artikel) => (
-            <li key={artikel.slug}>
+            <li key={artikel.slug} className="border-b border-ink-200">
               <Link
                 href={`/kennisbank/${artikel.slug}`}
-                className="card card-hover group flex h-full flex-col p-7 md:p-8"
+                className="komt-op group block py-7 transition-colors duration-200 hover:bg-white"
               >
-                <span className="text-2xs font-semibold tracking-[0.12em] text-accent-700 uppercase">
-                  {artikel.eyebrow}
-                </span>
-                <h2 className="mt-3 text-h3">{artikel.titel}</h2>
-                <p className="mt-3 grow text-ink-600">{artikel.antwoord}</p>
-                <span className="mt-6 flex items-center gap-1.5 font-semibold text-accent-700">
+                <span className="bovenkop">{artikel.eyebrow}</span>
+                <h2 className="mt-3 max-w-3xl text-h3 group-hover:text-amber-800">
+                  {artikel.titel}
+                </h2>
+                <p className="mt-3 max-w-prose text-ink-600">
+                  {artikel.antwoord}
+                </p>
+                <span className="mt-5 flex items-center gap-1.5 font-semibold text-amber-800">
                   Lees het antwoord
                   <Icon
                     name="arrow-right"
@@ -65,11 +73,11 @@ export default function KennisbankPage() {
             </li>
           ))}
         </ul>
-      </Section>
+      </Vlak>
 
-      <CtaBand
-        title="Liever gewoon laten doen?"
-        text="Onze monteur bepaalt het wandtype, rekent het draagvermogen na en hangt uw tv waterpas op. U hoort het bedrag vooraf en zit nergens aan vast."
+      <Slotoproep toon="oppervlak"
+        titel="Liever gewoon laten doen?"
+        tekst="Onze monteur bepaalt het wandtype, rekent het draagvermogen na en hangt uw tv waterpas op. U hoort het bedrag vooraf en zit nergens aan vast."
       />
     </>
   );

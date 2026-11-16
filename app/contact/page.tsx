@@ -3,7 +3,7 @@ import ContactForm from "@/components/ContactForm";
 import JsonLd from "@/components/JsonLd";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
-import { PageHero, Section, SectionHeading } from "@/components/sections";
+import { Hero, Kop, Vlak } from "@/components/sections";
 import { SITE } from "@/lib/site";
 import { absUrl, pageMeta } from "@/lib/seo";
 
@@ -32,8 +32,10 @@ export default function ContactPage() {
   return (
     <>
       <JsonLd data={contactJsonLd} />
-      <PageHero
-        breadcrumbs={
+      <Hero
+        beeld="/images/familie-kijkt-tv.webp"
+        beeldAlt="Gezin kijkt televisie in de woonkamer"
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -41,65 +43,72 @@ export default function ContactPage() {
             ]}
           />
         }
-        eyebrow="Contact"
-        title="Vraag een afspraak aan"
-        lead="Vier velden zijn genoeg: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. De prijs krijgt u daarna, vrijblijvend."
+        bovenkop="Contact"
+        titel="Vraag een afspraak aan"
+        inleiding="Vier velden zijn genoeg: uw naam, uw telefoonnummer, uw postcode en wat er moet gebeuren. De prijs krijgt u daarna, vrijblijvend."
       />
 
-      <Section id="offerte" labelledBy="offerte-kop">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1.3fr]">
+      <Vlak toon="wit" id="offerte" labelledBy="offerte-kop">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div>
-            <SectionHeading
+            <Kop
               id="offerte-kop"
-              eyebrow="Na het versturen"
-              title="Wat gebeurt er daarna?"
+              bovenkop="Na het versturen"
+              titel="Wat gebeurt er daarna?"
             />
             {/* Onzekerheid over wat er volgt is de tweede reden om een
                 formulier niet af te maken, na de angst vast te zitten aan een
                 bedrag. Daarom staat het hier naast het formulier en niet in
                 een bedankscherm dat de twijfelaar nooit ziet. */}
-            <ol className="mt-8 flex flex-col gap-5">
+            <ol className="mt-8 flex flex-col gap-6">
               {vervolgstappen.map((stap, i) => (
-                <li key={stap} className="flex gap-4">
-                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-ink-950 font-display text-sm font-bold text-white">
-                    {i + 1}
+                <li key={stap} className="flex gap-4 border-t border-ink-200 pt-4">
+                  <span
+                    aria-hidden="true"
+                    className="cijfers shrink-0 font-display text-h3 font-semibold leading-none text-ink-500"
+                  >
+                    {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-ink-700">{stap}</span>
                 </li>
               ))}
             </ol>
 
+            {/* Het telefoonnummer staat hier niet. Dat is een besluit van de
+                eigenaar en geldt voor de hele site: het nummer staat alleen
+                in de voettekst, zodat de aanvraag de enige handeling op dit
+                scherm blijft. */}
             <dl className="mt-10 flex flex-col gap-4 border-t border-ink-200 pt-8 text-sm">
               {SITE.whatsapp && (
                 <div className="flex items-center gap-3">
-                  <dt className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+                  <dt className="shrink-0 text-amber-700">
                     <Icon name="whatsapp" />
                     <span className="sr-only">WhatsApp</span>
                   </dt>
                   <dd>
-                    <a href={SITE.whatsapp} className="link">
+                    <a href={SITE.whatsapp} className="verwijzing">
                       WhatsApp ons
                     </a>
                   </dd>
                 </div>
               )}
               <div className="flex items-center gap-3">
-                <dt className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+                <dt className="shrink-0 text-amber-700">
                   <Icon name="mail" />
                   <span className="sr-only">E-mail</span>
                 </dt>
                 <dd>
-                  <a href={`mailto:${SITE.email}`} className="link">
+                  <a href={`mailto:${SITE.email}`} className="verwijzing">
                     {SITE.email}
                   </a>
                 </dd>
               </div>
               <div className="flex items-start gap-3">
-                <dt className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
+                <dt className="shrink-0 text-amber-700">
                   <Icon name="clock" />
                   <span className="sr-only">Openingstijden</span>
                 </dt>
-                <dd className="pt-2 text-ink-600">
+                <dd className="text-ink-600">
                   {SITE.openingstijden.lang.map((regel) => (
                     <span key={regel} className="block">
                       {regel}
@@ -112,9 +121,9 @@ export default function ContactPage() {
 
           <ContactForm variant="contact" />
         </div>
-      </Section>
+      </Vlak>
 
-      <Reviews />
+      <Reviews toon="oppervlak" />
     </>
   );
 }

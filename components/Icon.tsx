@@ -154,6 +154,14 @@ const paths: Record<string, ReactNode> = {
       <path d="M9 9.5c0 3 2.5 5.5 5.5 5.5.6 0 1-.5 1-1l-1.5-.8-1 .8a5 5 0 0 1-2.3-2.3l.8-1L10.5 9c-.5 0-1.5 0-1.5.5Z" />
     </>
   ),
+  /* Twee monteurs naast elkaar, voor de pagina's over het team. */
+  users: (
+    <>
+      <circle cx="9" cy="8" r="3.5" />
+      <path d="M2.5 20.5c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5" />
+      <path d="M16 5.2a3.5 3.5 0 0 1 0 6.6M18 14.6a6.5 6.5 0 0 1 3.5 5.9" />
+    </>
+  ),
 };
 
 export type IconName = keyof typeof paths;
@@ -175,17 +183,33 @@ export function Star({ className = "size-4" }: { className?: string }) {
 export function Stars({
   className = "size-4",
   dark = false,
+  label,
 }: {
   className?: string;
   /**
-   * Op een bijna-zwarte achtergrond is accent-500 te donker om als sterretje
-   * te lezen; accent-300 houdt daar de vorm vast. Op wit is het omgekeerd.
+   * Op een bijna-zwarte achtergrond is amber-500 te donker om als sterretje
+   * te lezen; amber-300 houdt daar de vorm vast. Op papier is het omgekeerd.
    */
   dark?: boolean;
+  /**
+   * De naam voor een schermlezer, bijvoorbeeld "5 van 5 sterren". Geef hem
+   * mee zodra de sterren het enige zijn dat de waardering uitdrukt — elke
+   * `<Star>` is `aria-hidden`, dus zonder naam hoort iemand met een
+   * schermlezer op zo'n kaart gewoon niets.
+   *
+   * Laat hem weg waar het cijfer ernaast staat (4,9 naast de sterren): dan
+   * is de rij versiering en moet hij juist niet nog een keer worden
+   * voorgelezen.
+   */
+  label?: string;
 }) {
   return (
     <span
-      className={`flex items-center gap-0.5 ${dark ? "text-accent-300" : "text-accent-500"}`}
+      // amber-600 en niet amber-500. Op een beoordelingskaart zijn deze vijf
+      // sterren het enige dat de waardering uitdrukt, en dan geldt de 3:1 van
+      // WCAG 1.4.11: amber-500 haalt op wit 2,41:1, amber-600 3,40:1.
+      {...(label ? { role: "img", "aria-label": label } : { "aria-hidden": "true" as const })}
+      className={`flex items-center gap-0.5 ${dark ? "text-amber-300" : "text-amber-600"}`}
     >
       {[0, 1, 2, 3, 4].map((i) => (
         <Star key={i} className={className} />

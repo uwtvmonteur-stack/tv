@@ -18,14 +18,12 @@ export default function PrijsGarantie({
   return (
     <ul className={`grid gap-4 md:grid-cols-3 ${className}`}>
       {prijsGaranties.map((garantie) => (
-        <li key={garantie.kop}>
-          <div className="card h-full p-6">
-            <span className="grid size-12 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
-              <Icon name={garantie.icon} className="size-6" />
-            </span>
-            <h3 className="mt-5 text-lg">{garantie.kop}</h3>
-            <p className="mt-2 text-sm text-ink-600">{garantie.tekst}</p>
-          </div>
+        <li key={garantie.kop} className="komt-op paneel p-5 sm:p-6">
+          <span className="icoonvlak">
+            <Icon name={garantie.icon} className="size-6" />
+          </span>
+          <h3 className="mt-4 text-h3">{garantie.kop}</h3>
+          <p className="mt-2 text-kaart text-ink-600">{garantie.tekst}</p>
         </li>
       ))}
     </ul>

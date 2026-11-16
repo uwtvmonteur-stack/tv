@@ -1,19 +1,20 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
-  CheckList,
-  HeroActions,
-  PageHero,
-  Section,
-  SectionHeading,
+  Aanvraagsectie,
+  Faqsectie,
+  Hero,
+  HeroKnoppen,
+  Kop,
+  Vinkjes,
+  Vlak,
 } from "@/components/sections";
-import { TV_HULP_PRIJS, type FaqItem } from "@/lib/content";
+import { BELOFTE, TV_HULP_PRIJS, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 /**
@@ -41,7 +42,7 @@ const belofte = [
   "Wij krijgen uw tv weer op het netwerk — bekabeld of draadloos",
   `Vaste prijs van ${TV_HULP_PRIJS}, inclusief voorrijkosten en btw`,
   "Ook uw apps, streamingdiensten en updates werkend achtergelaten",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  BELOFTE.avondWeekend,
 ];
 
 /**
@@ -109,11 +110,11 @@ const faqItems: FaqItem[] = [
   },
 ];
 
-const offerteBelofte = [
-  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+const aanvraagBelofte = [
+  BELOFTE.vrijblijvend,
   `Vaste prijs van ${TV_HULP_PRIJS}, inclusief voorrijkosten en btw`,
-  "Geen aanbetaling — u betaalt pas na afloop",
-  "Vaak al binnen 24 uur een afspraak mogelijk",
+  BELOFTE.geenAanbetaling,
+  BELOFTE.snel,
 ];
 
 export default function Page() {
@@ -135,8 +136,8 @@ export default function Page() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -145,50 +146,61 @@ export default function Page() {
             ]}
           />
         }
-        eyebrow="Tv hulp aan huis"
-        title="Tv maakt geen verbinding met wifi of internet"
-        lead="Uw tv vindt het netwerk niet, verliest de verbinding of meldt dat hij verbonden is terwijl geen enkele app werkt. Dat ligt zelden aan de televisie: meestal aan bereik, aan de frequentieband of aan een instelling in de router. Onze monteur krijgt hem weer online."
-        image="/images/dienst-tv-instellen.jpg"
-        imageAlt="Monteur stelt een smart tv in en controleert de netwerkverbinding"
+        bovenkop="Tv hulp aan huis"
+        titel="Tv maakt geen verbinding met wifi of internet"
+        inleiding="Uw tv vindt het netwerk niet, verliest de verbinding of meldt dat hij verbonden is terwijl geen enkele app werkt. Dat ligt zelden aan de televisie: meestal aan bereik, aan de frequentieband of aan een instelling in de router. Onze monteur krijgt hem weer online."
+        beeld="/images/tv-geen-wifi.webp"
+        beeldAlt="Monteur controleert de netwerkverbinding van een smart-tv terwijl de router op het dressoir staat"
       >
-        <HeroActions tweedeHref="#oorzaken" tweedeLabel="Bekijk de oorzaken" />
-        <CheckList items={belofte} className="mt-8" dark />
-      </PageHero>
-
-      <Section id="oorzaken" labelledBy="oorzaken-kop">
-        <SectionHeading
-          id="oorzaken-kop"
-          eyebrow="De oorzaak"
-          title="Vijf redenen waarom uw tv niet op het netwerk komt"
-          lead="Op volgorde van hoe vaak onze monteurs ze aantreffen. Bij vrijwel alle vijf is er niets mis met het toestel."
+        <HeroKnoppen tweedeHref="#oorzaken" tweedeLabel="Bekijk de oorzaken" />
+        <Vinkjes donker
+          items={belofte}
+          className="mt-8 border-t border-white/15 pt-6"
         />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-          {oorzaken.map((oorzaak) => (
-            <li key={oorzaak.kop} className="card h-full p-6">
-              <h3 className="flex items-start gap-3 text-h3">
-                <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
-                  <Icon name="info" className="size-5" />
-                </span>
-                {oorzaak.kop}
-              </h3>
-              <p className="mt-3 text-ink-600">{oorzaak.tekst}</p>
+      </Hero>
+
+      <Vlak toon="wit" id="oorzaken" labelledBy="oorzaken-kop">
+        <Kop
+          id="oorzaken-kop"
+          bovenkop="De oorzaak"
+        titel="Vijf redenen waarom uw tv niet op het netwerk komt"
+        tekst="Op volgorde van hoe vaak onze monteurs ze aantreffen. Bij vrijwel alle vijf is er niets mis met het toestel."
+        />
+        {/* Een genummerde lijst en geen kaartenraster: de volgorde ís de
+            inhoud — dit is wat de monteur van vaak naar zelden aantreft. */}
+        <ol className="mt-12 max-w-4xl border-t border-ink-200">
+          {oorzaken.map((oorzaak, i) => (
+            <li
+              key={oorzaak.kop}
+              className="komt-op flex gap-5 border-b border-ink-200 py-6"
+            >
+              <span
+                aria-hidden="true"
+                className="cijfers shrink-0 font-display text-h3 font-semibold leading-none text-ink-500"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="text-h4">{oorzaak.kop}</h3>
+                <p className="mt-2 text-ink-600">{oorzaak.tekst}</p>
+              </div>
             </li>
           ))}
-        </ul>
-      </Section>
+        </ol>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="zelf-kop">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
+      <Vlak toon="oppervlak" labelledBy="zelf-kop">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-16">
           <div>
-            <SectionHeading
+            <Kop
               id="zelf-kop"
-              eyebrow="Eerst zelf proberen"
-              title="Vijf dingen die u zonder gereedschap kunt controleren"
-              lead="Lukt het hiermee, dan hoeft u ons niet te bellen. Dat zeggen we liever eerlijk dan dat u voor niets een monteur over de vloer krijgt."
+              bovenkop="Eerst zelf proberen"
+              titel="Vijf dingen die u bij geen verbinding zelf kunt proberen"
+              tekst="Begin hier — in de meeste huizen zit het in het bereik of in één instelling. Werkt het daarna, dan hoeft u ons niet te bellen."
             />
-            <CheckList items={zelfProberen} className="mt-8" />
+            <Vinkjes items={zelfProberen} className="mt-8" />
           </div>
-          <div className="card p-7 md:p-8">
+          <div className="paneel border-t-4 border-t-amber-400 p-7 md:p-8">
             <h3 className="text-h3">Blijft hij offline?</h3>
             <p className="mt-3 text-ink-600">
               Dan komt onze monteur langs. Hij meet de signaalsterkte op de
@@ -199,39 +211,26 @@ export default function Page() {
             </p>
             <p className="mt-4 text-ink-600">
               Wordt de tv ook opgehangen of aangesloten?{" "}
-              <Link href="/diensten/tv-installatie" className="link">
+              <Link href="/diensten/tv-installatie" className="verwijzing">
                 Dat doen we in dezelfde afspraak
               </Link>
               .
             </p>
-            <Link href="#offerte" className="btn-primary mt-7 w-full">
+            <Link href="#offerte" className="knop-vol mt-7 w-full">
               Afspraak aanvragen
               <Icon name="arrow-right" className="size-5" />
             </Link>
           </div>
         </div>
-      </Section>
+      </Vlak>
 
-      <Reviews />
+      <Reviews toon="wit" />
 
-      <Section labelledBy="faq-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading
-            id="faq-kop"
-            eyebrow="Veelgestelde vragen"
-            title="Vragen over een tv zonder verbinding"
-            lead={
-              <>
-                Staat uw vraag er niet bij? Zet hem in het{" "}
-                <Link href="#offerte" className="link">
-                  aanvraagformulier
-                </Link>{" "}
-                — u krijgt er antwoord op als wij u bellen.
-              </>
-            }
-          />
-          <Faq items={faqItems} />
-        </div>
+      <Faqsectie
+        titel="Vragen over een tv zonder verbinding"
+        items={faqItems}
+        toon="oppervlak"
+      >
         <RelatedLinks
           items={[
             ["/diensten/tv-instellen", "Tv hulp aan huis"],
@@ -240,26 +239,20 @@ export default function Page() {
             ["/kennisbank", "Kennisbank"],
           ]}
         />
-      </Section>
+      </Faqsectie>
 
-      <Section id="offerte" tone="surface" labelledBy="offerte-kop">
-        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="offerte-kop"
-              eyebrow="Afspraak aanvragen"
-              title="Vertel wat uw tv doet"
-              lead="Zet erbij welk merk tv u heeft en of hij het netwerk helemaal niet ziet of wél verbindt zonder internet. Dan komt de monteur voorbereid en weet u het bedrag vooraf."
-            />
-            <CheckList items={offerteBelofte} className="mt-8" />
-          </div>
-          <ContactForm
-            variant="geen-wifi"
-            berichtLabel="Wat doet uw tv?"
-            berichtPlaceholder="Bijvoorbeeld: LG tv vindt ons wifi-netwerk niet meer sinds we een nieuwe router hebben."
-          />
-        </div>
-      </Section>
+      <Aanvraagsectie
+        toon="wit"
+        titel="Vertel wat uw tv doet"
+        tekst="Zet erbij welk merk tv u heeft en of hij het netwerk helemaal niet ziet of wél verbindt zonder internet. Dan komt de monteur voorbereid en weet u het bedrag vooraf."
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="geen-wifi"
+          berichtLabel="Wat doet uw tv?"
+          berichtPlaceholder="Bijvoorbeeld: LG tv vindt ons wifi-netwerk niet meer sinds we een nieuwe router hebben."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

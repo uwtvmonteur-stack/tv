@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
@@ -11,27 +10,35 @@ import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
-  CheckList,
-  HeroActions,
-  PageHero,
-  Section,
-  SectionHeading,
+  Aanvraagsectie,
+  Faqsectie,
+  Hero,
+  HeroKnoppen,
+  Kop,
+  Stappen,
+  Vinkjes,
+  Vlak,
 } from "@/components/sections";
-import { reviewsPerDienst, type FaqItem } from "@/lib/content";
+import { BELOFTE, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "Soundbar laten installeren aan huis — €49",
   description:
-    "Soundbar laten installeren? Wij monteren, sluiten aan en stellen het geluid af op uw kamer — ook surround en home-cinema. Vanaf €49.",
+    "Soundbar laten installeren? Wij monteren, sluiten aan en stellen het geluid af op uw kamer. Vaste prijs €49; een surroundset vanaf €79.",
   path: "/diensten/soundbar-installatie",
 });
 
 /**
- * De twee vaste bedragen van deze dienst, gelijk aan de regels "Soundbar
- * aansluiten en afstellen" en "Surround- of home-cinema-set aansluiten" in
+ * De twee bedragen van deze dienst, gelijk aan de regels "Soundbar aansluiten
+ * en afstellen" (€49 vast) en "Surround-set aansluiten" (vanaf €79) in
  * `tarieven`. Eén plek op de pagina, zodat kop, prijsblok en offerteblok niet
  * uit elkaar kunnen lopen.
+ *
+ * `SURROUND` is een vanafprijs en hoort dus overal met "vanaf" ervoor — de
+ * derde variant, home-cinema met losse versterker, staat in `tarieven` als
+ * "op offerte" en heeft hier geen bedrag. De meta-description beloofde
+ * surround en home-cinema "vanaf €49"; dat was het bedrag van de soundbar.
  */
 const PRIJS = "€49";
 const SURROUND = "€79";
@@ -56,9 +63,9 @@ const prijsDekking = [
 /** Wat de aanvraag zelf wel en niet van u vraagt — niet wat er in de prijs zit. */
 const aanvraagBelofte = [
   `Soundbar aansluiten en afstellen: vaste prijs ${PRIJS}`,
-  `Surround- of home-cinema-set: vanaf ${SURROUND}`,
-  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  `Surroundset: vanaf ${SURROUND}; home-cinema op offerte`,
+  BELOFTE.vrijblijvend,
+  BELOFTE.avondWeekend,
 ];
 
 const stappen = [
@@ -82,17 +89,17 @@ const stappen = [
 
 const keuze: IconCard[] = [
   {
-    icon: <Icon name="speaker" className="size-6" />,
+    icon: <Icon name="speaker" />,
     h3: "Losse soundbar",
     text: "De eenvoudigste upgrade: één balk onder de tv voor voller, helderder geluid. Ideaal als u vooral series en films kijkt en het strak wilt houden.",
   },
   {
-    icon: <Icon name="sliders" className="size-6" />,
+    icon: <Icon name="sliders" />,
     h3: "Soundbar met surround",
     text: "Een soundbar met draadloze subwoofer en achterspeakers voor echt ruimtelijk geluid. Wij plaatsen en koppelen alles en stellen het surround-beeld af op uw kamer.",
   },
   {
-    icon: <Icon name="tv" className="size-6" />,
+    icon: <Icon name="tv" />,
     h3: "Complete home-cinema",
     text: "Een volledige set met versterker en meerdere speakers voor bioscoopgeluid thuis. We verzorgen de bekabeling, de aansluiting en de fijnafstemming — op maat.",
   },
@@ -100,22 +107,22 @@ const keuze: IconCard[] = [
 
 const situaties: IconCard[] = [
   {
-    icon: <Icon name="speaker" className="size-6" />,
+    icon: <Icon name="speaker" />,
     h3: "Nieuwe soundbar gekocht",
     text: "Net een soundbar of set in huis? Wij monteren, sluiten aan en stellen af — u hoort meteen het verschil zonder zelf te hoeven uitzoeken welke kabel waar hoort.",
   },
   {
-    icon: <Icon name="tv" className="size-6" />,
+    icon: <Icon name="tv" />,
     h3: "Samen met tv ophangen",
     text: "De meest gekozen combinatie: eerst de tv, direct daarna de soundbar. Eén bezoek, geen extra voorrijkosten, en de kabels van beide netjes weggewerkt.",
   },
   {
-    icon: <Icon name="cable" className="size-6" />,
+    icon: <Icon name="cable" />,
     h3: "Bestaande set opnieuw aansluiten",
     text: "Verhuisd of alles in de war na een nieuwe tv? We sluiten uw bestaande soundbar of surround-set weer correct aan en stellen het geluid opnieuw af.",
   },
   {
-    icon: <Icon name="chat" className="size-6" />,
+    icon: <Icon name="chat" />,
     h3: "Advies over de beste set",
     text: "Nog geen soundbar? De monteur denkt mee over wat past bij uw kamer, tv en budget — eerlijk advies, zonder u iets aan te praten.",
   },
@@ -157,8 +164,8 @@ export default function SoundbarPage() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -170,118 +177,111 @@ export default function SoundbarPage() {
             ]}
           />
         }
-        eyebrow={`Soundbar installeren · aan huis · vaste prijs ${PRIJS}`}
-        title="Soundbar en audio installeren"
-        lead="Goed beeld verdient goed geluid. Wij sluiten uw soundbar, surround-set of complete home-cinema aan en stellen alles af op uw kamer — zodat elke film klinkt zoals de maker het bedoelde."
-        image="/images/dienst-soundbar.jpg"
-        imageAlt="Stel geniet 's avonds van film en geluid via een wandgemonteerde tv"
+        bovenkop={`Soundbar installeren · aan huis · vaste prijs ${PRIJS}`}
+        titel="Soundbar en audio installeren"
+        inleiding="Goed beeld verdient goed geluid. Wij sluiten uw soundbar, surround-set of complete home-cinema aan en stellen alles af op uw kamer — zodat elke film klinkt zoals de maker het bedoelde."
+        beeld="/images/dienst-soundbar-installatie.webp"
+        beeldAlt="Stel geniet 's avonds van film en geluid via een wandgemonteerde tv"
       >
-        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
-        <CheckList
-          dark
+        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <Vinkjes donker
           items={[
             "Soundbar strak gemonteerd en kabels weggewerkt",
             "Subwoofer en achterspeakers draadloos gekoppeld",
             "Aangesloten via HDMI ARC / eARC",
             "Perfect afgesteld voor uw ruimte",
           ]}
-          className="mt-8 grid gap-3 sm:grid-cols-2"
+          className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"
         />
-      </PageHero>
+      </Hero>
 
-      <Section labelledBy="audio">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="audio">
+        <Kop
           id="audio"
-          eyebrow="Wat u krijgt"
-          title="Van soundbar tot home-cinema"
-          lead="Moderne tv's zijn flinterdun — en dat hoort u: de ingebouwde speakers halen het niet bij een echte soundbar of surround-set. Wij zorgen dat uw beeld eindelijk het geluid krijgt dat het verdient. Van een enkele soundbar tot een volledige home-cinema met subwoofer en achterspeakers: we monteren, sluiten aan en stellen alles zorgvuldig af op de akoestiek van uw kamer."
+          bovenkop="Wat u krijgt"
+        titel="Van soundbar tot home-cinema"
+        tekst="Moderne tv's zijn flinterdun — en dat hoort u: de ingebouwde speakers halen het niet bij een echte soundbar of surround-set. Wij zorgen dat uw beeld eindelijk het geluid krijgt dat het verdient. Van een enkele soundbar tot een volledige home-cinema met subwoofer en achterspeakers: we monteren, sluiten aan en stellen alles zorgvuldig af op de akoestiek van uw kamer."
         />
-        <CheckList
+        <Vinkjes
           items={audioItems}
-          className="mt-10 grid max-w-4xl gap-3 sm:grid-cols-2"
+          className="mt-10 grid max-w-4xl gap-3.5 sm:grid-cols-2"
         />
-      </Section>
+      </Vlak>
 
       {/* Bewijs komt ná de belofte en vóór de prijs: eerst vertellen wat we
           leveren, dan laten zien dat we het leveren, dan wat het kost. */}
-      <Reviews
-        title="Klanten over hun geluidsinstallatie"
-        items={reviewsPerDienst["soundbar-installatie"]}
-      />
+      <Reviews toon="oppervlak" />
 
-      {/* Brengt zijn eigen witte sectie mee, vlak vóór de prijs. */}
-
-      <Section id="prijs" tone="surface" labelledBy="prijs-kop">
-        <SectionHeading
+      <Vlak id="prijs" toon="wit" labelledBy="prijs-kop">
+        <Kop
           id="prijs-kop"
-          eyebrow="Wat het kost"
-          title="Wat kost soundbar installeren?"
-          lead="Vaste prijzen, inclusief montage, aansluiten en afstellen — altijd inclusief voorrijkosten en btw."
+          bovenkop="Wat het kost"
+        titel="Wat kost soundbar installeren?"
+        tekst="Vaste prijzen, inclusief montage, aansluiten en afstellen — altijd inclusief voorrijkosten en btw."
         />
 
-        {/* Een vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij het
-            ophangen, waar de prijs uit een offerte komt. Hier is het bedrag
-            zelf het argument, dus staat het groot en alleen op de kaart. */}
-        <div className="mt-12 grid gap-5 lg:grid-cols-5">
+        {/* Eén vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij
+            het ophangen, met drie formaten. Hier is het bedrag zelf het
+            argument, dus staat het in een paneel met dezelfde amberen streep
+            als het aanvraagformulier. */}
+        <div className="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
           <div className="lg:col-span-2">
-            <div className="relative h-full overflow-hidden rounded-3xl bg-ink-950 p-8 text-white">
-              <div className="bg-grid absolute inset-0" aria-hidden="true" />
-              <div
-                className="absolute -right-16 -top-16 size-64 rounded-full bg-accent-500/25 blur-3xl"
-                aria-hidden="true"
-              />
-              <div className="relative flex h-full flex-col justify-between">
-                <div>
-                  <p className="eyebrow-dark">Vaste prijs · losse soundbar</p>
-                  <p className="mt-5 font-display text-stat font-bold tabular">
-                    {PRIJS}
-                  </p>
-                  <p className="mt-3 text-ink-300">
-                    Monteren, aansluiten en afstellen van uw soundbar,
-                    inclusief voorrijkosten en btw. Geen vanafprijs: dit is het
-                    bedrag.
-                  </p>
-                </div>
-                <Link href="#offerte" className="btn-primary btn-lg mt-8 w-full">
-                  Afspraak aanvragen
-                  <Icon name="arrow-right" className="size-5" />
-                </Link>
+            <div className="paneel flex h-full flex-col justify-between border-t-4 border-t-amber-400 p-7">
+              <div>
+                <p className="bovenkop">Vaste prijs · losse soundbar</p>
+                <p className="cijfers mt-4 font-display text-prijs font-semibold text-ink-950">
+                  {PRIJS}
+                </p>
+                <p className="mt-4 text-ink-600">
+                  Monteren, aansluiten en afstellen van uw soundbar,
+                  inclusief voorrijkosten en btw. Geen vanafprijs: dit is het
+                  bedrag.
+                </p>
               </div>
+              <Link href="#offerte" className="knop-vol knop-groot mt-8 w-full">
+                Afspraak aanvragen
+                <Icon name="arrow-right" className="size-5" />
+              </Link>
             </div>
           </div>
 
           <div className="lg:col-span-3">
             <h3 className="text-h3">Wat er in dat bedrag zit</h3>
-            <CheckList items={prijsDekking} className="mt-5" />
+            <Vinkjes items={prijsDekking} className="mt-5" />
 
-            <h3 className="mt-10 text-h3">Grotere sets</h3>
-            <ul className="mt-5 grid gap-4 sm:grid-cols-2">
-              <li className="card h-full p-6">
-                <p className="eyebrow">Surround-set</p>
-                <p className="mt-4 font-display text-h2 font-bold text-ink-950">
-                  <span className="text-lead font-normal text-ink-600">
-                    vanaf{" "}
-                  </span>
-                  <span className="tabular">{SURROUND}</span>
-                </p>
-                <p className="mt-2 text-sm text-ink-600">
-                  Inclusief subwoofer en achterspeakers, gekoppeld en afgesteld.
-                </p>
-              </li>
-              <li className="card h-full p-6">
-                <p className="eyebrow">Home-cinema</p>
-                <p className="mt-4 font-display text-h2 font-bold text-ink-950">
-                  Op offerte
-                </p>
-                <p className="mt-2 text-sm text-ink-600">
-                  Versterker, meerdere speakers en bekabeling: eerst kijken, dan
-                  een bedrag.
-                </p>
-              </li>
-            </ul>
-            <p className="mt-6 text-ink-600">
+            <h3 className="mt-12 text-h3">Grotere sets</h3>
+            <dl className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2">
+              <div className="border-t border-ink-200 pt-4">
+                <dt className="bovenkop">Surround-set</dt>
+                <dd>
+                  <p className="mt-3 font-display text-h2 font-semibold text-ink-950">
+                    <span className="text-lead font-normal text-ink-600">
+                      vanaf{" "}
+                    </span>
+                    <span className="cijfers">{SURROUND}</span>
+                  </p>
+                  <p className="mt-2 text-sm text-ink-600">
+                    Inclusief subwoofer en achterspeakers, gekoppeld en
+                    afgesteld.
+                  </p>
+                </dd>
+              </div>
+              <div className="border-t border-ink-200 pt-4">
+                <dt className="bovenkop">Home-cinema</dt>
+                <dd>
+                  <p className="mt-3 font-display text-h2 font-semibold text-ink-950">
+                    Op offerte
+                  </p>
+                  <p className="mt-2 text-sm text-ink-600">
+                    Versterker, meerdere speakers en bekabeling: eerst kijken,
+                    dan een bedrag.
+                  </p>
+                </dd>
+              </div>
+            </dl>
+            <p className="mt-7 text-ink-600">
               Bekijk alle tarieven en opties op de{" "}
-              <Link href="/prijzen" className="link">
+              <Link href="/prijzen" className="verwijzing">
                 prijzenpagina
               </Link>
               .
@@ -291,31 +291,31 @@ export default function SoundbarPage() {
 
         {/* Geen eigen kop boven dit blok: de drie garanties zijn zelf h3's, en
             een kop ernaast zou op hetzelfde niveau staan als wat hij aankondigt. */}
-        <p className="lead mt-16 max-w-3xl">
+        <p className="mt-16 max-w-3xl text-lead text-ink-600">
           Een vaste prijs is pas een argument als erbij staat waar hij tegen
           vast is. Dit zijn de drie dingen die uw bedrag niet veranderen.
         </p>
         <PrijsGarantie className="mt-8" />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="keuze">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="keuze">
+        <Kop
           id="keuze"
-          eyebrow="Welke set past bij u?"
-          title="Soundbar, surround of home-cinema — wat past bij u?"
-          lead="Elke woonkamer en elk budget is anders. De monteur adviseert wat het beste bij uw situatie past."
+          bovenkop="Welke set past bij u?"
+        titel="Soundbar, surround of home-cinema — wat past bij u?"
+        tekst="Elke woonkamer en elk budget is anders. De monteur adviseert wat het beste bij uw situatie past."
         />
         <IconCardGrid items={keuze} columns={3} className="mt-12" />
-      </Section>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="aansluiten">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="aansluiten">
+        <Kop
           id="aansluiten"
-          eyebrow="Hoe wij het doen"
-          title="Hoe wij uw soundbar aansluiten en plaatsen"
-          lead="De aansluitmethode en de plek bepalen samen hoe goed uw geluid wordt. Beide kiezen wij ter plekke, met u erbij."
+          bovenkop="Hoe wij het doen"
+        titel="Hoe wij uw soundbar aansluiten en plaatsen"
+        tekst="De aansluitmethode en de plek bepalen samen hoe goed uw geluid wordt. Beide kiezen wij ter plekke, met u erbij."
         />
-        <div className="prose-tv mt-10 max-w-3xl">
+        <div className="artikel mt-10 max-w-3xl">
           <h3>Hoe sluiten we uw soundbar aan?</h3>
           <p>
             De aansluitmethode bepaalt hoe goed uw geluid wordt. Waar mogelijk
@@ -352,67 +352,47 @@ export default function SoundbarPage() {
           href="#offerte"
           text="Vaste prijs vooraf, inclusief het netjes wegwerken van de kabels en het afregelen van het geluid. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="stappen">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="stappen">
+        <Kop
           id="stappen"
-          eyebrow="Zo werkt het"
-          title="Zo verloopt de soundbar-installatie"
-          lead="Van aanvraag tot het eerste nummer dat u hoort: vier stappen, één bezoek."
+          bovenkop="Zo werkt het"
+        titel="Zo verloopt de soundbar-installatie"
+        tekst="Van aanvraag tot het eerste nummer dat u hoort: vier stappen, één bezoek."
         />
-        {/* Genummerd, want de volgorde is het punt. `HowItWorks` uit de
-            sectiebibliotheek beschrijft de stappen van het ophangen; een
-            geluidsinstallatie eindigt met afstellen en testen. */}
-        <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {stappen.map((stap, i) => (
-            <li key={stap.title} className="card relative p-6 pt-8">
-              <span className="absolute -top-4 left-6 grid size-9 place-items-center rounded-full bg-ink-950 font-display font-bold text-white">
-                {i + 1}
-              </span>
-              <h3 className="text-h3">{stap.title}</h3>
-              <p className="mt-2 text-ink-600">{stap.text}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
+        {/* `Werkwijze` uit de sectiebibliotheek beschrijft de drie stappen
+            van het ophangen; een geluidsinstallatie heeft er vier en eindigt
+            met afstellen en testen. Vandaar `Stappen` met de eigen lijst — en
+            niet, zoals hiervoor, een eigen rij haarlijnen die er anders
+            uitzag dan dezelfde drie stappen op de homepage. */}
+        <div className="mt-12">
+          <Stappen items={stappen} kolommen={4} />
+        </div>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="situaties">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="situaties">
+        <Kop
           id="situaties"
-          eyebrow="Uw situatie"
-          title="Soundbar installeren in elke situatie"
-          lead="Waarvoor u ons ook vraagt, onze monteurs zorgen voor het beste geluid in uw kamer."
+          bovenkop="Uw situatie"
+        titel="Soundbar installeren in elke situatie"
+        tekst="Waarvoor u ons ook vraagt, onze monteurs zorgen voor het beste geluid in uw kamer."
         />
         <IconCardGrid items={situaties} columns={2} className="mt-12" />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="faq">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading
-            id="faq"
-            eyebrow="Veelgestelde vragen"
-            title="Veelgestelde vragen over soundbar-installatie"
-            lead={
-              <>
-                Staat uw vraag er niet bij? Zet hem in het{" "}
-                <Link href="#offerte" className="link">
-                  aanvraagformulier
-                </Link>{" "}
-                — dan belt de monteur u erover.
-              </>
-            }
-          />
-          <Faq items={faqItems} />
-        </div>
-      </Section>
+      <Faqsectie
+        titel="Veelgestelde vragen over soundbar-installatie"
+        items={faqItems}
+        toon="oppervlak"
+      />
 
-      <Section tone="surface" labelledBy="werkgebied">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="werkgebied">
+        <Kop
           id="werkgebied"
-          eyebrow="Werkgebied"
-          title="Soundbar installeren in ons werkgebied"
-          lead="Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Per provincie vindt u hieronder de plaatsen waar wij rijden."
+          bovenkop="Werkgebied"
+        titel="Soundbar installeren in ons werkgebied"
+        tekst="Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Per provincie vindt u hieronder de plaatsen waar wij rijden."
         />
         {/* Ankertekst volgt de titel van de doelpagina ("Tv ophangen in
             <provincie>"); de href verandert niet. */}
@@ -425,28 +405,21 @@ export default function SoundbarPage() {
             ["/prijzen", "Bekijk onze prijzen"],
           ]}
         />
-      </Section>
+      </Vlak>
 
-      <Section id="offerte" labelledBy="offerte-kop">
-        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="offerte-kop"
-              eyebrow="Afspraak aanvragen"
-              title="Vraag een afspraak aan voor uw geluid"
-              lead={`Soundbar aansluiten en afstellen kost ${PRIJS}, een complete surroundset vanaf ${SURROUND}. Vast, inclusief voorrijkosten en btw. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
-            />
-            <CheckList items={aanvraagBelofte} className="mt-8" />
-          </div>
-          {/* `variant` is het label waarop in GA4 wordt gemeten. Het blijft
-              staan zoals het was, anders breekt de reeks van deze pagina. */}
-          <ContactForm
-            variant="soundbar"
-            berichtLabel="Welke set heeft u?"
-            berichtPlaceholder="Bijvoorbeeld: Sonos Beam met subwoofer, tv is een LG van 2023."
-          />
-        </div>
-      </Section>
+      <Aanvraagsectie
+        titel="Vraag een afspraak aan voor uw geluid"
+        tekst={`Soundbar aansluiten en afstellen kost ${PRIJS}, een complete surroundset vanaf ${SURROUND}. Vast, inclusief voorrijkosten en btw. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
+        beloftes={aanvraagBelofte}
+      >
+        {/* `variant` is het label waarop in GA4 wordt gemeten. Het blijft
+            staan zoals het was, anders breekt de reeks van deze pagina. */}
+        <ContactForm
+          variant="soundbar"
+          berichtLabel="Welke set heeft u?"
+          berichtPlaceholder="Bijvoorbeeld: Sonos Beam met subwoofer, tv is een LG van 2023."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

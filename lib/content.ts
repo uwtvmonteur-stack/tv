@@ -109,11 +109,6 @@ export const prijsklassen: Prijsklasse[] = [
 export const VANAF_PRIJS = prijsklassen[0].prijs;
 
 /**
- * "€99, €129 of €159" — de drie tarieven in lopende tekst, voor koppen en
- * inleidingen. Afgeleid, zodat een bedrag dat hierboven wijzigt niet ergens
- * in een zin blijft staan.
- */
-/**
  * Het vaste tarief voor tv hulp aan huis — storingen, instellingen, zenders,
  * geluid en verbinding. Stond als losse `const PRIJS = "€60"` in
  * /diensten/tv-instellen; sinds er ook pagina's voor "geen geluid" en "geen
@@ -122,21 +117,33 @@ export const VANAF_PRIJS = prijsklassen[0].prijs;
  */
 export const TV_HULP_PRIJS = "€60";
 
+/**
+ * Het vaste tarief voor een complete tv installatie zonder ophangen: tv
+ * plaatsen, alles aansluiten en gebruiksklaar maken.
+ *
+ * Op 16-11-2026 heeft de eigenaar dit van €70 naar €60 gebracht. Het stond
+ * op zes plekken los ingetikt — hier in `tarieven`, als
+ * `const PRIJS = "€70"` op /diensten/tv-installatie, in de paginatitel, in
+ * de meta-description, als `"70"` in het Service-schema van die pagina en
+ * twee keer in public/llms.txt. Nu leest alles in de code dit af.
+ *
+ * Een eigen constante en niet `TV_HULP_PRIJS`, al zijn de bedragen nu
+ * gelijk: dit zijn twee verschillende diensten, en de ene moet kunnen
+ * wijzigen zonder de andere mee te nemen.
+ */
+export const TV_INSTALLATIE_PRIJS = "€60";
+
+/**
+ * "€99, €129 of €159" — de drie tarieven in lopende tekst, voor koppen en
+ * inleidingen. Afgeleid, zodat een bedrag dat hierboven wijzigt niet ergens
+ * in een zin blijft staan.
+ */
 export const PRIJZEN_KORT = prijsklassen
   .map((klasse) => klasse.prijs)
   .reduce((zin, prijs, i, alle) =>
     i === 0 ? prijs : i === alle.length - 1 ? `${zin} of ${prijs}` : `${zin}, ${prijs}`,
   );
 
-/**
- * De drie tarieven als korte pillen voor de hero: formaat boven, bedrag
- * onder. Afgeleid van `prijsklassen`, dus er staat nooit een bedrag in een
- * hero dat de prijskaarten tegenspreekt.
- *
- * `maat` is hier te lang ("Voor tv's tot 43 inch"); in een pil naast twee
- * andere pillen moet het "tot 43 inch" zijn, anders breekt de rij op een
- * telefoon van 360px over drie regels.
- */
 /**
  * De zin die onder de prijspillen in de hero hoort. Stond als staart aan de
  * lead van de homepage, waar hij na de pillen dubbelop werd.
@@ -159,10 +166,39 @@ export const BAND_UITSPRAKEN = [
   "Vaak al binnen 24 uur",
 ] as const;
 
+/**
+ * De drie tarieven als korte pillen voor de hero: formaat boven, bedrag
+ * onder. Afgeleid van `prijsklassen`, dus er staat nooit een bedrag in een
+ * hero dat de prijskaarten tegenspreekt.
+ *
+ * `maat` is hier te lang ("Voor tv's tot 43 inch"); in een pil naast twee
+ * andere pillen moet het "tot 43 inch" zijn, anders breekt de rij op een
+ * telefoon van 360px over drie regels.
+ */
 export const HERO_PRIJZEN = prijsklassen.map((klasse) => ({
   label: klasse.maat.replace(/^Voor tv's\s*/, ""),
   prijs: klasse.prijs,
 }));
+
+/**
+ * De regels naast het aanvraagformulier — wat de bezoeker wél en niet van de
+ * aanvraag mag verwachten.
+ *
+ * Eén bron, omdat dit lijstje op dertien paginabestanden stond: acht keer
+ * onder de naam `offerteBelofte` en vijf keer onder `aanvraagBelofte`, met
+ * zes regels die er woordelijk gelijk in stonden. Een pagina kiest hieruit en
+ * zet er zijn eigen regel bij ("Een gipswand kost bij ons niets extra"); wat
+ * voor de hele site geldt staat hier, zodat een wijziging niet in twaalf
+ * bestanden half doorkomt.
+ */
+export const BELOFTE = {
+  vrijblijvend: "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+  inclusief: "Het bedrag is inclusief voorrijkosten en btw",
+  geenAanbetaling: "Geen aanbetaling — u betaalt pas na afloop",
+  verzekerd: "Schade door ons werk is verzekerd — wij lossen het op",
+  snel: "Vaak al binnen 24 uur een afspraak mogelijk",
+  avondWeekend: "Ook 's avonds en in het weekend, zonder toeslag",
+} as const;
 
 export type Tarief = {
   naam: string;
@@ -176,10 +212,16 @@ export type Tarief = {
 };
 
 /**
- * Wat wij doen en wat het ongeveer kost. Bewust allemaal vanafprijzen: het
- * exacte bedrag staat in de offerte, en een bedrag dat op de site anders is
- * dan in de offerte kost precies het vertrouwen dat die offerte moet
- * opbouwen.
+ * Wat wij doen en wat het kost. Drie soorten bedrag, en het verschil is geen
+ * slordigheid maar een belofte: een vast bedrag (€60 voor een installatie,
+ * €49 voor een soundbar, €60 voor hulp aan huis) betaalt de klant exact zo,
+ * een vanafprijs (vanaf €99, vanaf €39, vanaf €79) hangt af
+ * van formaat of afstand, en "op offerte" kan pas na meting ter plekke.
+ *
+ * Een dienst hoort dus overal op de site met dezelfde soort genoemd te
+ * worden. "Vanaf €60" op de homepage terwijl drie andere pagina's "vaste
+ * prijs €60" zeggen, is voor de bezoeker het verschil tussen een bedrag en
+ * een voorschot — en precies het vertrouwen dat de offerte moet opbouwen.
  */
 export const tarieven: Tarief[] = [
   {
@@ -197,9 +239,13 @@ export const tarieven: Tarief[] = [
   {
     // Leest als de dienst en niet als een uitzondering op een andere dienst:
     // "complete installatie zonder ophangen" laat een bezoeker eerst uitzoeken
-    // wat er dan níet bij zit. Het bedrag blijft ongewijzigd.
+    // wat er dan níet bij zit. Die naamswijziging liet het bedrag staan; op
+    // 16-11-2026 is het bedrag zelf van €70 naar €60 gegaan.
     naam: "Tv plaatsen en aansluiten (zonder ophangen)",
-    prijs: "€70",
+    // `TV_INSTALLATIE_PRIJS` en niet "€60": hetzelfde bedrag staat op
+    // /diensten/tv-installatie in de kop, het prijsblok, het offerteblok, de
+    // paginatitel, de meta-description en het schema.
+    prijs: TV_INSTALLATIE_PRIJS,
     toelichting:
       "Tv op een meubel plaatsen, alles aansluiten en gebruiksklaar maken.",
   },
@@ -246,7 +292,11 @@ export const tarieven: Tarief[] = [
   },
   {
     naam: "Tv hulp aan huis — instellen, zenders, wifi en apps",
-    prijs: "€60",
+    // `TV_HULP_PRIJS` en niet "€60": datzelfde bedrag staat ook op
+    // /diensten/tv-instellen, /tv-geen-geluid en /tv-geen-wifi, en die drie
+    // lezen het hierboven af. Een tweede keer intikken is precies hoe één
+    // prijswijziging half doorkomt.
+    prijs: TV_HULP_PRIJS,
     toelichting: "Opgelost én uitgelegd, in gewone taal.",
   },
 ];
@@ -287,7 +337,7 @@ export const prijsExtras = [
 export const stats = [
   { value: "12.000+", label: "tv's vakkundig opgehangen" },
   { value: "4,9 / 5", label: "gemiddelde klantbeoordeling" },
-  { value: "7 dagen", label: "per week bereikbaar" },
+  { value: "zeven dagen", label: "per week bereikbaar" },
   { value: "±60 min", label: "gemiddelde montagetijd" },
 ];
 
@@ -302,200 +352,20 @@ export const usps = [
   "Ook 's avonds en in het weekend, zonder toeslag",
 ];
 
-export type Review = { quote: string; name: string };
-
 /**
- * LET OP — deze reviews zijn nog PLACEHOLDERS, net als `stats` en
- * `SITE.reviews`. Vervang ze door echte beoordelingen voordat er structureel
- * mee geadverteerd wordt: verzonnen klantervaringen zijn in strijd met het
- * Google Ads-beleid rond misleiding.
+ * Hier stonden negen verzonnen beoordelingen (`reviews` en
+ * `reviewsPerDienst`, met `type Review`), die op tien tot twaalf pagina's
+ * werden getoond. Op 16-11-2026 heeft de eigenaar ze eruit laten halen;
+ * alleen het cijfer uit `SITE.reviews` blijft staan. Verzonnen
+ * klantervaringen zijn in strijd met het Google Ads-beleid rond misleiding,
+ * en er loopt een Ads-account.
  *
- * `reviews` is de gemengde set voor algemene pagina's (home, prijzen, over ons,
- * werkgebied, steden). Per dienst staat er een eigen set in `reviewsPerDienst`,
- * zodat een bezoeker op de soundbarpagina ook over soundbars leest.
+ * Komen er echte beoordelingen, dan horen ze hier terug — en dan met per
+ * beoordeling een eigen waardering, want negen keer vijf sterren kan geen
+ * 4,9 gemiddeld opleveren. `SITE.reviews.score` en `.count` zijn nog steeds
+ * geen gemeten cijfers; `.url` naar het Google-bedrijfsprofiel maakt ze na
+ * te kijken.
  */
-export const reviews: Review[] = [
-  {
-    quote:
-      "Binnen een uur hing onze 65-inch strak boven het dressoir. Geen kabel te zien. Echt vakwerk.",
-    name: "Sandra V.",
-  },
-  {
-    quote:
-      "Zaterdagochtend gebeld, maandagavond gemonteerd. De monteur dacht mee over de perfecte kijkhoogte.",
-    name: "Mark de Jong",
-  },
-  {
-    quote:
-      "Ook de soundbar en alle apps werden direct geregeld. Vriendelijk, netjes en precies op tijd.",
-    name: "Familie Bakker",
-  },
-  {
-    quote:
-      "Vaste prijs vooraf afgesproken, geen verrassingen achteraf. Precies wat u wilt.",
-    name: "Kevin R.",
-  },
-  {
-    quote:
-      "De kabels zijn volledig in de muur weggewerkt. Je ziet er echt helemaal niets meer van.",
-    name: "Petra M.",
-  },
-  {
-    quote:
-      "Onze tv hangt kaarsrecht op een lastige gipswand. Ze wisten precies wat ze deden.",
-    name: "Youssef B.",
-  },
-  {
-    quote:
-      "Netjes gewerkt, alles opgeruimd achtergelaten en geduldig alles uitgelegd. Top service.",
-    name: "Familie Willemsen",
-  },
-  {
-    quote:
-      "Snel een afspraak, duidelijke communicatie en een keurige montage. Echt een aanrader.",
-    name: "Anouk T.",
-  },
-  {
-    quote:
-      "Onze grote tv met twee monteurs veilig opgehangen. Voelt echt solide aan de muur.",
-    name: "Dennis K.",
-  },
-];
-
-/**
- * Reviews per dienst — de sleutels zijn de slugs uit `diensten`. Ook nog
- * PLACEHOLDERS; zie de waarschuwing hierboven.
- */
-export const reviewsPerDienst: Record<string, Review[]> = {
-  "tv-ophangen": [
-    {
-      quote:
-        "Binnen een uur hing onze 65-inch strak boven het dressoir. Geen kabel te zien. Echt vakwerk.",
-      name: "Sandra V.",
-    },
-    {
-      quote:
-        "Onze tv hangt kaarsrecht op een lastige gipswand. Ze wisten precies wat ze deden.",
-      name: "Youssef B.",
-    },
-    {
-      quote:
-        "De monteur dacht mee over de kijkhoogte. Daar had ik zelf niet bij stilgestaan.",
-      name: "Mark de Jong",
-    },
-    {
-      quote:
-        "Vaste prijs vooraf afgesproken en dat was ook precies wat ik betaalde.",
-      name: "Kevin R.",
-    },
-    {
-      quote:
-        "Onze grote tv met twee monteurs opgehangen. Voelt echt solide aan de muur.",
-      name: "Dennis K.",
-    },
-    {
-      quote:
-        "Boorafval meegenomen en alles opgeruimd achtergelaten. Keurig gewerkt.",
-      name: "Anouk T.",
-    },
-  ],
-  "tv-installatie": [
-    {
-      quote:
-        "Nieuwe tv 's ochtends bezorgd, 's avonds keken we al. Alles stond ingesteld.",
-      name: "Ilse den Boer",
-    },
-    {
-      quote:
-        "De zenders zijn gesorteerd zoals wij ze gewend waren. Scheelde ons veel zoeken.",
-      name: "Familie Bakker",
-    },
-    {
-      quote:
-        "Decoder, soundbar en de spelcomputer in één keer aangesloten. Werkt allemaal.",
-      name: "Rachid E.",
-    },
-    {
-      quote:
-        "Mijn moeder kreeg rustig uitleg tot ze het zelf kon. Daar ging het haar om.",
-      name: "Marieke S.",
-    },
-    {
-      quote:
-        "Ook de streaming-apps ingesteld en ingelogd. Ik hoefde zelf niets uit te zoeken.",
-      name: "Tim V.",
-    },
-    {
-      quote:
-        "Het verpakkingsafval namen ze mee. Geen berg karton in de gang achtergelaten.",
-      name: "Joost W.",
-    },
-  ],
-  "soundbar-installatie": [
-    {
-      quote:
-        "Eindelijk geluid zoals het hoort. De subwoofer staat nu op de juiste plek.",
-      name: "Bram L.",
-    },
-    {
-      quote:
-        "Onze Atmos-set met achterspeakers aangesloten en afgestemd op de kamer.",
-      name: "Familie Kroon",
-    },
-    {
-      quote:
-        "Alles werkt nu met één afstandsbediening. Dat kreeg ik zelf niet voor elkaar.",
-      name: "Hanneke D.",
-    },
-    {
-      quote:
-        "De kabels zitten in een goot in muurkleur. Je ziet er echt niets meer van.",
-      name: "Petra M.",
-    },
-    {
-      quote:
-        "Bleek dat het via eARC moest. Ik had hem al die tijd verkeerd aangesloten.",
-      name: "Ruben J.",
-    },
-    {
-      quote:
-        "Binnen drie kwartier klaar en hij liet meteen horen wat het verschil was.",
-      name: "Sanne B.",
-    },
-  ],
-  "tv-instellen": [
-    {
-      quote:
-        "Na een storing waren al onze zenders weg. Binnen een half uur weer op orde.",
-      name: "Greet H.",
-    },
-    {
-      quote:
-        "Netflix deed het niet meer. Opgelost én uitgelegd waarom het misging.",
-      name: "Ferry O.",
-    },
-    {
-      quote:
-        "Geen wifi meer op de tv na het wisselen van provider. Nu weer verbinding.",
-      name: "Familie Smit",
-    },
-    {
-      quote:
-        "Geduldig uitgelegd, zonder moeilijke woorden. Voor mijn vader ideaal.",
-      name: "Linda K.",
-    },
-    {
-      quote:
-        "Eén universele afstandsbediening geprogrammeerd voor alles. Heerlijk rustig.",
-      name: "Wim de Vries",
-    },
-    {
-      quote:
-        "Eerlijk verteld dat het scherm zelf kapot was en waar ik terechtkon.",
-      name: "Nadia A.",
-    },
-  ],
-};
 
 export type FaqItem = { q: string; a: string };
 
@@ -510,7 +380,8 @@ export const faqAlgemeen: FaqItem[] = [
   },
   {
     q: "Hoe lang duurt de montage?",
-    a: "Een standaard montage duurt gemiddeld 45 tot 60 minuten. Werken we ook de kabels volledig weg, reken dan op ongeveer 90 minuten. De monteur laat alles netjes en schoon achter.",
+    a:
+      "Een standaard montage duurt gemiddeld 45 tot 60 minuten. Leggen we de kabels in een goot, reken dan op ongeveer 90 minuten in totaal. Kabels volledig in de muur wegwerken is een klus apart: dat kost anderhalf tot drie uur, afhankelijk van uw wand en de afstand. De monteur laat alles netjes en schoon achter.",
   },
   {
     q: "Werken jullie ook 's avonds en in het weekend?",
@@ -547,9 +418,13 @@ export const prijsGaranties = [
   },
   {
     icon: "clock",
-    kop: "Ook 's avonds en in het weekend",
+    // Niet "Ook 's avonds en in het weekend": dat is woordelijk de kop van
+    // `BEWIJS[3]`, en op /prijzen staan die twee blokken op dezelfde pagina.
+    // Dezelfde kop twee keer onder elkaar leest als een fout, ook als de
+    // tekst eronder verschilt.
+    kop: "Geen avond- en geen weekendtarief",
     tekst:
-      "Doordeweeks tot 21:00 uur, zaterdag en zondag van 09:00 tot 17:00. Geen avondtarief en geen weekendtoeslag.",
+      "Doordeweeks tot 21:00 uur, zaterdag en zondag van 09:00 tot 17:00. Hetzelfde bedrag als op een dinsdagmiddag.",
   },
   {
     icon: "check",

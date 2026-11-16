@@ -1,19 +1,22 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import Faq from "@/components/Faq";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
 import PrijsGarantie from "@/components/PrijsGarantie";
 import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
 import {
-  CheckList,
-  HeroActions,
-  PageHero,
-  Section,
-  SectionHeading,
+  Aanvraagsectie,
+  Faqsectie,
+  Hero,
+  HeroKnoppen,
+  Kop,
+  Stappen,
+  Vinkjes,
+  Vlak,
 } from "@/components/sections";
+import { BELOFTE } from "@/lib/content";
 import type { FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
@@ -23,8 +26,7 @@ import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
  * Stond tot nu toe alleen als één regel in de tarievenlijst, terwijl het de
  * meest gezochte vervolgvraag is van iemand die net een tv heeft opgehangen
  * ("tv kabels wegwerken", "kabels in de muur wegwerken") én de dienst die in
- * dezelfde rit meekan. De foto ervoor stond al in het project en werd nergens
- * gebruikt.
+ * dezelfde rit meekan.
  */
 export const metadata = pageMeta({
   title: "Tv-kabels wegwerken — wat het kost",
@@ -48,28 +50,28 @@ const voordelen = [
  */
 const manieren = [
   {
-    kop: "1. Kabelgoot in de kleur van uw muur",
+    kop: "Kabelgoot in de kleur van uw muur",
     prijs: "vanaf €39",
     wanneer: "Bijna altijd de beste keuze",
     tekst:
       "Een vlakke goot onder de tv waar alle kabels in verdwijnen, gespoten in precies uw muurkleur. Van een meter afstand ziet u er niets meer van. Het grote voordeel: er wordt niet gehakt, dus het kan op elke wand, het is in een half uur klaar en u kunt het later zonder schade weer weghalen — prettig in een huurwoning.",
   },
   {
-    kop: "2. Achter de plint en onder de vloer",
+    kop: "Achter de plint en onder de vloer",
     prijs: "op offerte",
     wanneer: "Bij een zwevende vloer of losse plint",
     tekst:
       "Loopt de kabel van de tv naar een kast of versterker aan de andere kant van de kamer, dan gaat hij achter de plint langs in plaats van dwars door de kamer. Werkt alleen als de plint eraf kan en er ruimte achter zit; dat beoordeelt de monteur ter plekke.",
   },
   {
-    kop: "3. Volledig in de muur",
+    kop: "Volledig in de muur",
     prijs: "op offerte",
     wanneer: "Als u echt niets wilt zien",
     tekst:
       "De kabels gaan in een sleuf in de wand, die daarna wordt dichtgezet en afgewerkt. Het mooiste resultaat en meteen het meeste werk: hakken, stoffen, dichtzetten en laten drogen. Daarom maken we hiervoor vooraf een vaste prijsafspraak, gebaseerd op uw wand en de afstand — u weet het bedrag dus voordat er iets gebeurt.",
   },
   {
-    kop: "4. Achter een voorzetwand",
+    kop: "Achter een voorzetwand",
     prijs: "op offerte",
     wanneer: "Bij een complete tv-wand",
     tekst:
@@ -104,11 +106,11 @@ const controle = [
   "Kan het niet veilig? Dan hakken we niet en stellen we een andere route voor",
 ];
 
-const offerteBelofte = [
+const aanvraagBelofte = [
   "In dezelfde rit als het ophangen, zonder tweede voorrijbeurt",
-  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
-  "Het bedrag is inclusief voorrijkosten en btw",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  BELOFTE.vrijblijvend,
+  BELOFTE.inclusief,
+  BELOFTE.avondWeekend,
 ];
 
 const faqItems: FaqItem[] = [
@@ -129,7 +131,7 @@ const faqItems: FaqItem[] = [
     a: "We zoeken de wand af met een detector die metaal, bedrading onder spanning en houten staanders vindt, en we houden de standaard installatiezones aan waar leidingen horen te lopen. Twijfelen we, dan hakken we niet — dan stellen we een route voor die wél veilig is.",
   },
   {
-    q: "Hoe lang duurt het?",
+    q: "Hoe lang duurt het wegwerken van de kabels?",
     a: "Een kabelgoot is meestal binnen een half uur klaar en kan direct bij het ophangen. Kabels volledig in de muur wegwerken kost ongeveer anderhalf tot drie uur, afhankelijk van de wand en de afstand, inclusief dichtzetten.",
   },
   {
@@ -155,8 +157,8 @@ export default function KabelsWegwerkenPage() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -165,63 +167,73 @@ export default function KabelsWegwerkenPage() {
             ]}
           />
         }
-        eyebrow="Kabels wegwerken"
-        // De kop noemt nu de dienst. "Een tv aan de muur, en geen kabel te
-        // zien" beschreef het resultaat maar niet wat u bij ons bestelt, en
-        // deze pagina moet vindbaar zijn op precies die woorden.
-        title="Tv-kabels wegwerken, tot u er niets meer van ziet"
-        lead="Een strak opgehangen tv met drie kabels eronder is geen strak opgehangen tv. Wij werken ze weg: in een goot in uw eigen muurkleur, of volledig uit het zicht in de wand."
-        image="/images/dienst-kabels-wegwerken.jpg"
-        imageAlt="Kabels van een wandgemonteerde tv weggewerkt in een goot in muurkleur"
+        bovenkop="Kabels wegwerken"
+        // De kop noemt de dienst. "Een tv aan de muur, en geen kabel te zien"
+        // beschreef het resultaat maar niet wat u bij ons bestelt, en deze
+        // pagina moet vindbaar zijn op precies die woorden.
+        titel="Tv-kabels wegwerken, tot u er niets meer van ziet"
+        inleiding="Een strak opgehangen tv met drie kabels eronder is geen strak opgehangen tv. Wij werken ze weg: in een goot in uw eigen muurkleur, of volledig uit het zicht in de wand."
+        beeld="/images/kabels-weggewerkt.webp"
+        beeldAlt="Kabelgoot in de kleur van de muur loopt van een wandgemonteerde televisie naar het dressoir"
       >
-        <CheckList
+        <HeroKnoppen tweedeHref="#manieren" tweedeLabel="De vier manieren" />
+        <Vinkjes donker
           items={voordelen}
-          dark
-          className="mt-8 grid gap-3 sm:grid-cols-2"
+          className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"
         />
-        <HeroActions tweedeHref="#manieren" tweedeLabel="De vier manieren" />
-      </PageHero>
+      </Hero>
 
-      <Section id="manieren" tone="surface" labelledBy="manieren-kop">
-        <SectionHeading
+      <Vlak id="manieren" toon="wit" labelledBy="manieren-kop">
+        <Kop
           id="manieren-kop"
-          eyebrow="Vier manieren"
-          title="Vier manieren, en wanneer welke past"
-          lead="Er is niet één juiste oplossing. Wat het beste werkt hangt af van uw wand, uw woning en van hoeveel u ervoor overheeft."
+          bovenkop="Vier manieren"
+        titel="Vier manieren, en wanneer welke past"
+        tekst="Er is niet één juiste oplossing. Wat het beste werkt hangt af van uw wand, uw woning en van hoeveel u ervoor overheeft."
         />
-        <ul className="mt-10 grid gap-4 md:grid-cols-2">
-          {manieren.map((manier) => (
-            <li key={manier.kop} className="h-full">
-              <div className="card flex h-full flex-col p-6">
-                <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="text-h3">{manier.kop}</h3>
-                  <span className="shrink-0 font-display font-bold whitespace-nowrap text-ink-950 tabular">
-                    {manier.prijs}
-                  </span>
-                </div>
-                <p className="mt-1.5 text-sm font-semibold text-accent-700">
+        {/* Een genummerde lijst met het bedrag rechts, als een menukaart.
+            Hiervoor stonden hier vier kaarten met het nummer in de kop
+            gebakken ("1. Kabelgoot…"); nu doet de `ol` het nummeren, en dat
+            is ook wat een schermlezer voorleest. */}
+        <ol className="mt-10 border-t border-ink-200">
+          {manieren.map((manier, i) => (
+            <li
+              key={manier.kop}
+              className="komt-op grid gap-x-6 gap-y-2 border-b border-ink-200 py-6 sm:grid-cols-[auto_1fr_auto] sm:py-7"
+            >
+              <span
+                aria-hidden="true"
+                className="cijfers font-display text-h3 font-semibold leading-none text-ink-500"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="text-h4">{manier.kop}</h3>
+                <p className="mt-1 text-sm font-semibold text-amber-800">
                   {manier.wanneer}
                 </p>
-                <p className="mt-3 text-ink-600">{manier.tekst}</p>
+                <p className="mt-3 max-w-prose text-ink-600">{manier.tekst}</p>
               </div>
+              <span className="cijfers font-display text-h4 font-semibold whitespace-nowrap text-ink-950 sm:text-right">
+                {manier.prijs}
+              </span>
             </li>
           ))}
-        </ul>
-      </Section>
+        </ol>
+      </Vlak>
 
-      <Section labelledBy="prijs">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="prijs">
+        <Kop
           id="prijs"
-          eyebrow="Wat het kost"
-          title="Wat kost het wegwerken van uw kabels?"
-          lead="Een kabelgoot in uw eigen muurkleur begint bij €39 als we hem in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk: dat bedrag staat vooraf vast, zodat u het kent voordat er gehakt wordt."
+          bovenkop="Wat het kost"
+        titel="Wat kost het wegwerken van uw kabels?"
+        tekst="Een kabelgoot in uw eigen muurkleur begint bij €39 als we hem in dezelfde rit meenemen. Kabels volledig in de muur wegwerken is maatwerk: dat bedrag staat vooraf vast, zodat u het kent voordat er gehakt wordt."
         />
         {/* Pal onder de bedragen: "vaste prijs" is pas een argument als erbij
             staat waar hij tegen vast is. */}
         <PrijsGarantie className="mt-10" />
-        <p className="mt-8 max-w-3xl text-ink-600">
+        <p className="mt-9 max-w-3xl text-ink-600">
           Alle tarieven staan bij elkaar op de{" "}
-          <Link href="/prijzen" className="link">
+          <Link href="/prijzen" className="verwijzing">
             prijzenpagina
           </Link>
           , inclusief wat er bij een montage altijd bij zit.
@@ -232,61 +244,40 @@ export default function KabelsWegwerkenPage() {
           title="Zal ik het meteen meenemen?"
           text="Kabels wegwerken tijdens het ophangen scheelt u een tweede afspraak en een tweede keer thuisblijven."
         />
-      </Section>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="werkwijze">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="werkwijze">
+        <Kop
           id="werkwijze"
-          eyebrow="Zo werkt het"
-          title="Zo gaat het wegwerken van uw kabels"
-          lead="Vier stappen, en u hoeft er zelf maar één van te doen: zeggen wat u wilt."
+          bovenkop="Zo werkt het"
+        titel="Zo gaat het wegwerken van uw kabels"
+        tekst="Vier stappen, en u hoeft er zelf maar één van te doen: zeggen wat u wilt."
         />
-        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stappen.map((stap, i) => (
-            <li key={stap.title} className="card p-5">
-              <p className="eyebrow">Stap {i + 1}</p>
-              <h3 className="mt-3 font-display font-bold text-ink-950">
-                {stap.title}
-              </h3>
-              <p className="mt-1.5 text-sm text-ink-600">{stap.text}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      <Section labelledBy="controle">
-        <SectionHeading
-          id="controle"
-          eyebrow="Veiligheid"
-          title="Wat wij controleren vóór we hakken"
-          lead="In een muur zitten dingen die u niet ziet. Een sleuf op de verkeerde plek raakt een waterleiding of de bedrading van het stopcontact erboven. Daarom gaat er altijd eerst een controle overheen — en zeggen we het eerlijk als een route niet veilig kan."
-        />
-        <CheckList
-          items={controle}
-          className="mt-10 grid max-w-4xl gap-3 sm:grid-cols-2"
-        />
-      </Section>
-
-      <Reviews />
-
-      <Section labelledBy="faq">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading
-            id="faq"
-            eyebrow="Veelgestelde vragen"
-            title="Veelgestelde vragen over kabels wegwerken"
-            lead={
-              <>
-                Staat uw vraag er niet bij? Zet hem in het{" "}
-                <Link href="#offerte" className="link">
-                  aanvraagformulier
-                </Link>{" "}
-                — dan belt de monteur u erover.
-              </>
-            }
-          />
-          <Faq items={faqItems} />
+        <div className="mt-12">
+          <Stappen items={stappen} kolommen={4} />
         </div>
+      </Vlak>
+
+      <Vlak toon="oppervlak" labelledBy="controle">
+        <Kop
+          id="controle"
+          bovenkop="Veiligheid"
+        titel="Wat wij controleren vóór we hakken"
+        tekst="In een muur zitten dingen die u niet ziet. Een sleuf op de verkeerde plek raakt een waterleiding of de bedrading van het stopcontact erboven. Daarom gaat er altijd eerst een controle overheen — en zeggen we het eerlijk als een route niet veilig kan."
+        />
+        <Vinkjes
+          items={controle}
+          className="mt-10 grid max-w-4xl gap-3.5 sm:grid-cols-2"
+        />
+      </Vlak>
+
+      <Reviews toon="wit" />
+
+      <Faqsectie
+        titel="Veelgestelde vragen over kabels wegwerken"
+        items={faqItems}
+        toon="oppervlak"
+      >
         <RelatedLinks
           items={[
             ["/tv-ophangen", "Tv laten ophangen"],
@@ -295,26 +286,20 @@ export default function KabelsWegwerkenPage() {
             ["/prijzen", "Alle tarieven"],
           ]}
         />
-      </Section>
+      </Faqsectie>
 
-      <Section id="offerte" tone="surface" labelledBy="offerte-kop">
-        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="offerte-kop"
-              eyebrow="Afspraak aanvragen"
-              title="Geen kabel meer in het zicht?"
-              lead="Vertel kort wat er moet gebeuren en waar u woont. Vraagt u het aan bij uw montage, dan doen we het in dezelfde rit — u hoeft ons dus geen tweede keer thuis te laten komen."
-            />
-            <CheckList items={offerteBelofte} className="mt-8" />
-          </div>
-          <ContactForm
-            variant="kabels-wegwerken"
-            berichtLabel="Uw tv en uw wand"
-            berichtPlaceholder="Bijvoorbeeld: 55 inch, stopcontact zit 2 meter links van de tv."
-          />
-        </div>
-      </Section>
+      <Aanvraagsectie
+        toon="wit"
+        titel="Geen kabel meer in het zicht?"
+        tekst="Vertel kort wat er moet gebeuren en waar u woont. Vraagt u het aan bij uw montage, dan doen we het in dezelfde rit — u hoeft ons dus geen tweede keer thuis te laten komen."
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="kabels-wegwerken"
+          berichtLabel="Uw tv en uw wand"
+          berichtPlaceholder="Bijvoorbeeld: 55 inch, stopcontact zit 2 meter links van de tv."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

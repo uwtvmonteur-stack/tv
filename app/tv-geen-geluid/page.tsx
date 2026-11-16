@@ -1,19 +1,20 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
-  CheckList,
-  HeroActions,
-  PageHero,
-  Section,
-  SectionHeading,
+  Aanvraagsectie,
+  Faqsectie,
+  Hero,
+  HeroKnoppen,
+  Kop,
+  Vinkjes,
+  Vlak,
 } from "@/components/sections";
-import { TV_HULP_PRIJS, type FaqItem } from "@/lib/content";
+import { BELOFTE, TV_HULP_PRIJS, type FaqItem } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
 /**
@@ -42,7 +43,7 @@ const belofte = [
   "Wij zoeken de oorzaak op en lossen hem ter plekke op",
   `Vaste prijs van ${TV_HULP_PRIJS}, inclusief voorrijkosten en btw`,
   "Uitleg in gewone taal, zodat u het zelf terug kunt zetten",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  BELOFTE.avondWeekend,
 ];
 
 /**
@@ -102,7 +103,7 @@ const faqItems: FaqItem[] = [
     a: "Dan zeggen we dat. Is de luidspreker of de versterker in het toestel defect, dan is dat een reparatie en die doen wij niet — daarvoor moet u bij de fabrikant of een reparateur zijn. U hoort dat van de monteur ter plekke, met de reden erbij, zodat u weet waar u aan toe bent.",
   },
   {
-    q: "Hoe lang duurt het?",
+    q: "Hoe lang duurt het verhelpen van een geluidsprobleem?",
     a: "De meeste geluidsproblemen zijn binnen een half uur verholpen. Moet er een kabel anders lopen of een soundbar opnieuw worden ingeregeld, reken dan op drie kwartier tot een uur. De monteur legt daarna uit wat er mis was, zodat u het zelf kunt terugzetten.",
   },
   {
@@ -111,11 +112,11 @@ const faqItems: FaqItem[] = [
   },
 ];
 
-const offerteBelofte = [
-  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
+const aanvraagBelofte = [
+  BELOFTE.vrijblijvend,
   `Vaste prijs van ${TV_HULP_PRIJS}, inclusief voorrijkosten en btw`,
-  "Geen aanbetaling — u betaalt pas na afloop",
-  "Vaak al binnen 24 uur een afspraak mogelijk",
+  BELOFTE.geenAanbetaling,
+  BELOFTE.snel,
 ];
 
 export default function Page() {
@@ -134,8 +135,8 @@ export default function Page() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -144,50 +145,63 @@ export default function Page() {
             ]}
           />
         }
-        eyebrow="Tv hulp aan huis"
-        title="Geen geluid op uw tv? Wij lossen het bij u thuis op"
-        lead="Wel beeld en geen geluid is zelden een kapotte tv. Meestal gaat het geluid naar een uitgang die niet speelt — een soundbar op de verkeerde HDMI-poort, een audioformaat dat niet past, of een instelling die de luidsprekers uitzet. Onze monteur zoekt het uit en lost het op."
-        image="/images/familie-kijkt-tv.jpg"
-        imageAlt="Gezin kijkt televisie in de woonkamer"
+        bovenkop="Tv hulp aan huis"
+        titel="Geen geluid op uw tv? Wij lossen het bij u thuis op"
+        inleiding="Wel beeld en geen geluid is zelden een kapotte tv. Meestal gaat het geluid naar een uitgang die niet speelt — een soundbar op de verkeerde HDMI-poort, een audioformaat dat niet past, of een instelling die de luidsprekers uitzet. Onze monteur zoekt het uit en lost het op."
+        beeld="/images/tv-geen-geluid.webp"
+        beeldAlt="Monteur sluit een HDMI-kabel aan op de achterkant van een wandgemonteerde televisie, met de soundbar eronder"
       >
-        <HeroActions tweedeHref="#oorzaken" tweedeLabel="Bekijk de oorzaken" />
-        <CheckList items={belofte} className="mt-8" dark />
-      </PageHero>
-
-      <Section id="oorzaken" labelledBy="oorzaken-kop">
-        <SectionHeading
-          id="oorzaken-kop"
-          eyebrow="De oorzaak"
-          title="Vijf redenen waarom uw tv stil blijft"
-          lead="Op volgorde van hoe vaak onze monteurs ze tegenkomen. Meestal is er niets kapot: het gaat om een instelling, een kabel of een poort."
+        <HeroKnoppen tweedeHref="#oorzaken" tweedeLabel="Bekijk de oorzaken" />
+        <Vinkjes donker
+          items={belofte}
+          className="mt-8 border-t border-white/15 pt-6"
         />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-          {oorzaken.map((oorzaak) => (
-            <li key={oorzaak.kop} className="card h-full p-6">
-              <h3 className="flex items-start gap-3 text-h3">
-                <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
-                  <Icon name="info" className="size-5" />
-                </span>
-                {oorzaak.kop}
-              </h3>
-              <p className="mt-3 text-ink-600">{oorzaak.tekst}</p>
+      </Hero>
+
+      <Vlak toon="wit" id="oorzaken" labelledBy="oorzaken-kop">
+        <Kop
+          id="oorzaken-kop"
+          bovenkop="De oorzaak"
+        titel="Vijf redenen waarom uw tv stil blijft"
+        tekst="Op volgorde van hoe vaak onze monteurs ze tegenkomen. Meestal is er niets kapot: het gaat om een instelling, een kabel of een poort."
+        />
+        {/* Een genummerde lijst en geen kaartenraster: de volgorde ís de
+            inhoud — dit is wat de monteur van vaak naar zelden aantreft. In
+            kaarten ging die volgorde verloren, en het icoontje bij elke kop
+            voegde er niets aan toe. */}
+        <ol className="mt-12 max-w-4xl border-t border-ink-200">
+          {oorzaken.map((oorzaak, i) => (
+            <li
+              key={oorzaak.kop}
+              className="komt-op flex gap-5 border-b border-ink-200 py-6"
+            >
+              <span
+                aria-hidden="true"
+                className="cijfers shrink-0 font-display text-h3 font-semibold leading-none text-ink-500"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="text-h4">{oorzaak.kop}</h3>
+                <p className="mt-2 text-ink-600">{oorzaak.tekst}</p>
+              </div>
             </li>
           ))}
-        </ul>
-      </Section>
+        </ol>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="zelf-kop">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-start">
+      <Vlak toon="oppervlak" labelledBy="zelf-kop">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-16">
           <div>
-            <SectionHeading
+            <Kop
               id="zelf-kop"
-              eyebrow="Eerst zelf proberen"
-              title="Vijf dingen die u zonder gereedschap kunt controleren"
-              lead="Lukt het hiermee, dan hoeft u ons niet te bellen. Dat zeggen we liever eerlijk dan dat u voor niets een monteur over de vloer krijgt."
+              bovenkop="Eerst zelf proberen"
+              titel="Vijf dingen die u bij geen geluid zelf kunt nakijken"
+              tekst="Geen gereedschap nodig. Lukt het hiermee, dan hoeft u ons niet te bellen — dat zeggen we liever eerlijk dan dat u voor niets een monteur over de vloer krijgt."
             />
-            <CheckList items={zelfProberen} className="mt-8" />
+            <Vinkjes items={zelfProberen} className="mt-8" />
           </div>
-          <div className="card p-7 md:p-8">
+          <div className="paneel border-t-4 border-t-amber-400 p-7 md:p-8">
             <h3 className="text-h3">Werkt het nog steeds niet?</h3>
             <p className="mt-3 text-ink-600">
               Dan komt onze monteur langs. Hij neemt een andere HDMI-kabel en
@@ -198,39 +212,29 @@ export default function Page() {
             <p className="mt-4 text-ink-600">
               Staat uw tv nog niet aan de muur, of wilt u er meteen een
               soundbar bij?{" "}
-              <Link href="/diensten/soundbar-installatie" className="link">
+              <Link
+                href="/diensten/soundbar-installatie"
+                className="verwijzing"
+              >
                 Dat kan in dezelfde afspraak
               </Link>
               .
             </p>
-            <Link href="#offerte" className="btn-primary mt-7 w-full">
+            <Link href="#offerte" className="knop-vol mt-7 w-full">
               Afspraak aanvragen
               <Icon name="arrow-right" className="size-5" />
             </Link>
           </div>
         </div>
-      </Section>
+      </Vlak>
 
-      <Reviews />
+      <Reviews toon="wit" />
 
-      <Section labelledBy="faq-kop">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading
-            id="faq-kop"
-            eyebrow="Veelgestelde vragen"
-            title="Vragen over geluid dat wegvalt"
-            lead={
-              <>
-                Staat uw vraag er niet bij? Zet hem in het{" "}
-                <Link href="#offerte" className="link">
-                  aanvraagformulier
-                </Link>{" "}
-                — u krijgt er antwoord op als wij u bellen.
-              </>
-            }
-          />
-          <Faq items={faqItems} />
-        </div>
+      <Faqsectie
+        titel="Vragen over geluid dat wegvalt"
+        items={faqItems}
+        toon="oppervlak"
+      >
         <RelatedLinks
           items={[
             ["/diensten/tv-instellen", "Tv hulp aan huis"],
@@ -239,26 +243,20 @@ export default function Page() {
             ["/diensten/tv-installatie", "Complete tv installatie"],
           ]}
         />
-      </Section>
+      </Faqsectie>
 
-      <Section id="offerte" tone="surface" labelledBy="offerte-kop">
-        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="offerte-kop"
-              eyebrow="Afspraak aanvragen"
-              title="Vertel wat er niet klinkt"
-              lead="Zet erbij welk merk tv u heeft en of er een soundbar of ontvanger aan hangt. Dan komt de monteur voorbereid en weet u het bedrag vooraf."
-            />
-            <CheckList items={offerteBelofte} className="mt-8" />
-          </div>
-          <ContactForm
-            variant="geen-geluid"
-            berichtLabel="Wat hoort u niet?"
-            berichtPlaceholder="Bijvoorbeeld: Samsung tv met Sonos soundbar, sinds gisteren wel beeld maar geen geluid."
-          />
-        </div>
-      </Section>
+      <Aanvraagsectie
+        toon="wit"
+        titel="Vertel wat er niet klinkt"
+        tekst="Zet erbij welk merk tv u heeft en of er een soundbar of ontvanger aan hangt. Dan komt de monteur voorbereid en weet u het bedrag vooraf."
+        beloftes={aanvraagBelofte}
+      >
+        <ContactForm
+          variant="geen-geluid"
+          berichtLabel="Wat hoort u niet?"
+          berichtPlaceholder="Bijvoorbeeld: Samsung tv met Sonos soundbar, sinds gisteren wel beeld maar geen geluid."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
@@ -11,15 +10,18 @@ import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
-  CheckList,
-  HeroActions,
-  PageHero,
-  Section,
-  SectionHeading,
+  Aanvraagsectie,
+  Faqsectie,
+  Hero,
+  HeroKnoppen,
+  Kop,
+  Stappen,
+  Vinkjes,
+  Vlak,
 } from "@/components/sections";
 import {
+  BELOFTE,
   TV_HULP_PRIJS,
-  reviewsPerDienst,
   type FaqItem,
 } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
@@ -77,9 +79,9 @@ const prijsDekking = [
 /** Wat de aanvraag zelf wel en niet van u vraagt — niet wat er in de prijs zit. */
 const aanvraagBelofte = [
   `Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw`,
-  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
-  "Geen aanbetaling — u betaalt pas na afloop",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  BELOFTE.vrijblijvend,
+  BELOFTE.geenAanbetaling,
+  BELOFTE.avondWeekend,
 ];
 
 const streaming = [
@@ -114,22 +116,22 @@ const stappen = [
 
 const situaties: IconCard[] = [
   {
-    icon: <Icon name="tv" className="size-6" />,
+    icon: <Icon name="tv" />,
     h3: "Ineens geen beeld of geluid",
     text: "Verkeerde bron, een instelling die is omgesprongen of een verbinding die eruit ligt? Wij zoeken uit waar het aan ligt en zetten uw tv weer aan het werk.",
   },
   {
-    icon: <Icon name="cable" className="size-6" />,
+    icon: <Icon name="cable" />,
     h3: "Na een verhuizing of storing",
     text: "Beeld weg, geen zenders of internet? We sluiten alles opnieuw aan, stellen het in en controleren de verbindingen — meestal werkt alles weer voordat wij de deur uit zijn.",
   },
   {
-    icon: <Icon name="sliders" className="size-6" />,
+    icon: <Icon name="sliders" />,
     h3: "Eén afstandsbediening voor alles",
     text: "We koppelen en programmeren een universele afstandsbediening, zodat u tv, soundbar en mediaspeler met één bediening aanstuurt.",
   },
   {
-    icon: <Icon name="chat" className="size-6" />,
+    icon: <Icon name="chat" />,
     h3: "Zenders kwijt of door elkaar",
     text: "Ineens andere zenders of alles door elkaar? We zoeken de zenders opnieuw, zetten uw favorieten weer op de juiste plek en leggen uit hoe u het zelf bijhoudt.",
   },
@@ -138,7 +140,11 @@ const situaties: IconCard[] = [
 const faqItems: FaqItem[] = [
   {
     q: "Repareren jullie ook kapotte tv's?",
-    a: "Nee, wij doen geen hardwarereparaties. We helpen met alles rondom de instellingen, zenders, wifi, apps en verbindingen van uw tv. Is het toestel zelf defect (bijvoorbeeld een kapot scherm)? Dan verwijzen we u naar de fabrikant of een reparateur.",
+    a:
+      // Woordelijk dezelfde grens als in de FAQ op de homepage. Stond hier
+      // in andere woorden, en een bezoeker die beide pagina's leest moet
+      // niet gaan uitzoeken of er verschil tussen zit.
+      "Nee. Een kapot scherm of defecte elektronica repareren wij niet; daarvoor moet u bij de fabrikant of een reparateur zijn. Wij helpen met alles rondom de instellingen, zenders, wifi, apps en verbindingen van uw tv.",
   },
   {
     q: "Wat is het verschil met een tv installatie?",
@@ -158,7 +164,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Kan de afspraak ook 's avonds of in het weekend?",
-    a: "Ja, doordeweeks tot 21:00 uur en in het weekend, zonder toeslag. Vraag online een afspraak aan, dan laten we u de eerstvolgende beschikbaarheid weten.",
+    a: "Ja. Doordeweeks komen we tot 21:00 uur langs en in het weekend tussen 09:00 en 17:00 uur, zonder toeslag. Vraag online een afspraak aan, dan laten we u de eerstvolgende beschikbaarheid weten.",
   },
 ];
 
@@ -176,8 +182,8 @@ export default function TvInstellenPage() {
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -186,95 +192,83 @@ export default function TvInstellenPage() {
             ]}
           />
         }
-        eyebrow={`Tv hulp aan huis · vaste prijs ${PRIJS}`}
-        title="Tv hulp aan huis: uw tv snel weer werkend"
-        lead="Werkt uw tv niet meer zoals het hoort? Geen zenders, geen wifi of internet, een app die niet opstart of een afstandsbediening die niet reageert? Onze monteur komt bij u thuis, verhelpt het en legt rustig uit hoe u het zelf houdt — in gewone taal, zonder jargon."
-        image="/images/dienst-tv-instellen.jpg"
-        imageAlt="Ingestelde smart-tv met heldere beeldweergave in de woonkamer"
+        bovenkop={`Tv hulp aan huis · vaste prijs ${PRIJS}`}
+        titel="Tv hulp aan huis: uw tv snel weer werkend"
+        inleiding="Werkt uw tv niet meer zoals het hoort? Geen zenders, geen wifi of internet, een app die niet opstart of een afstandsbediening die niet reageert? Onze monteur komt bij u thuis, verhelpt het en legt rustig uit hoe u het zelf houdt — in gewone taal, zonder jargon."
+        beeld="/images/dienst-tv-instellen.webp"
+        beeldAlt="Ingestelde smart-tv met heldere beeldweergave in de woonkamer"
       >
-        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
-        <CheckList
-          dark
+        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <Vinkjes donker
           items={[
             "Alles werkt weer na één bezoek",
             "Zenders, wifi en apps op orde",
             "Uitleg in gewone taal — ook prettig voor senioren",
             `Vaste prijs van ${PRIJS}, incl. voorrijkosten`,
           ]}
-          className="mt-8 grid gap-3 sm:grid-cols-2"
+          className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"
         />
-      </PageHero>
+      </Hero>
 
-      <Section labelledBy="hulp">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="hulp">
+        <Kop
           id="hulp"
-          eyebrow="Waarmee we helpen"
-          title="Waarmee we u helpen"
-          lead="Moderne tv's kunnen ontzettend veel, en juist daardoor gaat er weleens iets mis: zenders die verdwijnen, geen internet, een app die hapert of een instelling die per ongeluk is veranderd. Wij verhelpen dat soort problemen met de instellingen, software en verbindingen van uw tv — en leggen meteen uit hoe u het zelf houdt. Hardwarereparaties, zoals een kapot scherm, doen we niet."
+          bovenkop="Waarmee we helpen"
+        titel="Waarmee we u helpen"
+        tekst="Moderne tv's kunnen ontzettend veel, en juist daardoor gaat er weleens iets mis: zenders die verdwijnen, geen internet, een app die hapert of een instelling die per ongeluk is veranderd. Wij verhelpen dat soort problemen met de instellingen, software en verbindingen van uw tv — en leggen meteen uit hoe u het zelf houdt. Hardwarereparaties, zoals een kapot scherm, doen we niet."
         />
-        <CheckList
+        <Vinkjes
           items={hulpItems}
-          className="mt-10 grid max-w-4xl gap-3 sm:grid-cols-2"
+          className="mt-10 grid max-w-4xl gap-3.5 sm:grid-cols-2"
         />
-      </Section>
+      </Vlak>
 
       {/* Bewijs komt ná de belofte en vóór de prijs: eerst vertellen wat we
           leveren, dan laten zien dat we het leveren, dan wat het kost. */}
-      <Reviews
-        title="Klanten over onze hulp aan huis"
-        items={reviewsPerDienst["tv-instellen"]}
-      />
+      <Reviews toon="oppervlak" />
 
-      {/* Brengt zijn eigen witte sectie mee, vlak vóór de prijs. */}
-
-      <Section id="prijs" tone="surface" labelledBy="prijs-kop">
-        <SectionHeading
+      <Vlak id="prijs" toon="wit" labelledBy="prijs-kop">
+        <Kop
           id="prijs-kop"
-          eyebrow="Wat het kost"
-          title="Wat kost tv hulp aan huis?"
-          lead="De meeste hulpvragen lost onze monteur op voor één vast bedrag, inclusief voorrijkosten en btw. Vooraf afgesproken, geen verrassingen achteraf."
+          bovenkop="Wat het kost"
+        titel="Wat kost tv hulp aan huis?"
+        tekst="De meeste hulpvragen lost onze monteur op voor één vast bedrag, inclusief voorrijkosten en btw. Vooraf afgesproken, geen verrassingen achteraf."
         />
 
-        {/* Een vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij het
-            ophangen, waar de prijs uit een offerte komt. Hier is het bedrag
-            zelf het argument, dus staat het groot en alleen op de kaart. */}
-        <div className="mt-12 grid gap-5 lg:grid-cols-5">
+        {/* Eén vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij
+            het ophangen, met drie formaten. Hier is het bedrag zelf het
+            argument, dus staat het in een paneel met dezelfde amberen streep
+            als het aanvraagformulier. */}
+        <div className="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
           <div className="lg:col-span-2">
-            <div className="relative h-full overflow-hidden rounded-3xl bg-ink-950 p-8 text-white">
-              <div className="bg-grid absolute inset-0" aria-hidden="true" />
-              <div
-                className="absolute -right-16 -top-16 size-64 rounded-full bg-accent-500/25 blur-3xl"
-                aria-hidden="true"
-              />
-              <div className="relative flex h-full flex-col justify-between">
-                <div>
-                  <p className="eyebrow-dark">Vaste prijs</p>
-                  <p className="mt-5 font-display text-stat font-bold tabular">
-                    {PRIJS}
-                  </p>
-                  <p className="mt-3 text-ink-300">
-                    Voor het hele bezoek, inclusief voorrijkosten en btw. Geen
-                    uurtarief dat oploopt terwijl wij het uitzoeken.
-                  </p>
-                </div>
-                <Link href="#offerte" className="btn-primary btn-lg mt-8 w-full">
-                  Afspraak aanvragen
-                  <Icon name="arrow-right" className="size-5" />
-                </Link>
+            <div className="paneel flex h-full flex-col justify-between border-t-4 border-t-amber-400 p-7">
+              <div>
+                <p className="bovenkop">Vaste prijs</p>
+                <p className="cijfers mt-4 font-display text-prijs font-semibold text-ink-950">
+                  {PRIJS}
+                </p>
+                <p className="mt-4 text-ink-600">
+                  Voor het hele bezoek, inclusief voorrijkosten en btw. Geen
+                  uurtarief dat oploopt terwijl wij het uitzoeken.
+                </p>
               </div>
+              <Link href="#offerte" className="knop-vol knop-groot mt-8 w-full">
+                Afspraak aanvragen
+                <Icon name="arrow-right" className="size-5" />
+              </Link>
             </div>
           </div>
 
           <div className="lg:col-span-3">
             <h3 className="text-h3">Wat er in dat bedrag zit</h3>
-            <CheckList items={prijsDekking} className="mt-5" />
-            <p className="mt-6 text-ink-600">
+            <Vinkjes items={prijsDekking} className="mt-5" />
+            <p className="mt-7 text-ink-600">
               Bekijk alle{" "}
-              <Link href="/prijzen" className="link">
+              <Link href="/prijzen" className="verwijzing">
                 prijzen
               </Link>{" "}
               of zet uw vraag meteen in het{" "}
-              <Link href="#offerte" className="link">
+              <Link href="#offerte" className="verwijzing">
                 aanvraagformulier
               </Link>
               .
@@ -284,67 +278,57 @@ export default function TvInstellenPage() {
 
         {/* Geen eigen kop boven dit blok: de drie garanties zijn zelf h3's, en
             een kop ernaast zou op hetzelfde niveau staan als wat hij aankondigt. */}
-        <p className="lead mt-16 max-w-3xl">
+        <p className="mt-16 max-w-3xl text-lead text-ink-600">
           Een vaste prijs is pas een argument als erbij staat waar hij tegen
           vast is. Dit zijn de drie dingen die uw bedrag niet veranderen.
         </p>
         <PrijsGarantie className="mt-8" />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="streaming">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="streaming">
+        <Kop
           id="streaming"
-          eyebrow="Streaming"
-          title="Hulp met streaming en apps"
-          lead="Doet Netflix, Viaplay of NPO Start het niet, of komt u niet meer ingelogd? We zetten uw streaming-apps weer goed en helpen u met inloggen. Uw wachtwoorden blijven van u — die vullen we alleen samen met u in."
+          bovenkop="Streaming"
+        titel="Hulp met streaming en apps"
+        tekst="Doet Netflix, Viaplay of NPO Start het niet, of komt u niet meer ingelogd? We zetten uw streaming-apps weer goed en helpen u met inloggen. Uw wachtwoorden blijven van u — die vullen we alleen samen met u in."
         />
         <ul className="mt-10 flex flex-wrap gap-2.5">
           {streaming.map((dienst) => (
-            <li
-              key={dienst}
-              className="inline-flex min-h-11 items-center rounded-full bg-white px-4 text-sm font-semibold text-ink-800 ring-1 ring-ink-200"
-            >
+            <li key={dienst} className="pil">
               {dienst}
             </li>
           ))}
         </ul>
-      </Section>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="stappen">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="stappen">
+        <Kop
           id="stappen"
-          eyebrow="Zo werkt het"
-          title="Zo werkt tv hulp aan huis"
-          lead="Van aanvraag tot werkende tv in vier stappen, en de uitleg hoort erbij."
+          bovenkop="Zo werkt het"
+        titel="Zo werkt tv hulp aan huis"
+        tekst="Van aanvraag tot werkende tv in vier stappen, en de uitleg hoort erbij."
         />
-        {/* Genummerd, want de volgorde is het punt. `HowItWorks` uit de
-            sectiebibliotheek beschrijft de stappen van het ophangen; hulp aan
-            huis eindigt met uitleggen en niet met opruimen. */}
-        <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {stappen.map((stap, i) => (
-            <li key={stap.title} className="card relative p-6 pt-8">
-              <span className="absolute -top-4 left-6 grid size-9 place-items-center rounded-full bg-ink-950 font-display font-bold text-white">
-                {i + 1}
-              </span>
-              <h3 className="text-h3">{stap.title}</h3>
-              <p className="mt-2 text-ink-600">{stap.text}</p>
-            </li>
-          ))}
-        </ol>
+        {/* `Werkwijze` uit de sectiebibliotheek beschrijft de stappen van het
+            ophangen; hulp aan huis heeft er vier en eindigt met uitleggen in
+            plaats van met opruimen. Vandaar `Stappen` met de eigen lijst, in
+            dezelfde vorm als elders op de site. */}
+        <div className="mt-12">
+          <Stappen items={stappen} kolommen={4} />
+        </div>
         <InlineCta
           href="#offerte"
           text="Vaste prijs vooraf, en we leggen rustig uit hoe het werkt voordat we weggaan. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="senioren">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="senioren">
+        <Kop
           id="senioren"
-          eyebrow="Uitleg hoort erbij"
-          title="Geduldig en in gewone taal — ook voor senioren"
-          lead="Onze monteurs zijn er niet alleen om het óp te lossen, maar ook om het úít te leggen."
+          bovenkop="Uitleg hoort erbij"
+        titel="Geduldig en in gewone taal — ook voor senioren"
+        tekst="Onze monteurs zijn er niet alleen om het óp te lossen, maar ook om het úít te leggen."
         />
-        <div className="prose-tv mt-8 max-w-3xl">
+        <div className="artikel mt-8 max-w-3xl">
           <p>
             Veel van onze klanten zijn senioren die gewoon fijn tv willen kijken
             zonder gedoe. We nemen de tijd, herhalen de stappen zo vaak als
@@ -356,44 +340,30 @@ export default function TvInstellenPage() {
             gaan pas weg als u zich er zeker bij voelt.
           </p>
         </div>
-      </Section>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="situaties">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="situaties">
+        <Kop
           id="situaties"
-          eyebrow="Uw situatie"
-          title="Tv hulp in elke situatie"
-          lead="Waar u ook op vastloopt, onze monteur helpt u snel verder."
+          bovenkop="Uw situatie"
+        titel="Tv hulp in elke situatie"
+        tekst="Waar u ook op vastloopt, onze monteur helpt u snel verder."
         />
         <IconCardGrid items={situaties} columns={2} className="mt-12" />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="faq">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading
-            id="faq"
-            eyebrow="Veelgestelde vragen"
-            title="Veelgestelde vragen over tv hulp"
-            lead={
-              <>
-                Staat uw vraag er niet bij? Zet hem in het{" "}
-                <Link href="#offerte" className="link">
-                  aanvraagformulier
-                </Link>{" "}
-                — dan belt de monteur u erover.
-              </>
-            }
-          />
-          <Faq items={faqItems} />
-        </div>
-      </Section>
+      <Faqsectie
+        titel="Veelgestelde vragen over tv hulp"
+        items={faqItems}
+        toon="oppervlak"
+      />
 
-      <Section tone="surface" labelledBy="werkgebied">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="werkgebied">
+        <Kop
           id="werkgebied"
-          eyebrow="Werkgebied"
-          title="Tv hulp aan huis in ons werkgebied"
-          lead="Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Per provincie vindt u hieronder de plaatsen waar wij rijden."
+          bovenkop="Werkgebied"
+        titel="Tv hulp aan huis in ons werkgebied"
+        tekst="Onze monteurs komen aan huis in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Per provincie vindt u hieronder de plaatsen waar wij rijden."
         />
         {/* Ankertekst volgt de titel van de doelpagina ("Tv ophangen in
             <provincie>"); de href verandert niet. */}
@@ -410,28 +380,21 @@ export default function TvInstellenPage() {
             ["/diensten/soundbar-installatie", "Soundbar installeren"],
           ]}
         />
-      </Section>
+      </Vlak>
 
-      <Section id="offerte" labelledBy="offerte-kop">
-        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="offerte-kop"
-              eyebrow="Afspraak aanvragen"
-              title="Vraag een afspraak aan voor tv-hulp"
-              lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
-            />
-            <CheckList items={aanvraagBelofte} className="mt-8" />
-          </div>
-          {/* `variant` is het label waarop in GA4 wordt gemeten. Het blijft
-              staan zoals het was, anders breekt de reeks van deze pagina. */}
-          <ContactForm
-            variant="tv-instellen"
-            berichtLabel="Wat lukt er niet?"
-            berichtPlaceholder="Bijvoorbeeld: na de storing zijn alle zenders weg en Netflix start niet meer."
-          />
-        </div>
-      </Section>
+      <Aanvraagsectie
+        titel="Vraag een afspraak aan voor tv-hulp"
+        tekst={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Vertel kort wat er niet lukt, dan weet de monteur vooraf wat hij meeneemt. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
+        beloftes={aanvraagBelofte}
+      >
+        {/* `variant` is het label waarop in GA4 wordt gemeten. Het blijft
+            staan zoals het was, anders breekt de reeks van deze pagina. */}
+        <ContactForm
+          variant="tv-instellen"
+          berichtLabel="Wat lukt er niet?"
+          berichtPlaceholder="Bijvoorbeeld: na de storing zijn alle zenders weg en Netflix start niet meer."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

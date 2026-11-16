@@ -4,12 +4,12 @@ import JsonLd from "@/components/JsonLd";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
-  CtaBand,
-  HeroActions,
-  PageHero,
-  Section,
-  SectionHeading,
-  TrustBar,
+  Bewijsrij,
+  Hero,
+  HeroKnoppen,
+  Kop,
+  Slotoproep,
+  Vlak,
 } from "@/components/sections";
 import { provincies, stedenInProvincie } from "@/lib/steden";
 import { absUrl, itemListJsonLd, pageMeta } from "@/lib/seo";
@@ -33,8 +33,8 @@ export default function WerkgebiedPage() {
     <>
       <JsonLd data={itemList} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -42,25 +42,29 @@ export default function WerkgebiedPage() {
             ]}
           />
         }
-        eyebrow="Werkgebied"
-        title="Wij hangen uw tv op bij u in de buurt"
-        lead="Onze monteurs zijn dagelijks onderweg in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant — daar helpen we u vaak al binnen 24 uur."
+        bovenkop="Werkgebied"
+        titel="Wij hangen uw tv op bij u in de buurt"
+        inleiding="Onze monteurs zijn dagelijks onderweg in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant — daar helpen we u vaak al binnen 24 uur."
+        beeld="/images/aan-de-deur.webp"
+        beeldAlt="Monteur van Uw TV Monteur wordt begroet aan de voordeur van een Nederlandse rijtjeswoning"
       >
         {/* Deze pagina draagt zelf geen formulier, dus wijst de knop naar
             /contact en niet naar #offerte. */}
-        <HeroActions href="/contact" />
-      </PageHero>
+        <HeroKnoppen href="/contact" />
+      </Hero>
 
-      <Section tone="surface">
-        <TrustBar />
-      </Section>
+      {/* `kopNiveau={2}`: deze sectie heeft geen eigen kop, dus zijn de vier
+          kopjes in dit blok de eerste koppen na de h1 van de hero. */}
+      <Vlak toon="wit">
+        <Bewijsrij kopNiveau={2} />
+      </Vlak>
 
-      <Section labelledBy="provincies">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="provincies">
+        <Kop
           id="provincies"
-          eyebrow="Vier provincies"
-          title="Kies uw provincie of uw plaats"
-          lead="Elke plaats heeft zijn eigen pagina, met wat de bebouwing daar betekent voor het ophangen van uw tv."
+          bovenkop="Vier provincies"
+          titel="Kies uw provincie of uw plaats"
+          tekst="Elke plaats heeft zijn eigen pagina, met wat de bebouwing daar betekent voor het ophangen van uw tv."
         />
 
         {/* Dit is de spilpagina naar alle 32 plaatspagina's: de volledige
@@ -68,20 +72,27 @@ export default function WerkgebiedPage() {
             De ankertekst is de titel van de doelpagina ("Tv ophangen in
             <plaats>"), want een link die alleen de plaatsnaam draagt zegt
             Google niet waarvoor die plaats staat. */}
-        <ul className="mt-12 grid gap-4 lg:grid-cols-2">
+        <ul className="mt-12 grid gap-x-12 gap-y-12 lg:grid-cols-2">
           {provincies.map((provincie) => (
-            <li key={provincie.slug} className="card flex flex-col p-6 sm:p-8">
+            <li
+              key={provincie.slug}
+              // Een `paneel` en niet een blok onder een dikke lijn: dezelfde
+              // vier provincies staan op de homepage als witte kaarten, en
+              // twee vormen voor één begrip is precies wat een site
+              // onverzorgd maakt.
+              className="komt-op paneel flex flex-col p-6 sm:p-7"
+            >
               {/* De provincienaam is geen link, de regel onderaan wel: twee
-                  links naar dezelfde pagina in één kaart verdelen de waarde
+                  links naar dezelfde pagina in één blok verdelen de waarde
                   van die link over twee ankerteksten. */}
               <h3 className="text-h3">{provincie.naam}</h3>
-              <p className="mt-3 text-ink-600">{provincie.intro}</p>
-              <ul className="mt-5 grid gap-x-8 sm:grid-cols-2">
+              <p className="mt-3 max-w-prose text-ink-600">{provincie.intro}</p>
+              <ul className="mt-5 grid gap-x-10 sm:grid-cols-2">
                 {stedenInProvincie(provincie.slug).map((stad) => (
-                  <li key={stad.slug}>
+                  <li key={stad.slug} className="border-b border-ink-100">
                     <Link
                       href={`/tv-ophangen/${stad.slug}`}
-                      className="link inline-flex min-h-11 items-center"
+                      className="inline-flex min-h-11 items-center text-sm text-ink-700 underline-offset-4 hover:text-amber-800 hover:underline"
                     >
                       Tv ophangen in {stad.naam}
                     </Link>
@@ -90,7 +101,7 @@ export default function WerkgebiedPage() {
               </ul>
               <Link
                 href={`/werkgebied/${provincie.slug}`}
-                className="mt-auto flex min-h-11 items-center gap-1.5 pt-6 font-semibold text-accent-700 hover:text-accent-800"
+                className="mt-auto flex min-h-11 items-center gap-1.5 pt-6 font-semibold text-amber-800 hover:text-amber-700"
               >
                 Tv ophangen in {provincie.naam}
                 <Icon name="arrow-right" className="size-4" />
@@ -99,22 +110,21 @@ export default function WerkgebiedPage() {
           ))}
         </ul>
 
-        <p className="mt-12 max-w-2xl text-ink-600">
+        <p className="mt-14 max-w-2xl text-ink-600">
           Staat uw woonplaats er niet tussen? Ons werkgebied groeit
           voortdurend en voor grotere klussen rijden we graag een stukje
           verder.{" "}
-          <Link href="/contact" className="link">
+          <Link href="/contact" className="verwijzing">
             Neem contact op
           </Link>{" "}
           en we kijken wat er mogelijk is.
         </p>
-      </Section>
+      </Vlak>
 
-      {/* Brengt zijn eigen surface-sectie mee; de secties ervoor en erna zijn
-          daarom wit. */}
-      <Reviews />
+      {/* Brengt zijn eigen sectie met achtergrond mee. */}
+      <Reviews toon="wit" />
 
-      <CtaBand tone="white" href="/contact" />
+      <Slotoproep toon="oppervlak" href="/contact" />
     </>
   );
 }

@@ -7,7 +7,7 @@ import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
 import RelatedLinks from "@/components/RelatedLinks";
 import RichText from "@/components/RichText";
-import { CtaBand, PageHero, Section } from "@/components/sections";
+import { Hero, Slotoproep, Vlak } from "@/components/sections";
 import { artikelBySlug, artikelen, type ArtikelSectie } from "@/lib/kennisbank";
 import { artikelJsonLd, faqJsonLd, pageMeta } from "@/lib/seo";
 
@@ -37,7 +37,7 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
   return (
     <section className="mt-14 first:mt-0">
       <h2 className="text-h2">{sectie.kop}</h2>
-      <div className="prose-tv mt-4">
+      <div className="artikel mt-4">
         {sectie.alineas.map((alinea) => (
           <p key={alinea.slice(0, 40)}>
             <RichText>{alinea}</RichText>
@@ -45,50 +45,75 @@ function Sectie({ sectie }: { sectie: ArtikelSectie }) {
         ))}
       </div>
 
+      {/* De opsomming als regels tussen haarlijnen in plaats van losse
+          blokjes met een ring eromheen. Een ring is een box-shadow en
+          verdwijnt in de hoog-contrastmodus van Windows; dan stonden hier
+          alinea's zonder enig onderscheid. */}
       {sectie.lijst && (
-        <ul className="mt-6 space-y-3">
+        <ul className="mt-7 border-t border-ink-200">
           {sectie.lijst.map((punt) => (
             <li
               key={punt.slice(0, 40)}
-              className="rounded-xl bg-surface px-5 py-4 text-ink-700 ring-1 ring-ink-200"
+              className="flex gap-4 border-b border-ink-200 py-4 text-ink-700"
             >
-              <RichText>{punt}</RichText>
+              <span
+                aria-hidden="true"
+                // amber-400, net als de accentstreep van het korte antwoord
+                // verderop op deze pagina en die in `InlineCta`. Stond hier
+                // op amber-500 — een tweede tint voor hetzelfde streepje,
+                // op dezelfde pagina.
+                className="mt-2.5 h-px w-5 shrink-0 bg-amber-400"
+              />
+              <span>
+                <RichText>{punt}</RichText>
+              </span>
             </li>
           ))}
         </ul>
       )}
 
       {sectie.tabel && (
-        // overflow-x-auto houdt een brede tabel leesbaar op een telefoon
-        // zonder de hele pagina horizontaal te laten schuiven.
-        <div className="mt-6 overflow-x-auto rounded-2xl ring-1 ring-ink-200">
-          <table className="w-full border-collapse text-left text-sm">
-            <thead>
-              <tr className="bg-ink-950 text-white">
-                {sectie.tabel.kop.map((cel) => (
-                  <th key={cel} scope="col" className="px-5 py-3 font-semibold">
-                    {cel}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {sectie.tabel.rijen.map((rij) => (
-                <tr key={rij[0]} className="border-t border-ink-200 bg-white">
-                  {rij.map((cel, i) => (
-                    <td
+        // Dezelfde vorm als `Prijstabel`: een witte kaart met een
+        // bijna-zwarte kopregel. Hier stond een eigen tweede tabelontwerp met
+        // een dikke grijze lijn als kopregel, waardoor de site twee soorten
+        // tabellen had. `overflow-x-auto` houdt een brede tabel leesbaar op
+        // een telefoon zonder de hele pagina horizontaal te laten schuiven.
+        <div className="paneel mt-7 overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-left text-sm">
+              <thead>
+                <tr className="bg-ink-950">
+                  {sectie.tabel.kop.map((cel) => (
+                    <th
                       key={cel}
-                      className={`px-5 py-3 align-top ${
-                        i === 0 ? "font-semibold text-ink-950" : "text-ink-600"
-                      }`}
+                      scope="col"
+                      className="py-3.5 pl-5 pr-4 text-xs font-bold uppercase tracking-[0.14em] text-amber-300 last:pr-5"
                     >
                       {cel}
-                    </td>
+                    </th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-ink-100">
+                {sectie.tabel.rijen.map((rij) => (
+                  <tr key={rij[0]}>
+                    {rij.map((cel, i) => (
+                      <td
+                        key={cel}
+                        className={`py-4 pl-5 pr-4 align-top last:pr-5 ${
+                          i === 0
+                            ? "font-display font-semibold text-ink-950"
+                            : "text-ink-600"
+                        }`}
+                      >
+                        {cel}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </section>
@@ -120,8 +145,8 @@ export default async function ArtikelPage({
       />
       <JsonLd data={faqJsonLd(artikel.faq)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -130,15 +155,20 @@ export default async function ArtikelPage({
             ]}
           />
         }
-        eyebrow={artikel.eyebrow}
-        title={artikel.titel}
+        bovenkop={artikel.eyebrow}
+        titel={artikel.titel}
       />
 
-      <Section>
-        <div className="mx-auto max-w-3xl">
+      <Vlak toon="wit">
+        <div className="max-w-3xl">
           {/* Het korte antwoord bovenaan: wie alleen dit leest is al geholpen,
-              en wie doorleest weet waar het heen gaat. */}
-          <p className="rounded-2xl bg-surface px-7 py-7 text-lead text-ink-800 ring-1 ring-ink-200 md:px-9">
+              en wie doorleest weet waar het heen gaat. Een amberen streep
+              ernaast in plaats van een vakje eromheen — zo leest het als een
+              aanhef en niet als een losse mededeling. */}
+          {/* amber-400 en niet amber-500: dezelfde accentstreep staat in
+              `InlineCta`, en twee tinten voor één streep zie je zodra beide
+              blokken op één pagina staan — wat hier het geval is. */}
+          <p className="border-l-4 border-amber-400 pl-6 text-lead text-ink-800">
             {artikel.antwoord}
           </p>
 
@@ -160,7 +190,7 @@ export default async function ArtikelPage({
           </div>
 
           <RelatedLinks
-            label="Verder lezen:"
+            label="Verder lezen"
             items={[
               ...verwanteArtikelen.map(
                 (verwant) =>
@@ -176,15 +206,15 @@ export default async function ArtikelPage({
 
           <p className="mt-10 text-sm text-ink-600">
             Staat uw vraag er niet bij?{" "}
-            <Link href="/contact" className="link">
+            <Link href="/contact" className="verwijzing">
               Stel hem via het contactformulier
             </Link>
             , dan krijgt u binnen enkele uren antwoord van een monteur.
           </p>
         </div>
-      </Section>
+      </Vlak>
 
-      <CtaBand title="Tv ophangen? Vraag een afspraak aan" />
+      <Slotoproep toon="oppervlak" titel="Tv ophangen? Vraag een afspraak aan" />
     </>
   );
 }

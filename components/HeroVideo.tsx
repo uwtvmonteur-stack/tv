@@ -37,21 +37,15 @@ import { useEffect, useRef, useState } from "react";
  *
  * In alle drie de gevallen blijft de poster eronder gewoon staan.
  */
-export default function HeroVideo({
-  src,
-  srcStaand,
-}: {
-  /** De liggende versie, voor tablet en breder. */
-  src: string;
-  /**
-   * De staande versie voor telefoons.
-   *
-   * Zonder deze bron wordt een 16:9-film in een vlak van 390 bij 1200 pixels
-   * zo hard bijgesneden dat er alleen een strook muur overblijft — op het
-   * scherm waar 85% van het betaalde verkeer binnenkomt.
-   */
-  srcStaand?: string;
-}) {
+/**
+ * Eén bron, geen staande uitsnede meer. Die was er voor de tijd dat deze film
+ * de volle hero vulde: in een vlak van 390 bij 1200 pixels bleef van een
+ * 16:9-opname alleen een strook muur over. Sinds de film halverwege de
+ * homepage in een kader van 16:10 staat, is de liggende versie op elke
+ * schermbreedte de juiste — en de prop werd dan ook nergens meegegeven,
+ * waardoor de helft van deze code nooit liep.
+ */
+export default function HeroVideo({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [speelt, setSpeelt] = useState(false);
 
@@ -75,8 +69,7 @@ export default function HeroVideo({
       return;
     }
 
-    const staand = srcStaand && !window.matchMedia("(min-width: 48rem)").matches;
-    video.src = staand ? srcStaand : src;
+    video.src = src;
 
     // React zet `muted` niet altijd door naar het DOM-attribuut, en zonder
     // gedempt geluid weigert elke browser autoplay.
@@ -93,7 +86,7 @@ export default function HeroVideo({
       video.removeAttribute("src");
       video.load();
     };
-  }, [src, srcStaand]);
+  }, [src]);
 
   return (
     <video

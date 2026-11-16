@@ -13,8 +13,12 @@ import { provincies } from "@/lib/steden";
    Koptekstbalk
    =========================================================================
    Loopt mee in de stroom (`sticky top-0`), dus geen enkele pagina reserveert
-   er ruimte voor. Hoogte: 4,5rem op mobiel; op `lg` en groter 2,5rem
-   donkere bovenbalk plus 5rem.
+   er ruimte voor.
+
+   Opnieuw vormgegeven volgens het nieuwe systeem: de actieve pagina krijgt
+   een amberen streep onder de link in plaats van een grijze pil. Een pil is
+   een vakje in een ontwerp dat geen vakjes meer heeft, en de streep leest
+   bovendien beter — hij hoort bij de tekst, hij ligt er niet achter.
 
    Het telefoonnummer staat hier bewust niet — niet als knop en niet als
    link. Eén actie per scherm: de offerteaanvraag. Het nummer staat alleen in
@@ -24,19 +28,12 @@ import { provincies } from "@/lib/steden";
 /**
  * "Diensten" stond in de oude balk en /tv-ophangen niet — terwijl dat de
  * pagina is waar het advertentiegeld landt en waar de omzet vandaan komt.
- * Een overzichtshub met vier kaartjes kreeg zo de navigatiewaarde die de
- * geldpagina hoort te krijgen. Diensten is nu het megamenu (vanaf `xl`);
- * daaronder blijven ze bereikbaar via het mobiele menu en de voettekst.
- */
-/**
- * `pasVanafXl` houdt een link onder 1280px uit de balk.
+ * Diensten is daarom het megamenu (vanaf `lg`); daaronder blijven ze
+ * bereikbaar via het mobiele menu en de voettekst.
  *
- * Nodig sinds het dienstenmenu al vanaf `lg` meedoet: de hamburger verdwijnt
- * op 1024px en het megamenu verscheen pas op 1280px, waardoor er tussen die
- * twee breedtes — iPad liggend, smalle laptops — geen enkele weg naar de
- * dienstpagina's was behalve de voettekst. Nu verschijnt het menu precies
- * waar de hamburger stopt, en wijken de twee minst dringende links daar even
- * uit zodat de balk niet breder wordt dan hij nu is.
+ * `pasVanafXl` houdt een link onder 1280px uit de balk. Nodig omdat het
+ * dienstenmenu al vanaf `lg` meedoet: de hamburger verdwijnt op 1024px, en
+ * zonder deze uitwijk wordt de balk daar breder dan er ruimte is.
  */
 const links: { href: string; label: string; pasVanafXl?: boolean }[] = [
   { href: "/tv-ophangen", label: "Tv ophangen" },
@@ -106,8 +103,6 @@ const MET_FORMULIER = new Set([
  * `scripts/check-ontwerp.mjs` controleert na een build dat elke pagina die
  * naar `#offerte` wijst dat anker ook werkelijk heeft.
  *
- * Bewust een vaste regel op basis van het pad en geen zoekopdracht in de DOM
- * binnen een effect: dat laatste zet de knop pas goed ná de eerste tekening.
  * StickyBar leest dezelfde functie, zodat balk en knop nooit naar
  * verschillende plekken wijzen.
  */
@@ -126,6 +121,9 @@ export function afspraakHref(pathname: string) {
 export default function Header() {
   const pathname = usePathname();
   const href = afspraakHref(pathname);
+  // Zelfde regel als bij de losse menu-items: de pagina zelf of iets eronder.
+  const dienstenActief =
+    pathname === "/diensten" || pathname.startsWith("/diensten/");
   const [open, setOpen] = useState(false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -176,43 +174,60 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-ink-100 bg-white/90 backdrop-blur-md">
-        <div className="hidden bg-ink-950 lg:block">
-          <ul className="container-x flex h-10 items-center gap-6 whitespace-nowrap text-2xs text-ink-300">
+      <header className="sticky top-0 z-40 border-b border-ink-100 bg-white/92 backdrop-blur-md">
+        {/* De feitenstrook. Donker, als het bordje boven een winkelpui: het
+            geeft de hele site bovenaan een rand en zet de warme pagina
+            daaronder af tegen iets vasts. */}
+        <div className="op-donker hidden bg-ink-950 lg:block">
+          <ul className="kader flex h-10 items-center gap-7 whitespace-nowrap text-2xs text-ink-200">
             {feiten.map((f) => (
               <li
                 key={f.tekst}
                 className={`flex items-center gap-2 ${f.className ?? ""}`}
               >
-                <Icon name={f.icon} className="size-4 text-accent-300" />
+                <Icon name={f.icon} className="size-4 text-amber-300" />
                 {f.tekst}
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="container-x flex h-18 items-center justify-between gap-3 lg:h-20">
+        {/* `gap-2` onder `sm`: op 390 pixels kwam de merknaam 13 pixels tekort
+            en kapte `truncate` hem af tot "Uw TV Mon…". Dat komt doordat de
+            wortelmaat 18px is — `size-11` is hier 49,5 pixels en niet 44 —
+            waardoor de hele balk 12,5% ruimer opbouwt dan de klassenamen
+            suggereren. De ruimte komt uit de tussenruimtes en de knopopvulling
+            hieronder; `truncate` blijft staan als vangnet voor 360 pixels. */}
+        <div className="kader flex h-18 items-center justify-between gap-2 sm:gap-3 lg:h-20">
           <Link
             href="/"
             inert={open || undefined}
-            className="min-w-0 rounded-xl"
+            className="min-w-0 rounded-lg"
             onClick={() => setOpen(false)}
           >
             <Logo />
           </Link>
 
           <nav aria-label="Hoofdnavigatie" className="hidden lg:block">
-            <ul className="flex items-center gap-0.5">
+            <ul className="flex items-center gap-1">
               {/* Megamenu zonder JavaScript: `group-hover` voor de muis,
                   `group-focus-within` voor het toetsenbord. Vanaf `lg`, dus
-                  precies waar de hamburger verdwijnt — daaronder stond het op
-                  `xl` en was er tussen 1024 en 1280px geen enkele link naar
-                  de dienstpagina's. De ruimte komt van `pasVanafXl`
-                  hierboven. */}
+                  precies waar de hamburger verdwijnt. */}
               <li className="group relative hidden lg:block">
+                {/* Dezelfde actieve staat als de losse menu-items hieronder.
+                    Die stond hier niet: op /diensten en de drie dienst-
+                    pagina's wees het menu dus niets aan, terwijl het dat op
+                    elke andere pagina wel doet. Vier van de tien pagina's in
+                    het menu, en juist de vier waar de bezoeker het diepst
+                    zit. */}
                 <Link
                   href="/diensten"
-                  className="flex items-center gap-1 rounded-lg px-2.5 py-2 text-sm font-semibold text-ink-700 hover:bg-ink-50 hover:text-ink-950 2xl:px-3 2xl:text-base"
+                  aria-current={dienstenActief ? "page" : undefined}
+                  className={`flex items-center gap-1 border-b-2 px-1.5 py-2 text-sm font-semibold hover:text-ink-950 2xl:px-2.5 2xl:text-base ${
+                    dienstenActief
+                      ? "border-amber-600 text-ink-950"
+                      : "border-transparent text-ink-700 hover:border-ink-200"
+                  }`}
                 >
                   Diensten
                   <Icon
@@ -220,30 +235,38 @@ export default function Header() {
                     className="size-4 transition group-hover:rotate-180"
                   />
                 </Link>
-                <div className="invisible absolute left-1/2 top-full z-50 w-184 -translate-x-1/2 pt-3 opacity-0 transition duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                  <div className="grid grid-cols-2 gap-1 rounded-2xl bg-white p-3 shadow-lift ring-1 ring-ink-200">
-                    {diensten.map((d) => (
-                      <Link
-                        key={d.slug}
-                        href={dienstHref(d)}
-                        className="flex items-start gap-3 rounded-xl p-3 hover:bg-accent-50"
-                      >
-                        <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-accent-50 text-accent-700 ring-1 ring-accent-200">
-                          <DienstIcon slug={d.slug} className="size-5" />
-                        </span>
-                        <span>
-                          <span className="block font-display font-bold text-ink-950">
-                            {d.naam}
-                          </span>
-                          <span className="mt-1 block text-sm text-ink-600">
-                            {d.kort}
-                          </span>
-                        </span>
-                      </Link>
-                    ))}
+                <div className="invisible absolute left-1/2 top-full z-50 w-168 -translate-x-1/2 pt-4 opacity-0 transition duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                  {/* Regels onder een haarlijn, net als de dienstenlijst op de
+                      pagina's zelf. Hiervoor stonden hier icoontegels in een
+                      raster van twee bij twee — een derde manier om dezelfde
+                      vier diensten te tonen. */}
+                  <div className="rounded-2xl bg-white p-2.5 shadow-lift ring-1 ring-ink-100">
+                    <ul>
+                      {diensten.map((d) => (
+                        <li key={d.slug}>
+                          <Link
+                            href={dienstHref(d)}
+                            className="flex items-center gap-3.5 rounded-lg px-3 py-3 hover:bg-surface"
+                          >
+                            <DienstIcon
+                              slug={d.slug}
+                              className="size-5 shrink-0 text-amber-700"
+                            />
+                            <span className="min-w-0">
+                              <span className="block font-display font-semibold text-ink-950">
+                                {d.naam}
+                              </span>
+                              <span className="mt-0.5 block text-sm text-ink-600">
+                                {d.kort}
+                              </span>
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                     <Link
                       href="/diensten"
-                      className="col-span-2 mt-1 flex min-h-11 items-center justify-center gap-2 rounded-xl bg-ink-50 font-semibold text-ink-900 hover:bg-ink-100"
+                      className="mt-1 flex min-h-11 items-center justify-center gap-2 rounded-lg border-t border-ink-200 font-semibold text-amber-800 hover:bg-surface"
                     >
                       Alle diensten bekijken
                       <Icon name="arrow-right" className="size-4" />
@@ -263,8 +286,16 @@ export default function Header() {
                     <Link
                       href={link.href}
                       aria-current={actief ? "page" : undefined}
-                      className={`block whitespace-nowrap rounded-lg px-2.5 py-2 text-sm font-semibold hover:bg-ink-50 hover:text-ink-950 2xl:px-3 2xl:text-base ${
-                        actief ? "bg-ink-50 text-ink-950" : "text-ink-700"
+                      className={`block whitespace-nowrap border-b-2 px-1.5 py-2 text-sm font-semibold hover:text-ink-950 2xl:px-2.5 2xl:text-base ${
+                        // amber-600 en niet amber-500: deze streep is het
+                        // enige dat zegt op welke pagina u staat, en dan is
+                        // het een vorm die informatie draagt (WCAG 1.4.11,
+                        // 3:1). amber-500 haalt op wit 2,41:1, amber-600
+                        // 3,40:1. De hover is ink-200, de haarlijnkleur van
+                        // het ontwerpsysteem; ink-300 hoort er niet bij.
+                        actief
+                          ? "border-amber-600 text-ink-950"
+                          : "border-transparent text-ink-700 hover:border-ink-200"
                       }`}
                     >
                       {link.label}
@@ -275,11 +306,11 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
             <Link
               href={href}
               inert={open || undefined}
-              className="btn-primary whitespace-nowrap px-3 sm:px-6"
+              className="knop-vol whitespace-nowrap px-2.5 sm:px-6"
             >
               <span className="hidden sm:inline">Afspraak aanvragen</span>
               <span className="sm:hidden">Afspraak</span>
@@ -292,12 +323,12 @@ export default function Header() {
               aria-controls="mobiel-menu"
               aria-haspopup="dialog"
               onClick={() => setOpen(!open)}
-              className="grid size-11 cursor-pointer place-items-center rounded-xl text-ink-900 ring-1 ring-ink-300 hover:bg-ink-50 sm:size-12 lg:hidden"
+              className="grid size-11 cursor-pointer place-items-center rounded-lg border border-ink-500 text-ink-900 hover:bg-ink-50 sm:size-12 lg:hidden"
             >
               <span className="flex flex-col gap-1.5" aria-hidden="true">
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
+                <span className="block h-0.5 w-5 bg-current" />
+                <span className="block h-0.5 w-5 bg-current" />
+                <span className="block h-0.5 w-5 bg-current" />
               </span>
             </button>
           </div>
@@ -316,7 +347,7 @@ export default function Header() {
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <div className="flex h-18 shrink-0 items-center justify-between gap-3 border-b border-ink-100 px-4">
+        <div className="flex h-18 shrink-0 items-center justify-between gap-3 border-b border-ink-200 px-5">
           <Link href="/" onClick={() => setOpen(false)} className="min-w-0">
             <Logo />
           </Link>
@@ -327,7 +358,7 @@ export default function Header() {
               setOpen(false);
               hamburgerRef.current?.focus();
             }}
-            className="grid size-12 shrink-0 cursor-pointer place-items-center rounded-xl text-ink-900 ring-1 ring-ink-300 hover:bg-ink-50"
+            className="grid size-12 shrink-0 cursor-pointer place-items-center rounded-lg border border-ink-500 text-ink-900 hover:bg-ink-50"
           >
             {/* De icoonset heeft geen kruis: een plus van 45 graden is
                 hetzelfde pad en houdt het binnen de bibliotheek. */}
@@ -335,17 +366,16 @@ export default function Header() {
           </button>
         </div>
 
-        <nav aria-label="Mobiel menu" className="flex-1 overflow-y-auto px-4 py-4">
+        <nav aria-label="Mobiel menu" className="flex-1 overflow-y-auto px-5 py-5">
           <ul>
             {links.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  // Geen gestapelde vertragingen meer: het oude menu bouwde
-                  // zich in 400 ms op terwijl de bezoeker al wist waar hij
-                  // heen wilde.
-                  className="flex min-h-14 items-center justify-between gap-3 border-b border-ink-100 font-display text-h3 font-bold text-ink-950"
+                  // Geen gestapelde vertragingen: het oude menu bouwde zich in
+                  // 400 ms op terwijl de bezoeker al wist waar hij heen wilde.
+                  className="flex min-h-14 items-center justify-between gap-3 border-b border-ink-200 font-display text-h3 font-semibold text-ink-950"
                 >
                   {link.label}
                   <Icon name="arrow-right" className="size-5 text-ink-400" />
@@ -354,18 +384,16 @@ export default function Header() {
             ))}
           </ul>
 
-          <p className="mt-7 text-2xs font-bold uppercase tracking-widest text-ink-500">
-            Diensten
-          </p>
-          <ul className="mt-2 grid gap-1 sm:grid-cols-2">
+          <p className="bovenkop mt-8">Diensten</p>
+          <ul className="mt-2.5 grid gap-0.5 sm:grid-cols-2">
             {diensten.map((d) => (
               <li key={d.slug}>
                 <Link
                   href={dienstHref(d)}
                   onClick={() => setOpen(false)}
-                  className="flex min-h-12 items-center gap-3 rounded-xl px-2 font-semibold text-ink-900 hover:bg-accent-50"
+                  className="flex min-h-12 items-center gap-3 rounded-lg px-2 font-semibold text-ink-900 hover:bg-surface"
                 >
-                  <DienstIcon slug={d.slug} className="size-5 text-accent-700" />
+                  <DienstIcon slug={d.slug} className="size-5 text-amber-700" />
                   {d.naam}
                 </Link>
               </li>
@@ -373,11 +401,11 @@ export default function Header() {
           </ul>
         </nav>
 
-        <div className="shrink-0 border-t border-ink-100 p-4">
+        <div className="shrink-0 border-t border-ink-200 p-5">
           <Link
             href={href}
             onClick={() => setOpen(false)}
-            className="btn-primary btn-lg w-full"
+            className="knop-vol knop-groot w-full"
           >
             Afspraak aanvragen
             <Icon name="arrow-right" className="size-5" />

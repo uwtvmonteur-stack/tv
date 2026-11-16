@@ -8,9 +8,9 @@ export type Crumb = { name: string; href: string };
 /**
  * Kruimelpad, inclusief BreadcrumbList-schema.
  *
- * Het pad staat altijd in de `PageHero`, en die is bijna-zwart — dus is dit
- * component licht van kleur en heeft het geen tooninstelling. Een variant
- * voor wit zou een tweede plek zijn waar hetzelfde pad kan afwijken.
+ * Het pad staat altijd in de hero, en die is bijna-zwart — dus is het pad
+ * licht. Er is bewust geen tooninstelling: een variant voor licht zou een
+ * tweede plek zijn waar hetzelfde pad kan afwijken.
  *
  * Het schema zit hier en niet in de pagina, zodat de zichtbare kruimels en
  * de kruimels die Google leest per definitie dezelfde zijn.
@@ -31,7 +31,7 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
     <>
       <JsonLd data={jsonLd} />
       <nav aria-label="Kruimelpad" className="text-sm">
-        <ol className="flex flex-wrap items-center gap-1.5 text-ink-100">
+        <ol className="flex flex-wrap items-center gap-1.5 text-ink-300">
           {items.map((crumb, i) => {
             const laatste = i === items.length - 1;
             return (
@@ -39,7 +39,7 @@ export default function Breadcrumbs({ items }: { items: Crumb[] }) {
                 {i > 0 && (
                   <Icon
                     name="chevron-down"
-                    className="size-3.5 -rotate-90 text-ink-300"
+                    className="size-3.5 -rotate-90 text-ink-500"
                   />
                 )}
                 {laatste ? (

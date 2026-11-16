@@ -1,44 +1,68 @@
-import { Icon, Stars } from "@/components/Icon";
-import { Section, SectionHeading } from "@/components/sections";
-import { reviews, type Review } from "@/lib/content";
+import { Stars } from "@/components/Icon";
+import { Kop, Vlak } from "@/components/sections";
 import { SITE } from "@/lib/site";
 
 /**
- * De beoordelingen, horizontaal te verschuiven — zonder plaatsnamen.
- * De score komt uit `SITE.reviews` (één bron) en wordt een link zodra
- * `SITE.reviews.url` is ingevuld, zodat bezoekers de beoordelingen zelf kunnen
- * controleren.
+ * Het beoordelingscijfer. Eén bron: `SITE.reviews`.
  *
- * Zonder `items` toont de sectie de gemengde set; dienstpagina's geven hun
- * eigen set mee uit `reviewsPerDienst`, zodat de beoordelingen over die dienst
- * gaan.
+ * Hier stonden negen beoordelingen als citaatkaarten. Die zijn er op
+ * 16-11-2026 uit gehaald op verzoek van de eigenaar, en dat is de juiste kant
+ * op: ze waren verzonnen, inclusief de namen, en stonden op tien tot twaalf
+ * pagina's. Verzonnen klantervaringen zijn in strijd met het Google
+ * Ads-beleid rond misleiding, en er loopt een Ads-account. Bovendien droeg
+ * elke kaart vijf sterren terwijl het gemiddelde 4,9 is — negen keer vijf
+ * sterren kan dat cijfer niet opleveren, en zo'n rekenfout is precies het
+ * detail waaraan een bezoeker ziet dat iets niet echt is.
  *
- * Dit blok brengt zijn eigen `<Section>` mee: een pagina zet `<Reviews />`
- * tussen twee witte secties en wikkelt hem niet nog eens in een sectie.
+ * Wat blijft is het cijfer, met de vindplaats ernaast. Vul
+ * `SITE.reviews.url` met de link naar het Google-bedrijfsprofiel: dan is het
+ * cijfer na te kijken, en één controleerbaar cijfer weegt zwaarder dan negen
+ * citaten die nergens te vinden zijn.
+ *
+ * Komen er echte beoordelingen, dan horen de kaarten hier terug — met per
+ * beoordeling een eigen waardering in plaats van vijf sterren voor iedereen.
+ * `Stars` heeft daar de `label`-prop nog voor, en die is er nu niet voor
+ * niets blijven staan.
+ *
+ * Dit blok brengt zijn eigen `<Vlak>` mee: een pagina zet `<Reviews />`
+ * tussen twee secties en wikkelt hem niet nog eens in een sectie.
  */
 export default function Reviews({
-  title = "Waarom klanten ons aanraden",
-  items = reviews,
+  toon = "oppervlak",
 }: {
-  title?: string;
-  items?: Review[];
+  /**
+   * Dit blok brengt zijn eigen sectie mee, dus moet de pagina kunnen zeggen
+   * welke achtergrond er past. Zonder dat stonden er op de homepage twee
+   * witte secties tegen elkaar en verdween de scheiding ertussen.
+   */
+  toon?: "oppervlak" | "wit";
 }) {
   return (
-    <Section tone="surface" labelledBy="reviews-kop">
-      <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
-        <SectionHeading id="reviews-kop" eyebrow="Reviews" title={title} />
-        <div className="card flex shrink-0 items-center gap-4 px-5 py-4">
-          <span className="font-display text-h2 font-bold text-ink-950 tabular">
+    <Vlak toon={toon} labelledBy="reviews-kop">
+      <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-8">
+        <Kop
+          id="reviews-kop"
+          bovenkop="Beoordelingen"
+          titel="Hoe klanten ons beoordelen"
+          tekst={
+            SITE.reviews.url
+              ? "Dit is het gemiddelde van de beoordelingen op ons Google-bedrijfsprofiel. Via de link leest u ze allemaal na."
+              : "Dit is het gemiddelde van de beoordelingen op ons Google-bedrijfsprofiel."
+          }
+        />
+        <div className="paneel flex shrink-0 items-center gap-4 px-5 py-4">
+          <span className="cijfers font-display text-prijs font-extrabold text-ink-950">
             {SITE.reviews.score}
           </span>
-          <span className="flex flex-col gap-1">
+          <span className="flex flex-col gap-1.5">
+            {/* Geen naam: het cijfer staat er links van. */}
             <Stars className="size-4" />
             {SITE.reviews.url ? (
               <a
                 href={SITE.reviews.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="link text-sm"
+                className="verwijzing text-sm"
               >
                 {SITE.reviews.count} beoordelingen op Google
               </a>
@@ -50,37 +74,6 @@ export default function Reviews({
           </span>
         </div>
       </div>
-
-      {/* `tabIndex` en `aria-label` zijn geen sierwerk: zonder die twee is een
-          scrollbare rij met een toetsenbord niet te verschuiven en kondigt een
-          schermlezer alleen een naamloze lijst aan. Niet weghalen. */}
-      <ul
-        tabIndex={0}
-        aria-label="Reviews van klanten, horizontaal te verschuiven"
-        // `pb-5`: een rij met `overflow-x` snijdt ook verticaal af, en zonder
-        // die ruimte valt de schaduw onder de kaarten weg.
-        className="mt-10 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-5 sm:mx-0 sm:px-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {items.map((review) => (
-          // `w-64`/`w-72` (272 en 306px) in plaats van losse pixelmaten: een
-          // kaart moet smal genoeg zijn dat de volgende er half naast staat,
-          // anders ziet een bezoeker niet dat er meer is.
-          <li key={review.name} className="w-64 shrink-0 snap-start sm:w-72">
-            <article className="card flex h-full flex-col gap-4 p-6">
-              <Stars className="size-4" />
-              <p className="text-ink-700">&ldquo;{review.quote}&rdquo;</p>
-              <p className="mt-auto font-display font-bold text-ink-950">
-                {review.name}
-              </p>
-            </article>
-          </li>
-        ))}
-      </ul>
-
-      <p className="flex items-center gap-1.5 text-sm text-ink-500">
-        Sleep of scroll voor meer beoordelingen
-        <Icon name="arrow-right" className="size-4" />
-      </p>
-    </Section>
+    </Vlak>
   );
 }

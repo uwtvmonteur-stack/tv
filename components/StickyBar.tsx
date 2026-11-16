@@ -54,7 +54,7 @@ export default function StickyBar() {
       // De enige losse maat op de hele site, en onvermijdelijk: zonder
       // `safe-area-inset-bottom` valt de knop op een iPhone deels achter de
       // streep waarmee de gebruiker van app wisselt.
-      className={`fixed inset-x-0 bottom-0 z-30 border-t border-ink-100 bg-white/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-md transition duration-300 ease-out lg:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-30 border-t border-ink-100 bg-white/95 px-5 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-lift backdrop-blur-md transition duration-300 ease-out lg:hidden ${
         zichtbaar
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"
@@ -63,7 +63,7 @@ export default function StickyBar() {
       <Link
         href={afspraakHref(pathname)}
         tabIndex={zichtbaar ? undefined : -1}
-        className="btn-primary w-full"
+        className="knop-vol w-full"
       >
         Afspraak aanvragen
         <Icon name="arrow-right" className="size-5" />

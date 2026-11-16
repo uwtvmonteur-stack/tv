@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ContactForm from "@/components/ContactForm";
-import Faq from "@/components/Faq";
 import IconCardGrid, { type IconCard } from "@/components/IconCardGrid";
 import InlineCta from "@/components/InlineCta";
 import JsonLd from "@/components/JsonLd";
@@ -11,33 +10,41 @@ import RelatedLinks from "@/components/RelatedLinks";
 import Reviews from "@/components/Reviews";
 import { Icon } from "@/components/Icon";
 import {
-  CheckList,
-  HeroActions,
-  PageHero,
-  Section,
-  SectionHeading,
+  Aanvraagsectie,
+  Faqsectie,
+  Hero,
+  HeroKnoppen,
+  Kop,
+  Stappen,
+  Vinkjes,
+  Vlak,
 } from "@/components/sections";
 import {
+  BELOFTE,
   PRIJZEN_KORT,
+  TV_INSTALLATIE_PRIJS,
   VANAF_PRIJS,
-  reviewsPerDienst,
   type FaqItem,
 } from "@/lib/content";
 import { faqJsonLd, pageMeta, serviceJsonLd } from "@/lib/seo";
 
+/**
+ * Het vaste bedrag van deze dienst. Komt uit `lib/content.ts`, waar de regel
+ * "Tv plaatsen en aansluiten (zonder ophangen)" in `tarieven` hem ook
+ * afleest.
+ *
+ * Het staat hier bóven de metadata, zodat de paginatitel en de
+ * meta-description hetzelfde bedrag gebruiken als de kop, het prijsblok, het
+ * offerteblok en het schema. Tot 16-11-2026 stond €70 in vijf van die zes
+ * plekken los ingetikt, en een prijswijziging kwam dus half door.
+ */
+const PRIJS = TV_INSTALLATIE_PRIJS;
+
 export const metadata = pageMeta({
-  title: "Tv laten installeren — vaste prijs €70",
-  description:
-    "Nieuwe tv gekocht? Wij maken hem gebruiksklaar aan huis: aansluiten, zenders, wifi en apps instellen en uitleg. Vaste prijs €70. Ophangen kan als optie.",
+  title: `Tv laten installeren — vaste prijs ${PRIJS}`,
+  description: `Nieuwe tv gekocht? Wij maken hem gebruiksklaar aan huis: aansluiten, zenders, wifi en apps instellen en uitleg. Vaste prijs ${PRIJS}. Ophangen kan als optie.`,
   path: "/diensten/tv-installatie",
 });
-
-/**
- * Het vaste bedrag van deze dienst, gelijk aan de regel "Complete tv
- * installatie zonder ophangen" in `tarieven`. Eén plek op de pagina, zodat
- * kop, prijsblok en offerteblok niet uit elkaar kunnen lopen.
- */
-const PRIJS = "€70";
 
 const inbegrepen = [
   "Tv plaatsen en uitpakken",
@@ -61,9 +68,9 @@ const prijsDekking = [
 /** Wat de aanvraag zelf wel en niet van u vraagt — niet wat er in de prijs zit. */
 const aanvraagBelofte = [
   `Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw`,
-  "Vrijblijvend: u zit aan niets vast tot u ja zegt",
-  "Geen aanbetaling — u betaalt pas na afloop",
-  "Ook 's avonds en in het weekend, zonder toeslag",
+  BELOFTE.vrijblijvend,
+  BELOFTE.geenAanbetaling,
+  BELOFTE.avondWeekend,
 ];
 
 const stappen = [
@@ -87,22 +94,22 @@ const stappen = [
 
 const apparatuur: IconCard[] = [
   {
-    icon: <Icon name="speaker" className="size-6" />,
+    icon: <Icon name="speaker" />,
     h3: "Soundbar en audio",
     text: "Heeft u een soundbar of surround-systeem? Wij sluiten deze aan, bijvoorbeeld via HDMI ARC of eARC, en controleren of het geluid goed werkt.",
   },
   {
-    icon: <Icon name="chat" className="size-6" />,
+    icon: <Icon name="chat" />,
     h3: "Apple TV, Chromecast en mediaspelers",
     text: "Heeft u een Apple TV, Chromecast, Fire TV of andere mediaspeler? Wij sluiten deze aan, verbinden hem met internet en helpen met de gewenste apps.",
   },
   {
-    icon: <Icon name="sliders" className="size-6" />,
+    icon: <Icon name="sliders" />,
     h3: "PlayStation, Xbox en Nintendo Switch",
     text: "Ook uw spelcomputer kunnen we aansluiten. Waar mogelijk controleren we instellingen zoals HDR en de geschikte beeldmodus voor gaming.",
   },
   {
-    icon: <Icon name="tv" className="size-6" />,
+    icon: <Icon name="tv" />,
     h3: "Tv-ontvanger en decoder",
     text: "We sluiten uw tv-ontvanger of decoder aan, zoeken de zenders en controleren of alles correct werkt.",
   },
@@ -110,17 +117,17 @@ const apparatuur: IconCard[] = [
 
 const situaties: IconCard[] = [
   {
-    icon: <Icon name="tv" className="size-6" />,
+    icon: <Icon name="tv" />,
     h3: "Nieuwe tv gekocht",
     text: "Uw nieuwe televisie is binnen, maar u wilt hem niet zelf installeren? Wij pakken hem uit, plaatsen hem, sluiten alles aan en stellen hem volledig in. Na onze afspraak kunt u direct kijken.",
   },
   {
-    icon: <Icon name="chat" className="size-6" />,
+    icon: <Icon name="chat" />,
     h3: "Hulp omdat u niet technisch bent",
     text: "Geen probleem. Wij nemen de tijd om alles rustig uit te leggen. U hoeft geen technische kennis te hebben.",
   },
   {
-    icon: <Icon name="sliders" className="size-6" />,
+    icon: <Icon name="sliders" />,
     h3: "Van oude naar nieuwe tv",
     text: "Een nieuwer of groter toestel in huis? Wij sluiten uw nieuwe tv aan, zetten uw zenders, apps en accounts weer klaar en ruimen de oude opstelling netjes op.",
   },
@@ -164,14 +171,14 @@ export default function TvInstallatiePage() {
           // vanafprijs, die hier als hard bedrag werd vastgelegd. Google
           // vergelijkt schema met de zichtbare pagina.
           offers: [
-            { name: "Tv installeren & gebruiksklaar maken", price: "70" },
+            { name: "Tv installeren & gebruiksklaar maken", price: PRIJS },
           ],
         })}
       />
       <JsonLd data={faqJsonLd(faqItems)} />
 
-      <PageHero
-        breadcrumbs={
+      <Hero
+        kruimels={
           <Breadcrumbs
             items={[
               { name: "Home", href: "/" },
@@ -180,95 +187,84 @@ export default function TvInstallatiePage() {
             ]}
           />
         }
-        eyebrow={`Tv installatie · aan huis · vaste prijs ${PRIJS}`}
-        title="Tv installatie aan huis"
-        lead="Uw nieuwe tv volledig geïnstalleerd en direct gebruiksklaar. Wij sluiten uw tv en apparatuur aan, stellen zenders, wifi, apps, beeld en geluid voor u in en leggen rustig uit hoe alles werkt."
-        image="/images/dienst-tv-installatie.jpg"
-        imageAlt="Volledig geïnstalleerde tv aan de muur in een moderne woonkamer"
+        bovenkop={`Tv installatie · aan huis · vaste prijs ${PRIJS}`}
+        titel="Tv installatie aan huis"
+        inleiding="Uw nieuwe tv volledig geïnstalleerd en direct gebruiksklaar. Wij sluiten uw tv en apparatuur aan, stellen zenders, wifi, apps, beeld en geluid voor u in en leggen rustig uit hoe alles werkt."
+        beeld="/images/dienst-tv-installatie.webp"
+        beeldAlt="Volledig geïnstalleerde tv aan de muur in een moderne woonkamer"
       >
-        <HeroActions tweedeHref="#prijs" tweedeLabel="Wat het kost" />
-        <CheckList
-          dark
+        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <Vinkjes donker
           items={[
             "Zenders, wifi en streaming-apps ingesteld",
             "Soundbar, decoder en andere apparatuur aangesloten",
             "Beeld en geluid zorgvuldig ingesteld",
             "Tv ophangen aan de muur mogelijk als extra optie",
           ]}
-          className="mt-8 grid gap-3 sm:grid-cols-2"
+          className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"
         />
-      </PageHero>
+      </Hero>
 
-      <Section labelledBy="inbegrepen">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="inbegrepen">
+        <Kop
           id="inbegrepen"
-          eyebrow="Wat u krijgt"
-          title="Wat is inbegrepen bij de tv installatie?"
-          lead="Een nieuwe televisie aansluiten is meer dan de stekker erin doen: zenders instellen, wifi verbinden en alle apparaten goed laten samenwerken. Onze monteur komt bij u thuis, sluit uw tv en apparatuur aan, stelt alles zorgvuldig in en legt daarna rustig uit hoe u de tv en afstandsbediening gebruikt. Eén afspraak, en uw nieuwe tv is direct gebruiksklaar."
+          bovenkop="Wat u krijgt"
+        titel="Wat is inbegrepen bij de tv installatie?"
+        tekst="Een nieuwe televisie aansluiten is meer dan de stekker erin doen: zenders instellen, wifi verbinden en alle apparaten goed laten samenwerken. Onze monteur komt bij u thuis, sluit uw tv en apparatuur aan, stelt alles zorgvuldig in en legt daarna rustig uit hoe u de tv en afstandsbediening gebruikt. Eén afspraak, en uw nieuwe tv is direct gebruiksklaar."
         />
-        <p className="mt-8 max-w-2xl text-ink-600">
+        <p className="mt-9 max-w-2xl text-ink-600">
           Bij een standaard tv installatie regelen wij onder andere:
         </p>
-        <CheckList
+        <Vinkjes
           items={inbegrepen}
-          className="mt-6 grid max-w-4xl gap-3 sm:grid-cols-2"
+          className="mt-6 grid max-w-4xl gap-3.5 sm:grid-cols-2"
         />
-      </Section>
+      </Vlak>
 
       {/* Bewijs komt ná de belofte en vóór de prijs: eerst vertellen wat we
           leveren, dan laten zien dat we het leveren, dan wat het kost. */}
-      <Reviews
-        title="Klanten over hun tv installatie"
-        items={reviewsPerDienst["tv-installatie"]}
-      />
+      <Reviews toon="oppervlak" />
 
-      {/* Brengt zijn eigen witte sectie mee, vlak vóór de prijs. */}
-
-      <Section id="prijs" tone="surface" labelledBy="prijs-kop">
-        <SectionHeading
+      <Vlak id="prijs" toon="wit" labelledBy="prijs-kop">
+        <Kop
           id="prijs-kop"
-          eyebrow="Wat het kost"
-          title="Wat kost een tv installatie aan huis?"
-          lead="Eén vast bedrag voor de complete installatie, inclusief voorrijkosten en btw. Wat we vooraf afspreken, is wat u betaalt — geen verrassingen achteraf."
+          bovenkop="Wat het kost"
+        titel="Wat kost een tv installatie aan huis?"
+        tekst="Eén vast bedrag voor de complete installatie, inclusief voorrijkosten en btw. Wat we vooraf afspreken, is wat u betaalt — geen verrassingen achteraf."
         />
 
-        {/* Een vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij het
-            ophangen, waar de prijs uit een offerte komt. Hier is het bedrag
-            zelf het argument, dus staat het groot en alleen op de kaart. */}
-        <div className="mt-12 grid gap-5 lg:grid-cols-5">
+        {/* Eén vast bedrag, en daarom géén `Prijsklassen`: dat blok hoort bij
+            het ophangen, met drie formaten. Hier is het bedrag zelf het
+            argument, dus staat het groot en alleen in een paneel met dezelfde
+            amberen streep als het aanvraagformulier — de twee plekken op deze
+            pagina waar iemand iets beslist. */}
+        <div className="mt-12 grid gap-8 lg:grid-cols-5 lg:gap-10">
           <div className="lg:col-span-2">
-            <div className="relative h-full overflow-hidden rounded-3xl bg-ink-950 p-8 text-white">
-              <div className="bg-grid absolute inset-0" aria-hidden="true" />
-              <div
-                className="absolute -right-16 -top-16 size-64 rounded-full bg-accent-500/25 blur-3xl"
-                aria-hidden="true"
-              />
-              <div className="relative flex h-full flex-col justify-between">
-                <div>
-                  <p className="eyebrow-dark">Vaste prijs</p>
-                  <p className="mt-5 font-display text-stat font-bold tabular">
-                    {PRIJS}
-                  </p>
-                  <p className="mt-3 text-ink-300">
-                    Voor de complete installatie, inclusief voorrijkosten en
-                    btw. Geen vanafprijs en geen uurtarief: dit is het bedrag.
-                  </p>
-                </div>
-                <Link href="#offerte" className="btn-primary btn-lg mt-8 w-full">
-                  Afspraak aanvragen
-                  <Icon name="arrow-right" className="size-5" />
-                </Link>
+            <div className="paneel flex h-full flex-col justify-between border-t-4 border-t-amber-400 p-7">
+              <div>
+                <p className="bovenkop">Vaste prijs</p>
+                <p className="cijfers mt-4 font-display text-prijs font-semibold text-ink-950">
+                  {PRIJS}
+                </p>
+                <p className="mt-4 text-ink-600">
+                  Voor de complete installatie, inclusief voorrijkosten en
+                  btw. Geen vanafprijs en geen uurtarief: dit is het bedrag.
+                </p>
               </div>
+              <Link href="#offerte" className="knop-vol knop-groot mt-8 w-full">
+                Afspraak aanvragen
+                <Icon name="arrow-right" className="size-5" />
+              </Link>
             </div>
           </div>
 
           <div className="lg:col-span-3">
             <h3 className="text-h3">Dit bedrag dekt de hele installatie</h3>
-            <CheckList items={prijsDekking} className="mt-5" />
-            <p className="mt-6 text-ink-600">
+            <Vinkjes items={prijsDekking} className="mt-5" />
+            <p className="mt-7 text-ink-600">
               Wilt u de tv ook aan de muur? Het ophangen is apart werk met een
               eigen tarief per formaat,{" "}
-              <Link href="/tv-ophangen" className="link">
+              <Link href="/tv-ophangen" className="verwijzing">
                 {PRIJZEN_KORT}
               </Link>
               . Zet het in uw aanvraag, dan doen wij het in dezelfde afspraak.
@@ -278,33 +274,37 @@ export default function TvInstallatiePage() {
 
         {/* Geen eigen kop boven dit blok: de drie garanties zijn zelf h3's, en
             een kop ernaast zou op hetzelfde niveau staan als wat hij aankondigt. */}
-        <p className="lead mt-16 max-w-3xl">
+        <p className="mt-16 max-w-3xl text-lead text-ink-600">
           Een vaste prijs is pas een argument als erbij staat waar hij tegen
           vast is. Dit zijn de drie dingen die uw bedrag niet veranderen.
         </p>
         <PrijsGarantie className="mt-8" />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="keuze">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="keuze">
+        <Kop
           id="keuze"
-          eyebrow="Welke dienst past bij u?"
-          title="Tv laten installeren of alleen ophangen?"
-          lead="Twee verschillende klussen, twee verschillende prijzen. Hieronder staat welke bij uw situatie hoort."
+          bovenkop="Welke dienst past bij u?"
+        titel="Tv laten installeren of alleen ophangen?"
+        tekst="Twee verschillende klussen, twee verschillende prijzen. Hieronder staat welke bij uw situatie hoort."
         />
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          <div className="card h-full p-7 md:p-8">
+        <div className="mt-10 grid gap-8 md:grid-cols-2 md:gap-10">
+          {/* Twee `paneel`-kaarten en niet twee blokken onder een dikke
+              lijn: elke andere keuze-uit-twee op deze site staat in kaarten,
+              en dit vlak is grijs, dus een witte kaart leest hier als een
+              kaart. */}
+          <div className="paneel p-6 sm:p-7">
             <h3 className="text-h3">Alleen tv ophangen</h3>
             <p className="mt-3 text-ink-600">
               Wilt u vooral dat uw televisie veilig en waterpas aan de muur
               wordt gemonteerd? Bekijk dan onze{" "}
-              <Link href="/tv-ophangen" className="link">
+              <Link href="/tv-ophangen" className="verwijzing">
                 tv ophangservice
               </Link>{" "}
               vanaf {VANAF_PRIJS}, met een vaste prijs per tv-formaat.
             </p>
           </div>
-          <div className="card h-full p-7 md:p-8">
+          <div className="paneel p-6 sm:p-7">
             <h3 className="text-h3">Complete tv installatie</h3>
             <p className="mt-3 text-ink-600">
               Wilt u dat uw tv wordt aangesloten, met wifi wordt verbonden,
@@ -314,88 +314,67 @@ export default function TvInstallatiePage() {
             </p>
           </div>
         </div>
-        <p className="mt-6 max-w-3xl text-ink-600">
+        <p className="mt-9 max-w-3xl text-ink-600">
           Twijfelt u welke service bij u past? Zet het kort in het{" "}
-          <Link href="#offerte" className="link">
+          <Link href="#offerte" className="verwijzing">
             aanvraagformulier
           </Link>{" "}
           — wij denken graag met u mee.
         </p>
-      </Section>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="apparatuur">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="apparatuur">
+        <Kop
           id="apparatuur"
-          eyebrow="Alles in één bezoek"
-          title="Ook uw andere apparatuur aansluiten"
-          lead="Uw televisie staat meestal niet alleen. Daarom kunnen we ook de apparatuur rondom uw tv aansluiten en instellen."
+          bovenkop="Alles in één bezoek"
+        titel="Ook uw andere apparatuur aansluiten"
+        tekst="Uw televisie staat meestal niet alleen. Daarom kunnen we ook de apparatuur rondom uw tv aansluiten en instellen."
         />
         <IconCardGrid items={apparatuur} columns={2} className="mt-12" />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="stappen">
-        <SectionHeading
+      <Vlak toon="oppervlak" labelledBy="stappen">
+        <Kop
           id="stappen"
-          eyebrow="Zo werkt het"
-          title="Zo werkt onze tv installatie"
-          lead="Van aanvraag tot gebruiksklaar in vier stappen. U hoeft niets uit te zoeken."
+          bovenkop="Zo werkt het"
+        titel="Zo werkt onze tv installatie"
+        tekst="Van aanvraag tot gebruiksklaar in vier stappen. U hoeft niets uit te zoeken."
         />
-        {/* Genummerd, want de volgorde is het punt. `HowItWorks` uit de
-            sectiebibliotheek beschrijft de drie stappen van het ophangen; een
-            installatie heeft er vier en noemt het plaatsen apart. */}
-        <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {stappen.map((stap, i) => (
-            <li key={stap.title} className="card relative p-6 pt-8">
-              <span className="absolute -top-4 left-6 grid size-9 place-items-center rounded-full bg-ink-950 font-display font-bold text-white">
-                {i + 1}
-              </span>
-              <h3 className="text-h3">{stap.title}</h3>
-              <p className="mt-2 text-ink-600">{stap.text}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
+        {/* `Werkwijze` uit de sectiebibliotheek beschrijft de drie stappen
+            van het ophangen; een installatie heeft er vier en noemt het
+            plaatsen apart. Vandaar `Stappen` met de eigen lijst, in dezelfde
+            vorm als die drie stappen op de homepage. */}
+        <div className="mt-12">
+          <Stappen items={stappen} kolommen={4} />
+        </div>
+      </Vlak>
 
-      <Section tone="surface" labelledBy="situaties">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="situaties">
+        <Kop
           id="situaties"
-          eyebrow="Uw situatie"
-          title="Tv installatie voor iedere situatie"
-          lead="Of uw tv net is bezorgd of de oude wordt vervangen: wij maken hem gebruiksklaar."
+          bovenkop="Uw situatie"
+        titel="Tv installatie voor iedere situatie"
+        tekst="Of uw tv net is bezorgd of de oude wordt vervangen: wij maken hem gebruiksklaar."
         />
         <IconCardGrid items={situaties} columns={3} className="mt-12" />
         <InlineCta
           href="#offerte"
           text="Vaste prijs vooraf. Wij gaan pas weg als uw tv staat of hangt, alle apparatuur is aangesloten en de zenders en apps werken. Wij bellen u binnen enkele uren om de afspraak in te plannen."
         />
-      </Section>
+      </Vlak>
 
-      <Section labelledBy="faq">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          <SectionHeading
-            id="faq"
-            eyebrow="Veelgestelde vragen"
-            title="Veelgestelde vragen over tv installatie"
-            lead={
-              <>
-                Staat uw vraag er niet bij? Zet hem in het{" "}
-                <Link href="#offerte" className="link">
-                  aanvraagformulier
-                </Link>{" "}
-                — dan belt de monteur u erover.
-              </>
-            }
-          />
-          <Faq items={faqItems} />
-        </div>
-      </Section>
+      <Faqsectie
+        titel="Veelgestelde vragen over tv installatie"
+        items={faqItems}
+        toon="oppervlak"
+      />
 
-      <Section tone="surface" labelledBy="werkgebied">
-        <SectionHeading
+      <Vlak toon="wit" labelledBy="werkgebied">
+        <Kop
           id="werkgebied"
-          eyebrow="Werkgebied"
-          title="Tv installatie aan huis in uw regio"
-          lead="Wij helpen klanten aan huis met tv installatie, montage en technische ondersteuning in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Woont u in een andere plaats? Zet het in uw aanvraag — we bekijken graag of we u kunnen helpen."
+          bovenkop="Werkgebied"
+        titel="Tv installatie aan huis in uw regio"
+        tekst="Wij helpen klanten aan huis met tv installatie, montage en technische ondersteuning in Zuid-Holland, Noord-Holland, Utrecht en Noord-Brabant. Woont u in een andere plaats? Zet het in uw aanvraag — we bekijken graag of we u kunnen helpen."
         />
         {/* Ankertekst volgt de titel van de doelpagina ("Tv ophangen in
             <provincie>"); de href verandert niet. */}
@@ -408,28 +387,21 @@ export default function TvInstallatiePage() {
             ["/prijzen", "Bekijk onze prijzen"],
           ]}
         />
-      </Section>
+      </Vlak>
 
-      <Section id="offerte" labelledBy="offerte-kop">
-        <div className="flex flex-col-reverse gap-10 lg:grid lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div>
-            <SectionHeading
-              id="offerte-kop"
-              eyebrow="Afspraak aanvragen"
-              title="Vraag een afspraak aan voor de installatie"
-              lead={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Wilt u de tv ook opgehangen hebben? Zet het erbij, dan rekenen wij dat vooraf voor u uit. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
-            />
-            <CheckList items={aanvraagBelofte} className="mt-8" />
-          </div>
-          {/* `variant` is het label waarop in GA4 wordt gemeten. Het blijft
-              staan zoals het was, anders breekt de reeks van deze pagina. */}
-          <ContactForm
-            variant="tv-installatie"
-            berichtLabel="Wat moet er aangesloten worden?"
-            berichtPlaceholder="Bijvoorbeeld: nieuwe Samsung, decoder van Ziggo en een soundbar."
-          />
-        </div>
-      </Section>
+      <Aanvraagsectie
+        titel="Vraag een afspraak aan voor de installatie"
+        tekst={`Vaste prijs van ${PRIJS}, inclusief voorrijkosten en btw. Wilt u de tv ook opgehangen hebben? Zet het erbij, dan rekenen wij dat vooraf voor u uit. Wij bellen u binnen enkele uren om de afspraak in te plannen.`}
+        beloftes={aanvraagBelofte}
+      >
+        {/* `variant` is het label waarop in GA4 wordt gemeten. Het blijft
+            staan zoals het was, anders breekt de reeks van deze pagina. */}
+        <ContactForm
+          variant="tv-installatie"
+          berichtLabel="Wat moet er aangesloten worden?"
+          berichtPlaceholder="Bijvoorbeeld: nieuwe Samsung, decoder van Ziggo en een soundbar."
+        />
+      </Aanvraagsectie>
     </>
   );
 }

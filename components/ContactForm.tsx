@@ -22,16 +22,15 @@ const ENDPOINT = "/api/afspraak";
  * Een offerteaanvraag vraagt om vier dingen en niet meer: uw naam, uw
  * telefoonnummer, uw postcode en wat er moet gebeuren.
  *
- * Hiervoor stond hier een configurator met het tv-formaat, de beugelvraag,
- * extra's, een datumkiezer en een meelopende prijs. Die hoorde bij vaste
- * tarieven per formaat. Nu de prijs uit een offerte komt, is elke vraag die
- * niet nodig is om die offerte te maken puur een reden om af te haken.
+ * Er stond hier eens een configurator met het tv-formaat, de beugelvraag,
+ * extra's, een datumkiezer en een meelopende prijs. Elke vraag die niet nodig
+ * is om de afspraak te maken, is een reden om af te haken.
  *
- * Om diezelfde reden staan hier geen straatnaam, huisnummer en woonplaats
- * meer. Voor een offerte is de postcode genoeg: die bepaalt de rit en of de
- * plaats in het werkgebied valt. Het volledige adres is pas nodig om de
- * afspraak in te plannen, en dat gebeurt nadat iemand akkoord is. Zo vraagt
- * het formulier niet om een huisadres op het moment dat er nog geen bedrag
+ * Om diezelfde reden staan hier geen straatnaam, huisnummer en woonplaats.
+ * Voor een offerte is de postcode genoeg: die bepaalt de rit en of de plaats
+ * in het werkgebied valt. Het volledige adres is pas nodig om de afspraak in
+ * te plannen, en dat gebeurt nadat iemand akkoord is. Zo vraagt het
+ * formulier niet om een huisadres op het moment dat er nog geen bedrag
  * tegenover staat — twee velden minder, en twee verplichte vragen minder.
  */
 const VELDEN = [
@@ -80,7 +79,7 @@ const Verplicht = () => <span className="text-danger">*</span>;
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} className="field-error flex items-start gap-1.5">
+    <p id={id} className="veld-fout flex items-start gap-1.5">
       <Icon name="info" className="mt-0.5 size-4 shrink-0" />
       <span>{message}</span>
     </p>
@@ -110,12 +109,12 @@ function Veldje({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={id} className="label">
+      <label htmlFor={id} className="veld-label">
         {label}
       </label>
       {children}
       {uitleg && (
-        <p id={`${id}-uitleg`} className="mt-1.5 text-sm text-ink-500">
+        <p id={`${id}-uitleg`} className="mt-1.5 text-sm text-ink-600">
           {uitleg}
         </p>
       )}
@@ -137,10 +136,12 @@ function Paneel({
   paneelRef: RefObject<HTMLDivElement | null>;
 }) {
   return (
-    <div ref={paneelRef} tabIndex={-1} className="card p-6 sm:p-8">
-      <span className="grid size-12 place-items-center rounded-xl bg-accent-50 text-accent-700 ring-1 ring-accent-200">
-        <Icon name={icoon} className="size-6" />
-      </span>
+    <div
+      ref={paneelRef}
+      tabIndex={-1}
+      className="paneel border-t-4 border-t-amber-400 p-6 sm:p-8"
+    >
+      <Icon name={icoon} className="size-8 text-amber-700" />
       <h3 className="mt-5 text-h3">{titel}</h3>
       <p className="mt-3 text-ink-600">{children}</p>
     </div>
@@ -201,11 +202,13 @@ export default function ContactForm({
       .filter(Boolean)
       .join(" ") || undefined;
 
-  // Het foute veld krijgt een rode ring boven op `input`. Een foutmelding die
-  // alleen onder het veld staat, wordt op een volle telefoonschermhoogte
-  // gemist; de rand wijst aan wáár gekeken moet worden.
+  // Het foute veld krijgt een rode rand in plaats van de gewone. Een
+  // foutmelding die alleen onder het veld staat, wordt op een volle
+  // telefoonschermhoogte gemist; de rand wijst aan wáár gekeken moet worden.
+  // Een echte rand en geen `ring`: een ring is een box-shadow, en die laat
+  // Windows in hoog-contrastmodus weg — dan bleef de fout onzichtbaar.
   const veldKlasse = (veld: Veld) =>
-    fieldErrors[veld] ? "input ring-2 ring-danger" : "input";
+    fieldErrors[veld] ? "veld border-2 border-danger" : "veld";
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -299,10 +302,10 @@ export default function ContactForm({
             methode: "formulier",
             ...(variant ? { variant } : {}),
           });
-          // Zonder vaste tarieven kent het formulier geen bedrag meer, dus de
-          // conversie gaat zonder waarde mee. Wilt u Google Ads op omzet laten
-          // sturen, dan hoort die waarde uit het geoffreerde bedrag te komen —
-          // dat vraagt om terugkoppeling vanuit de offerte, niet vanaf de site.
+          // De conversie gaat zonder waarde mee. Wilt u Google Ads op omzet
+          // laten sturen, dan hoort die waarde uit het geoffreerde bedrag te
+          // komen — dat vraagt om terugkoppeling vanuit de offerte, niet
+          // vanaf de site.
           trackAdsConversion(TRACKING.adsFormConversion);
         }
         setStatus("success");
@@ -343,7 +346,7 @@ export default function ContactForm({
         Wij hebben een e-mail voor u klaargezet met uw gegevens erin. Verstuur
         die, dan komt uw aanvraag bij ons binnen. Lukt dat niet? Mail ons dan
         rechtstreeks op{" "}
-        <a className="link" href={`mailto:${SITE.email}`}>
+        <a className="verwijzing" href={`mailto:${SITE.email}`}>
           {SITE.email}
         </a>
         .
@@ -360,7 +363,10 @@ export default function ContactForm({
       // en is "niemand kwam bij het formulier" niet te onderscheiden van
       // "iedereen haakte halverwege af".
       onFocusCapture={meldStart}
-      className="card flex flex-col gap-6 p-6 sm:p-8"
+      // De amberen streep bovenlangs is het enige sieraad: hij markeert dit
+      // paneel als de plek waar het om gaat, zonder dat er een tweede
+      // gekleurd vlak op het scherm komt dat met de knop concurreert.
+      className="paneel flex flex-col gap-6 border-t-4 border-t-amber-400 p-6 sm:p-8"
     >
       {/* Alleen de kop. Hier stond daaronder dezelfde alinea die de sectie
           erboven al voert ("uw gegevens, uw adres en wat er moet gebeuren,
@@ -445,7 +451,7 @@ export default function ContactForm({
           label={
             <>
               E-mailadres{" "}
-              <span className="font-normal text-ink-500">(optioneel)</span>
+              <span className="font-normal text-ink-600">(optioneel)</span>
             </>
           }
           fout={fieldErrors.email}
@@ -498,10 +504,12 @@ export default function ContactForm({
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="btn-primary btn-lg w-full"
+          className="knop-vol knop-groot w-full"
         >
           {status === "submitting" ? (
             <>
+              {/* Bijna-zwart op de amberen knop, net als de knoptekst zelf.
+                  Een wit rondje zou op dit amber vrijwel onzichtbaar zijn. */}
               <span
                 className="size-5 animate-spin rounded-full border-2 border-ink-950/25 border-t-ink-950"
                 aria-hidden="true"
@@ -519,7 +527,7 @@ export default function ContactForm({
         {status === "error" && (
           <p
             role="alert"
-            className="mt-4 rounded-xl bg-danger/10 p-4 text-sm font-semibold text-danger ring-1 ring-danger/20"
+            className="mt-4 rounded-lg border border-danger/30 bg-danger/8 p-4 text-sm font-semibold text-danger"
           >
             Er ging iets mis bij het versturen. Probeer het nog eens, of mail
             ons op{" "}
@@ -530,7 +538,7 @@ export default function ContactForm({
           </p>
         )}
 
-        <p className="mt-4 flex items-start gap-2 text-sm text-ink-500">
+        <p className="mt-4 flex items-start gap-2 text-sm text-ink-600">
           <Icon name="lock" className="mt-0.5 size-4 shrink-0" />
           <span>
             Velden met * zijn verplicht. Wij gebruiken uw gegevens alleen voor

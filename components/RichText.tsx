@@ -12,9 +12,9 @@ import type { ReactNode } from "react";
  * verwijzing nu op het moment dat de vraag opkomt in plaats van na afloop.
  *
  * Bewust alleen interne links (het pad moet met / beginnen): dit is geen
- * markdown-renderer en hoeft geen externe URL's, afbeeldingen of nesting aan
- * te kunnen. Tekst zonder haakjespatroon gaat ongewijzigd door, dus bestaande
- * alinea's blijven werken zoals ze zijn.
+ * markdown-renderer en hoeft geen externe adressen, afbeeldingen of nesting
+ * aan te kunnen. Tekst zonder haakjespatroon gaat ongewijzigd door, dus
+ * bestaande alinea's blijven werken zoals ze zijn.
  */
 const LINK = /\[([^\]]+)\]\((\/[^)\s]*)\)/g;
 
@@ -27,7 +27,7 @@ export default function RichText({ children }: { children: string }) {
     const start = m.index ?? 0;
     if (start > laatste) delen.push(children.slice(laatste, start));
     delen.push(
-      <Link key={`${start}-${m[2]}`} href={m[2]} className="link">
+      <Link key={`${start}-${m[2]}`} href={m[2]} className="verwijzing">
         {m[1]}
       </Link>,
     );

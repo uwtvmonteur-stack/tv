@@ -78,7 +78,7 @@ export default function Footer() {
           </div>
 
           <div className="border-t border-white/15 pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
-            <h2 className="bovenkop-donker">Contact</h2>
+            <p className="bovenkop-donker">Contact</p>
             {/* Het nummer als gewone link en niet als knop. Dat is een
                 besluit van de eigenaar en geldt voor de hele site. */}
             <a
@@ -133,9 +133,9 @@ export default function Footer() {
             blijft zonder dat elke pagina 32 keer hetzelfde signaal afgeeft. */}
         <div className="mt-14 grid gap-10 border-t border-white/15 pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <nav aria-labelledby="voet-diensten">
-            <h2 id="voet-diensten" className="bovenkop-donker">
+            <p id="voet-diensten" className="bovenkop-donker">
               Diensten
-            </h2>
+            </p>
             <ul className="mt-2">
               {diensten.map((d) => (
                 <li key={d.slug}>
@@ -148,9 +148,9 @@ export default function Footer() {
           </nav>
 
           <nav aria-labelledby="voet-specialisme">
-            <h2 id="voet-specialisme" className="bovenkop-donker">
+            <p id="voet-specialisme" className="bovenkop-donker">
               Specifieke klussen
-            </h2>
+            </p>
             <ul className="mt-2">
               {extraPaginas.map((p) => (
                 <li key={p.href}>
@@ -163,9 +163,9 @@ export default function Footer() {
           </nav>
 
           <nav aria-labelledby="voet-werkgebied">
-            <h2 id="voet-werkgebied" className="bovenkop-donker">
+            <p id="voet-werkgebied" className="bovenkop-donker">
               Werkgebied
-            </h2>
+            </p>
             <ul className="mt-2">
               {provincies.map((p) => (
                 <li key={p.slug}>
@@ -183,9 +183,9 @@ export default function Footer() {
           </nav>
 
           <nav aria-labelledby="voet-kennisbank">
-            <h2 id="voet-kennisbank" className="bovenkop-donker">
+            <p id="voet-kennisbank" className="bovenkop-donker">
               Kennisbank
-            </h2>
+            </p>
             <ul className="mt-2">
               {artikelen.map((a) => (
                 <li key={a.slug}>

@@ -82,11 +82,21 @@ function valideer(p: Record<Veld, string>): FieldErrors {
 
 /**
  * Het sterretje bij een verplicht veld; de uitleg staat onder de knop.
- * Bewust niet `aria-hidden`: de velden hebben geen `required`-attribuut (het
- * formulier valideert zelf), dus dit sterretje is het enige wat een
- * schermlezer vertelt dat een veld verplicht is.
+ *
+ * Wel `aria-hidden`. Hier stond het tegenovergestelde, met de redenering dat
+ * dit sterretje het enige was wat een schermlezer over "verplicht" vertelde.
+ * Dat was juist het probleem: een los sterretje wordt als "ster" of als niets
+ * voorgelezen, en de uitleg staat pas ná de verzendknop. De velden dragen nu
+ * `aria-required="true"`, en dát is wat een schermlezer aankondigt bij het
+ * veld zelf. Het sterretje is daarmee nog alleen een visueel teken, en de
+ * regel onder de knop blijft staan waar hij staat: een alinea boven het
+ * eerste veld duwde dat veld op een telefoon bijna een half scherm omlaag.
  */
-const Verplicht = () => <span className="text-danger">*</span>;
+const Verplicht = () => (
+  <span aria-hidden="true" className="text-danger">
+    *
+  </span>
+);
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
@@ -298,6 +308,12 @@ export default function ContactForm({
           Accept: "application/json",
         },
         body: JSON.stringify(payload),
+        // Zonder tijdslimiet blijft de knop bij een stille SMTP-server
+        // minutenlang op "Bezig met versturen" staan en kan de bezoeker
+        // niets. Twintig seconden is ruim voor een trage mobiele verbinding
+        // en kort genoeg om nog een tweede poging te doen. De `catch`
+        // hieronder vangt het af als de melding met het e-mailadres.
+        signal: AbortSignal.timeout(20000),
       });
       if (res.ok) {
         form.reset();
@@ -333,7 +349,19 @@ export default function ContactForm({
         // mis is én de algemene melding met het e-mailadres eronder. Eerder
         // wees dit altijd naar het e-mailveld — dan zoekt iemand een fout in
         // het enige veld dat optioneel is, en komt hij er nooit meer uit.
-        setFieldErrors(valideer(payload));
+        const serverFouten = valideer(payload);
+        // Het formulier en de server keuren e-mailadressen niet identiek:
+        // de server weigert tekens als een apostrof of een komma die het
+        // formulier doorlaat. Zonder deze regel zag een bezoeker met
+        // `o'brien@gmail.com` alleen "er ging iets mis", bij geen enkel veld
+        // een fout, en elke nieuwe poging gaf hetzelfde. Het e-mailveld is
+        // optioneel, dus de uitweg is hem leeg laten — maar dat moet er wel
+        // staan.
+        if (!Object.keys(serverFouten).length && payload.email.trim()) {
+          serverFouten.email =
+            "Dit e-mailadres kunnen wij niet verwerken. Controleer het, of laat het leeg — dan bellen wij u.";
+        }
+        setFieldErrors(serverFouten);
         setStatus("error");
       } else {
         setStatus("error");
@@ -407,6 +435,7 @@ export default function ContactForm({
             name="naam"
             autoComplete="name"
             placeholder="Jan de Vries"
+            aria-required="true"
             aria-invalid={!!fieldErrors.naam}
             aria-describedby={beschrijf("naam")}
             className={veldKlasse("naam")}
@@ -429,6 +458,7 @@ export default function ContactForm({
             inputMode="tel"
             autoComplete="tel"
             placeholder="06 12 34 56 78"
+            aria-required="true"
             aria-invalid={!!fieldErrors.telefoon}
             aria-describedby={beschrijf("telefoon")}
             className={veldKlasse("telefoon")}
@@ -449,11 +479,20 @@ export default function ContactForm({
           }
           fout={fieldErrors.straat}
         >
+          {/* `autoComplete="off"` en niet `address-line1`. Er bestaat geen
+              HTML-token voor alleen een straatnaam: browsers vullen
+              `address-line1` met straat én huisnummer ("Dorpsstraat 12"). Dan
+              staat het nummer twee keer in de aanvraag, of Huisnummer blijft
+              leeg terwijl de browser denkt dat hij het heeft gevuld — en dan
+              klaagt onze eigen validatie over een veld dat de bezoeker al
+              gevuld dacht te hebben. Postcode en woonplaats hebben wél een
+              eenduidig token en houden hun autofill. */}
           <input
             id="straat"
             name="straat"
-            autoComplete="address-line1"
+            autoComplete="off"
             placeholder="Dorpsstraat"
+            aria-required="true"
             aria-invalid={!!fieldErrors.straat}
             aria-describedby={beschrijf("straat")}
             className={veldKlasse("straat")}
@@ -474,8 +513,9 @@ export default function ContactForm({
           <input
             id="huisnummer"
             name="huisnummer"
-            autoComplete="address-line2"
+            autoComplete="off"
             placeholder="12 B"
+            aria-required="true"
             aria-invalid={!!fieldErrors.huisnummer}
             aria-describedby={beschrijf("huisnummer")}
             className={veldKlasse("huisnummer")}
@@ -498,6 +538,7 @@ export default function ContactForm({
             name="postcode"
             autoComplete="postal-code"
             placeholder="3511 AB"
+            aria-required="true"
             aria-invalid={!!fieldErrors.postcode}
             aria-describedby={beschrijf("postcode")}
             className={veldKlasse("postcode")}
@@ -518,6 +559,7 @@ export default function ContactForm({
             name="plaats"
             autoComplete="address-level2"
             placeholder="Utrecht"
+            aria-required="true"
             aria-invalid={!!fieldErrors.plaats}
             aria-describedby={beschrijf("plaats")}
             className={veldKlasse("plaats")}
@@ -563,6 +605,7 @@ export default function ContactForm({
             name="omschrijving"
             rows={4}
             placeholder={berichtPlaceholder}
+            aria-required="true"
             aria-invalid={!!fieldErrors.omschrijving}
             aria-describedby={beschrijf("omschrijving")}
             className={`${veldKlasse("omschrijving")} resize-y`}

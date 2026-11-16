@@ -21,7 +21,10 @@ export const diensten: Dienst[] = [
   {
     slug: "tv-installatie",
     naam: "Tv installatie",
-    kort: "Uw tv laten installeren aan huis: plaatsen of ophangen, alles aansluiten en direct klaar voor gebruik.",
+    // Niet "plaatsen of ophangen": dat leest alsóf ophangen in de €60 zit,
+    // en ophangen is een aparte dienst vanaf €99. Deze regel staat in het
+    // menu op elke pagina, dus de fout stond overal.
+    kort: "Uw tv laten installeren aan huis: plaatsen, alles aansluiten en direct klaar voor gebruik.",
   },
   {
     slug: "soundbar-installatie",

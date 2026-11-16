@@ -145,6 +145,13 @@ export async function POST(request: Request) {
     port,
     secure: SMTP_SECURE === "true" || port === 465,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    // Zonder deze drie wacht de functie op een stille SMTP-server tot Vercel
+    // haar afbreekt. Dan krijgt de bezoeker een 504 terwijl de mail mogelijk
+    // al vertrokken is, hij verstuurt opnieuw, en de monteur krijgt dezelfde
+    // aanvraag twee keer. Tien seconden is ruim voor elke normale provider.
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
   });
 
   const to = MAIL_TO || SITE.email;

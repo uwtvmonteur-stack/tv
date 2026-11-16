@@ -79,8 +79,13 @@ const stappen = [
     text: "Vul het formulier in met uw gegevens en wat er moet gebeuren. Wij nemen binnen enkele uren contact met u op om een geschikt moment af te spreken.",
   },
   {
-    title: "Tv plaatsen of ophangen",
-    text: "Onze monteur komt bij u thuis en plaatst uw tv op het meubel of hangt hem aan de muur.",
+    // Niet "plaatsen of ophangen". Deze pagina verkoopt de vaste prijs van
+    // EUR 60, en ophangen is een aparte dienst vanaf EUR 99. Een stap die
+    // zegt dat de monteur de tv aan de muur hangt, belooft iets wat niet in
+    // dat bedrag zit — en dat is precies het soort tegenspraak waar een
+    // klant aan de deur achter komt.
+    title: "Tv plaatsen en klaarzetten",
+    text: "Onze monteur komt bij u thuis en plaatst uw tv op het meubel. Aan de muur hangen is een aparte dienst vanaf €99; zet het in uw aanvraag, dan rekenen wij het vooraf voor u uit.",
   },
   {
     title: "Aansluiten & instellen",

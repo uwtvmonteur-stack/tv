@@ -11,6 +11,27 @@ const nextConfig: NextConfig = {
     // kost meer rekentijd; daarna komt alles uit de cache.
     formats: ["image/avif", "image/webp"],
   },
+  /*
+   * Drie headers die iets beschermen en niets kosten. Geen volledige CSP:
+   * die is op Next met inline scripts bewerkelijk en levert weinig op zolang
+   * er geen inhoud van bezoekers wordt getoond. `Permissions-Policy` is hier
+   * ceremonie. Deze drie niet: `nosniff` voorkomt dat een browser een
+   * geupload bestand als script uitvoert, `Referrer-Policy` houdt het volle
+   * pad binnen bij een klik naar buiten, en `frame-ancestors` voorkomt dat
+   * iemand het afspraakformulier in zijn eigen pagina inlijst.
+   */
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       {

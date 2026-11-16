@@ -24,7 +24,13 @@ export default function Faq({ items }: { items: FaqItem[] }) {
           // De eerste staat open: dan ziet een bezoeker meteen dát er
           // antwoorden onder zitten en niet alleen een rij vragen.
           open={i === 0}
-          className="paneel group overflow-hidden"
+          // Geen `overflow-hidden`: de sitebrede focusring heeft
+          // `outline-offset: 3px` en ligt dus buiten de summary. Met
+          // `overflow-hidden` op deze `details` werd die ring afgeknipt — bij
+          // een ingeklapte vraag volledig. Op 52 pagina's zag een
+          // toetsenbordgebruiker daardoor niet welke vraag focus had. Er is
+          // geen kind met een eigen achtergrond, dus er valt niets te kappen.
+          className="paneel group"
         >
           <summary className="list-none [&::-webkit-details-marker]:hidden">
             {/* De kop draagt de opvulling, zodat de hele aanraakrij (ruim boven

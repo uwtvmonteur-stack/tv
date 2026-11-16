@@ -81,6 +81,13 @@ const MET_FORMULIER = new Set([
   "/kabels-wegwerken",
   "/tv-geen-geluid",
   "/tv-geen-wifi",
+  // Sinds 16-11-2026 dragen ook deze het formulier. Deze vier stonden hier
+  // een halve dag niet in, en toen stuurde de opvallendste knop van het
+  // scherm de bezoeker wég van het formulier dat op diezelfde pagina stond.
+  "/diensten",
+  "/werkgebied",
+  "/kennisbank",
+  "/over-ons",
 ]);
 
 /**
@@ -109,12 +116,13 @@ const MET_FORMULIER = new Set([
 export function afspraakHref(pathname: string) {
   const heeftFormulier =
     MET_FORMULIER.has(pathname) ||
-    // De drie dienstpagina's, de 32 stadpagina's en de vier
-    // provinciepagina's dragen het formulier allemaal; de overzichten
-    // /diensten en /werkgebied niet, en /kennisbank-artikelen evenmin.
+    // De drie dienstpagina's, de 32 stadpagina's, de vier provinciepagina's
+    // en sinds 16-11-2026 ook de vijf kennisbankartikelen dragen het
+    // formulier allemaal.
     /^\/diensten\/[^/]+$/.test(pathname) ||
     /^\/tv-ophangen\/[^/]+$/.test(pathname) ||
-    /^\/werkgebied\/[^/]+$/.test(pathname);
+    /^\/werkgebied\/[^/]+$/.test(pathname) ||
+    /^\/kennisbank\/[^/]+$/.test(pathname);
   return heeftFormulier ? "#afspraak" : "/contact";
 }
 

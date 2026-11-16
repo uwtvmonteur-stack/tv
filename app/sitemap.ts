@@ -17,13 +17,26 @@ import { artikelen } from "@/lib/kennisbank";
  */
 const GEWIJZIGD = {
   /** Home, dienstenoverzicht, prijzen, contact, over ons. */
-  kern: "2026-10-25",
+  kern: "2026-11-16",
   /** De dienstpagina's zelf, inclusief de gipswandpagina. */
-  diensten: "2026-10-25",
+  diensten: "2026-11-16",
   /** Stad-, provincie- en werkgebiedpagina's. */
-  steden: "2026-10-21",
-  kennisbank: "2026-10-21",
+  steden: "2026-11-16",
+  kennisbank: "2026-11-16",
 } as const;
+
+/*
+ * Waarom alle vier op 16-11-2026 staan: op die dag is de hele presentatielaag
+ * herbouwd (afspraak in plaats van offerte, het tarief voor een installatie
+ * van EUR 70 naar EUR 60, de beoordelingen eruit, een formulier op negen
+ * pagina's die er geen hadden). Elke groep is dus echt gewijzigd.
+ *
+ * De datums stonden op 21 en 25 oktober, voor het bestaan van de huidige
+ * stad-URL's. Google gebruikt `lastmod` alleen zolang die aantoonbaar klopt,
+ * en een datum die voor de inhoud ligt is precies de reden om het veld te
+ * negeren — juist nu de oude /tv-monteur/<stad>-URL's nog in de index staan
+ * en de 301 opnieuw opgehaald moet worden.
+ */
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entry = (

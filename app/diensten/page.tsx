@@ -84,7 +84,7 @@ export default function DienstenPage() {
         <div className="mt-12">
           {/* `kopNiveau` 2: op deze pagina zijn de diensten de onderwerpen
               van de pagina en niet een opsomming binnen een ander verhaal. */}
-          <Dienstenlijst kopNiveau={2} />
+          <Dienstenlijst kopNiveau={3} />
         </div>
       </Vlak>
 

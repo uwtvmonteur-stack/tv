@@ -36,7 +36,7 @@ export const provincies: Provincie[] = [
     slug: "utrecht-provincie",
     iso: "UT",
     intro:
-      "Midden in het land, midden in ons werkgebied: de provincie Utrecht bedienen we snel en flexibel. Van de stad Utrecht tot Amersfoort en de Heuvelrug — vaak nog dezelfde week een afspraak.",
+      "Midden in het land, midden in ons werkgebied: de provincie Utrecht bedienen we snel en flexibel. Van de stad Utrecht tot Amersfoort en de Heuvelrug rijden onze monteurs dagelijks.",
   },
   {
     naam: "Noord-Brabant",
@@ -133,7 +133,7 @@ export const steden: Stad[] = [
     lat: 52.13,
     lng: 4.66,
     blurb:
-      "Centraal in het Groene Hart: in Alphen aan den Rijn en de omliggende dorpen staan we vaak nog dezelfde week bij u op de stoep.",
+      "Centraal in het Groene Hart: in Alphen aan den Rijn en de omliggende dorpen komen we dagelijks.",
     wijken: ["Kerk en Zanen", "Ridderveld", "Zuid", "Centrum", "Ridderbuurt"],
     nabij: ["leiden", "gouda", "woerden"],
   },
@@ -222,7 +222,7 @@ export const steden: Stad[] = [
     lat: 52.51,
     lng: 4.96,
     blurb:
-      "In Purmerend en de omliggende Beemster komen we regelmatig — vaak kunnen we nog dezelfde week een afspraak inplannen.",
+      "In Purmerend en de omliggende Beemster komen we regelmatig.",
     wijken: ["Weidevenne", "Overwhere", "Purmer-Noord", "Wheermolen", "Gors"],
     nabij: ["zaandam", "amsterdam", "alkmaar"],
   },
@@ -300,7 +300,7 @@ export const steden: Stad[] = [
     lat: 52.09,
     lng: 4.88,
     blurb:
-      "Vanuit het hart van het Groene Hart bedienen we Woerden, Harmelen en Kamerik — vaak nog dezelfde week na uw aanvraag.",
+      "Vanuit het hart van het Groene Hart bedienen we Woerden, Harmelen en Kamerik.",
     wijken: ["Molenvliet", "Snel en Polanen", "Schilderskwartier", "Harmelen", "Kamerik"],
     nabij: ["utrecht", "gouda", "alphen-aan-den-rijn"],
   },

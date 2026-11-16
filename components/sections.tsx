@@ -391,7 +391,7 @@ export const BEWIJS: { icon: IconName; titel: string; tekst: string }[] = [
     icon: "level",
     titel: "Waterpas en belast getest",
     tekst:
-      "Wij hangen uw tv recht en hangen er daarna zelf aan, zodat u weet dat hij houdt.",
+      "Wij hangen uw tv recht en belasten de beugel voordat uw tv erop gaat, zodat u weet dat hij houdt.",
   },
   {
     icon: "shield",

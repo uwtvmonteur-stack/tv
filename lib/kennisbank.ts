@@ -48,7 +48,7 @@ export const artikelen: Artikel[] = [
     titel: "Hoe hoog hangt u een tv op?",
     metaTitel: "Hoe hoog moet een tv hangen?",
     beschrijving:
-      "Hoe hoog hang je een tv op? Het midden van het scherm hoort op ooghoogte als u zit. Met deze rekenregel en tabel per formaat weet u de juiste hoogte.",
+      "Hoe hoog hangt u een tv op? Het midden van het scherm hoort op ooghoogte als u zit. Met deze rekenregel en tabel per formaat weet u de juiste hoogte.",
     eyebrow: "Kennisbank · Tv ophangen",
     antwoord:
       "Hang uw tv zo op dat het midden van het scherm op ooghoogte zit terwijl u op de bank zit — voor de meeste mensen is dat 100 tot 110 cm boven de vloer. Bij een 55-inch tv komt de onderkant van het scherm dan op ongeveer 70 cm.",
@@ -83,7 +83,7 @@ export const artikelen: Artikel[] = [
         kop: "Waarom televisies zo vaak te hoog hangen",
         alineas: [
           "De meest gemaakte fout is de tv op oogniveau hangen terwijl u stáát. In de winkel en tijdens het ophangen staat u, dus die hoogte voelt logisch. Zodra u gaat zitten kijkt u omhoog, en dat houdt u een hele film lang vol in uw nek.",
-          "Houd uw kijkhoek vanaf de bank onder ongeveer vijftien graden omhoog. Daarboven gaat u uw hoofd kantelen in plaats van alleen uw ogen. Bij een OLED- of QLED-scherm gaan bovendien het contrast en de kleuren merkbaar achteruit zodra u er schuin van onderaf naar kijkt.",
+          "Houd uw kijkhoek vanaf de bank onder ongeveer vijftien graden omhoog. Daarboven gaat u uw hoofd kantelen in plaats van alleen uw ogen. Bij een lcd-scherm, waaronder de meeste QLED-tv's, gaan bovendien het contrast en de kleuren merkbaar achteruit zodra u er schuin van onderaf naar kijkt. Een OLED heeft dat probleem niet, maar uw nek wel.",
           "Hangt de televisie noodgedwongen hoger, bijvoorbeeld boven een haard of een hoog dressoir, gebruik dan een kantelbare beugel. Vijf tot vijftien graden kanteling richt het scherm terug naar uw ooghoogte en haalt het ergste van de hoek weg.",
         ],
       },
@@ -97,11 +97,11 @@ export const artikelen: Artikel[] = [
     ],
     faq: [
       {
-        q: "Hoe hoog hang je een 55 inch tv op?",
+        q: "Hoe hoog hangt u een 55 inch tv op?",
         a: "Bij een gemiddelde zithoogte komt de onderkant van een 55-inch tv op ongeveer 70 cm boven de vloer, met het midden van het scherm rond 105 cm. Meet uw eigen ooghoogte op de bank en trek daar de helft van de schermhoogte af, bij 55 inch is dat 34 cm.",
       },
       {
-        q: "Hoe hoog hang je een 65 inch tv op?",
+        q: "Hoe hoog hangt u een 65 inch tv op?",
         a: "Een 65-inch scherm is ongeveer 81 cm hoog. Bij een ooghoogte van 105 cm komt de onderkant dus op circa 65 cm. Grotere schermen hangen dus juist lager, niet hoger.",
       },
       {

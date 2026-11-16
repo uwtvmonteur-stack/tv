@@ -105,7 +105,7 @@ const muren = [
   },
   {
     h3: "Tv ophangen aan een holle wand",
-    text: "Bij holle wanden (bijvoorbeeld voorzetwanden of systeemwanden) werken we met kantelpluggen of tuimelankers die achter de plaat verankeren. Voor zwaardere tv's zoeken we naar het draagframe voor extra zekerheid.",
+    text: "Bij een voorzetwand boren we door de plaat heen in het metselwerk erachter; dat is de sterkste oplossing. Bij een echte holle of systeemwand gebruiken we metalen hollewandankers, en voor zwaardere tv's zoeken we eerst het draagframe.",
   },
   {
     h3: "Tv ophangen aan een houten wand",

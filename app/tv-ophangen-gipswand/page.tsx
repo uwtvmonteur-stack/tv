@@ -48,7 +48,7 @@ const inbegrepen = [
   "Wandonderzoek: we bepalen of het gipsplaat, gipsblok of een voorzetwand is",
   "Opsporen van het houten of metalen frame achter de platen",
   "Berekening van het draagvermogen op basis van gewicht en beugeltype",
-  "Bevestiging die bij úw wand past: frameschroeven, tuimelankers of kantelpluggen",
+  "Bevestiging die bij úw wand past: frameschroeven, tuimelankers of hollewandankers",
   "De beugel waterpas en stevig monteren, daarna belast testen",
   "Tv ophangen, aansluiten en de kabels gebundeld wegleggen",
   "Een eerlijk oordeel vooraf als het níet veilig kan",
@@ -95,7 +95,7 @@ const wandtypes: IconCard[] = [
   {
     icon: <Icon name="tool" />,
     h3: "Holle wand of systeemwand",
-    text: "Bij holle wanden verankeren kantelpluggen of tuimelankers zich achter de plaat. Voor een tv vanaf 55 inch zoeken we eerst naar het draagframe; een kantelbare of draaibare beugel vraagt namelijk veel meer van de bevestiging dan een vaste.",
+    text: "Bij holle wanden verankeren metalen hollewandankers zich achter de plaat; kunststof kantel- of tuimelpluggen gebruiken wij daar niet voor. Voor een tv vanaf 55 inch zoeken we eerst naar het draagframe; een kantelbare of draaibare beugel vraagt namelijk veel meer van de bevestiging dan een vaste.",
   },
 ];
 
@@ -116,7 +116,7 @@ const aanvraagBelofte = [
 const faqItems: FaqItem[] = [
   {
     q: "Kan een tv aan een gipswand worden opgehangen?",
-    a: "Ja, in vrijwel alle gevallen. Het hangt af van het wandtype, de plaatdikte, het gewicht van uw tv en het beugeltype. Waar mogelijk bevestigen we in het stalen of houten frame achter de platen; lukt dat niet, dan gebruiken we tuimelankers of kantelpluggen die het gewicht achter de plaat verdelen. Wij rekenen het draagvermogen vooraf na.",
+    a: "Ja, in vrijwel alle gevallen. Het hangt af van het wandtype, de plaatdikte, het gewicht van uw tv en het beugeltype. Waar mogelijk bevestigen we in het stalen of houten frame achter de platen; lukt dat niet, dan gebruiken we metalen hollewandankers die het gewicht achter de plaat verdelen. Wij rekenen het draagvermogen vooraf na.",
   },
   {
     q: "Hoeveel gewicht houdt een gipswand?",

@@ -170,7 +170,7 @@ export default async function ProvinciePage({
         beeld="/images/aan-de-deur.webp"
         beeldAlt="Monteur van Uw TV Monteur wordt begroet aan de voordeur van een Nederlandse rijtjeswoning"
       >
-        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <HeroKnoppen />
         <HeroFeiten gebied={provincie.naam} />
       </Hero>
 

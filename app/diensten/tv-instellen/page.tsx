@@ -198,7 +198,7 @@ export default function TvInstellenPage() {
         beeld="/images/dienst-tv-instellen.webp"
         beeldAlt="Ingestelde smart-tv met heldere beeldweergave in de woonkamer"
       >
-        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <HeroKnoppen />
         <Vinkjes donker
           items={[
             "Alles werkt weer na één bezoek",

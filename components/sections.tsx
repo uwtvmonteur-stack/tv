@@ -14,6 +14,7 @@ import {
   prijsklassen,
   type FaqItem,
 } from "@/lib/content";
+import { SITE } from "@/lib/site";
 
 /* =========================================================================
    Sectiebibliotheek
@@ -315,16 +316,35 @@ export function Hero({
   );
 }
 
+/**
+ * De twee knoppen in de hero: een afspraak maken, en bellen.
+ *
+ * Hier stond als tweede knop een verwijzing, meestal "Wat het kost" naar de
+ * prijssectie. Die is er op 16-11-2026 uit gehaald op verzoek van de
+ * eigenaar: het bedrag staat al in de hero zelf (in de prijstegels of in de
+ * bovenkop), dus die knop stuurde de bezoeker naar iets wat hij al zag. De
+ * conversie-expert kwam op hetzelfde uit — op /tv-ophangen stond die knop
+ * 150 px ónder drie prijzen die al in beeld stonden.
+ *
+ * In die plek staat nu een belknop, en dat draait een harde regel van de
+ * eigenaar om. Tot vandaag mocht het nummer NERGENS als knop staan, alleen
+ * in de voettekst, met als reden: één actie per scherm, en een gesprek is
+ * niet meetbaar en niet inplanbaar. De cijfers hebben die reden ingehaald:
+ * 9 van de 24 conversies over 90 dagen waren al telefoonkliks, op een nummer
+ * dat alleen onderaan de pagina staat, en 84% van het verkeer is mobiel.
+ * Meetbaar is het ook: `Analytics.tsx` meet elke `tel:`-klik en voert hem
+ * door als Ads-conversie.
+ *
+ * De afspraakknop blijft de primaire (`knop-vol`); bellen is de secundaire
+ * (`knop-op-donker`). Het nummer staat er voluit, want een zichtbaar nummer
+ * doet op een desktop nog iets waar een `tel:`-link dat niet doet.
+ */
 export function HeroKnoppen({
   href = "#afspraak",
   label = "Afspraak maken",
-  tweedeHref = "/prijzen",
-  tweedeLabel = "Bekijk alle tarieven",
 }: {
   href?: string;
   label?: string;
-  tweedeHref?: string;
-  tweedeLabel?: string;
 }) {
   return (
     <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -332,9 +352,10 @@ export function HeroKnoppen({
         {label}
         <Icon name="arrow-right" className="size-5" />
       </Link>
-      <Link href={tweedeHref} className="knop-op-donker knop-groot">
-        {tweedeLabel}
-      </Link>
+      <a href={`tel:${SITE.phone}`} className="knop-op-donker knop-groot">
+        <Icon name="phone" className="size-5" />
+        {SITE.phoneDisplay}
+      </a>
     </div>
   );
 }

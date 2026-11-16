@@ -170,10 +170,7 @@ export default function TvOphangenGipswandPage() {
         beeld="/images/tv-ophangen-gipswand.webp"
         beeldAlt="Monteur zoekt met een detector de stijlen in een gipswand en zet de boorpunten af"
       >
-        <HeroKnoppen
-          tweedeHref="/tv-ophangen"
-          tweedeLabel="Alles over tv ophangen"
-        />
+        <HeroKnoppen />
         <Vinkjes donker
           items={heroPunten}
           className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"

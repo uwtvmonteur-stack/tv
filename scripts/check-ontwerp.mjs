@@ -54,13 +54,25 @@ function meld(lijst, pad, nr, tekst) {
   lijst.push(`${relative(WORTEL, pad).split(sep).join("/")}:${nr}  ${tekst}`);
 }
 
-/* -- 1. Het telefoonnummer mag alleen in de voettekst staan ---------------
-   Harde eis van de eigenaar: één actie per scherm, de afspraakaanvraag. Een
-   belknop ernaast haalt de aanvraag weg en levert een gesprek op dat niet
-   meetbaar is en niet inplanbaar. */
+/* -- 1. Het telefoonnummer alleen in de voettekst en in de heroknoppen ----
+   Dit was: alleen in de voettekst. Harde eis van de eigenaar, met als reden
+   één actie per scherm, en een gesprek dat niet meetbaar en niet inplanbaar
+   is. Op 16-11-2026 heeft hij die regel zelf omgedraaid en om een belknop
+   gevraagd, en de cijfers steunen dat: 9 van de 24 conversies over 90 dagen
+   waren al telefoonkliks op een nummer dat alleen onderaan stond, bij 84%
+   mobiel verkeer. Meetbaar is het bovendien wél — Analytics.tsx meet elke
+   `tel:`-klik en voert hem door als Ads-conversie.
+
+   De regel blijft dus staan, maar met één plek erbij: `HeroKnoppen` in
+   components/sections.tsx. Overal elders is een belknop nog steeds een fout,
+   zodat er niet alsnog overal op de pagina een nummer bijkomt. */
 for (const pad of bron) {
   const naam = relative(WORTEL, pad).split(sep).join("/");
-  if (naam === "components/Footer.tsx" || naam === "app/api/afspraak/route.ts")
+  if (
+    naam === "components/Footer.tsx" ||
+    naam === "components/sections.tsx" ||
+    naam === "app/api/afspraak/route.ts"
+  )
     continue;
   regels(pad).forEach((r, i) => {
     // Alleen een echte href, niet elke string met "tel:" erin: Analytics.tsx
@@ -345,11 +357,24 @@ if (process.argv.includes("--html")) {
     // `knop` staat hier sinds de herbouw naast `btn`. Zonder die toevoeging
     // bewaakte deze regel — de hardste eis van de eigenaar — niets meer,
     // omdat er geen enkele `btn`-klasse meer op de site staat.
-    const belKnop = (html.match(/<a\b[^>]*>/g) ?? []).some(
+    // Tot 16-11-2026 was elke belknop hier een fout. De eigenaar heeft die
+    // eis die dag zelf omgedraaid en om een belknop gevraagd, en de cijfers
+    // steunen dat: 9 van de 24 conversies over 90 dagen waren al
+    // telefoonkliks op een nummer dat alleen in de voettekst stond, bij 84%
+    // mobiel verkeer. Meetbaar is het ook: Analytics.tsx meet elke tel:-klik.
+    //
+    // De controle blijft bestaan, maar hij telt nu in plaats van te verbieden.
+    // Precies een belknop per pagina, die uit HeroKnoppen. Twee of meer
+    // betekent dat er elders alsnog een nummer als knop is bijgekomen, en dan
+    // is de hero niet meer de enige plek - dat is het sluipgedrag waar de oude
+    // eis tegen was. Pagina's zonder hero (privacy, 404) hebben er nul.
+    const belKnoppen = (html.match(/<a\b[^>]*>/g) ?? []).filter(
       (tag) => /href="tel:/.test(tag) && /class="[^"]*\b(?:btn|knop)/.test(tag),
-    );
-    if (belKnop)
-      fouten.push(`${naam}: telefoonnummer staat als knop op de pagina`);
+    ).length;
+    if (belKnoppen > 1)
+      fouten.push(
+        `${naam}: ${belKnoppen} belknoppen op een pagina (alleen die in de hero mag)`,
+      );
 
     /* -- Een knop naar #afspraak moet dat anker ook hebben -----------------
        Dit is een echte fout geweest: `afspraakHref()` gaf standaard

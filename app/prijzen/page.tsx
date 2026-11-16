@@ -90,7 +90,7 @@ export default function PrijzenPage() {
         beeld="/images/dienst-tv-installatie.webp"
         beeldAlt="Monteur stelt een opgehangen televisie in na de montage"
       >
-        <HeroKnoppen tweedeHref="#tarieven" tweedeLabel="Alle tarieven" />
+        <HeroKnoppen />
       </Hero>
 
       {/* De prijspagina droeg alleen bedragen en kleine letters: geen

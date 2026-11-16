@@ -176,7 +176,7 @@ export default function KabelsWegwerkenPage() {
         beeld="/images/kabels-weggewerkt.webp"
         beeldAlt="Kabelgoot in de kleur van de muur loopt van een wandgemonteerde televisie naar het dressoir"
       >
-        <HeroKnoppen tweedeHref="#manieren" tweedeLabel="De vier manieren" />
+        <HeroKnoppen />
         <Vinkjes donker
           items={voordelen}
           className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"

@@ -170,10 +170,7 @@ export default function TvBovenOpenHaardPage() {
         beeld="/images/tv-boven-open-haard.webp"
         beeldAlt="Monteur meet met een infraroodthermometer de temperatuur van de schouw onder een opgehangen televisie"
       >
-        <HeroKnoppen
-          tweedeHref="/tv-ophangen"
-          tweedeLabel="Alles over tv ophangen"
-        />
+        <HeroKnoppen />
         <Vinkjes donker
           items={voordelen}
           className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"

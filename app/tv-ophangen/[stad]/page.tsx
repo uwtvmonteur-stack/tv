@@ -277,7 +277,7 @@ export default async function StadPage({
         beeld={HEROBEELDEN[stadIndex % HEROBEELDEN.length].src}
         beeldAlt={HEROBEELDEN[stadIndex % HEROBEELDEN.length].alt}
       >
-        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <HeroKnoppen />
         <HeroFeiten plaats={stad.naam} />
       </Hero>
 

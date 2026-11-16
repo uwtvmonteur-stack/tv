@@ -152,7 +152,7 @@ export default function Page() {
         beeld="/images/tv-geen-wifi.webp"
         beeldAlt="Monteur controleert de netwerkverbinding van een smart-tv terwijl de router op het dressoir staat"
       >
-        <HeroKnoppen tweedeHref="#oorzaken" tweedeLabel="Bekijk de oorzaken" />
+        <HeroKnoppen />
         <Vinkjes donker
           items={belofte}
           className="mt-8 border-t border-white/15 pt-6"

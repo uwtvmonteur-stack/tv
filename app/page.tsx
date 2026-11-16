@@ -220,7 +220,7 @@ export default function Page() {
         beeld="/images/team-twee-monteurs.webp"
         beeldAlt="Twee monteurs van Uw TV Monteur tillen samen een grote televisie op de wandbeugel"
       >
-        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <HeroKnoppen />
         <HeroBewijs />
       </Hero>
 

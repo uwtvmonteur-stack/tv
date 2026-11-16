@@ -151,7 +151,7 @@ export default function Page() {
         beeld="/images/tv-geen-geluid.webp"
         beeldAlt="Monteur sluit een HDMI-kabel aan op de achterkant van een wandgemonteerde televisie, met de soundbar eronder"
       >
-        <HeroKnoppen tweedeHref="#oorzaken" tweedeLabel="Bekijk de oorzaken" />
+        <HeroKnoppen />
         <Vinkjes donker
           items={belofte}
           className="mt-8 border-t border-white/15 pt-6"

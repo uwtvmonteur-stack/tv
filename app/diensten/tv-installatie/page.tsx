@@ -198,7 +198,7 @@ export default function TvInstallatiePage() {
         beeld="/images/dienst-tv-installatie.webp"
         beeldAlt="Volledig geïnstalleerde tv aan de muur in een moderne woonkamer"
       >
-        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <HeroKnoppen />
         <Vinkjes donker
           items={[
             "Zenders, wifi en streaming-apps ingesteld",

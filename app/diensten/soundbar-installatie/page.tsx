@@ -183,7 +183,7 @@ export default function SoundbarPage() {
         beeld="/images/dienst-soundbar-installatie.webp"
         beeldAlt="Stel geniet 's avonds van film en geluid via een wandgemonteerde tv"
       >
-        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <HeroKnoppen />
         <Vinkjes donker
           items={[
             "Soundbar strak gemonteerd en kabels weggewerkt",

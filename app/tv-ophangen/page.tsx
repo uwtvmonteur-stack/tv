@@ -251,7 +251,7 @@ export default function TvOphangenPage() {
             kwam hij na vier regels bewijs, en op een telefoon van 667 pixels
             viel hij daarmee net buiten het eerste scherm — op de pagina waar
             ruim de helft van het advertentiebudget landt. */}
-        <HeroKnoppen tweedeHref="#prijs" tweedeLabel="Wat het kost" />
+        <HeroKnoppen />
         <Vinkjes donker
           items={heroPunten}
           className="mt-8 grid gap-3 border-t border-white/15 pt-6 sm:grid-cols-2"
